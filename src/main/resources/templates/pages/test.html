@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Test page')}">
+    <th:block th:fragment="content">
+        <p>Test page</p>
+    </th:block>
+</th:block>
+</html>
