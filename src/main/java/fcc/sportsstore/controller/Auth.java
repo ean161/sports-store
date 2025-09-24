@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Auth controller, login and register maps
+ * Auth controller, mapping for login and register
  */
 @Controller
 @RequestMapping("/auth")
@@ -19,7 +19,7 @@ public class Auth {
      */
     @GetMapping("/login")
     public String login(Model model) {
-        // Notice for UI to show login components
+        // Define authentication type is login
         model.addAttribute("type", "login");
         return "pages/auth";
     }
@@ -31,7 +31,7 @@ public class Auth {
      */
     @GetMapping("/register")
     public String register(Model model) {
-        // Notice for UI to show register components
+        // Define authentication type is register
         model.addAttribute("type", "register");
         return "pages/auth";
     }
