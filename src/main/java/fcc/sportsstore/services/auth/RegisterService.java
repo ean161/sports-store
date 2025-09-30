@@ -37,10 +37,10 @@ public class RegisterService {
 
         if (email == null || email.isEmpty()) {
             throw new RuntimeException("Email must not be empty.");
-        } else if (userRepository.findByEmailIgnoreCase(email).isPresent()) {
-            throw new RuntimeException("Email is already taken.");
         } else if (!validate.isValidEmail(email)) {
             throw new RuntimeException("Invalid email. Please enter a valid email address.");
+        } else if (userRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email is already taken.");
         } else if (password == null || password.isEmpty()) {
             throw new RuntimeException("Password must not be empty.");
         } else if (confirmPassword == null || confirmPassword.isEmpty()) {

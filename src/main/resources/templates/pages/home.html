@@ -2,8 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
     <th:block th:fragment="content">
-        // Home
-       
+
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-3">
+                <div class="flex items-center justify-between">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <div class="bg-red-600 text-white p-2 rounded">
+                            <i class="fas fa-flag text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xl text-gray-800">SPORT STORE     </div>
+                            <div class="text-xs text-gray-500">HEART OF THE GAME</div>
+                        </div>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="flex-1 max-w-md mx-8">
+                        <div class="relative">
+                            <input
+                                    type="text"
+                                    placeholder="Search..."
+                                    class="w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                            >
+                            <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Top Right Icons -->
+                    <div class="flex items-center space-x-6">
+                        <div class="text-center cursor-pointer hover:text-red-600 transition">
+                            <i class="fas fa-running text-xl"></i>
+                            <div class="text-xs mt-1">Săn thể thao</div>
+                        </div>
+                        <div class="text-center cursor-pointer hover:text-red-600 transition">
+                            <i class="fas fa-dumbbell text-xl"></i>
+                            <div class="text-xs mt-1">Đội thể thao</div>
+                        </div>
+                        <div class="text-center cursor-pointer hover:text-red-600 transition">
+                            <i class="fas fa-user text-xl"></i>
+                            <div class="text-xs mt-1">Tài khoản</div>
+                        </div>
+                        <div class="text-center cursor-pointer hover:text-red-600 transition relative">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                            <div class="text-xs mt-1">Giỏ hàng</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
         <script src="/assets/js/pages/home.js"></script>
     </th:block>
 </th:block>
