@@ -4,23 +4,22 @@ package fcc.sportsstore.services.auth;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
 import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.utils.Hash;
 import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class RegisterService {
 
-    private final UserRepository userRepository;
     private final UserService userService;
 
     /**
      * Constructor
-     * @param userRepository User repository
      * @param userService User service
      */
-    public RegisterService(UserRepository userRepository,
-            UserService userService) {
-        this.userRepository = userRepository;
+    public RegisterService(UserService userService) {
         this.userService = userService;
     }
 
@@ -39,7 +38,7 @@ public class RegisterService {
             throw new RuntimeException("Email must not be empty.");
         } else if (!validate.isValidEmail(email)) {
             throw new RuntimeException("Invalid email. Please enter a valid email address.");
-        } else if (userRepository.existsByEmail(email)) {
+        } else if (userService.existsByEmail(email)) {
             throw new RuntimeException("Email is already taken.");
         } else if (password == null || password.isEmpty()) {
             throw new RuntimeException("Password must not be empty.");
@@ -51,9 +50,11 @@ public class RegisterService {
             throw new RuntimeException("Password length must be from 6 - 30 characters, contains a special character.");
         }
 
+        Hash hash = new Hash();
+        String hashedPassword = hash.hashMD5(password);
         User user = new User(userService.generateId(),
                 email,
-                password);
-        return userRepository.save(user);
+                hashedPassword);
+        return userService.saveUser(user);
     }
 }
