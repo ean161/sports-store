@@ -17,7 +17,10 @@ public class RecoveryPassword {
     @Column(name = "recovery_password_id")
     private String id;
 
+    @Column(length = 100)
     private String code;
+
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,6 +31,7 @@ public class RecoveryPassword {
     public RecoveryPassword(String id, String code, User user) {
         this.id = id;
         this.code = code;
+        this.status = "NOT_USED_YET";
         this.user = user;
 
         Time time = new Time();

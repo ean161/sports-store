@@ -25,7 +25,7 @@ public class UserService {
     /**
      * Generate new id for user
      * Format: Year-month-day-random_string
-     * @return
+     * @return New valid id
      */
     public String generateId() {
         String id;
@@ -57,7 +57,7 @@ public class UserService {
     /**
      * Check email exists
      * @param email User email
-     * @return email
+     * @return TRUE if email was exist, FALSE is not
      */
     public boolean existsByEmail(String email){
         return userRepository.existsByEmail(email);
@@ -66,7 +66,7 @@ public class UserService {
     /**
      * Save User to list
      * @param user User(userId, email, password)
-     * @return user
+     * @return User that saved
      */
     public User saveUser(User user){
         return userRepository.save(user);
@@ -75,5 +75,4 @@ public class UserService {
     public Optional<User> findByEmailIgnoreCase(String email){
         return userRepository.findByEmailIgnoreCase(email);
     }
-
 }

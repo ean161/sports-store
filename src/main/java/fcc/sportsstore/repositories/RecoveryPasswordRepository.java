@@ -13,5 +13,7 @@ public interface RecoveryPasswordRepository extends JpaRepository<RecoveryPasswo
 
     Optional<RecoveryPassword> findByCode(String code);
 
-    boolean existsByUserAndExpiredAtGreaterThan(User user, Long now);
+    boolean existsByUserAndStatusAndExpiredAtGreaterThan(User user, String status, Long now);
+
+    boolean existsByCodeAndStatusAndExpiredAtGreaterThan(String code, String status, Long now);
 }
