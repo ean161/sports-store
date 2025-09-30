@@ -20,7 +20,7 @@ public class User {
     @Column(name = "user_id")
     private String id;
 
-    private String email, password;
+    private String email, password, token;
 
     private Long createdAt;
 
@@ -35,7 +35,6 @@ public class User {
         this.email = email;
         this.password = password;
 
-        // Get current timestamp for "created_at" column
         Time time = new Time();
         this.createdAt = time.getCurrentTimestamp();
     }

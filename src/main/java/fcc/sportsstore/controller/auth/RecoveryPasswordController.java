@@ -1,6 +1,7 @@
 package fcc.sportsstore.controller.auth;
 
 import fcc.sportsstore.entities.RecoveryPassword;
+import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.auth.RecoveryPasswordService;
 import fcc.sportsstore.utils.Response;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,18 @@ public class RecoveryPasswordController {
      * @return Recovery password page
      */
     @GetMapping("/recovery")
-    public String recovery(@RequestParam(required = false, name = "code") String recoveryCode, Model model) {
+    public String recovery(Model model, @RequestParam(required = false, name = "code") String code) {
+        model.addAttribute("code", code);
+        model.addAttribute("isExistCode", false);
+
+        boolean isValidCode = recoveryPasswordService.isValidCode(code);
+        if (isValidCode) {
+            model.addAttribute("isExistCode", true);
+
+            String userEmail = recoveryPasswordService.getUserEmailByCode(code);
+            model.addAttribute("email", userEmail);
+        }
+
         return "pages/auth/recovery-password/recovery";
     }
 
@@ -50,9 +62,9 @@ public class RecoveryPasswordController {
     @ResponseBody
     public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "email") String email) {
         try {
-            RecoveryPassword recoveryPassword = recoveryPasswordService.requestRecovery(email);
+            recoveryPasswordService.requestRecovery(email);
 
-            Response res = new Response(1, "Recovery link was sent to your email.", recoveryPassword);
+            Response res = new Response(1, "Recovery link was sent to your email.");
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
@@ -67,7 +79,17 @@ public class RecoveryPasswordController {
      */
     @PostMapping("/recovery")
     @ResponseBody
-    public String recoveryPassword(@RequestParam(required = false, name = "code") String code) {
-        return null;
+    public Map<String, Object> recoveryPassword(@RequestParam(required = false, name = "code") String code,
+            @RequestParam(required = false, name = "password") String password,
+            @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
+        try {
+            recoveryPasswordService.recoveryPassword(code, password, confirmPassword);
+
+            Response res = new Response(1, "Your password was changed.");
+            return res.pull();
+        } catch (Exception e) {
+            Response res = new Response(0, e.getMessage());
+            return res.pull();
+        }
     }
 }
