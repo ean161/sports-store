@@ -4,15 +4,16 @@
     <th:block th:fragment="content">
 
         <header class="bg-white shadow-sm">
-            <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="max-w-7xl mx-auto px-4 py-4">
                 <div class="flex items-center justify-between">
                     <!-- Logo -->
-                    <div class="flex items-center space-x-2">
-                        <div class="bg-red-600 text-white p-2 rounded">
-                            <i class="fas fa-flag text-xl"></i>
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div class="bg-red-600 w-12 h-12 skew-x-12"></div>
+                            <i class="fas fa-flag absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-xl text-gray-800">SPORT STORE     </div>
+                            <div class="font-bold text-xl text-gray-800">SPORT STORE</div>
                             <div class="text-xs text-gray-500">HEART OF THE GAME</div>
                         </div>
                     </div>
@@ -22,38 +23,359 @@
                         <div class="relative">
                             <input
                                     type="text"
-                                    placeholder="Search..."
-                                    class="w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                                    placeholder="Tìm sản thẩm thể thao..."
+                                    class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm"
                             >
-                            <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                            <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
 
                     <!-- Top Right Icons -->
-                    <div class="flex items-center space-x-6">
-                        <div class="text-center cursor-pointer hover:text-red-600 transition">
-                            <i class="fas fa-running text-xl"></i>
-                            <div class="text-xs mt-1">Săn thể thao</div>
+                    <div class="flex items-center space-x-10">
+                        <div class="text-center cursor-pointer hover:text-red-600  duration-300 group">
+                            <a href="/login" class="text-base text-gray-700">Tài khoản</a>
                         </div>
-                        <div class="text-center cursor-pointer hover:text-red-600 transition">
-                            <i class="fas fa-dumbbell text-xl"></i>
-                            <div class="text-xs mt-1">Đội thể thao</div>
-                        </div>
-                        <div class="text-center cursor-pointer hover:text-red-600 transition">
-                            <i class="fas fa-user text-xl"></i>
-                            <div class="text-xs mt-1">Tài khoản</div>
-                        </div>
-                        <div class="text-center cursor-pointer hover:text-red-600 transition relative">
-                            <i class="fas fa-shopping-cart text-xl"></i>
-                            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                            <div class="text-xs mt-1">Giỏ hàng</div>
+                        <div class="text-center cursor-pointer hover:text-red-600  duration-300 group relative">
+                            <a class="text-base text-gray-700">Giỏ hàng</a>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
+        <!-- Navigation Menu -->
+        <nav class="bg-white border-t border-b border-gray-200 b">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between">
+                    <a href="#" class="px-4 py-4 hover:text-red-600  font-medium text-gray-700 border-b-2 border-transparent hover:border-red-600">Bóng đá</a>
+                    <a href="#" class="px-4 py-4 hover:text-red-600  font-medium text-gray-700 border-b-2 border-transparent hover:border-red-600">Cầu lông</a>
+                    <a href="#" class="px-4 py-4 hover:text-red-600  font-medium text-gray-700 border-b-2 border-transparent hover:border-red-600">Pickleball</a>
+                    <a href="#" class="px-4 py-4 hover:text-red-600  font-medium text-gray-700 border-b-2 border-transparent hover:border-red-600">Bóng rổ</a>
+                    <a href="#" class="px-4 py-4 hover:text-red-600  font-medium text-gray-700 border-b-2 border-transparent hover:border-red-600">Bóng chuyền</a>
+                </div>
+            </div>
+        </nav>
 
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 py-6">
+            <div class="grid grid-cols-10 gap-6">
+
+                <!-- Hero Section -->
+                <section class="col-span-8 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl overflow-hidden relative">
+                    <div class="grid grid-cols-2 h-96">
+                        <!-- Left Content -->
+                        <div class="flex flex-col justify-center p-12">
+                            <h1 class="text-4xl font-bold text-gray-800 mb-2">Sports Store</h1>
+                            <h2 class="text-3xl font-bold text-red-600 mb-2">phân phối dụng cụ thể thao</h2>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6">Đạt chuẩn 5*</h3>
+                            <button class="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-red-600 w-fit">
+                                Mua ngay
+                            </button>
+                        </div>
+
+                        <!-- Right Image -->
+                        <div class="relative flex items-center justify-center">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-64 h-48 bg-gradient-to-br from-green-500 to-green-700 rounded-lg transform rotate-3 shadow-2xl"></div>
+                                <i class="fas fa-futbol absolute text-white text-6xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- Right Sidebar -->
+                <aside class="col-span-2 space-y-4">
+                    <!-- Promo Card 1 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-lg p-4">
+                        <p class="text-gray-700 mb-1">Thảm cầu lông vân cát</p>
+                        <p class="text-red-600 font-semibold mb-1">Giảm</p>
+                        <p class="text-3xl font-bold text-red-600 mb-2">20%</p>
+                        <div class="flex justify-end">
+                            <div class="w-16 h-16 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg transform rotate-12"></div>
+                        </div>
+                    </div>
+
+                    <!-- Promo Card 2 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-lg p-4">
+                        <p class="text-gray-700 mb-1">Cỏ nhân tạo sân bóng</p>
+                        <p class="text-gray-700 mb-1">CCGrass chuẩn FIFA</p>
+                        <p class="text-red-600 font-semibold mb-1">Chỉ</p>
+                        <p class="text-3xl font-bold text-red-600 mb-2">120K</p>
+                        <div class="flex justify-end">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded"></div>
+                        </div>
+                    </div>
+
+                    <!-- Promo Card 3 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-lg p-4">
+                        <p class="text-gray-700 mb-1">Vợt Pickleball</p>
+                        <p class="text-gray-700 mb-2">Passion Pro P101</p>
+                        <a href="#" class="text-red-600 font-semibold">Xem chi tiết →</a>
+                        <div class="flex justify-end mt-2">
+                            <div class="w-12 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg"></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Product Section -->
+            <section class="mt-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Sản phẩm đã xem gần đây</h2>
+                    <a href="#" class="text-blue-600 text-md hover:underline hover:scale-105 hover:text-red-600">Xem tất cả</a>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Left Large Card -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-8 flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-700 mb-2">Cỏ nhân tạo sân</p>
+                            <p class="text-gray-700 mb-4">vườn CCGrass</p>
+                            <a href="#" class="text-red-600 font-semibold text-md">Xem chi tiết →</a>
+                        </div>
+                        <div class="w-32 h-32 bg-gradient-to-br from-green-500 to-green-700 rounded-lg shadow-xl"></div>
+                    </div>
+
+                    <!-- Right Large Card -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-8 flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-700 mb-2">Vợt Pickleball</p>
+                            <p class="text-gray-700 mb-4">Passion Pro P101</p>
+                            <a href="#" class="text-red-600 font-semibold text-md">Xem chi tiết →</a>
+                        </div>
+                        <div class="w-24 h-32 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg shadow-xl"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deal Hot Section -->
+            <section class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Deal hot dành cho bạn</h2>
+
+                <div class="grid grid-cols-4 gap-6">
+                    <!-- Deal Card 1 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6">
+                        <p class="text-gray-700 font-semibold mb-2">Thảm cầu lông vân cát</p>
+                        <p class="text-xs text-gray-600 mb-2">Giảm</p>
+                        <p class="text-4xl font-bold text-red-600 mb-4">-20%</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Deal Card 2 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6">
+                        <p class="text-gray-700 font-semibold mb-2">Thảm pickleball PVC vân đá</p>
+                        <p class="text-gray-600 mb-2">Giảm</p>
+                        <p class="text-4xl font-bold text-red-600 mb-4">-15%</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Deal Card 3 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6">
+                        <p class="text-gray-700 font-semibold mb-2">Thảm bóng bàn vân caro</p>
+                        <p class="text-gray-600 mb-2">Giảm</p>
+                        <p class="text-4xl font-bold text-red-600 mb-4">-15%</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Deal Card 4 -->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6">
+                        <p class="text-gray-700 font-semibold mb-2">Cỏ nhân tạo sân bóng CCGrass</p>
+                        <p class="text-gray-600 mb-2">Giảm</p>
+                        <p class="text-4xl font-bold text-red-600 mb-4">-20%</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded shadow-lg"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Category Hot Section-->
+            <section class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Doanh mục nổi bật</h2>
+                <div class="grid grid-cols-5 gap-6">
+            <!--Category 1-->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6 hover:scale-105">
+                        <p class="text-gray-700 font-semibold mb-2">01</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+                    <!--Category 2-->
+
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6 hover:scale-105">
+                        <p class="text-gray-700 font-semibold mb-2">02</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+                    <!--Category 3-->
+
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6 hover:scale-105">
+                        <p class="text-gray-700 font-semibold mb-2">03</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+                    <!--Category 4-->
+
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6 hover:scale-105">
+                        <p class="text-gray-700 font-semibold mb-2">04</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+                    <!--Category 5-->
+                    <div class="bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-xl p-6 hover:scale-105">
+                        <p class="text-sm text-gray-700 font-semibold mb-2">05</p>
+                        <div class="flex justify-end">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+   <!--information-->
+            <section class="bg-[#14203A] text-white py-12 mt-12">
+                <div class="container mx-auto px-4">
+                    <!-- title -->
+                    <h2 class="text-3xl font-bold mb-8">
+                        Tại sao chọn <span class="text-red-500">Sports Store</span>
+                    </h2>
+
+                    <!-- content -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <!-- Left image -->
+                        <div>
+                            <img src="/assets/img/sports.jpg" alt="Sport" class="rounded-lg shadow-lg">
+                        </div>
+
+                        <!-- Right Text -->
+                        <div class="space-y-8">
+                            <!-- Box 1 -->
+                            <div class="relative hover:scale-105">
+                                <h3 class="text-xl font-bold mb-2 ">Đội thể thao</h3>
+                                <p class="text-gray-300">
+                                    Cung cấp dụng cụ và trang phục thể thao chất lượng cao, giúp đội thể thao có sự chuẩn bị tốt nhất cho mọi trận đấu và giải đấu.
+                                </p>
+                                <span class="absolute top-0 right-0 text-6xl font-bold text-white/10 select-none">01</span>
+                            </div>
+
+                            <!-- Box 2 -->
+                            <div class="relative border-t border-gray-600 pt-4 hover:scale-105">
+                                <h3 class="text-xl font-bold mb-2">Vận động viên</h3>
+                                <p class="text-gray-300">
+                                    Giúp người chơi thể thao mua hàng chính hãng với giá rẻ, tư vấn chuyên sâu và những trải nghiệm tuyệt vời!
+                                </p>
+                                <span class="absolute top-0 right-0 text-6xl font-bold text-white/10 select-none">02</span>
+                            </div>
+
+                            <!-- Box 3 -->
+                            <div class="relative border-t border-gray-600 pt-4 hover:scale-105">
+                                <h3 class="text-xl font-bold mb-2">Chủ sân thể thao</h3>
+                                <p class="text-gray-300">
+                                    Giúp tư vấn, đầu tư Hiệu Quả: Cung cấp vật tư chất lượng, cung cấp công cụ quản lý, Marketing với chi phí thấp!
+                                </p>
+                                <span class="absolute top-0 right-0 text-6xl font-bold text-white/10 select-none">03</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <!-- Footer spacer -->
+        <footer class="bg-white text-gray-700">
+            <!-- Kết nối -->
+            <div class="container mx-auto px-4 py-8">
+                <h2 class="text-xl font-bold mb-4">Connect with Sports Store</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Thông tin liên hệ -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow">
+                        <div class="flex flex-col space-y-3">
+                            <p><span class="font-semibold">📍 Địa chỉ:</span> </p>
+                            <p><span class="font-semibold">📞 Điện thoại:</span></p>
+                            <p><span class="font-semibold">📧 Mail:</span> <a href="#" class="text-red-500"></a></p>
+                            <p><span class="font-semibold">📲 Hotline (Zalo):</span> </p>
+                        </div>
+                    </div>
+                    <!-- Google Map -->
+                    <div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18..."
+                                width="100%" height="250" style="border:0;" allowfullscreen=""
+                                loading="lazy" class="rounded-lg shadow"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Footer -->
+            <div class="bg-gray-50 border-t border-gray-200">
+                <div class="container mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Chính sách -->
+                    <div>
+                        <h3 class="font-bold mb-4">Chính sách</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-red-500">Chính sách bảo mật</a></li>
+                            <li><a href="#" class="hover:text-red-500">Hướng dẫn đổi trả</a></li>
+                            <li><a href="#" class="hover:text-red-500">Cam kết chất lượng</a></li>
+                            <li><a href="#" class="hover:text-red-500">Giao hàng & Nhận hàng</a></li>
+                            <li><a href="#" class="hover:text-red-500">Đặt hàng & Thanh toán</a></li>
+                        </ul>
+                    </div>
+                    <!-- Hỗ trợ -->
+                    <div>
+                        <h3 class="font-bold mb-4">Hỗ trợ</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-red-500">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                    <!-- Dịch vụ -->
+                    <div>
+                        <h3 class="font-bold mb-4">Dịch vụ</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-red-500"></a></li>
+                        </ul>
+                    </div>
+                    <!-- Cộng đồng -->
+                    <div>
+                        <h3 class="font-bold mb-4">Cộng đồng</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="#" class="text-xl hover:text-red-500">Facebook</a>
+                            <a href="#" class="text-xl hover:text-red-500">Zalo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-200 bg-white">
+                <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center text-sm">
+                    <div class="mb-4 md:mb-0">
+<!--                        <p>Copyright ©2025 TheGioiTheThao.vn. Bản quyền thuộc về Thế Giới Thể Thao</p>-->
+<!--                        <p>Công ty Cổ Phần Đầu Tư Và Xây Dựng Thế Giới Thể Thao</p>-->
+<!--                        <p>Giấy chứng nhận đăng ký kinh doanh số: 0801445522</p>-->
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span>Giao dịch an toàn:</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="h-6" alt="Visa">
+<!--                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/MasterCard_Logo.svg" class="h-6" alt="MasterCard">-->
+<!--                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/ZaloPay.svg" class="h-6" alt="ZaloPay">-->
+<!--                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Cash.svg" class="h-6" alt="COD">-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-red-600 text-white text-center py-2 text-sm">
+                Copyright © 2025 SportWorld. All rights reserved.
+            </div>
+        </footer>
 
         <script src="/assets/js/pages/home.js"></script>
     </th:block>

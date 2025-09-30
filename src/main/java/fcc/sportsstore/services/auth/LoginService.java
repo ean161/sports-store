@@ -2,20 +2,22 @@ package fcc.sportsstore.services.auth;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
+import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.utils.Hash;
 import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     /**
      * Constructor
-     * @param userRepository User repo
+     * @param userService User service
      */
-    public LoginService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public LoginService(UserService userService) {
+        this.userService = userService;
     }
 
     /**
@@ -37,7 +39,9 @@ public class LoginService {
             throw new RuntimeException("Password length must be from 6 - 30 characters, contains a special character.");
         }
 
-        User user = userRepository.findByEmailIgnoreCaseAndPassword(email, password)
+        Hash hash = new Hash();
+        String hashedPassword = hash.hashMD5(password);
+        User user = userService.findByEmailIgnoreCaseAndPassword(email, hashedPassword)
                 .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
         return user;
     }
