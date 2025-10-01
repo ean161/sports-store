@@ -1,7 +1,5 @@
 package fcc.sportsstore.controller.auth;
 
-import fcc.sportsstore.entities.RecoveryPassword;
-import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.auth.RecoveryPasswordService;
 import fcc.sportsstore.utils.Response;
 import org.springframework.stereotype.Controller;
@@ -34,6 +32,25 @@ public class RecoveryPasswordController {
     }
 
     /**
+     * Request recovery password
+     * @param email User email to recovery
+     * @return Recovery result
+     */
+    @PostMapping
+    @ResponseBody
+    public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "email") String email) {
+        try {
+            recoveryPasswordService.requestRecovery(email);
+
+            Response res = new Response(1, "Recovery link was sent to your email.");
+            return res.pull();
+        } catch (Exception e) {
+            Response res = new Response(0, e.getMessage());
+            return res.pull();
+        }
+    }
+
+    /**
      * Recovery password page mapping
      * @return Recovery password page
      */
@@ -54,26 +71,7 @@ public class RecoveryPasswordController {
     }
 
     /**
-     * Recovery password request process
-     * @param email User email to recovery
-     * @return Recovery result
-     */
-    @PostMapping
-    @ResponseBody
-    public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "email") String email) {
-        try {
-            recoveryPasswordService.requestRecovery(email);
-
-            Response res = new Response(1, "Recovery link was sent to your email.");
-            return res.pull();
-        } catch (Exception e) {
-            Response res = new Response(0, e.getMessage());
-            return res.pull();
-        }
-    }
-
-    /**
-     * Recovery password process
+     * Recovery password
      * @param code Recovery code
      * @return Recovery result
      */

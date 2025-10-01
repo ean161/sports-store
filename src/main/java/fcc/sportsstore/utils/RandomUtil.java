@@ -2,7 +2,7 @@ package fcc.sportsstore.utils;
 
 import java.security.SecureRandom;
 
-public class Random {
+public class RandomUtil {
 
     public String randString(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

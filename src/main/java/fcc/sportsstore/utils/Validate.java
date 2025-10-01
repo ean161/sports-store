@@ -1,9 +1,10 @@
 package fcc.sportsstore.utils;
+
 public class Validate {
 
     /**
      * Validate for password
-     * @param email A email to validate
+     * @param email Email to validate
      * @return TRUE if valid, FALSE if invalid
      */
     public boolean isValidEmail(String email) {
@@ -13,7 +14,7 @@ public class Validate {
 
     /**
      * Validate for valid password
-     * @param password A password to validate
+     * @param password Password to validate
      * @return TRUE if valid, FALSE if invalid
      */
     public boolean isValidPassword(String password) {

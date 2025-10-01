@@ -3,15 +3,15 @@ package fcc.sportsstore.services.auth;
 import fcc.sportsstore.entities.RecoveryPassword;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.RecoveryPasswordRepository;
+import fcc.sportsstore.services.EmailService;
 import fcc.sportsstore.services.UserService;
-import fcc.sportsstore.utils.Hash;
-import fcc.sportsstore.utils.Random;
-import fcc.sportsstore.utils.Time;
+import fcc.sportsstore.utils.HashUtil;
+import fcc.sportsstore.utils.RandomUtil;
+import fcc.sportsstore.utils.TimeUtil;
 import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Service
 public class RecoveryPasswordService {
@@ -20,9 +20,14 @@ public class RecoveryPasswordService {
 
     final private RecoveryPasswordRepository recoveryPasswordRepository;
 
-    public RecoveryPasswordService(UserService userService, RecoveryPasswordRepository recoveryPasswordRepository) {
+    final private EmailService emailService;
+
+    public RecoveryPasswordService(UserService userService,
+           RecoveryPasswordRepository recoveryPasswordRepository,
+           EmailService emailService) {
         this.userService = userService;
         this.recoveryPasswordRepository = recoveryPasswordRepository;
+        this.emailService = emailService;
     }
 
     /**
@@ -34,8 +39,8 @@ public class RecoveryPasswordService {
         String id;
 
         do {
-            Time time = new Time();
-            Random rand = new Random();
+            TimeUtil time = new TimeUtil();
+            RandomUtil rand = new RandomUtil();
             ZonedDateTime date = time.getNow();
 
             id = String.format("%d-%d-%d-%s",
@@ -47,17 +52,24 @@ public class RecoveryPasswordService {
         return id;
     }
 
+    public boolean isValidCode(String code) {
+        TimeUtil time = new TimeUtil();
+        Long now = time.getCurrentTimestamp();
+
+        return recoveryPasswordRepository.existsByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now);
+    }
+
     public boolean existValidCodeByEmail(String email) {
-        Time time = new Time();
+        TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
         User user = userService.findByEmailIgnoreCase(email).orElseThrow();
 
         return recoveryPasswordRepository.existsByUserAndStatusAndExpiredAtGreaterThan(user, "NOT_USED_YET", now);
     }
 
-    public RecoveryPassword requestRecovery(String email) {
+    public void requestRecovery(String email) {
         Validate validate = new Validate();
-        Random rand = new Random();
+        RandomUtil rand = new RandomUtil();
 
         if (email == null || email.isEmpty()) {
             throw new RuntimeException("Email must be not empty.");
@@ -72,26 +84,20 @@ public class RecoveryPasswordService {
         User user = userService.findByEmailIgnoreCase(email).orElseThrow(
                 () -> new RuntimeException("User not exist."));
 
+        String recoveryCode = rand.randString(100);
         RecoveryPassword recoverySession = new RecoveryPassword(generateId(),
-                rand.randString(100),
+                recoveryCode,
                 user);
 
+        emailService.sendRecoveryPasswordCode(email, recoveryCode);
         recoveryPasswordRepository.save(recoverySession);
-        return recoverySession;
-    }
-
-    public boolean isValidCode(String code) {
-        Time time = new Time();
-        Long now = time.getCurrentTimestamp();
-
-        return recoveryPasswordRepository.existsByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now);
     }
 
     public void recoveryPassword(String code,
             String password,
             String confirmPassword) {
         Validate validate = new Validate();
-        Hash hash = new Hash();
+        HashUtil hash = new HashUtil();
 
         if (password == null || password.isEmpty()) {
             throw new RuntimeException("Password must be not empty.");

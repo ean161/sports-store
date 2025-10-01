@@ -3,7 +3,7 @@ package fcc.sportsstore.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class Cookie {
+public class CookieUtil {
 
     /**
      * Get cookie by key
