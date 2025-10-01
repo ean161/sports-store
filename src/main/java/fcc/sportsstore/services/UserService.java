@@ -2,8 +2,8 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
-import fcc.sportsstore.utils.Random;
-import fcc.sportsstore.utils.Time;
+import fcc.sportsstore.utils.RandomUtil;
+import fcc.sportsstore.utils.TimeUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -31,8 +31,8 @@ public class UserService {
         String id;
 
         do {
-            Time time = new Time();
-            Random rand = new Random();
+            TimeUtil time = new TimeUtil();
+            RandomUtil rand = new RandomUtil();
             ZonedDateTime date = time.getNow();
 
             id = String.format("%d-%d-%d-%s",

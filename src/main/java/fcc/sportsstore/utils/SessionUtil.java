@@ -1,10 +1,8 @@
 package fcc.sportsstore.utils;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
-public class Session {
+public class SessionUtil {
 
     /**
      * Get session value by key

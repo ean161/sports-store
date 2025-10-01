@@ -2,7 +2,6 @@ package fcc.sportsstore.controller.auth;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.auth.LoginService;
-import fcc.sportsstore.utils.Hash;
 import fcc.sportsstore.utils.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

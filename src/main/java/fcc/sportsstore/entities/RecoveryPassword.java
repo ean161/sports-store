@@ -1,6 +1,6 @@
 package fcc.sportsstore.entities;
 
-import fcc.sportsstore.utils.Time;
+import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +34,7 @@ public class RecoveryPassword {
         this.status = "NOT_USED_YET";
         this.user = user;
 
-        Time time = new Time();
+        TimeUtil time = new TimeUtil();
         Long nowTimestamp = time.getCurrentTimestamp();
 
         this.createdAt = nowTimestamp;

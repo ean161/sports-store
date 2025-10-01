@@ -2,13 +2,10 @@ package fcc.sportsstore.services.auth;
 
 
 import fcc.sportsstore.entities.User;
-import fcc.sportsstore.repositories.UserRepository;
 import fcc.sportsstore.services.UserService;
-import fcc.sportsstore.utils.Hash;
+import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class RegisterService {
@@ -50,7 +47,7 @@ public class RegisterService {
             throw new RuntimeException("Password length must be from 6 - 30 characters, contains a special character.");
         }
 
-        Hash hash = new Hash();
+        HashUtil hash = new HashUtil();
         String hashedPassword = hash.hashMD5(password);
         User user = new User(userService.generateId(),
                 email,

@@ -1,6 +1,6 @@
 package fcc.sportsstore.entities;
 
-import fcc.sportsstore.utils.Time;
+import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -35,7 +35,7 @@ public class User {
         this.email = email;
         this.password = password;
 
-        Time time = new Time();
+        TimeUtil time = new TimeUtil();
         this.createdAt = time.getCurrentTimestamp();
     }
 }

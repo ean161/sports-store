@@ -3,7 +3,7 @@ package fcc.sportsstore.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Hash {
+public class HashUtil {
 
     public String hashMD5(String input) {
         try {

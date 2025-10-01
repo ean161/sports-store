@@ -1,15 +1,14 @@
 package fcc.sportsstore.utils;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class Time {
+public class TimeUtil {
 
     final private ZoneId timeZone;
 
-    public Time() {
+    public TimeUtil() {
         this.timeZone = ZoneId.of("Asia/Ho_Chi_Minh");
     }
 
