@@ -2,9 +2,13 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
+import fcc.sportsstore.utils.CookieUtil;
 import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.TimeUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -30,11 +34,11 @@ public class UserService {
     public String generateId() {
         String id;
 
-        do {
-            TimeUtil time = new TimeUtil();
-            RandomUtil rand = new RandomUtil();
-            ZonedDateTime date = time.getNow();
+        TimeUtil time = new TimeUtil();
+        ZonedDateTime date = time.getNow();
+        RandomUtil rand = new RandomUtil();
 
+        do {
             id = String.format("%d-%d-%d-%s",
                     date.getYear(),
                     date.getMonthValue(),
@@ -45,34 +49,69 @@ public class UserService {
     }
 
     /**
-     * Get user list by email (ignore case) and password
-     * @param email User email
-     * @param password User password
-     * @return User matches list
+     * Generate new user token
+     * @return New user token
      */
-    public Optional<User> findByEmailIgnoreCaseAndPassword(String email, String password) {
-        return userRepository.findByEmailIgnoreCaseAndPassword(email, password);
+    public String generateToken() {
+        String token;
+        RandomUtil rand = new RandomUtil();
+
+        do {
+            token = rand.randString(1000);
+        } while (userRepository.existsByToken(token));
+        return token;
     }
 
     /**
-     * Check email exists
-     * @param email User email
-     * @return TRUE if email was exist, FALSE is not
+     * Get user list by username (ignore case) and password
+     * @param username User username
+     * @param password User password
+     * @return User matches list
      */
-    public boolean existsByEmail(String email){
-        return userRepository.existsByEmail(email);
+    public Optional<User> findByUsernameIgnoreCaseAndPassword(String username, String password) {
+        return userRepository.findByUsernameIgnoreCaseAndPassword(username, password);
+    }
+
+    /**
+     * Check username exists
+     * @param username User username
+     * @return TRUE if username was exists, FALSE is not
+     */
+    public boolean existsByUsername(String username){
+        return userRepository.existsByUsername(username);
     }
 
     /**
      * Save User to list
-     * @param user User(userId, email, password)
+     * @param user User(userId, username, password)
      * @return User that saved
      */
-    public User saveUser(User user){
+    public User save(User user){
         return userRepository.save(user);
     }
 
-    public Optional<User> findByEmailIgnoreCase(String email){
-        return userRepository.findByEmailIgnoreCase(email);
+    /**
+     * Get user by username
+     * @param username Username to get
+     * @return Found user
+     */
+    public Optional<User> findByUsernameIgnoreCase(String username){
+        return userRepository.findByUsernameIgnoreCase(username);
+    }
+
+    /**
+     * Access session for user within response
+     * @param response Response of HTTP Servlet
+     * @param userId User ID to access
+     */
+    @Transactional
+    public void access(HttpServletResponse response, String userId) {
+        CookieUtil cookie = new CookieUtil(response);
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException(String.format("User ID #%s not found", userId)));
+
+        String token = generateToken();
+        user.setToken(token);
+        cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
     }
 }

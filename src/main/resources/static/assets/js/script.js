@@ -11,11 +11,17 @@ async function post(url, data = null) {
         data: data
     });
 
-    if ("message" in res && res.message != null) {
-        if (res.code === 0) {
-            out.error(res.message);
-        } else if (res.code === 1) {
-            out.success(res.message);
+    if ("code" in res) {
+        if ("message" in res && res.message != null) {
+            if (res.code === 0) {
+                out.error(res.message);
+            } else if (res.code === 1) {
+                out.success(res.message);
+            }
+        }
+
+        if (res.code === 2) {
+            window.location.href = res.data;
         }
     }
 }
