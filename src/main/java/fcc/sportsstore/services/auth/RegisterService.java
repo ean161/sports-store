@@ -1,25 +1,35 @@
 package fcc.sportsstore.services.auth;
 
 
+import fcc.sportsstore.entities.Email;
 import fcc.sportsstore.entities.User;
+import fcc.sportsstore.services.EmailService;
+import fcc.sportsstore.services.JavaMailService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegisterService {
 
     private final UserService userService;
 
+    private final JavaMailService javaMailService;
+
+    private final EmailService emailService;
+
     /**
      * Constructor
      * @param userService User service
      */
-    public RegisterService(UserService userService) {
+    public RegisterService(UserService userService,
+           EmailService emailService,
+           JavaMailService javaMailService) {
         this.userService = userService;
+        this.emailService = emailService;
+        this.javaMailService = javaMailService;
     }
 
     /**
@@ -57,8 +67,10 @@ public class RegisterService {
         String hashedPassword = hash.md5(password);
         User user = new User(userService.generateId(),
                 username,
-                email,
                 hashedPassword);
+
+        Email emailEntity = new Email(emailService.generateId(), email);
+        user.setEmail(emailEntity);
 
         userService.save(user);
         userService.access(response, user.getId());
