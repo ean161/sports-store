@@ -30,7 +30,7 @@ public class RegisterService {
      * @param confirmPassword User confirmPassword
      * @return Register in user
      */
-    public User register(HttpServletResponse response, String username, String password, String confirmPassword) {
+    public User register(HttpServletResponse response, String username, String email, String password, String confirmPassword) {
         Validate validate = new Validate();
 
         if (username == null || username.isEmpty()) {
@@ -39,6 +39,10 @@ public class RegisterService {
             throw new RuntimeException("Username length must be from 6 - 30 characters.");
         } else if (userService.existsByUsername(username)) {
             throw new RuntimeException("Username is already taken.");
+        } else if (email == null || email.isEmpty()) {
+            throw new RuntimeException("Email must not be empty.");
+        } else if (!validate.isValidEmail(email)) {
+            throw new RuntimeException("Invalid email format.");
         } else if (password == null || password.isEmpty()) {
             throw new RuntimeException("Password must not be empty.");
         } else if (confirmPassword == null || confirmPassword.isEmpty()) {
@@ -53,6 +57,7 @@ public class RegisterService {
         String hashedPassword = hash.md5(password);
         User user = new User(userService.generateId(),
                 username,
+                email,
                 hashedPassword);
 
         userService.save(user);
