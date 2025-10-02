@@ -23,8 +23,8 @@ public class RecoveryPasswordController {
     }
 
     /**
-     * Recovery password request page mapping
-     * @return Recovery password request page
+     * Request recovery password page mapping
+     * @return Request recovery password page
      */
     @GetMapping
     public String request() {

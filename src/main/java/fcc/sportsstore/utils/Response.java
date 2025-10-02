@@ -18,11 +18,20 @@ public class Response {
     private String message;
     private Object data;
 
+    /**
+     * Constructor
+     * @param code Response code (0: error, 1: success, 2: to redirect without message)
+     * @param message Response message
+     */
     public Response(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
+    /**
+     * Get response properties as map
+     * @return Map of response
+     */
     public Map<String, Object> pull() {
         Map<String, Object> res = new HashMap<>();
         res.put("code", code);

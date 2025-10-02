@@ -32,7 +32,7 @@ public class RegisterController {
     }
 
     /**
-     * Register process
+     * Process register
      * @param email User email
      * @param password User password
      * @param confirmPassword User retype password

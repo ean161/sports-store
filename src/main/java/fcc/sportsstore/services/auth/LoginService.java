@@ -39,7 +39,7 @@ public class LoginService {
         }
 
         HashUtil hash = new HashUtil();
-        String hashedPassword = hash.hashMD5(password);
+        String hashedPassword = hash.md5(password);
         User user = userService.findByEmailIgnoreCaseAndPassword(email, hashedPassword)
                 .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
         return user;

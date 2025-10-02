@@ -4,6 +4,11 @@ import java.security.SecureRandom;
 
 public class RandomUtil {
 
+    /**
+     * Random a string
+     * @param length Length of result
+     * @return Random string
+     */
     public String randString(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom random = new SecureRandom();
