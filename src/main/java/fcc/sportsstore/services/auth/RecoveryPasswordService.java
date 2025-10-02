@@ -3,7 +3,7 @@ package fcc.sportsstore.services.auth;
 import fcc.sportsstore.entities.RecoveryPassword;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.RecoveryPasswordRepository;
-import fcc.sportsstore.services.EmailService;
+import fcc.sportsstore.services.JavaMailService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.RandomUtil;
@@ -20,20 +20,20 @@ public class RecoveryPasswordService {
 
     final private RecoveryPasswordRepository recoveryPasswordRepository;
 
-    final private EmailService emailService;
+    final private JavaMailService javaMailService;
 
     /**
      * Constructor
      * @param userService User service
      * @param recoveryPasswordRepository Recovery password repository
-     * @param emailService Email service
+     * @param javaMailService Email service
      */
     public RecoveryPasswordService(UserService userService,
            RecoveryPasswordRepository recoveryPasswordRepository,
-           EmailService emailService) {
+           JavaMailService javaMailService) {
         this.userService = userService;
         this.recoveryPasswordRepository = recoveryPasswordRepository;
-        this.emailService = emailService;
+        this.javaMailService = javaMailService;
     }
 
     /**
@@ -56,6 +56,11 @@ public class RecoveryPasswordService {
                     rand.randString(10));
         } while (recoveryPasswordRepository.existsById(id));
         return id;
+    }
+
+    public String generateCode() {
+        RandomUtil rand = new RandomUtil();
+        return rand.randString(100);
     }
 
     /**
@@ -89,7 +94,6 @@ public class RecoveryPasswordService {
      */
     public void requestRecovery(String username) {
         Validate validate = new Validate();
-        RandomUtil rand = new RandomUtil();
 
         if (username == null || username.isEmpty()) {
             throw new RuntimeException("Username must be not empty.");
@@ -104,12 +108,12 @@ public class RecoveryPasswordService {
         User user = userService.findByUsernameIgnoreCase(username).orElseThrow(
                 () -> new RuntimeException("User not exist."));
 
-        String recoveryCode = rand.randString(100);
+        String recoveryCode = generateCode();
         RecoveryPassword recoverySession = new RecoveryPassword(generateId(),
                 recoveryCode,
                 user);
 
-        emailService.sendRecoveryPasswordMail(user.getEmail(), recoveryCode);
+        javaMailService.sendRecoveryPasswordMail(user.getEmail().getAddress(), recoveryCode);
         recoveryPasswordRepository.save(recoverySession);
     }
 

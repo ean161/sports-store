@@ -1,86 +1,45 @@
 package fcc.sportsstore.services;
 
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import fcc.sportsstore.repositories.EmailRepository;
+import fcc.sportsstore.utils.RandomUtil;
+import fcc.sportsstore.utils.TimeUtil;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Service;
+
+import java.time.ZonedDateTime;
 
 @Service
 public class EmailService {
 
-    final private JavaMailSender mailSender;
+    final private EmailRepository emailRepository;
 
     /**
      * Constructor
-     * @param mailSender Mail sender
+     * @param emailRepository Email repository
      */
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    public EmailService(EmailRepository emailRepository) {
+        this.emailRepository = emailRepository;
     }
 
     /**
-     * Send email with plain text
-     * @param to Receiver email address
-     * @param subject Mail title
-     * @param text Mail content
+     * Generate new id for email
+     * Format: Year-month-day-random_string
+     * @return New valid id
      */
-    public void send(String to, String subject, String text) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("nguyenhoaian.itech@gmail.com");
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
+    public String generateId() {
+        String id;
 
-        mailSender.send(message);
-    }
+        TimeUtil time = new TimeUtil();
+        ZonedDateTime date = time.getNow();
+        RandomUtil rand = new RandomUtil();
 
-    /**
-     * Sennd email with HTML
-     * @param to Receiver email address
-     * @param subject Mail title
-     * @param htmlContent Mail content as HTML code
-     */
-    public void sendHTML(String to, String subject, String htmlContent) {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-
-        try {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setFrom("nguyenhoaian.itech@gmail.com");
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlContent, true);
-        } catch (Exception e) {
-            System.out.println("Email sent error: " + e.getMessage());
-        }
-
-        mailSender.send(mimeMessage);
-    }
-
-    /**
-     * Send recovery password mail to user who requested
-     * @param email Requester email
-     * @param code Recovery code
-     */
-    public void sendRecoveryPasswordMail(String email, String code) {
-        String content = "<p>You have submitted a request to <b><i>recover your account password</i></b>. "
-                + "If you did, click the link below to reset your password:<p>"
-                + "<a href='https://ss.ean.vn/recovery-password/recovery?code=" + code + "' style='background: red; color: white; padding: 2px; text-decoration: none;'>Recovery your password</a>"
-                + "<br><br><i>Each link can only be used once and is valid for 10 minutes from the time of password recovery request.</i>";
-
-        sendHTML(email, "SPORTS STORE - Recovery your password", content);
-    }
-
-    /**
-     * Send verify email mail to new user
-     * @param email Creator email
-     * @param code Verify code
-     */
-    public void sendEmailVerify(String email, String code) {
-        String content = "<p>Welcome to Sports Store. "
-                + "Click the link below to verify your email:<p>"
-                + "<a href='https://ss.ean.vn/verify-email/?code=" + code + "' style='background: red; color: white; padding: 2px; text-decoration: none;'>Verify your email</a>";
-
-        sendHTML(email, "SPORTS STORE - Verify your email", content);
+        do {
+            id = String.format("%d-%d-%d-%s",
+                    date.getYear(),
+                    date.getMonthValue(),
+                    date.getDayOfMonth(),
+                    rand.randString(10));
+        } while (emailRepository.existsById(id));
+        return id;
     }
 }
