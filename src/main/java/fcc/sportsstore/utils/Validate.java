@@ -13,12 +13,27 @@ public class Validate {
     }
 
     /**
+     * Validate for username
+     * @param username Username to validate
+     * @return TRUE if valid, FALSE if invalid
+     */
+    public boolean isValidUsername(String username) {
+        int length = username.length();
+        if (length < 6 || length > 30) {
+            return false;
+        }
+
+        return username.matches("^[a-zA-Z0-9]+$");
+    }
+
+    /**
      * Validate for valid password
      * @param password Password to validate
      * @return TRUE if valid, FALSE if invalid
      */
     public boolean isValidPassword(String password) {
-        if (password.length() < 6 || password.length() > 30) {
+        int length = password.length();
+        if (length < 6 || length > 30) {
             return false;
         }
 

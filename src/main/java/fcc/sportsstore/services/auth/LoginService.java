@@ -4,6 +4,8 @@ import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.Validate;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,27 +23,23 @@ public class LoginService {
 
     /**
      * Login an account
-     * @param email User email
+     * @param username User username
      * @param password User password
      * @return Logged in user
      */
-    public User login(String email, String password) {
-        Validate validate = new Validate();
-
-        if (email == null || email.isEmpty()) {
-            throw new RuntimeException("Email must be not empty.");
+    public User login(HttpServletResponse response, String username, String password) {
+        if (username == null || username.isEmpty()) {
+            throw new RuntimeException("Username must be not empty.");
         } else if (password == null || password.isEmpty()) {
             throw new RuntimeException("Password must be not empty.");
-        } else if (!validate.isValidPassword(email)) {
-            throw new RuntimeException("Email invalid.");
-        } else if (!validate.isValidPassword(password)) {
-            throw new RuntimeException("Password length must be from 6 - 30 characters, contains a special character.");
         }
 
         HashUtil hash = new HashUtil();
         String hashedPassword = hash.md5(password);
-        User user = userService.findByEmailIgnoreCaseAndPassword(email, hashedPassword)
+        User user = userService.findByUsernameIgnoreCaseAndPassword(username, hashedPassword)
                 .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
+
+        userService.access(response, user.getId());
         return user;
     }
 }

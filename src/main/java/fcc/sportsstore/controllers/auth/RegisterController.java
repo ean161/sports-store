@@ -1,8 +1,9 @@
-package fcc.sportsstore.controller.auth;
+package fcc.sportsstore.controllers.auth;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.auth.RegisterService;
 import fcc.sportsstore.utils.Response;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,8 @@ public class RegisterController {
 
     /**
      * Process register
-     * @param email User email
+     * @param response HTTP servlet response
+     * @param username User username
      * @param password User password
      * @param confirmPassword User retype password
      * @return Register result
@@ -41,13 +43,14 @@ public class RegisterController {
     @PostMapping
     @ResponseBody
     public Map<String, Object> register(
-            @RequestParam(required = false, name="email") String email,
+            HttpServletResponse response,
+            @RequestParam(required = false, name="username") String username,
             @RequestParam(required = false, name="password") String password,
             @RequestParam(required = false, name="confirm-password") String confirmPassword) {
         try {
-            User user = registerService.register(email, password, confirmPassword);
+            User user = registerService.register(response, username, password, confirmPassword);
 
-            Response res = new Response(1, "Register successfully.", user);
+            Response res = new Response(2, null, "/");
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());

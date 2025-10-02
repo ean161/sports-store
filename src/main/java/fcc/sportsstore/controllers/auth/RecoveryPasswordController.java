@@ -1,4 +1,4 @@
-package fcc.sportsstore.controller.auth;
+package fcc.sportsstore.controllers.auth;
 
 import fcc.sportsstore.services.auth.RecoveryPasswordService;
 import fcc.sportsstore.utils.Response;
@@ -33,16 +33,16 @@ public class RecoveryPasswordController {
 
     /**
      * Request recovery password
-     * @param email User email to recovery
+     * @param username User username to recovery
      * @return Recovery result
      */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "email") String email) {
+    public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "username") String username) {
         try {
-            recoveryPasswordService.requestRecovery(email);
+            recoveryPasswordService.requestRecovery(username);
 
-            Response res = new Response(1, "Recovery link was sent to your email.");
+            Response res = new Response(1, "Recovery link was sent to your username.");
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
@@ -63,8 +63,8 @@ public class RecoveryPasswordController {
         if (isValidCode) {
             model.addAttribute("isExistCode", true);
 
-            String userEmail = recoveryPasswordService.getUserEmailByCode(code);
-            model.addAttribute("email", userEmail);
+            String userUsername = recoveryPasswordService.getUserUsernameByCode(code);
+            model.addAttribute("username", userUsername);
         }
 
         return "pages/auth/recovery-password/recovery";

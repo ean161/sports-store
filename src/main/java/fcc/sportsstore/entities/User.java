@@ -20,19 +20,22 @@ public class User {
     @Column(name = "user_id")
     private String id;
 
-    private String email, password, token;
+    private String username, password, email;
+
+    @Column(length = 1000)
+    private String token;
 
     private Long createdAt;
 
     /**
      * Constructor
      * @param id User ID
-     * @param email User email address
+     * @param username User username address
      * @param password User password
      */
-    public User(String id, String email, String password) {
+    public User(String id, String username, String password) {
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.password = password;
 
         TimeUtil time = new TimeUtil();
