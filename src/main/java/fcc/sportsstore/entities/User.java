@@ -22,6 +22,8 @@ public class User {
 
     private String username, password, email;
 
+    private boolean isVerifiedEmail;
+
     @Column(length = 1000)
     private String token;
 
@@ -33,8 +35,10 @@ public class User {
      * @param username User username address
      * @param password User password
      */
-    public User(String id, String username, String password) {
+    public User(String id, String username, String email, String password) {
         this.id = id;
+        this.email = email;
+        this.isVerifiedEmail = false;
         this.username = username;
         this.password = password;
 

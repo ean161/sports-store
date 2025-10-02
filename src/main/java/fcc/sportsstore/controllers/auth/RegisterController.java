@@ -45,10 +45,11 @@ public class RegisterController {
     public Map<String, Object> register(
             HttpServletResponse response,
             @RequestParam(required = false, name="username") String username,
+            @RequestParam(required = false, name="email") String email,
             @RequestParam(required = false, name="password") String password,
             @RequestParam(required = false, name="confirm-password") String confirmPassword) {
         try {
-            User user = registerService.register(response, username, password, confirmPassword);
+            User user = registerService.register(response, username, email, password, confirmPassword);
 
             Response res = new Response(2, null, "/");
             return res.pull();
