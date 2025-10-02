@@ -28,6 +28,12 @@ public class RecoveryPassword {
 
     private Long expiredAt, createdAt;
 
+    /**
+     * Constructor
+     * @param id Recovery session ID
+     * @param code Recovery session code
+     * @param user Who requested
+     */
     public RecoveryPassword(String id, String code, User user) {
         this.id = id;
         this.code = code;

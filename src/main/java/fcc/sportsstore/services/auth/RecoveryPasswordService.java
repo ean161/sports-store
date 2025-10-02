@@ -22,6 +22,12 @@ public class RecoveryPasswordService {
 
     final private EmailService emailService;
 
+    /**
+     * Constructor
+     * @param userService User service
+     * @param recoveryPasswordRepository Recovery password repository
+     * @param emailService Email service
+     */
     public RecoveryPasswordService(UserService userService,
            RecoveryPasswordRepository recoveryPasswordRepository,
            EmailService emailService) {
@@ -52,6 +58,11 @@ public class RecoveryPasswordService {
         return id;
     }
 
+    /**
+     * Check recovery code valid (based on status, expired time)
+     * @param code Recovery code to check
+     * @return TRUE if valid, FALSE if invalid
+     */
     public boolean isValidCode(String code) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
@@ -59,7 +70,12 @@ public class RecoveryPasswordService {
         return recoveryPasswordRepository.existsByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now);
     }
 
-    public boolean existValidCodeByEmail(String email) {
+    /**
+     * Check recovery session exists by email
+     * @param email Email to check
+     * @return TRUE if having a valid session, FALSE if not exists
+     */
+    public boolean existsValidCodeByEmail(String email) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
         User user = userService.findByEmailIgnoreCase(email).orElseThrow();
@@ -67,6 +83,10 @@ public class RecoveryPasswordService {
         return recoveryPasswordRepository.existsByUserAndStatusAndExpiredAtGreaterThan(user, "NOT_USED_YET", now);
     }
 
+    /**
+     * Request new recovery password session
+     * @param email Email to request
+     */
     public void requestRecovery(String email) {
         Validate validate = new Validate();
         RandomUtil rand = new RandomUtil();
@@ -77,7 +97,7 @@ public class RecoveryPasswordService {
             throw new RuntimeException("Invalid email.");
         } else if (!userService.existsByEmail(email)) {
             throw new RuntimeException("Email not exist.");
-        } else if (existValidCodeByEmail(email)){
+        } else if (existsValidCodeByEmail(email)){
             throw new RuntimeException("You have requested too many times.");
         }
 
@@ -89,10 +109,16 @@ public class RecoveryPasswordService {
                 recoveryCode,
                 user);
 
-        emailService.sendRecoveryPasswordCode(email, recoveryCode);
+        emailService.sendRecoveryPasswordMail(email, recoveryCode);
         recoveryPasswordRepository.save(recoverySession);
     }
 
+    /**
+     * Submit to recovery password
+     * @param code Recovery code
+     * @param password New password
+     * @param confirmPassword New password confirm
+     */
     public void recoveryPassword(String code,
             String password,
             String confirmPassword) {
@@ -117,12 +143,17 @@ public class RecoveryPasswordService {
         recoveryPasswordRepository.save(codeObj);
 
         User user = codeObj.getUser();
-        String hashedPassword = hash.hashMD5(password);
+        String hashedPassword = hash.md5(password);
         user.setPassword(hashedPassword);
 
         userService.saveUser(user);
     }
 
+    /**
+     * Get a user's email by recovery code
+     * @param code Recovery code
+     * @return That user's code email
+     */
     public String getUserEmailByCode(String code) {
         RecoveryPassword codeObj = recoveryPasswordRepository.findByCode(code).orElseThrow();
         return codeObj.getUser().getEmail();
