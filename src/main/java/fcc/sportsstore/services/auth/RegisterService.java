@@ -9,7 +9,9 @@ import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegisterService {
@@ -40,6 +42,7 @@ public class RegisterService {
      * @param confirmPassword User confirmPassword
      * @return Register in user
      */
+    @Transactional
     public void register(HttpServletResponse response, String username, String email, String password, String confirmPassword) {
         Validate validate = new Validate();
 
@@ -51,6 +54,8 @@ public class RegisterService {
             throw new RuntimeException("Username is already taken.");
         } else if (email == null || email.isEmpty()) {
             throw new RuntimeException("Email must not be empty.");
+        } else if (emailService.existsByAddress(email)) {
+            throw new RuntimeException("Email is already taken.");
         } else if (!validate.isValidEmail(email)) {
             throw new RuntimeException("Invalid email format.");
         } else if (password == null || password.isEmpty()) {
@@ -72,7 +77,11 @@ public class RegisterService {
         Email emailEntity = new Email(emailService.generateId(), email);
         user.setEmail(emailEntity);
 
-        userService.save(user);
-        userService.access(response, user.getId());
+        try {
+            userService.save(user);
+            userService.access(response, user.getId());
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("You acted too fast, please try again later.");
+        }
     }
 }

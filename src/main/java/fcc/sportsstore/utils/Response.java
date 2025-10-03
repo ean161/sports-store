@@ -14,8 +14,16 @@ import java.util.Map;
 @NoArgsConstructor
 public class Response {
 
+    /**
+     * Response status code rule:
+     * - 0: Error
+     * - 1: Success
+     * - 2: Redirect user to 'data' as url
+     */
     private int code;
+
     private String message;
+
     private Object data;
 
     /**

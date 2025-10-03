@@ -12,6 +12,7 @@ import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.TimeUtil;
 import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 
@@ -94,6 +95,7 @@ public class RecoveryPasswordService {
      * Request new recovery password session
      * @param email Email to request
      */
+    @Transactional
     public void requestRecovery(String email) {
         Validate validate = new Validate();
 
