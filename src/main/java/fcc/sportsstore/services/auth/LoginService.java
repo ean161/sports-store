@@ -5,6 +5,7 @@ import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LoginService {
@@ -25,6 +26,7 @@ public class LoginService {
      * @param username User username
      * @param password User password
      */
+    @Transactional
     public void login(HttpServletResponse response, String username, String password) {
         if (username == null || username.isEmpty()) {
             throw new RuntimeException("Username must be not empty.");

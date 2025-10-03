@@ -4,12 +4,8 @@ import fcc.sportsstore.entities.Email;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.EmailRepository;
 import fcc.sportsstore.utils.RandomUtil;
-import fcc.sportsstore.utils.TimeUtil;
-import jakarta.persistence.Id;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
@@ -35,7 +31,7 @@ public class EmailService {
 
         do {
             id = rand.randId("email");
-        } while (emailRepository.existsById(id));
+        } while (emailRepository.findById(id).isPresent());
         return id;
     }
 
@@ -45,7 +41,7 @@ public class EmailService {
      * @return TRUE if email was exists, FALSE is not
      */
     public boolean existsByAddress(String address) {
-        return emailRepository.existsByAddress(address);
+        return emailRepository.findByAddress(address).isPresent();
     }
 
     public Optional<Email> findByAddress(String address) {

@@ -53,7 +53,7 @@ public class RecoveryPasswordService {
 
         do {
             id = rand.randId("recovery_password");
-        } while (recoveryPasswordRepository.existsById(id));
+        } while (recoveryPasswordRepository.findById(id).isPresent());
         return id;
     }
 
@@ -75,7 +75,7 @@ public class RecoveryPasswordService {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
 
-        return recoveryPasswordRepository.existsByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now);
+        return recoveryPasswordRepository.findByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now).isPresent();
     }
 
     /**
@@ -88,7 +88,7 @@ public class RecoveryPasswordService {
         Long now = time.getCurrentTimestamp();
         Email userEmail = emailService.findByAddress(email).orElseThrow();
 
-        return recoveryPasswordRepository.existsByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now);
+        return recoveryPasswordRepository.findByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now).isPresent();
     }
 
     /**

@@ -36,7 +36,7 @@ public class UserService {
 
         do {
             id = rand.randId("user");
-        } while (userRepository.existsById(id));
+        } while (userRepository.findById(id).isPresent());
         return id;
     }
 
@@ -50,7 +50,7 @@ public class UserService {
 
         do {
             token = rand.randToken("user");
-        } while (userRepository.existsByToken(token));
+        } while (userRepository.findByToken(token).isPresent());
         return token;
     }
 
@@ -70,7 +70,7 @@ public class UserService {
      * @return TRUE if username was exists, FALSE is not
      */
     public boolean existsByUsername(String username){
-        return userRepository.existsByUsername(username);
+        return userRepository.findByUsername(username).isPresent();
     }
 
     /**

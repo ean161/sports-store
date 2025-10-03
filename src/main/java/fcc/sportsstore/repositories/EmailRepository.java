@@ -12,7 +12,5 @@ import java.util.Optional;
 public interface EmailRepository extends JpaRepository<Email, String> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    boolean existsByAddress(String address);
-
     Optional<Email> findByAddress(String address);
 }
