@@ -40,7 +40,7 @@ public class RegisterService {
      * @param confirmPassword User confirmPassword
      * @return Register in user
      */
-    public User register(HttpServletResponse response, String username, String email, String password, String confirmPassword) {
+    public void register(HttpServletResponse response, String username, String email, String password, String confirmPassword) {
         Validate validate = new Validate();
 
         if (username == null || username.isEmpty()) {
@@ -74,6 +74,5 @@ public class RegisterService {
 
         userService.save(user);
         userService.access(response, user.getId());
-        return user;
     }
 }

@@ -17,7 +17,7 @@ public class RecoveryPassword {
     @Column(name = "recovery_password_id")
     private String id;
 
-    @Column(length = 100)
+    @Column(length = 150)
     private String code;
 
     private String status;

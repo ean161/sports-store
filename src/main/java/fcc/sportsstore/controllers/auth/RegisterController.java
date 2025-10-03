@@ -49,7 +49,7 @@ public class RegisterController {
             @RequestParam(required = false, name="password") String password,
             @RequestParam(required = false, name="confirm-password") String confirmPassword) {
         try {
-            User user = registerService.register(response, username, email, password, confirmPassword);
+            registerService.register(response, username, email, password, confirmPassword);
 
             Response res = new Response(2, null, "/");
             return res.pull();

@@ -20,7 +20,7 @@ public class Email {
 
     private boolean isVerified;
 
-    @Column(length = 1000)
+    @Column(length = 150)
     private String code;
 
     @OneToOne(mappedBy = "email")

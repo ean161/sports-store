@@ -3,8 +3,6 @@ package fcc.sportsstore.services.auth;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
-import fcc.sportsstore.utils.Validate;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +21,11 @@ public class LoginService {
 
     /**
      * Login an account
+     *
      * @param username User username
      * @param password User password
-     * @return Logged in user
      */
-    public User login(HttpServletResponse response, String username, String password) {
+    public void login(HttpServletResponse response, String username, String password) {
         if (username == null || username.isEmpty()) {
             throw new RuntimeException("Username must be not empty.");
         } else if (password == null || password.isEmpty()) {
@@ -40,6 +38,5 @@ public class LoginService {
                 .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
 
         userService.access(response, user.getId());
-        return user;
     }
 }

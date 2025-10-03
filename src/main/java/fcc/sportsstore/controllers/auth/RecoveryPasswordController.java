@@ -33,16 +33,16 @@ public class RecoveryPasswordController {
 
     /**
      * Request recovery password
-     * @param username User username to recovery
+     * @param email User email to recovery
      * @return Recovery result
      */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "username") String username) {
+    public Map<String, Object> requestRecovery(@RequestParam(required = false, name = "email") String email) {
         try {
-            recoveryPasswordService.requestRecovery(username);
+            recoveryPasswordService.requestRecovery(email);
+            Response res = new Response(1, "Recovery link was sent to your email.");
 
-            Response res = new Response(1, "Recovery link was sent to your username.");
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
@@ -63,8 +63,8 @@ public class RecoveryPasswordController {
         if (isValidCode) {
             model.addAttribute("isExistCode", true);
 
-            String userUsername = recoveryPasswordService.getUserUsernameByCode(code);
-            model.addAttribute("username", userUsername);
+            String userEmail = recoveryPasswordService.getEmailByCode(code);
+            model.addAttribute("email", userEmail);
         }
 
         return "pages/auth/recovery-password/recovery";
