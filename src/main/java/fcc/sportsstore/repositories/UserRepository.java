@@ -9,11 +9,12 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<User> findByUsernameIgnoreCaseAndPassword(String username, String password);
 
     Optional<User> findByUsernameIgnoreCase(String username);
 
-    boolean existsByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-    boolean existsByToken(String token);
+    Optional<User> findByToken(String token);
 }
