@@ -1,5 +1,7 @@
 package fcc.sportsstore.services;
 
+import fcc.sportsstore.entities.Email;
+import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.EmailRepository;
 import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.TimeUtil;
@@ -7,6 +9,7 @@ import jakarta.persistence.Id;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 @Service
 public class EmailService {
@@ -23,23 +26,35 @@ public class EmailService {
 
     /**
      * Generate new id for email
-     * Format: Year-month-day-random_string
      * @return New valid id
      */
     public String generateId() {
         String id;
-
-        TimeUtil time = new TimeUtil();
-        ZonedDateTime date = time.getNow();
         RandomUtil rand = new RandomUtil();
 
         do {
-            id = String.format("%d-%d-%d-%s",
-                    date.getYear(),
-                    date.getMonthValue(),
-                    date.getDayOfMonth(),
-                    rand.randString(10));
+            id = rand.randId("email");
         } while (emailRepository.existsById(id));
         return id;
+    }
+
+    /**
+     * Check email exists
+     * @param address User email
+     * @return TRUE if email was exists, FALSE is not
+     */
+    public boolean existsByAddress(String address) {
+        return emailRepository.existsByAddress(address);
+    }
+
+    public Optional<Email> findByAddress(String address) {
+        return emailRepository.findByAddress(address);
+    }
+
+    public User findUserByAddress(String address) {
+        Email userEmail = emailRepository.findByAddress(address).orElseThrow(
+                () -> new RuntimeException("Email address not found"));
+
+        return userEmail.getUser();
     }
 }

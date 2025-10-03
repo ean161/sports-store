@@ -1,8 +1,10 @@
 package fcc.sportsstore.services.auth;
 
+import fcc.sportsstore.entities.Email;
 import fcc.sportsstore.entities.RecoveryPassword;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.RecoveryPasswordRepository;
+import fcc.sportsstore.services.EmailService;
 import fcc.sportsstore.services.JavaMailService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
@@ -18,6 +20,8 @@ public class RecoveryPasswordService {
 
     final private UserService userService;
 
+    final private EmailService emailService;
+
     final private RecoveryPasswordRepository recoveryPasswordRepository;
 
     final private JavaMailService javaMailService;
@@ -29,38 +33,36 @@ public class RecoveryPasswordService {
      * @param javaMailService Email service
      */
     public RecoveryPasswordService(UserService userService,
+           EmailService emailService,
            RecoveryPasswordRepository recoveryPasswordRepository,
            JavaMailService javaMailService) {
         this.userService = userService;
+        this.emailService = emailService;
         this.recoveryPasswordRepository = recoveryPasswordRepository;
         this.javaMailService = javaMailService;
     }
 
     /**
      * Generate new id for recovery password session
-     * ID format: Year-month-day-random_string
      * @return New valid id
      */
     public String generateId() {
         String id;
-
-        TimeUtil time = new TimeUtil();
-        ZonedDateTime date = time.getNow();
         RandomUtil rand = new RandomUtil();
 
         do {
-            id = String.format("%d-%d-%d-%s",
-                    date.getYear(),
-                    date.getMonthValue(),
-                    date.getDayOfMonth(),
-                    rand.randString(10));
+            id = rand.randId("recovery_password");
         } while (recoveryPasswordRepository.existsById(id));
         return id;
     }
 
+    /**
+     * Generate new recovery code
+     * @return New recovery code
+     */
     public String generateCode() {
         RandomUtil rand = new RandomUtil();
-        return rand.randString(100);
+        return rand.randCode("recovery_password");
     }
 
     /**
@@ -76,37 +78,36 @@ public class RecoveryPasswordService {
     }
 
     /**
-     * Check recovery session exists by username
-     * @param username Username to check
+     * Check recovery session exists by email
+     * @param email Email to check
      * @return TRUE if having a valid session, FALSE if not exists
      */
-    public boolean existsValidCodeByUsername(String username) {
+    public boolean existsValidCodeByEmail(String email) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
-        User user = userService.findByUsernameIgnoreCase(username).orElseThrow();
+        Email userEmail = emailService.findByAddress(email).orElseThrow();
 
-        return recoveryPasswordRepository.existsByUserAndStatusAndExpiredAtGreaterThan(user, "NOT_USED_YET", now);
+        return recoveryPasswordRepository.existsByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now);
     }
 
     /**
      * Request new recovery password session
-     * @param username Username to request
+     * @param email Email to request
      */
-    public void requestRecovery(String username) {
+    public void requestRecovery(String email) {
         Validate validate = new Validate();
 
-        if (username == null || username.isEmpty()) {
-            throw new RuntimeException("Username must be not empty.");
-        } else if (!validate.isValidUsername(username)) {
-            throw new RuntimeException("Invalid username.");
-        } else if (!userService.existsByUsername(username)) {
-            throw new RuntimeException("Username not exist.");
-        } else if (existsValidCodeByUsername(username)){
+        if (email == null || email.isEmpty()) {
+            throw new RuntimeException("Email must be not empty.");
+        } else if (!validate.isValidEmail(email)) {
+            throw new RuntimeException("Invalid email.");
+        } else if (!emailService.existsByAddress(email)) {
+            throw new RuntimeException("Email not exist.");
+        } else if (existsValidCodeByEmail(email)){
             throw new RuntimeException("You have requested too many times.");
         }
 
-        User user = userService.findByUsernameIgnoreCase(username).orElseThrow(
-                () -> new RuntimeException("User not exist."));
+        User user = emailService.findUserByAddress(email);
 
         String recoveryCode = generateCode();
         RecoveryPassword recoverySession = new RecoveryPassword(generateId(),
@@ -154,12 +155,13 @@ public class RecoveryPasswordService {
     }
 
     /**
-     * Get a user's username by recovery code
+     * Get a user's email by recovery code
      * @param code Recovery code
-     * @return That user's code username
+     * @return That user's code email
      */
-    public String getUserUsernameByCode(String code) {
-        RecoveryPassword codeObj = recoveryPasswordRepository.findByCode(code).orElseThrow();
-        return codeObj.getUser().getUsername();
+    public String getEmailByCode(String code) {
+        RecoveryPassword codeObj = recoveryPasswordRepository.findByCode(code).orElseThrow(
+                () -> new RuntimeException("Recovery code not found"));
+        return codeObj.getUser().getEmail().getAddress();
     }
 }

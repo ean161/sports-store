@@ -1,6 +1,8 @@
 package fcc.sportsstore.utils;
 
 import java.security.SecureRandom;
+import java.time.ZonedDateTime;
+import java.util.Locale;
 
 public class RandomUtil {
 
@@ -20,5 +22,44 @@ public class RandomUtil {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Random new id
+     * @return New id
+     */
+    public String randId(String name) {
+        TimeUtil time = new TimeUtil();
+
+        return String.format("%d.ID{%s}.%s",
+                time.getCurrentTimestamp(),
+                name.toUpperCase(),
+                randString(10));
+    }
+
+    /**
+     * Random new user token
+     * @return New user token
+     */
+    public String randToken(String name) {
+        TimeUtil time = new TimeUtil();
+
+        return String.format("%d.TOKEN{%s}.%s",
+                time.getCurrentTimestamp(),
+                name.toUpperCase(),
+                randString(500));
+    }
+
+    /**
+     * Random new code
+     * @return New code
+     */
+    public String randCode(String name) {
+        TimeUtil time = new TimeUtil();
+
+        return String.format("%d.CODE{%s}.%s",
+                time.getCurrentTimestamp(),
+                name.toUpperCase(),
+                randString(100));
     }
 }

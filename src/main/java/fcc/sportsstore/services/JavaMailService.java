@@ -36,7 +36,7 @@ public class JavaMailService {
     }
 
     /**
-     * Sennd email with HTML
+     * Send email with HTML
      * @param to Receiver email address
      * @param subject Mail title
      * @param htmlContent Mail content as HTML code

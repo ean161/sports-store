@@ -28,22 +28,14 @@ public class UserService {
 
     /**
      * Generate new id for user
-     * Format: Year-month-day-random_string
      * @return New valid id
      */
     public String generateId() {
         String id;
-
-        TimeUtil time = new TimeUtil();
-        ZonedDateTime date = time.getNow();
         RandomUtil rand = new RandomUtil();
 
         do {
-            id = String.format("%d-%d-%d-%s",
-                    date.getYear(),
-                    date.getMonthValue(),
-                    date.getDayOfMonth(),
-                    rand.randString(10));
+            id = rand.randId("user");
         } while (userRepository.existsById(id));
         return id;
     }
@@ -57,7 +49,7 @@ public class UserService {
         RandomUtil rand = new RandomUtil();
 
         do {
-            token = rand.randString(1000);
+            token = rand.randToken("user");
         } while (userRepository.existsByToken(token));
         return token;
     }

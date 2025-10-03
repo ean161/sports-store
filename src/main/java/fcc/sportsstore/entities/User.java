@@ -21,7 +21,7 @@ public class User {
 
     private String username, password;
 
-    @Column(length = 1000)
+    @Column(length = 550)
     private String token;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

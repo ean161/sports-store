@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Component
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
 public class Response {
 
     private int code;
@@ -26,6 +26,12 @@ public class Response {
     public Response(int code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public Response(int code, String message, Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
     }
 
     /**
