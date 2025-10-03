@@ -19,7 +19,16 @@ public class User {
     @Column(name = "user_id")
     private String id;
 
-    private String username, password;
+    @Column(unique = true)
+    private String username;
+
+    /**
+     * User status rule:
+     * - UNVERIFIED: New user, not email verified yet
+     * - ACTIVE: User that verified
+     * - BANNED: User was banned
+     */
+    private String password, status;
 
     @Column(length = 550)
     private String token;
@@ -40,6 +49,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.status = "UNVERIFIED";
 
         TimeUtil time = new TimeUtil();
         this.createdAt = time.getCurrentTimestamp();

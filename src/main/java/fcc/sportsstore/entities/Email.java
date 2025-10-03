@@ -16,6 +16,7 @@ public class Email {
     @Column(name = "email_id")
     private String id;
 
+    @Column(unique = true)
     private String address;
 
     private boolean isVerified;
