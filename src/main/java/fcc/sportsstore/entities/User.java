@@ -28,10 +28,17 @@ public class User {
      * - ACTIVE: User that verified
      * - BANNED: User was banned
      */
-    private String password, status;
+    private String password, fullName, status, phoneNumber;
 
     @Column(length = 550)
     private String token;
+
+    /**
+     * User gender rule:
+     * - 0/FALSE: Female
+     * - 1/TRUE: MALE
+     */
+    private boolean gender;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "email_id")
@@ -49,6 +56,8 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.fullName = username;
+        this.gender = true;
         this.status = "UNVERIFIED";
 
         TimeUtil time = new TimeUtil();

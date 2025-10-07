@@ -77,7 +77,7 @@ public class AuthFilter implements Filter {
             User user = userService.findByToken(token).orElseThrow();
             session.setSession("user", user);
         }
-        
+
         chain.doFilter(request, response);
     }
 }

@@ -15,6 +15,11 @@ public class SessionUtil {
         this.request = request;
         this.response = response;
     }
+
+    public SessionUtil(HttpServletRequest request) {
+        this.request = request;
+    }
+
     /**
      * Get session value by key
      * @param key Session key
