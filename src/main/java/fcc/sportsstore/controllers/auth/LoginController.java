@@ -40,10 +40,9 @@ public class LoginController {
      */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> login(
-            HttpServletResponse response,
-            @RequestParam(required = false, name="username") String username,
-            @RequestParam(required = false, name="password") String password) {
+    public Map<String, Object> login(HttpServletResponse response,
+                                     @RequestParam(required = false, name="username") String username,
+                                     @RequestParam(required = false, name="password") String password) {
         try {
             loginService.login(response, username, password);
 

@@ -27,8 +27,8 @@ public class RegisterService {
      * @param userService User service
      */
     public RegisterService(UserService userService,
-           EmailService emailService,
-           JavaMailService javaMailService) {
+                           EmailService emailService,
+                           JavaMailService javaMailService) {
         this.userService = userService;
         this.emailService = emailService;
         this.javaMailService = javaMailService;
@@ -43,7 +43,11 @@ public class RegisterService {
      * @return Register in user
      */
     @Transactional
-    public void register(HttpServletResponse response, String username, String email, String password, String confirmPassword) {
+    public void register(HttpServletResponse response,
+                         String username,
+                         String email,
+                         String password,
+                         String confirmPassword) {
         Validate validate = new Validate();
 
         if (username == null || username.isEmpty()) {
@@ -77,11 +81,7 @@ public class RegisterService {
         Email emailEntity = new Email(emailService.generateId(), email);
         user.setEmail(emailEntity);
 
-        try {
-            userService.save(user);
-            userService.access(response, user.getId());
-        } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("You acted too fast, please try again later.");
-        }
+        userService.save(user);
+        userService.access(response, user.getId());
     }
 }
