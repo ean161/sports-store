@@ -73,4 +73,20 @@ public class CookieUtil {
 
         response.addCookie(cookie);
     }
+
+    /**
+     * Delete cookie by key
+     * @param key Cookie key
+     */
+    public void deleteCookie(String key) {
+        Cookie cookie = new Cookie(key, null);
+
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+
+        response.addCookie(cookie);
+    }
+
 }

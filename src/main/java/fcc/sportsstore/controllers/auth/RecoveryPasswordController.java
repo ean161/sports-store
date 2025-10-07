@@ -78,8 +78,8 @@ public class RecoveryPasswordController {
     @PostMapping("/recovery")
     @ResponseBody
     public Map<String, Object> recoveryPassword(@RequestParam(required = false, name = "code") String code,
-            @RequestParam(required = false, name = "password") String password,
-            @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
+                                                @RequestParam(required = false, name = "password") String password,
+                                                @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
         try {
             recoveryPasswordService.recoveryPassword(code, password, confirmPassword);
 

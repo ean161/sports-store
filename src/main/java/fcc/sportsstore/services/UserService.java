@@ -4,13 +4,10 @@ import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
 import fcc.sportsstore.utils.CookieUtil;
 import fcc.sportsstore.utils.RandomUtil;
-import fcc.sportsstore.utils.TimeUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
@@ -74,12 +71,29 @@ public class UserService {
     }
 
     /**
+     * Check token exists
+     * @param token User token
+     * @return TRUE if token was exists, FALSE is not
+     */
+    public boolean existsByToken(String token) {
+        return userRepository.findByToken(token).isPresent();
+    }
+
+    public User getUserById(String id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("User not found"));
+    }
+
+    public Optional<User> findByToken(String token) {
+        return userRepository.findByToken(token);
+    }
+
+    /**
      * Save User to list
      * @param user User(userId, username, password)
-     * @return User that saved
      */
-    public User save(User user){
-        return userRepository.save(user);
+    public void save(User user){
+        userRepository.save(user);
     }
 
     /**

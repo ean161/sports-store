@@ -4,6 +4,7 @@ import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.auth.RegisterService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,16 +43,18 @@ public class RegisterController {
      */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> register(
-            HttpServletResponse response,
-            @RequestParam(required = false, name="username") String username,
-            @RequestParam(required = false, name="email") String email,
-            @RequestParam(required = false, name="password") String password,
-            @RequestParam(required = false, name="confirm-password") String confirmPassword) {
+    public Map<String, Object> register(HttpServletResponse response,
+                                        @RequestParam(required = false, name="username") String username,
+                                        @RequestParam(required = false, name="email") String email,
+                                        @RequestParam(required = false, name="password") String password,
+                                        @RequestParam(required = false, name="confirm-password") String confirmPassword) {
         try {
             registerService.register(response, username, email, password, confirmPassword);
 
             Response res = new Response(2, null, "/");
+            return res.pull();
+        } catch (DataIntegrityViolationException e) {
+            Response res = new Response(1, "You acted too fast, please try again later.");
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
