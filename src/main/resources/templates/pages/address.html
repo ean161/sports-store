@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+
+        <header th:replace="~{fragment/header :: header}"></header>
+        <body class="bg-gray-100 font-sans">
+
+        <div class="flex min-h-screen">
+            <div th:replace="~{fragment/profile  :: profile-slidebar}"></div>
+
+            <div class="flex-1 p-8 bg-white shadow-md m-4 rounded">
+                <div class="max-w-2xl mx-2">
+                    <h2 class="text-xl font-semibold mb-6">Delivery Address</h2>
+                    <p class="pb-5 space-y-4  text-base">This is the address where you usually receive goods.
+                    </p>
+                </div>
+                <div class="max-w-7xl mx-2">
+                    <!-- Add Address Button Section -->
+                    <label for="modalToggle" class="block border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 hover:bg-blue-50 transition cursor-pointer">
+                        <span class="inline-flex items-center gap-2 text-blue-500 font-medium hover:text-blue-600">
+                            <span class="text-xl">+</span>
+                            <span>Add Address</span>
+                        </span>
+                       </label>
+                </div>
+        </div>
+
+            <input type="checkbox" id="modalToggle" class="hidden peer">
+            <div class="hidden peer-checked:fixed peer-checked:inset-0 peer-checked:bg-black peer-checked:bg-opacity-50 peer-checked:flex peer-checked:items-center peer-checked:justify-center z-50">
+                <!-- Modal -->
+                <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl mx-4">
+                    <h2 class="text-xl font-bold mb-6 uppercase">Delivery Address</h2>
+
+                    <form class="space-y-4">
+                        <!-- Address Name + Phone Number -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-semibold text-sm mb-2">
+                                    Address Name <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" placeholder="" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-sm mb-2">
+                                    Phone Number <span class="text-red-500">*</span>
+                                </label>
+                                <input type="tel" placeholder="" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <!-- Full Address -->
+                        <div>
+                            <label class="block font-semibold text-sm mb-2">
+                                Address <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" placeholder="" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                        </div>
+
+                        <!-- Province -->
+                        <div>
+                            <label class="block font-semibold text-sm mb-2">
+                                Province <span class="text-red-500">*</span>
+                            </label>
+                            <select class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                                <option>-- Province --</option>
+                                <option>Ho Chi Minh City</option>
+                                <option>Hanoi</option>
+                                <option>Da Nang</option>
+                            </select>
+                        </div>
+
+                        <!-- District + Ward -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-semibold text-sm mb-2">
+                                    District <span class="text-red-500">*</span>
+                                </label>
+                                <select class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                                    <option>-- District --</option>
+                                    <option>District 1</option>
+                                    <option>District 2</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-sm mb-2">
+                                    Ward
+                                </label>
+                                <select class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                                    <option>-- Ward --</option>
+                                    <option>Ward 1</option>
+                                    <option>Ward 2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex gap-4 mt-8">
+                            <button type="submit" class="bg-gray-900 text-white font-semibold px-6 py-3 rounded hover:bg-gray-800">
+                                Update
+                            </button>
+                            <label for="modalToggle" class="bg-gray-300 text-gray-700 font-semibold px-6 py-3 rounded hover:bg-gray-400 cursor-pointer">
+                                Cancel
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </body>
+        <script src="/assets/js/pages/address.js"></script>
+    </th:block>
+</th:block>
+</html>

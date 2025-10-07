@@ -1,6 +1,20 @@
 package fcc.sportsstore.utils;
 
 public class Validate {
+    
+    public boolean isValidFullName(String fullName) {
+        fullName = fullName.trim();
+        if (fullName.length() < 3 || fullName.length() > 35) {
+            return false;
+        }
+
+        return fullName.matches("^[a-zA-Z]+$");
+    }
+
+    public boolean isValidPhoneNumber(String phoneNumber) {
+        phoneNumber = phoneNumber.trim();
+        return phoneNumber.matches("^0\\d{9,11}$");
+    }
 
     /**
      * Validate for password
