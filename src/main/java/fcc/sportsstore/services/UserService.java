@@ -99,8 +99,6 @@ public class UserService {
         return userRepository.findByToken(token);
     }
 
-
-
     /**
      * Save User to list
      * @param user User(userId, username, password)

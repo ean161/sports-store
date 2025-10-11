@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:replace="~{layout/base :: layout(~{::content}, 'Recovery Password')}">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Forget Password')}">
     <th:block th:fragment="content">
         <div class="flex items-center justify-center h-dvh">
             <div class="w-1/2 ">
                 <div class="w-3/5 m-auto ">
                     <div>
-                        <h1 class="font-bold mb-8 text-5xl">Recovery password</h1>
+                        <h1 class="font-bold mb-8 text-5xl">Forget password</h1>
                     </div>
-                    <form th:if="${isExistCode}" class="space-y-4" id="recovery-password-form">
+                    <form th:if="${isExistCode}" class="space-y-4" id="forget-password-form">
                         <input name="code" id="code" th:value="${code}" class="hidden"/>
                         <div>
                             <label for="email" class="font-medium mb-1 block">Email</label>
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <script src="/assets/js/pages/auth/recovery-password.js"></script>
+        <script src="/assets/js/pages/auth/forget-password.js"></script>
     </th:block>
 </th:block>
 </html>

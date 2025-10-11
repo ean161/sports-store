@@ -1,6 +1,5 @@
 package fcc.sportsstore.controllers.auth;
 
-import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.auth.RegisterService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletResponse;

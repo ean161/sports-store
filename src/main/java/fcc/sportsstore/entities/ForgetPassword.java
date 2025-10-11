@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "recovery_password")
+@Table(name = "forget_password")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class RecoveryPassword {
+public class ForgetPassword {
 
     @Id
-    @Column(name = "recovery_password_id")
+    @Column(name = "forget_password_id")
     private String id;
 
     @Column(length = 150)
@@ -30,11 +30,11 @@ public class RecoveryPassword {
 
     /**
      * Constructor
-     * @param id Recovery session ID
-     * @param code Recovery session code
+     * @param id Forget session ID
+     * @param code Forget session code
      * @param user Who requested
      */
-    public RecoveryPassword(String id, String code, User user) {
+    public ForgetPassword(String id, String code, User user) {
         this.id = id;
         this.code = code;
         this.status = "NOT_USED_YET";

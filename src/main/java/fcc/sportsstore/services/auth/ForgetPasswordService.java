@@ -1,9 +1,9 @@
 package fcc.sportsstore.services.auth;
 
 import fcc.sportsstore.entities.Email;
-import fcc.sportsstore.entities.RecoveryPassword;
+import fcc.sportsstore.entities.ForgetPassword;
 import fcc.sportsstore.entities.User;
-import fcc.sportsstore.repositories.RecoveryPasswordRepository;
+import fcc.sportsstore.repositories.ForgetPasswordRepository;
 import fcc.sportsstore.services.EmailService;
 import fcc.sportsstore.services.JavaMailService;
 import fcc.sportsstore.services.UserService;
@@ -14,37 +14,35 @@ import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
-
 @Service
-public class RecoveryPasswordService {
+public class ForgetPasswordService {
 
     final private UserService userService;
 
     final private EmailService emailService;
 
-    final private RecoveryPasswordRepository recoveryPasswordRepository;
+    final private ForgetPasswordRepository forgetPasswordRepository;
 
     final private JavaMailService javaMailService;
 
     /**
      * Constructor
      * @param userService User service
-     * @param recoveryPasswordRepository Recovery password repository
+     * @param forgetPasswordRepository Forget password repository
      * @param javaMailService Email service
      */
-    public RecoveryPasswordService(UserService userService,
-           EmailService emailService,
-           RecoveryPasswordRepository recoveryPasswordRepository,
-           JavaMailService javaMailService) {
+    public ForgetPasswordService(UserService userService,
+                                 EmailService emailService,
+                                 ForgetPasswordRepository forgetPasswordRepository,
+                                 JavaMailService javaMailService) {
         this.userService = userService;
         this.emailService = emailService;
-        this.recoveryPasswordRepository = recoveryPasswordRepository;
+        this.forgetPasswordRepository = forgetPasswordRepository;
         this.javaMailService = javaMailService;
     }
 
     /**
-     * Generate new id for recovery password session
+     * Generate new id for forget password session
      * @return New valid id
      */
     public String generateId() {
@@ -52,34 +50,34 @@ public class RecoveryPasswordService {
         RandomUtil rand = new RandomUtil();
 
         do {
-            id = rand.randId("recovery_password");
-        } while (recoveryPasswordRepository.findById(id).isPresent());
+            id = rand.randId("forget_password");
+        } while (forgetPasswordRepository.findById(id).isPresent());
         return id;
     }
 
     /**
-     * Generate new recovery code
-     * @return New recovery code
+     * Generate new forget code
+     * @return New forget code
      */
     public String generateCode() {
         RandomUtil rand = new RandomUtil();
-        return rand.randCode("recovery_password");
+        return rand.randCode("forget_password");
     }
 
     /**
-     * Check recovery code valid (based on status, expired time)
-     * @param code Recovery code to check
+     * Check forget code valid (based on status, expired time)
+     * @param code Forget code to check
      * @return TRUE if valid, FALSE if invalid
      */
     public boolean isValidCode(String code) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
 
-        return recoveryPasswordRepository.findByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now).isPresent();
+        return forgetPasswordRepository.findByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now).isPresent();
     }
 
     /**
-     * Check recovery session exists by email
+     * Check forget session exists by email
      * @param email Email to check
      * @return TRUE if having a valid session, FALSE if not exists
      */
@@ -88,15 +86,15 @@ public class RecoveryPasswordService {
         Long now = time.getCurrentTimestamp();
         Email userEmail = emailService.findByAddress(email).orElseThrow();
 
-        return recoveryPasswordRepository.findByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now).isPresent();
+        return forgetPasswordRepository.findByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now).isPresent();
     }
 
     /**
-     * Request new recovery password session
+     * Request new forget password session
      * @param email Email to request
      */
     @Transactional
-    public void requestRecovery(String email) {
+    public void requestForget(String email) {
         Validate validate = new Validate();
 
         if (email == null || email.isEmpty()) {
@@ -111,22 +109,22 @@ public class RecoveryPasswordService {
 
         User user = emailService.findUserByAddress(email);
 
-        String recoveryCode = generateCode();
-        RecoveryPassword recoverySession = new RecoveryPassword(generateId(),
-                recoveryCode,
+        String forgetCode = generateCode();
+        ForgetPassword forgetSession = new ForgetPassword(generateId(),
+                forgetCode,
                 user);
 
-        javaMailService.sendRecoveryPasswordMail(user.getEmail().getAddress(), recoveryCode);
-        recoveryPasswordRepository.save(recoverySession);
+        javaMailService.sendForgetPasswordMail(user.getEmail().getAddress(), forgetCode);
+        forgetPasswordRepository.save(forgetSession);
     }
 
     /**
-     * Submit to recovery password
-     * @param code Recovery code
+     * Submit to forget password
+     * @param code Forget code
      * @param password New password
      * @param confirmPassword New password confirm
      */
-    public void recoveryPassword(String code,
+    public void forgetPassword(String code,
             String password,
             String confirmPassword) {
         Validate validate = new Validate();
@@ -141,13 +139,13 @@ public class RecoveryPasswordService {
         } else if (!password.equals(confirmPassword)) {
             throw new RuntimeException("Passwords do not match.");
         } else if (!isValidCode(code)) {
-            throw new RuntimeException("Recovery password link invalid.");
+            throw new RuntimeException("Forget password link invalid.");
         }
 
-        RecoveryPassword codeObj = recoveryPasswordRepository.findByCode(code).orElseThrow();
+        ForgetPassword codeObj = forgetPasswordRepository.findByCode(code).orElseThrow();
         codeObj.setStatus("USED");
 
-        recoveryPasswordRepository.save(codeObj);
+        forgetPasswordRepository.save(codeObj);
 
         User user = codeObj.getUser();
         String hashedPassword = hash.md5(password);
@@ -157,13 +155,13 @@ public class RecoveryPasswordService {
     }
 
     /**
-     * Get a user's email by recovery code
-     * @param code Recovery code
+     * Get a user's email by forget code
+     * @param code Forget code
      * @return That user's code email
      */
     public String getEmailByCode(String code) {
-        RecoveryPassword codeObj = recoveryPasswordRepository.findByCode(code).orElseThrow(
-                () -> new RuntimeException("Recovery code not found"));
+        ForgetPassword codeObj = forgetPasswordRepository.findByCode(code).orElseThrow(
+                () -> new RuntimeException("Forget code not found"));
         return codeObj.getUser().getEmail().getAddress();
     }
 }

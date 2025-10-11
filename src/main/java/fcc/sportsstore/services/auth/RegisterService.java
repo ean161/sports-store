@@ -4,12 +4,10 @@ package fcc.sportsstore.services.auth;
 import fcc.sportsstore.entities.Email;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.EmailService;
-import fcc.sportsstore.services.JavaMailService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +16,6 @@ public class RegisterService {
 
     private final UserService userService;
 
-    private final JavaMailService javaMailService;
 
     private final EmailService emailService;
 
@@ -27,11 +24,9 @@ public class RegisterService {
      * @param userService User service
      */
     public RegisterService(UserService userService,
-                           EmailService emailService,
-                           JavaMailService javaMailService) {
+                           EmailService emailService) {
         this.userService = userService;
         this.emailService = emailService;
-        this.javaMailService = javaMailService;
     }
 
     /**
@@ -40,7 +35,6 @@ public class RegisterService {
      * @param username User username
      * @param password User password
      * @param confirmPassword User confirmPassword
-     * @return Register in user
      */
     @Transactional
     public void register(HttpServletResponse response,

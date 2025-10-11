@@ -1,8 +1,6 @@
 package fcc.sportsstore.utils;
 
 import java.security.SecureRandom;
-import java.time.ZonedDateTime;
-import java.util.Locale;
 
 public class RandomUtil {
 
