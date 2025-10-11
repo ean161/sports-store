@@ -8,11 +8,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -39,7 +37,7 @@ public class AuthFilter implements Filter {
                 "/login",
                 "/register");
         List<String> unprotectedPathPrefix = List.of(
-                "/recovery-password");
+                "/forget-password");
         List<String> unprotectedPathSuffix = List.of(
                 ".css",
                 ".js",

@@ -58,17 +58,17 @@ public class JavaMailService {
     }
 
     /**
-     * Send recovery password mail to user who requested
+     * Send forget password mail to user who requested
      * @param email Requester email
-     * @param code Recovery code
+     * @param code Forget code
      */
-    public void sendRecoveryPasswordMail(String email, String code) {
+    public void sendForgetPasswordMail(String email, String code) {
         String content = "<p>You have submitted a request to <b><i>recover your account password</i></b>. "
                 + "If you did, click the link below to reset your password:<p>"
-                + "<a href='https://sports-store.ean.vn/recovery-password/recovery?code=" + code + "' style='background: red; color: white; padding: 2px; text-decoration: none;'>Recovery your password</a>"
-                + "<br><br><i>Each link can only be used once and is valid for 10 minutes from the time of password recovery request.</i>";
+                + "<a href='https://sports-store.ean.vn/forget-password/forget?code=" + code + "' style='background: red; color: white; padding: 2px; text-decoration: none;'>Forget your password</a>"
+                + "<br><br><i>Each link can only be used once and is valid for 10 minutes from the time of password forget request.</i>";
 
-        sendHTML(email, "SPORTS STORE - Recovery your password", content);
+        sendHTML(email, "SPORTS STORE - Forget your password", content);
     }
 
     /**

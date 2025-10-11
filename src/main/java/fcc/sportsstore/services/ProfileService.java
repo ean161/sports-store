@@ -1,7 +1,6 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.User;
-import fcc.sportsstore.repositories.UserRepository;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -51,6 +50,7 @@ public class ProfileService {
         caller.setFullName(fullName);
         caller.setGender(genderBool);
         caller.setPhoneNumber(phoneNumber);
+
         userService.save(caller);
     }
 }
