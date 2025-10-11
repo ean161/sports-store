@@ -28,7 +28,7 @@ public class User {
      * - ACTIVE: User that verified
      * - BANNED: User was banned
      */
-    private String password, fullName, status, phoneNumber;
+    private String password, fullName, status;
 
     @Column(length = 550)
     private String token;

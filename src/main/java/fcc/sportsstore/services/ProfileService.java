@@ -19,8 +19,7 @@ public class ProfileService {
     public void editProfile(HttpServletRequest request,
                             String id,
                             String fullName,
-                            String gender,
-                            String phoneNumber) {
+                            String gender) {
         Validate validate = new Validate();
         User caller = userService.getUserFromSession(request);
 
@@ -34,10 +33,6 @@ public class ProfileService {
             throw new RuntimeException("Full name must be not empty");
         } else if (!validate.isValidFullName(fullName)) {
             throw new RuntimeException("Full name length must be from 3 - 35 chars, only contains alpha");
-        } else if (phoneNumber == null || phoneNumber.isEmpty()) {
-            throw new RuntimeException("Phone number must be not empty");
-        } else if (!validate.isValidPhoneNumber(phoneNumber)) {
-            throw new RuntimeException("Invalid phone number");
         }
 
         boolean genderBool;
@@ -49,7 +44,6 @@ public class ProfileService {
 
         caller.setFullName(fullName);
         caller.setGender(genderBool);
-        caller.setPhoneNumber(phoneNumber);
 
         userService.save(caller);
     }

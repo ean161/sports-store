@@ -21,21 +21,25 @@ public class ProfileController {
         return "pages/profile";
     }
 
+    @GetMapping("/edit")
+    public String editPage() {
+        return "pages/edit-profile";
+    }
+
     @PostMapping("/edit")
     @ResponseBody
     public Object editProfile(HttpServletRequest request,
                               @RequestParam(value = "id", required = false) String id,
                               @RequestParam(value = "full-name", required = false) String fullName,
-                              @RequestParam(value = "gender", required = false) String gender,
-                              @RequestParam(value = "phone-number", required = false) String phoneNumber){
-            try {
-                profileService.editProfile(request, id, fullName, gender, phoneNumber);
+                              @RequestParam(value = "gender", required = false) String gender){
+        try {
+            profileService.editProfile(request, id, fullName, gender);
 
-                Response res = new Response(1, "Update successfully");
-                return res.pull();
-            } catch(Exception e){
-                Response res = new Response(0, e.getMessage());
-                return res.pull();
-            }
+            Response res = new Response(2, null, "/profile");
+            return res.pull();
+        } catch(Exception e){
+            Response res = new Response(0, e.getMessage());
+            return res.pull();
+        }
     }
 }
