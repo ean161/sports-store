@@ -136,5 +136,13 @@ public class UserService {
         SessionUtil session = new SessionUtil(request);
         return (User) session.getSession("user");
     }
+
+    public void revokeTokenByRequest(HttpServletRequest request) {
+        User user = getUserFromSession(request);
+
+        String token = generateToken();
+        user.setToken(token);
+        save(user);
+    }
 }
 
