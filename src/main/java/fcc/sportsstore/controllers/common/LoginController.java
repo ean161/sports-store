@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -46,7 +47,10 @@ public class LoginController {
         try {
             loginService.login(response, username, password);
 
-            Response res = new Response(2, null, "/");
+            Response res = new Response(1,
+                    "Login successfully.",
+                    Map.of("redirect", "/",
+                            "time", 3000));
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
