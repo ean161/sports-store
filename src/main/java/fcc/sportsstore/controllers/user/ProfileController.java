@@ -1,6 +1,6 @@
-package fcc.sportsstore.controllers;
+package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.services.ProfileService;
+import fcc.sportsstore.services.user.ProfileService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;

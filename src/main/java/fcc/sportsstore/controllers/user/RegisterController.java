@@ -1,6 +1,6 @@
-package fcc.sportsstore.controllers.common;
+package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.services.common.RegisterService;
+import fcc.sportsstore.services.user.RegisterService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;

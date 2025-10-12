@@ -1,6 +1,6 @@
-package fcc.sportsstore.controllers.common;
+package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.services.common.ForgetPasswordService;
+import fcc.sportsstore.services.user.ForgetPasswordService;
 import fcc.sportsstore.utils.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
