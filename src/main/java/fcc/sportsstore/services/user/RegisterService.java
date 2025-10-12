@@ -1,4 +1,4 @@
-package fcc.sportsstore.services.common;
+package fcc.sportsstore.services.user;
 
 
 import fcc.sportsstore.entities.Email;

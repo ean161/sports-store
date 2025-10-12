@@ -1,6 +1,7 @@
-package fcc.sportsstore.services;
+package fcc.sportsstore.services.user;
 
 import fcc.sportsstore.entities.User;
+import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
