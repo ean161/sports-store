@@ -1,14 +1,11 @@
-package fcc.sportsstore.services.auth;
+package fcc.sportsstore.services.common;
 
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.CookieUtil;
 import fcc.sportsstore.utils.SessionUtil;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class LogoutService {

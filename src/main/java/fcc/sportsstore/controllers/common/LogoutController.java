@@ -1,6 +1,6 @@
-package fcc.sportsstore.controllers.auth;
+package fcc.sportsstore.controllers.common;
 
-import fcc.sportsstore.services.auth.LogoutService;
+import fcc.sportsstore.services.common.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
