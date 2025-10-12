@@ -1,15 +1,68 @@
 package fcc.sportsstore.controllers.user;
 
+import fcc.sportsstore.entities.Address;
+import fcc.sportsstore.entities.Province;
+import fcc.sportsstore.entities.User;
+import fcc.sportsstore.repositories.ProvinceRepository;
+import fcc.sportsstore.repositories.WardsRepository;
+import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.services.user.AddressService;
+import fcc.sportsstore.utils.Response;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/address")
 public class AddressController {
+    private final AddressService addressService;
+    private final ProvinceRepository provinceRepository;
+    private final WardsRepository wardsRepository;
+    private final UserService userService;
+
+
+    public AddressController(AddressService addressService, ProvinceRepository provinceRepository, WardsRepository wardsRepository, UserService userService) {
+        this.addressService = addressService;
+        this.provinceRepository = provinceRepository;
+        this.wardsRepository = wardsRepository;
+        this.userService = userService;
+    }
 
     @GetMapping
-    public String index(){
+    public String index(Model model, HttpServletRequest request) {
+        User caller = userService.getUserFromSession(request);
+        List<Address> listAddress = addressService.getAllAdress(caller);
+        model.addAttribute("listAddress", listAddress);
         return "pages/user/address";
+    }
+
+    @GetMapping("/add")
+    public String edit(Model model) {
+        model.addAttribute("address", new Address());
+        model.addAttribute("provinces", provinceRepository.findAll());
+        model.addAttribute("wards", wardsRepository.findAll());
+        return "pages/user/edit-address";
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public Object editAddress(HttpServletRequest request,
+                              @RequestParam(value = "note", required = false) String note,
+                              @RequestParam(value = "phoneNumber", required = false) String phone,
+                              @RequestParam(value = "addressDetail", required = false) String detail) {
+        try {
+            addressService.addAddress(request, note, phone, detail);
+
+            Response res = new Response(2, null, "/address");
+            return res.pull();
+
+        } catch (Exception e) {
+            Response res = new Response(0, e.getMessage());
+            return res.pull();
+        }
     }
 }
