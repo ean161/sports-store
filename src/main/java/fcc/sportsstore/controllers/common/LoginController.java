@@ -1,6 +1,6 @@
-package fcc.sportsstore.controllers.auth;
+package fcc.sportsstore.controllers.common;
 
-import fcc.sportsstore.services.auth.LoginService;
+import fcc.sportsstore.services.common.LoginService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class LoginController {
      */
     @GetMapping
     public String index() {
-        return "pages/auth/login";
+        return "pages/common/login";
     }
 
     /**

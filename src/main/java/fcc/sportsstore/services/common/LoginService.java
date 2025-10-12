@@ -1,4 +1,4 @@
-package fcc.sportsstore.services.auth;
+package fcc.sportsstore.services.common;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
