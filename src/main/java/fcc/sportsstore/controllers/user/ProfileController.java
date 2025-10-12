@@ -18,12 +18,12 @@ public class ProfileController {
 
     @GetMapping
     public String index() {
-        return "pages/profile";
+        return "pages/user/profile";
     }
 
     @GetMapping("/edit")
     public String editPage() {
-        return "pages/edit-profile";
+        return "pages/user/edit-profile";
     }
 
     @PostMapping("/edit")

@@ -3,7 +3,6 @@
         <div class="w-20 h-20 bg-gray-300 rounded-full mx-auto"></div>
         <p class="mt-2 font-semibold text-gray-700" th:text="${session.user.username}" ></p>
     </div>
-
     <nav class="space-y-2">
         <ul class="text-gray-700 space-y-1">
             <li><a th:href="@{/profile}" class="hover:text-red-500">Profile</a></li>
@@ -14,11 +13,9 @@
             <li><a href="#" class="hover:text-red-500">Change password </a></li>
         </ul>
     </nav>
-
-    <div class="mt-6 w-full bg-red-600 text-white text-center py-2 rounded hover:bg-red-700">
+    <div class="mt-6 w-full bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 cursor-pointer">
            <a th:href="@{/logout}" >
-                Log Out
+                Logout
             </a>
     </div>
-
 </div>

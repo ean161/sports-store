@@ -29,7 +29,7 @@ public class RegisterController {
      */
     @GetMapping
     public String index(){
-        return "pages/auth/register";
+        return "pages/user/register";
     }
 
     /**
