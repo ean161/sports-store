@@ -4,7 +4,7 @@
     <th:block th:fragment="content">
 
         <header th:replace="~{fragment/header :: header}"></header>
-        <body class="bg-gray-100 font-sans">
+        <main class="bg-gray-100 font-sans">
 
         <div class="flex min-h-screen">
             <div th:replace="~{fragment/profile  :: profile-slidebar}"></div>
@@ -22,10 +22,9 @@
                             <span class="text-xl">+</span>
                             <span>Add Address</span>
                         </span>
-                       </label>
+                    </label>
                 </div>
-        </div>
-
+            </div>
             <input type="checkbox" id="modalToggle" class="hidden peer">
             <div class="hidden peer-checked:fixed peer-checked:inset-0 peer-checked:bg-black peer-checked:bg-opacity-50 peer-checked:flex peer-checked:items-center peer-checked:justify-center z-50">
                 <!-- Modal -->
@@ -48,7 +47,6 @@
                                 <input type="tel" placeholder="" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
                             </div>
                         </div>
-
                         <!-- Full Address -->
                         <div>
                             <label class="block font-semibold text-sm mb-2">
@@ -56,7 +54,6 @@
                             </label>
                             <input type="text" placeholder="" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
                         </div>
-
                         <!-- Province -->
                         <div>
                             <label class="block font-semibold text-sm mb-2">
@@ -106,7 +103,7 @@
                     </form>
                 </div>
             </div>
-        </body>
+        </main>
         <script src="/assets/js/pages/address.js"></script>
     </th:block>
 </th:block>

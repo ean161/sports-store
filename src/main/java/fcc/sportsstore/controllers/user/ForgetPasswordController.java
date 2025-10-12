@@ -28,7 +28,7 @@ public class ForgetPasswordController {
      */
     @GetMapping
     public String request() {
-        return "pages/auth/forget-password/request";
+        return "pages/user/forget-password/request";
     }
 
     /**
@@ -67,7 +67,7 @@ public class ForgetPasswordController {
             model.addAttribute("email", userEmail);
         }
 
-        return "pages/auth/forget-password/forget";
+        return "pages/user/forget-password/forget";
     }
 
     /**

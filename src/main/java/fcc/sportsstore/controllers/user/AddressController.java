@@ -10,6 +10,6 @@ public class AddressController {
 
     @GetMapping
     public String index(){
-        return "pages/address";
+        return "pages/user/address";
     }
 }
