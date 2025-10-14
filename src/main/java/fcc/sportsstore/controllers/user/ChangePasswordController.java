@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 
 
 @Controller
@@ -43,7 +44,10 @@ public class ChangePasswordController {
                                  @RequestParam(required = false, name = "confirm-password") String newPasswordConfirm){
         try {
             changePasswordService.changePassword(request, oldPassword, newPassword, newPasswordConfirm);
-            Response res = new Response(2, null, "/profile");
+            Response res = new Response(1,
+                    "Your password was changed.",
+                    Map.of("redirect", "/profile",
+                            "time", 3000));
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
