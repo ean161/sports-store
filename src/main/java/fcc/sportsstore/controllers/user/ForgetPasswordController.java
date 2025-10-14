@@ -83,7 +83,10 @@ public class ForgetPasswordController {
         try {
             forgetPasswordService.forgetPassword(code, password, confirmPassword);
 
-            Response res = new Response(1, "Your password was changed.");
+            Response res = new Response(1,
+                    "Your password was changed.",
+                    Map.of("redirect", "/",
+                            "time", 3000));
             return res.pull();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
