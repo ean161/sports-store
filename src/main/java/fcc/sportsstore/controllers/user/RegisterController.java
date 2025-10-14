@@ -50,7 +50,10 @@ public class RegisterController {
         try {
             registerService.register(response, username, email, password, confirmPassword);
 
-            Response res = new Response(2, null, "/");
+            Response res = new Response(1,
+                    "Register successfully.",
+                    Map.of("redirect", "/login",
+                            "time", 3000));
             return res.pull();
         } catch (DataIntegrityViolationException e) {
             Response res = new Response(1, "You acted too fast, please try again later.");
