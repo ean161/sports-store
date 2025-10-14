@@ -21,10 +21,12 @@ async function post(url, data = null) {
         }
 
         if ("data" in res) {
-            if ("redirect" in res.data && "time" in res.data) {
-                setTimeout(() => {
-                    window.location.href = res.data.redirect;
-                }, res.data.time);
+            if (typeof res.data === 'object') {
+                if ("redirect" in res.data && "time" in res.data) {
+                    setTimeout(() => {
+                        window.location.href = res.data.redirect;
+                    }, res.data.time);
+                }
             }
         }
 
