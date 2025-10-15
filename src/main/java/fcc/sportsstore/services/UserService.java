@@ -1,8 +1,10 @@
 package fcc.sportsstore.services;
 
+import fcc.sportsstore.entities.Manager;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
 import fcc.sportsstore.utils.CookieUtil;
+import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ public class UserService {
 
     /**
      * Constructor
+     *
      * @param userRepository User repository
      */
     public UserService(UserRepository userRepository) {
@@ -27,6 +30,7 @@ public class UserService {
 
     /**
      * Generate new id for user
+     *
      * @return New valid id
      */
     public String generateId() {
@@ -41,6 +45,7 @@ public class UserService {
 
     /**
      * Generate new user token
+     *
      * @return New user token
      */
     public String generateToken() {
@@ -55,6 +60,7 @@ public class UserService {
 
     /**
      * Get user list by username (ignore case) and password
+     *
      * @param username User username
      * @param password User password
      * @return User matches list
@@ -65,15 +71,17 @@ public class UserService {
 
     /**
      * Check username exists
+     *
      * @param username User username
      * @return TRUE if username was exists, FALSE is not
      */
-    public boolean existsByUsername(String username){
+    public boolean existsByUsername(String username) {
         return userRepository.findByUsername(username).isPresent();
     }
 
     /**
      * Check token exists
+     *
      * @param token User token
      * @return TRUE if token was exists, FALSE is not
      */
@@ -83,6 +91,7 @@ public class UserService {
 
     /**
      * Check user ID exist
+     *
      * @param id User ID to check
      * @return TRUE if ID was exists, FALSE is not
      */
@@ -101,25 +110,28 @@ public class UserService {
 
     /**
      * Save User to list
+     *
      * @param user User(userId, username, password)
      */
-    public void save(User user){
+    public void save(User user) {
         userRepository.save(user);
     }
 
     /**
      * Get user by username
+     *
      * @param username Username to get
      * @return Found user
      */
-    public Optional<User> findByUsernameIgnoreCase(String username){
+    public Optional<User> findByUsernameIgnoreCase(String username) {
         return userRepository.findByUsernameIgnoreCase(username);
     }
 
     /**
      * Access session for user within response
+     *
      * @param response Response of HTTP Servlet
-     * @param userId User ID to access
+     * @param userId   User ID to access
      */
     @Transactional
     public void access(HttpServletResponse response, String userId) {
@@ -131,7 +143,7 @@ public class UserService {
         user.setToken(token);
         cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
     }
-    
+
     public User getUserFromSession(HttpServletRequest request) {
         SessionUtil session = new SessionUtil(request);
         return (User) session.getSession("user");
@@ -144,5 +156,11 @@ public class UserService {
         user.setToken(token);
         save(user);
     }
-}
 
+    public User getByUsernameAndPassword(String username, String password) {
+        HashUtil hash = new HashUtil();
+        String hashedPassword = hash.md5(password);
+        return findByUsernameIgnoreCaseAndPassword(username, hashedPassword).orElseThrow(
+                () -> new RuntimeException("Account or password does not exist."));
+    }
+}

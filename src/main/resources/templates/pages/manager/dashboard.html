@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+        <main class="bg-gray-100 font-sans">
+            <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
+                <div th:if="${session.manager != null}">
+                    <div th:if="${session.manager.role == 'ADMIN'}">
+                        <div th:replace="~{fragment/admin :: admin-slidebar}"></div>
+                    </div>
+
+                    <div th:if="${session.manager.role == 'STAFF'}">
+                        <div th:replace="~{fragment/staff :: staff-slidebar}"></div>
+                    </div>
+
+                    <form class="space-y-4 max-w-2xl" id="edit-profile-form">
+                        <input name="id" th:value="${session.manager.id}" hidden/>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="full-name" class="block font-medium mb-1">Full name:</label>
+                                <input id="full-name" name="full-name" type="text"
+                                       th:value="${session.manager.fullName}"
+                                       readonly
+                                       class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <script src="/assets/js/pages/manager/login.js"></script>
+    </th:block>
+</th:block>
+</html>

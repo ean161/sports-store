@@ -1,5 +1,6 @@
 package fcc.sportsstore.services.common;
 
+import fcc.sportsstore.services.ManagerService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.CookieUtil;
 import fcc.sportsstore.utils.SessionUtil;
@@ -12,8 +13,11 @@ public class LogoutService {
 
     final private UserService userService;
 
-    public LogoutService(UserService userService) {
+    final private ManagerService managerService;
+
+    public LogoutService(UserService userService, ManagerService managerService) {
         this.userService = userService;
+        this.managerService = managerService;
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {
@@ -21,8 +25,11 @@ public class LogoutService {
         SessionUtil session = new SessionUtil(request, response);
 
         userService.revokeTokenByRequest(request);
+        session.deleteSession("user");
+
+        managerService.revokeTokenByRequest(request);
+        session.deleteSession("manager");
 
         cookie.deleteCookie("token");
-        session.deleteSession("user");
     }
 }

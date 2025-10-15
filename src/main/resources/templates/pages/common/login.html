@@ -3,10 +3,10 @@
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Login')}">
     <th:block th:fragment="content">
         <div class="flex h-dvh">
-            <div class="w-1/2">
+            <div class="w-1/2 m-auto">
                 <div class="w-3/5 m-auto">
                     <div>
-                        <h1 class="font-bold mt-20 mb-2 text-5xl">Login</h1>
+                        <h1 class="font-bold mb-2 text-5xl">Login</h1>
                         <p class="mb-8 text-gray-600 text-2xl">Login your account</p>
                     </div>
                     <form class="space-y-4" id="login-form">
@@ -24,9 +24,6 @@
                         <p>Don't have an account? <a href="/register" class="text-red-500">Register an account</a></p>
                     </form>
                 </div>
-            </div>
-            <div class="w-1/2 flex justify-end">
-                <img class="h-full" src="https://github.com/thenavik/nike-login-page/blob/main/img/nike.png?raw=true"  alt=""/>
             </div>
         </div>
 
