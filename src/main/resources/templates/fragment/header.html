@@ -1,17 +1,17 @@
-<header th:fragment="header" class="bg-white shadow-sm">
+<header th:fragment="header" class="bg-red-900 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="flex items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center space-x-3">
                 <div class="relative">
-                    <div class="bg-red-600 w-12 h-12 skew-x-12"></div>
+                    <div class="bg-red-700 w-12 h-12 skew-x-12"></div>
                     <i class="fas fa-flag absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl"></i>
                 </div>
                 <div>
                     <a th:href="@{/}">
-                        <div class="font-bold text-xl text-gray-800">SPORT STORE</div>
+                        <div class="font-bold text-xl text-white">SPORTS <span class="text-red-200">STORE</span></div>
                     </a>
-                    <div class="text-xs text-gray-500">HEART OF THE GAME</div>
+                    <div class="text-xs text-gray-200">HEART OF THE GAME</div>
                 </div>
             </div>
 
@@ -31,12 +31,16 @@
 
             <!-- Top Right Icons -->
             <div class="flex items-center space-x-10">
-                <div class="text-center cursor-pointer hover:text-red-600 duration-300 group">
-                    <a th:if="${session.user == null}" href="/login" class="text-base text-gray-700 hover:scale-105 hover:text-red-600">Login</a>
-                    <a th:if="${session.user != null}" th:text="${session.user.username}" href="/profile" class="text-base text-gray-700 hover:scale-105 hover:text-red-600"></a>
+                <div class="p-1 bg-red-800 rounded-2xl pl-3 pr-3 text-white font-bold hover:bg-white hover:text-red-800" th:if="${session.user != null}">
+                    <a th:href="@{/profile}" th:text="${session.user.fullName}"></a>
                 </div>
-                <div class="text-center cursor-pointer hover:text-red-600 duration-300 group relative">
-                    <a class="text-base text-gray-700 hover:scale-105 hover:text-red-600">Cart</a>
+                <div class="text-center cursor-pointer hover:text-red-600 duration-300 group">
+                    <div class="p-1 bg-white rounded-2xl pl-3 pr-3 text-black text-base font-bold hover:bg-black hover:text-white">
+                        <a th:if="${session.user == null}" href="/login" >Login</a>
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer duration-300 group relative">
+                    <a class="text-base text-white hover:scale-105">Cart</a>
                 </div>
             </div>
         </div>
