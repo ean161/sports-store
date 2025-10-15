@@ -1,24 +1,27 @@
-package fcc.sportsstore.services.common;
+package fcc.sportsstore.services.manager;
 
+import fcc.sportsstore.entities.Manager;
 import fcc.sportsstore.entities.User;
-import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.services.ManagerService;
+import fcc.sportsstore.services.common.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service(value = "manager-login-service")
 public class LoginService {
 
-    private final UserService userService;
+    private final ManagerService managerService;
     private final LogoutService logoutService;
 
     /**
      * Constructor
-     * @param userService User service
+     *
+     * @param managerService User service
      */
-    public LoginService(UserService userService, LogoutService logoutService) {
-        this.userService = userService;
+    public LoginService(ManagerService managerService, LogoutService logoutService) {
+        this.managerService = managerService;
         this.logoutService = logoutService;
     }
 
@@ -36,7 +39,7 @@ public class LoginService {
             throw new RuntimeException("Password must be not empty.");
         }
 
-        User user = userService.getByUsernameAndPassword(username, password);
-        userService.access(response, user.getId());
+        Manager manager = managerService.getByUsernameAndPassword(username, password);
+        managerService.access(response, manager.getId());
     }
 }
