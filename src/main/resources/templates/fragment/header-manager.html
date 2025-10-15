@@ -1,0 +1,29 @@
+<header th:fragment="header-manager" class="bg-blue-900 text-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="relative">
+                    <div class="bg-red-600 w-12 h-12 skew-x-12"></div>
+                    <i class="fas fa-flag absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl"></i>
+                </div>
+                <div>
+                    <a th:href="@{/manager/dashboard}">
+                        <div class="font-bold text-xl text-wheat-300">SPORTS STORE</div>
+                    </a>
+                    <div class="text-xs text-wheat-100">HEART OF THE GAME</div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-10">
+                <div class="p-1 bg-white rounded-2xl pr-2">
+                    <span class="p-1 text-wheat-100 rounded-2xl mr-1 pr-2 pl-2 font-bold text-sm" th:classappend="${session.manager.role == 'ADMIN' ? 'bg-red-800' : 'bg-blue-800'}" th:text="${session.manager.role}"></span>
+                    <span th:text="${session.manager.fullName}" class="text-black"></span>
+                </div>
+                <div class="text-center cursor-pointer hover:text-red-600 duration-300 group">
+                    <a th:if="${session.manager != null}" href="/logout"
+                       class="text-base text-wheat-300 hover:scale-105 hover:text-red-600">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
