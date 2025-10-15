@@ -1,19 +1,12 @@
-<div th:fragment="staff-slidebar" class="w-64 bg-white shadow-md p-6 mt-4 ml-4 mb-4 rounded">
-    <div class="text-center mb-6">
-        <div class="w-20 h-20 bg-gray-300 rounded-full mx-auto"></div>
-        <p class="mt-2 font-semibold text-gray-700" th:text="${session.manager.username}" ></p>
-    </div>
+<div th:fragment="staff-slidebar" class="w-64 bg-blue-900 shadow-md p-6 mt-4 mb-4 ml-4 rounded-xl">
     <nav class="space-y-2">
-        <ul class="text-gray-700 space-y-1">
-            <li><a href="#" class="hover:text-red-500">Staff</a></li>
-            <li><a href="#" class="hover:text-red-500">My Orders</a></li>
-            <li><a href="#" class="hover:text-red-500">Membership</a></li>
-            <li><a href="#" class="hover:text-red-500">Voucher storage</a></li>
+        <ul class="text-gray-700 space-y-2">
+            <li class="hover:bg-white bg-blue-900 text-white hover:text-blue-900 font-bold p-3 rounded-lg"><a href="#">Manage Users</a></li>
+            <li class="hover:bg-white bg-blue-900 text-white hover:text-blue-900 font-bold p-3 rounded-lg"><a href="#">Manage Vouchers</a></li>
+            <li class="hover:bg-white bg-blue-900 text-white hover:text-blue-900 font-bold p-3 rounded-lg"><a href="#" >Manage Product</a></li>
+            <li class="hover:bg-white bg-blue-900 text-white hover:text-blue-900 font-bold p-3 rounded-lg"><a href="#" >Manage Categories</a></li>
+            <li class="hover:bg-white bg-blue-900 text-white hover:text-blue-900 font-bold p-3 rounded-lg"><a href="#" >Manage Product Type</a></li>
+            <li class="hover:bg-white bg-blue-900 text-white hover:text-blue-900 font-bold p-3 rounded-lg"><a href="#" >Manage Properties</a></li>
         </ul>
     </nav>
-    <div class="mt-6 w-full bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 cursor-pointer">
-        <a th:href="@{/logout}" >
-            Logout
-        </a>
-    </div>
 </div>
