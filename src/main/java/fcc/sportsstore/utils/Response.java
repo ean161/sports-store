@@ -24,6 +24,11 @@ public class Response {
 
     private String message;
 
+    /**
+     * Data redirect rule:
+     * - data.redirect: URL that redirect to
+     * - data.time: Redirect time (milliseconds)
+     */
     private Object data;
 
     /**

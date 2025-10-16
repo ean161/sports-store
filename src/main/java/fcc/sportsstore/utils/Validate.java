@@ -13,7 +13,7 @@ public class Validate {
 
     public boolean isValidPhoneNumber(String phoneNumber) {
         phoneNumber = phoneNumber.trim();
-        return phoneNumber.matches("^0\\d{9,11}$");
+        return phoneNumber.matches("^0\\d{9}$");
     }
 
     /**
@@ -58,5 +58,18 @@ public class Validate {
         }
 
         return false;
+    }
+
+    public boolean isValidNote(String note) {
+        if (note == null) return false;
+        int length = note.trim().length();
+        return length >= 2 && length <= 20;
+    }
+
+    public boolean isValidAddress(String address) {
+        if (address == null) return false;
+        address = address.trim();
+        String regexAddress = "^[\\p{L}0-9 ,.\\-\\/]+$";
+        return address.matches(regexAddress) && address.length() >= 5 && address.length() <= 200;
     }
 }
