@@ -1,7 +1,8 @@
-package fcc.sportsstore.services.common;
+package fcc.sportsstore.services.user;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.services.common.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
