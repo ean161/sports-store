@@ -19,4 +19,9 @@ public class DashboardController {
     public String dashboard() {
             return "pages/manager/dashboard";
     }
+
+    @GetMapping("/manage-users")
+    public String manageUsers() {
+        return "pages/manager/manage-users";
+    }
 }
