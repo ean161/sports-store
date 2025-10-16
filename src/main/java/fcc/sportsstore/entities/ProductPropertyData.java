@@ -19,6 +19,10 @@ public class ProductPropertyData {
     @JoinColumn(name = "product_property_field_id")
     private ProductPropertyField productPropertyField;
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     private String data;
 
     private Long createdAt;

@@ -18,8 +18,7 @@ public class TestController {
     @GetMapping
     @ResponseBody
     public String index() {
-        Product p = productRepository.findById("p1").orElseThrow();
-//        return p.getProductType().getProductPropertyFields().size();
-        return null;
+        return productRepository.findById("p2").orElseThrow().getProductPropertyData().get(0).getData();
+//        return null;
     }
 }
