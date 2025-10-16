@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
@@ -21,8 +23,15 @@ public class Product {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "product_type")
+    @JoinColumn(name = "product_type_id")
     private ProductType productType;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductPropertyData> productPropertyData;
+
+    @ManyToOne
+    @JoinColumn(name = "product_collection_id")
+    private ProductCollection productCollection;
 
     private Long createdAt;
 }
