@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<div>
+    <div style="font-weight:800">Running Shoes <span style="color:var(--muted); font-weight:600">• $79.99</span></div>
+    <div class="sku">SKU 12345</div>
+</div>
+<div class="qty">Quantity left 5</div>
+</div>
+<div class="item">
+    <div class="thumb"><img alt="" src="https://picsum.photos/seed/headphones/160/160"></div>
+    <div>
+        <div style="font-weight:800">Headphones <span style="color:var(--muted); font-weight:600">• $299.99</span></div>
+        <div class="sku">SKU 23456</div>
+    </div>
+    <div class="qty">Quantity left 12</div>
+</div>
+<div class="item">
+    <div class="thumb"><img alt="" src="https://picsum.photos/seed/watch/160/160"></div>
+    <div>
+        <div style="font-weight:800">Smart Watch <span style="color:var(--muted); font-weight:600">• $199.99</span></div>
+        <div class="sku">SKU 34567</div>
+    </div>
+    <div class="qty">Quantity left 8</div>
+</div>
+<div class="item">
+    <div class="thumb"><img alt="" src="https://picsum.photos/seed/backpack/160/160"></div>
+    <div>
+        <div style="font-weight:800">Backpack <span style="color:var(--muted); font-weight:600">• $49.99</span></div>
+        <div class="sku">SKU 45678</div>
+    </div>
+    <div class="qty">Quantity left 3</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script>
+    const pq = document.getElementById('productSearch');
+    const list = document.getElementById('prodList');
+    pq.addEventListener('input', () => {
+        const term = pq.value.toLowerCase();
+        for(const it of list.querySelectorAll('.item')){
+            it.style.display = it.innerText.toLowerCase().includes(term) ? '' : 'none';
+        }
+    });
+</script>
+</body>
+</html>

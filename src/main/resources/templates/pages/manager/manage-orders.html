@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<td><span class="badge dot b-shipping"></span></td>
+<td style="text-align:right">$120.50</td>
+</tr>
+<tr>
+    <td>#1026</td>
+    <td><img class="avatar" src="https://i.pravatar.cc/64?u=4" alt=""/> Becky Turner</td>
+    <td>Mar 3, 2024</td>
+    <td><span class="badge dot b-delivered">Delivered</span></td>
+    <td><span class="badge dot b-delivered"></span></td>
+    <td style="text-align:right">$65.99</td>
+</tr>
+<tr>
+    <td>#1025</td>
+    <td><img class="avatar" src="https://i.pravatar.cc/64?u=5" alt=""/> David Hall</td>
+    <td>Mar 2, 2024</td>
+    <td><span class="badge dot b-canceled">Canceled</span></td>
+    <td><span class="badge dot b-canceled"></span></td>
+    <td style="text-align:right">$232.10</td>
+</tr>
+<tr>
+    <td>#1023</td>
+    <td><img class="avatar" src="https://i.pravatar.cc/64?u=6" alt=""/> Amanda Wise</td>
+    <td>Mar 1, 2024</td>
+    <td><span class="badge dot b-returned">Returned</span></td>
+    <td><span class="badge dot b-returned"></span></td>
+    <td style="text-align:right">$150.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script>
+    // Simple client filter
+    const q = document.getElementById('orderSearch');
+    const sel = document.getElementById('statusSelect');
+    const body = document.getElementById('ordersBody');
+    function apply(){
+        const term = q.value.toLowerCase();
+        const st = sel.value.toLowerCase();
+        for(const tr of body.querySelectorAll('tr')){
+            const text = tr.innerText.toLowerCase();
+            const badge = tr.querySelector('.badge')?.textContent.toLowerCase() || '';
+            const ok = (!term || text.includes(term)) && (!st || badge.includes(st));
+            tr.style.display = ok ? '' : 'none';
+        }
+    }
+    q.addEventListener('input', apply); sel.addEventListener('change', apply);
+</script>
+</body>
+</html>
