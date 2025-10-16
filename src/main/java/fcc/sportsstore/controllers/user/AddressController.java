@@ -1,7 +1,6 @@
 package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.Address;
-import fcc.sportsstore.entities.Province;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.ProvinceRepository;
 import fcc.sportsstore.repositories.WardsRepository;
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/address")
@@ -45,7 +44,7 @@ public class AddressController {
         model.addAttribute("address", new Address());
         model.addAttribute("provinces", provinceRepository.findAll());
         model.addAttribute("wards", wardsRepository.findAll());
-        return "pages/user/edit-address";
+        return "pages/user/add-address";
     }
 
     @PostMapping("/add")
@@ -56,8 +55,10 @@ public class AddressController {
                               @RequestParam(value = "addressDetail", required = false) String detail) {
         try {
             addressService.addAddress(request, note, phone, detail);
-
-            Response res = new Response(2, null, "/address");
+            Response res = new Response(1,
+                    "Add address successfully.",
+                    Map.of("redirect", "/address",
+                            "time", 500));
             return res.pull();
 
         } catch (Exception e) {

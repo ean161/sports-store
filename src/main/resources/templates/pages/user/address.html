@@ -11,6 +11,10 @@
                     <h2 class="text-xl font-semibold mb-6">Address</h2>
                     <p class="pb-5 space-y-4  text-base">This is the address where you usually receive goods.
                     </p>
+                    <div th:if="${#lists.isEmpty(listAddress)}"
+                         class="text-gray-500 italic text-sm p-2 rounded-md shadow-sm bg-grey-3">
+                         You haven't added any address yet.
+                    </div>
                 </div>
 
                 <div class="flex flex-col gap-4 max-w-3xl mb-3">
@@ -31,14 +35,17 @@
                                <span th:text="${address.phoneNumber}">
                                </span>
                            </p>
-                       </div>
 
+<!--                           <div class="w-45 text-center bg-yellow-300 text-black px-4 py-2 rounded hover:bg-yellow-400">-->
+<!--                               <a >Delete</a>-->
+<!--                           </div>-->
+                       </div>
                    </div>
                 </div>
 
                 <div class="max-w-2xl">
-                    <div class="w-20 text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                        <a th:href="@{/address/add}">Add</a>
+                    <div class="w-45 text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        <a th:href="@{/address/add}">Add New Address</a>
                     </div>
                 </div>
             </div>

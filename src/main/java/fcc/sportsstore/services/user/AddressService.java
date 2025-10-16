@@ -49,14 +49,30 @@ public class AddressService {
     }
 
 
-    public void addAddress(HttpServletRequest request,
-                           String note,
-                           String phone,
-                           String detail){
-
+    public void addAddress(HttpServletRequest request, String note, String phone, String detail) {
+        Validate validate = new Validate();
         User caller = userService.getUserFromSession(request);
 
-                Address address = new Address();
+        if (note == null || note.trim().isEmpty()) {
+            throw new RuntimeException("Note must not be empty.");
+        }
+        if (!validate.isValidNote(note)) {
+            throw new RuntimeException("Note length must be between 2 and 20 characters.");
+        }
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new RuntimeException("Phone number must not be empty.");
+        }
+        if (!validate.isValidPhoneNumber(phone)) {
+            throw new RuntimeException("Phone number must start with 0 and contain exactly 10 digits.");
+        }
+        if (detail == null || detail.trim().isEmpty()) {
+            throw new RuntimeException("Address detail must not be empty.");
+        }
+        if (!validate.isValidAddress(detail)) {
+            throw new RuntimeException("Address detail must be 5–200 characters and can only contain , . / -");
+        }
+
+        Address address = new Address();
         address.setId(generateId());
         address.setNote(note);
         address.setPhoneNumber(phone);
@@ -64,5 +80,15 @@ public class AddressService {
         address.setUser(caller);
 
         addressRepository.save(address);
+    }
+
+    public void deleteAddress(HttpServletRequest request, String id) {
+        User caller = userService.getUserFromSession(request);
+        Optional<Address> address = addressRepository.findById(id);
+        if (address.isEmpty()) {
+            throw new RuntimeException("Address does not exist.");
+        }
+
+        addressRepository.delete(address.get());
     }
 }
