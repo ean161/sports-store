@@ -49,5 +49,3 @@ public class ProfileService {
         userService.save(caller);
     }
 }
-
-
