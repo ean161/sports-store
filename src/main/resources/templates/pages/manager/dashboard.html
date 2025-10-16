@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<header th:replace="~{fragment/header-manager :: header-manager}"></header>
+<header th:replace="~{fragment/manager/header :: header}"></header>
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">F
     <th:block th:fragment="content">
         <main class="bg-gray-100 font-sans">
             <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
                 <th:block th:if="${session.manager != null}">
                     <th:block th:if="${session.manager.role == 'ADMIN'}">
-                        <div th:replace="~{fragment/admin :: admin-slidebar}"></div>
+                        <div th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></div>
                     </th:block>
                     <th:block th:if="${session.manager.role == 'STAFF'}">
-                        <div th:replace="~{fragment/staff :: staff-slidebar}"></div>
+                        <div th:replace="~{fragment/manager/sidebar :: staff-slidebar}"></div>
                     </th:block>
                 </th:block>
                 <div class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">

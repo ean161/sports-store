@@ -1,7 +1,6 @@
 <header th:fragment="header" class="bg-red-900 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="flex items-center justify-between">
-            <!-- Logo -->
             <div class="flex items-center space-x-3">
                 <div class="relative">
                     <div class="bg-red-700 w-12 h-12 skew-x-12"></div>
@@ -14,8 +13,6 @@
                     <div class="text-xs text-gray-200">HEART OF THE GAME</div>
                 </div>
             </div>
-
-            <!-- Search Bar -->
             <div class="flex-1 max-w-md mx-8">
                 <div class="relative">
                     <input
@@ -28,8 +25,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Top Right Icons -->
             <div class="flex items-center space-x-10">
                 <div class="p-1 bg-red-800 rounded-2xl pl-3 pr-3 text-white font-bold hover:bg-white hover:text-red-800" th:if="${session.user != null}">
                     <a th:href="@{/profile}" th:text="${session.user.fullName}"></a>

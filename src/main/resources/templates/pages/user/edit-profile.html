@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
     <th:block th:fragment="content">
-        <header th:replace="~{fragment/header :: header}"></header>
+        <header th:replace="~{fragment/user/header :: header}"></header>
         <main class="bg-gray-100 font-sans">
             <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
-                <div th:replace="~{fragment/profile :: profile-slidebar}"></div>
+                <div th:replace="~{fragment/user/sidebar :: slidebar}"></div>
                 <div class="flex-1 p-8 bg-white shadow-md m-4 rounded">
                     <h2 class="text-xl font-semibold mb-6">Edit Profile</h2>
                     <form class="space-y-4 max-w-2xl" id="edit-profile-form">
