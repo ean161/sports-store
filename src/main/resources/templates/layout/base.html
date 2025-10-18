@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" th:fragment="layout(content, pageTitle)">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:fragment="layout(baseContent, pageTitle)">
 <head>
     <title>Sports Store</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -9,7 +9,7 @@
     <script src="/assets/js/script.js"></script>
     <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-<body>
-    <th:block th:replace="${content}"></th:block>
+<body class="bg-gray-200">
+    <th:block th:replace="${baseContent}"></th:block>
 </body>
 </html>

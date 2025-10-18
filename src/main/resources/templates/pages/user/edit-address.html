@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/profile :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+        <header th:replace="~{fragment/header :: header}"></header>
+        <div class="flex min-h-screen">
+            <div th:replace="~{fragment/profile :: profile-slidebar}"></div>
+            <div class="flex-1 p-8 bg-white shadow-md m-4 rounded">
+                <form id="edit-address-form" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input name="id" th:value="${session.user.id}" hidden />
+                        <div>
+                            <label class="block font-semibold text-sm mb-2">
+                                Note <span class="text-red-500">*</span>
+                            </label>
+                            <input name="note" type="text"
+                                   class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-sm mb-2">
+                                Phone Number <span class="text-red-500">*</span>
+                            </label>
+                            <input name="phoneNumber" type="tel"
+                                   class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-sm mb-2">
+                            Address <span class="text-red-500">*</span>
+                        </label>
+                        <input name="addressDetail" type="text"
+                               class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold text-sm mb-2">
+                                Province <span class="text-red-500">*</span>
+                            </label>
+                            <select name="province" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                                <option value="">-- Province --</option>
+                                <option th:each="p : ${provinces}"
+                                        th:value="${p.id}"
+                                        th:text="${p.name}"
+                                        th:selected="${address.province != null and address.province.id == p.id}">
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-sm mb-2">
+                                Ward
+                            </label>
+                            <select name="wards" class="w-full border-2 border-gray-300 rounded px-4 py-3 focus:outline-none focus:border-blue-500">
+                                <option value="">-- Ward --</option>
+                                <option th:each="w : ${wards}"
+                                        th:value="${w.id}"
+                                        th:text="${w.name}"
+                                        th:selected="${address.wards != null and address.wards.id == w.id}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 mt-8">
+                        <button type="submit"
+                                class="bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                </form>
+
+                <script src="/assets/js/pages/user/address.js"></script>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+</html>
