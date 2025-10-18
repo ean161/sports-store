@@ -152,6 +152,10 @@ public class UserService {
     public void revokeTokenByRequest(HttpServletRequest request) {
         User user = getUserFromSession(request);
 
+        if (user == null) {
+            return;
+        }
+
         String token = generateToken();
         user.setToken(token);
         save(user);

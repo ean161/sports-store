@@ -142,6 +142,10 @@ public class ManagerService {
     public void revokeTokenByRequest(HttpServletRequest request) {
         Manager manager = getManagerFromSession(request);
 
+        if (manager == null) {
+            return;
+        }
+
         String token = generateToken();
         manager.setToken(token);
         save(manager);
