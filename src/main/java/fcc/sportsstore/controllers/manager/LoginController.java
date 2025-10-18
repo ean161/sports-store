@@ -13,7 +13,6 @@ import java.util.Map;
 @RequestMapping("/manager/login")
 public class LoginController {
 
-
     private final LoginService loginService;
 
     /**
@@ -54,7 +53,7 @@ public class LoginController {
 
             Response res = new Response(1,
                     "Login successfully.",
-                    Map.of("redirect", "/manager/dashboard",
+                    Map.of("redirect", "/manager",
                             "time", 3000));
             return res.pull();
         } catch (Exception e) {
