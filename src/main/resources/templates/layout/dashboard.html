@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:fragment="layout(content, pageTitle)">
+<th:block th:replace="~{layout/base :: layout(~{::content}, ${pageTitle})}">
+    <th:block th:fragment="content">
+        <header th:replace="~{fragment/manager/header :: header}"></header>
+        <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
+            <th:block th:if="${session.manager.role == 'ADMIN'}">
+                <th:block th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></th:block>
+            </th:block>
+            <th:block th:if="${session.manager.role == 'STAFF'}">
+                <th:block th:replace="~{fragment/manager/sidebar :: staff-slidebar}"></th:block>
+            </th:block>
+            <main class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">
+                <th:block th:replace="${content}"></th:block>
+            </main>
+        </div>
+    </th:block>
+</th:block>
+</html>

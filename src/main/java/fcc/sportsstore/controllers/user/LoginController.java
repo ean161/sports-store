@@ -28,7 +28,7 @@ public class LoginController {
      */
     @GetMapping
     public String index() {
-        return "pages/common/login";
+        return "pages/user/login";
     }
 
     /**
