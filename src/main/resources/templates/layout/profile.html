@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" th:fragment="layout(content, pageTitle)">
+<th:block th:replace="~{layout/base :: layout(~{::content}, ${pageTitle})}">
+    <th:block th:fragment="content">
+        <header th:replace="~{fragment/user/header :: header}"></header>
+        <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
+            <div th:replace="~{fragment/user/sidebar :: slidebar}"></div>
+            <main class="flex-1 p-8 bg-white shadow-md m-4 rounded">
+                <th:block th:replace="${content}"></th:block>
+            </main>
+        </div>
+    </th:block>
+</th:block>
+</html>

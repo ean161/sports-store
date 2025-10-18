@@ -1,66 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+<th:block th:replace="~{layout/profile :: layout(~{::content}, 'Profile')}">
     <th:block th:fragment="content">
-        <header th:replace="~{fragment/user/header :: header}"></header>
-        <main class="bg-gray-100 font-sans">
-            <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6 ">
-                <div th:replace="~{fragment/user/sidebar :: slidebar}"></div>
-                <div class="flex-1 p-8 bg-white shadow-md m-4 rounded">
-                    <h2 class="text-xl font-semibold mb-6">Profile</h2>
-                    <form class="space-y-4 max-w-2xl" id="edit-profile-form">
-                        <input name="id" th:value="${session.user.id}" hidden />
-                        <div class="grid grid-cols-2 gap-4 ">
-                            <div>
-                                <label for="full-name" class="block font-medium mb-1">Full name:</label>
-                                <input id="full-name" name="full-name" type="text" placeholder="Enter your full name"
-                                       th:value="${session.user.fullName}"
-                                       class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm"
-                                       readonly>
-                            </div>
-                            <div>
-                                <div>
-                                    <label for="gender" class="block font-medium mb-1">Gender:</label>
-                                    <select name="gender" id="gender"
-                                            class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm"
-                                            readonly>
-                                        <option value="1" disabled th:selected="${session.user.gender}">Male</option>
-                                        <option value="0" disabled th:selected="${!session.user.gender}">Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block font-medium mb-1">Email:</label>
-                                    <p class="text-gray-500 text-sm" th:text="${session.user.email.address}">
-                                        <a href="#" class="text-blue-500">(Verify)</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block font-medium mb-1">Membership:</label>
-                                <p class="text-gray-500 text-sm">
-                                    No information yet
-                                    <a href="#" class="text-blue-500">(Update)</a>
-                                </p>
-                            </div>
-                            <div>
-                                <label class="block font-medium mb-1">Address:</label>
-                                <p class="text-gray-500 text-sm">
-                                    No information yet
-                                    <a th:href="@{/address}" class="text-blue-500">(Update)</a>
-                                </p>
-                            </div>
-                            <div>
-                                <div class="w-20 text-center bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                                    <a th:href="@{/profile/edit}">Edit</a>
-                                </div>
-                            </div>
-                    </form>
+        <h2 class="text-xl font-semibold mb-6">Profile</h2>
+        <form class="space-y-4 max-w-2xl" id="edit-profile-form">
+            <input name="id" th:value="${session.user.id}" hidden />
+            <div class="grid grid-cols-2 gap-4 ">
+                <div>
+                    <label for="full-name" class="block font-medium mb-1">Full name:</label>
+                    <input id="full-name" name="full-name" type="text" placeholder="Enter your full name"
+                           th:value="${session.user.fullName}"
+                           class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm"
+                           readonly>
+                </div>
+                <div>
+                    <div>
+                        <label for="gender" class="block font-medium mb-1">Gender:</label>
+                        <select name="gender" id="gender"
+                                class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm"
+                                readonly>
+                            <option value="1" disabled th:selected="${session.user.gender}">Male</option>
+                            <option value="0" disabled th:selected="${!session.user.gender}">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium mb-1">Email:</label>
+                        <p class="text-gray-500 text-sm" th:text="${session.user.email.address}">
+                            <a href="#" class="text-blue-500">(Verify)</a>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium mb-1">Membership:</label>
+                    <p class="text-gray-500 text-sm">
+                        No information yet
+                        <a href="#" class="text-blue-500">(Update)</a>
+                    </p>
+                </div>
+                <div>
+                    <label class="block font-medium mb-1">Address:</label>
+                    <p class="text-gray-500 text-sm">
+                        No information yet
+                        <a th:href="@{/address}" class="text-blue-500">(Update)</a>
+                    </p>
+                </div>
+                <div>
+                    <div class="w-20 text-center bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                        <a th:href="@{/profile/edit}">Edit</a>
+                    </div>
                 </div>
             </div>
-        </main>
-        
+        </form>
         <script src="/assets/js/pages/user/profile.js"></script>
     </th:block>
 </th:block>
