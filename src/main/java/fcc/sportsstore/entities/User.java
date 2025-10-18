@@ -24,7 +24,6 @@ public class User {
 
     /**
      * User status rule:
-     * - UNVERIFIED: New user, not email verified yet
      * - ACTIVE: User that verified
      * - BANNED: User was banned
      */
@@ -58,7 +57,7 @@ public class User {
         this.password = password;
         this.fullName = username;
         this.gender = true;
-        this.status = "UNVERIFIED";
+        this.status = "ACTIVE";
 
         TimeUtil time = new TimeUtil();
         this.createdAt = time.getCurrentTimestamp();

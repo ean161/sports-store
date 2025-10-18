@@ -108,13 +108,18 @@ public class ForgetPasswordService {
         }
 
         User user = emailService.findUserByAddress(email);
+        Email emailObj = user.getEmail();
+
+        if (!emailObj.isVerified()) {
+            throw new RuntimeException("This email not verified yet.");
+        }
 
         String forgetCode = generateCode();
         ForgetPassword forgetSession = new ForgetPassword(generateId(),
                 forgetCode,
                 user);
 
-        javaMailService.sendForgetPasswordMail(user.getEmail().getAddress(), forgetCode);
+        javaMailService.sendForgetPasswordMail(emailObj.getAddress(), forgetCode);
         forgetPasswordRepository.save(forgetSession);
     }
 
