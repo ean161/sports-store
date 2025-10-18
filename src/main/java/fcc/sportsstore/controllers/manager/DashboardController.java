@@ -9,19 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/manager")
 public class DashboardController {
 
-    private final ManagerService managerService;
-
-    public DashboardController(ManagerService managerService) {
-        this.managerService = managerService;
-    }
-
     @GetMapping
     public String dashboard() {
-            return "pages/manager/dashboard";
-    }
-
-    @GetMapping("/manage-users")
-    public String manageUsers() {
-        return "pages/manager/manage-users";
+        return "pages/manager/dashboard";
     }
 }

@@ -1,6 +1,7 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.Product;
+import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,8 @@ public class ProductService {
    public ProductService( ProductRepository productRepository){
        this.productRepository = productRepository;
    }
+    public Product getById(String id) {
+        return productRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Product ID not found"));
+    }
 }

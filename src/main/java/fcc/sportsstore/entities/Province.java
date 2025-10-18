@@ -21,6 +21,6 @@ public class Province {
 
     private Integer vtpReferrenceId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wards> awardsList;
 }

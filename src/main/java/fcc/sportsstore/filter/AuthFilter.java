@@ -44,7 +44,9 @@ public class AuthFilter implements Filter {
                 "/register",
                 "/manager/login");
         List<String> unprotectedPathPrefix = List.of(
-                "/forget-password");
+                "/forget-password",
+                "/collection",
+                "/product");
         List<String> assets = List.of(
                 ".css",
                 ".js",
