@@ -1,8 +1,8 @@
 package fcc.sportsstore.services;
 
-import fcc.sportsstore.entities.Product;
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.repositories.ProductCollectionRepository;
+import fcc.sportsstore.repositories.ProductMediaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,15 +10,25 @@ import java.util.List;
 public class ProductCollectionService {
     final private ProductCollectionRepository productCollectionRepository;
 
-    public ProductCollectionService(ProductCollectionRepository productCollectionRepository){
+    public ProductCollectionService(ProductCollectionRepository productCollectionRepository) {
         this.productCollectionRepository = productCollectionRepository;
     }
 
-    public List<ProductCollection> getAllCollection(){
+    public List<ProductCollection> getAll() {
         return productCollectionRepository.findAll();
     }
 
-    public List<Product> getAllProduct(String id){
-        return productCollectionRepository.findById(id).orElseThrow().getProducts();
+    public ProductCollection getById(String id) {
+        return productCollectionRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Product collection ID not found"));
+    }
+
+    @Service
+    public static class ProductMediaService {
+         private ProductMediaRepository productMediaRepository;
+
+         public ProductMediaService(ProductMediaRepository productMediaRepository) {
+             this.productMediaRepository = productMediaRepository;
+         }
     }
 }

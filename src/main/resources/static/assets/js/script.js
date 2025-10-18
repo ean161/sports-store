@@ -34,4 +34,18 @@ async function post(url, data = null) {
             window.location.href = res.data;
         }
     }
+
+}
+
+function scrollToId(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+        element.focus({ preventScroll: true });
+    } else {
+        console.warn(`Element with id "${id}" not found.`);
+    }
 }

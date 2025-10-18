@@ -27,30 +27,7 @@ public class HomeController {
      */
     @GetMapping
     public String index(Model model){
-        model.addAttribute("collections",productCollectionService.getAllCollection());
+        model.addAttribute("collections", productCollectionService.getAll());
         return "pages/home";
     }
-//
-//    @GetMapping()
-//    public String index(Model model) {
-//        List<ProductCollection> collections = productCollectionService.findAll();
-//        model.addAttribute("collections", collections);
-//        model.addAttribute("products", productService.findAll());
-//        model.addAttribute("selectedCollection", null);
-//        return "home";
-//    }
-//
-//    @GetMapping("/collections/{id}")
-//    public String showCollection(@PathVariable("id") String id, Model model) {
-//        List<ProductCollection> collections = productCollectionService.findAll();
-//        List<Product> productsByCollection = productService.findByCollectionId(id);
-//
-//        model.addAttribute("collections", collections);
-//        model.addAttribute("products", productsByCollection);
-//        model.addAttribute("selectedCollection", id);
-//
-//        return "home";
-//    }
-
-
 }

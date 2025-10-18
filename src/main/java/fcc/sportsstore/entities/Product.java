@@ -22,6 +22,9 @@ public class Product {
     @Column(length = 500)
     private String description;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductMedia> productMedia;
+
     @ManyToOne
     @JoinColumn(name = "product_type_id")
     private ProductType productType;

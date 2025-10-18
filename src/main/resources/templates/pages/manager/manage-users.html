@@ -9,9 +9,6 @@
                     <th:block th:if="${session.manager.role == 'ADMIN'}">
                         <div th:replace="~{fragment/admin :: admin-slidebar}"></div>
                     </th:block>
-                    <th:block th:if="${session.manager.role == 'STAFF'}">
-                        <div th:replace="~{fragment/staff :: staff-slidebar}"></div>
-                    </th:block>
                 </th:block>
                 <div class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">
                     <div class="col-span-9">
