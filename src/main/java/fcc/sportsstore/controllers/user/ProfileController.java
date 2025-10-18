@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
@@ -35,7 +37,7 @@ public class ProfileController {
         try {
             profileService.editProfile(request, id, fullName, gender);
 
-            Response res = new Response(2, null, "/profile");
+            Response res = new Response(1, "Your profile was updated.");
             return res.pull();
         } catch(Exception e){
             Response res = new Response(0, e.getMessage());

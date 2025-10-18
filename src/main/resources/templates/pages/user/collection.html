@@ -3,15 +3,15 @@
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Collection')}">
     <th:block th:fragment="content">
         <header th:replace="~{fragment/user/header :: header}"></header>
+        <th:block th:replace="~{fragment/user/navbar :: navbar}"></th:block>
 
         <main class="max-w-7xl mx-auto px-4 py-6">
             <section class="mt-12 cursor-pointer">
                 <h2 th:text="${collection.name}" class="text-2xl font-bold text-gray-800 mb-8"></h2>
                 <div class="grid grid-cols-5 gap-6">
-                    <a
-                            th:each="prod : ${collection.products}"
-                            th:href="${'/product/' + prod.id}"
-                            class="bg-gradient-to-br from-gray-50 to-gray-300 rounded-xl p-6 hover:scale-105">
+                    <a th:each="prod : ${collection.products}"
+                       th:href="${'/product/' + prod.id}"
+                       class="bg-gradient-to-br from-gray-50 to-gray-300 rounded-xl p-6 hover:scale-105">
                         <p th:text="${prod.title}" class="font-semibold mb-2"></p>
                         <div th:if="${prod.productMedia.size() > 0}" class="flex justify-end">
                             <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-white rounded-lg shadow-lg p-2">

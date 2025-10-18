@@ -23,4 +23,6 @@ public class ProductCollection {
     private List<Product> products;
 
     private Long createdAt;
+
+
 }
