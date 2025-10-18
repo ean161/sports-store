@@ -1,0 +1,11 @@
+<nav class="bg-white" th:fragment="navbar">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between">
+            <span th:each="collection : ${collections}"
+                  th:text="${collection.name}"
+                  th:attr="onclick=${'productCollectionMove(`collection-' + collection.id + '`)'}"
+                  class="px-4 py-4 hover:text-red-600 font-medium text-gray-700 border-b-2 border-transparent hover:border-red-600 cursor-pointer"></span>
+        </div>
+    </div>
+    <hr class="text-gray-100" />
+</nav>

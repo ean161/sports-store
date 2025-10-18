@@ -1,6 +1,7 @@
 package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.Product;
+import fcc.sportsstore.services.ProductCollectionService;
 import fcc.sportsstore.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/product")
 public class ProductController {
 
+    private final ProductCollectionService productCollectionService;
+
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductCollectionService productCollectionService,
+                             ProductService productService) {
+        this.productCollectionService = productCollectionService;
         this.productService = productService;
     }
 
@@ -28,6 +33,7 @@ public class ProductController {
             return "redirect:/";
         }
 
+        model.addAttribute("collections", productCollectionService.getAll());
         model.addAttribute("product", prod);
         return "pages/user/product";
     }

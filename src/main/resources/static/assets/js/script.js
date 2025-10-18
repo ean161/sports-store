@@ -1,6 +1,6 @@
 var out;
 
-$(document).ready(function() {
+$(document).ready(function () {
     out = new Notyf();
 });
 
@@ -44,8 +44,16 @@ function scrollToId(id) {
             behavior: "smooth",
             block: "center",
         });
-        element.focus({ preventScroll: true });
+        element.focus({preventScroll: true});
     } else {
         console.warn(`Element with id "${id}" not found.`);
+    }
+}
+
+function productCollectionMove(id) {
+    if (document.getElementById(id)) {
+        scrollToId(id);
+    } else {
+        window.location.href = `/collection/${id.split("-")[1]}`;
     }
 }

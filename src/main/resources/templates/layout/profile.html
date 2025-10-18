@@ -5,7 +5,7 @@
         <header th:replace="~{fragment/user/header :: header}"></header>
         <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
             <div th:replace="~{fragment/user/sidebar :: slidebar}"></div>
-            <main class="flex-1 p-8 bg-white shadow-md m-4 rounded">
+            <main class="flex-1 p-8 bg-white m-4">
                 <th:block th:replace="${content}"></th:block>
             </main>
         </div>
