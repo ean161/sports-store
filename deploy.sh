@@ -9,5 +9,6 @@ LOCAL_FILE="./target/sports-store-0.0.1-SNAPSHOT.jar"
 
 ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "pkill -f 'java -jar sports-store-0.0.1-SNAPSHOT.jar' || true"
 ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "rm -f $REMOTE_FILE"
+mvn clean package
 scp -P $SSH_PORT $LOCAL_FILE $SSH_USER@$SSH_HOST:$REMOTE_DIR/
 ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "cd $REMOTE_DIR && java -jar sports-store-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
