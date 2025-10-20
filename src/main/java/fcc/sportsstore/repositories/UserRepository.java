@@ -2,6 +2,8 @@ package fcc.sportsstore.repositories;
 
 import fcc.sportsstore.entities.User;
 import jakarta.persistence.LockModeType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 
@@ -18,5 +20,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByToken(String token);
 
+    Page<User> findAll(Pageable pageable);
 
+    Page<User> findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(String searchForUsername,
+                                                                                String searchForFullName,
+                                                                                Pageable pageable);
 }

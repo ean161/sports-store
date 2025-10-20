@@ -1,31 +1,49 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.Product;
+import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.repositories.ProductTypeRepository;
-import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductTypeService {
-    private final ProductTypeRepository repo;
+    private final ProductTypeRepository productTypeRepository;
 
-    public ProductTypeService(ProductTypeRepository repo) {
-        this.repo = repo;
+    public ProductTypeService(ProductTypeRepository productTypeRepository) {
+        this.productTypeRepository = productTypeRepository;
     }
 
-    public List<ProductType> findAll() {
-        return repo.findAll();
+    public List<ProductType> getAll() {
+        return productTypeRepository.findAll();
     }
 
-    public Page<ProductType> getProductType(Pageable pageable) {
-        return repo.findAll(pageable);
+    public ProductType getById(String id) {
+        return productTypeRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Product collection ID not found"));
     }
 
-    public Page<ProductType> getProductTypeByIdOrName(String search, Pageable pageable) {
-        return repo.findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
+    public List<ProductType> getInitProductTypeByCollection(ProductCollection collection) {
+        List<ProductType> types = new ArrayList<>();
+
+        for (Product product : collection.getProducts()) {
+            ProductType type = product.getProductType();
+            if (!types.contains(type)) {
+                List<Product> collectionProducts = new ArrayList<>();
+                for (Product prod : type.getProducts()) {
+                    if (prod.getProductCollection().equals(collection)) {
+                        collectionProducts.add(prod);
+                    }
+                }
+
+                type.setProducts(collectionProducts);
+                types.add(type);
+            }
+        }
+
+        return types;
     }
 }

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+<th:block th:replace="~{layout/profile :: layout(~{::content}, 'Profile')}">
     <th:block th:fragment="content">
-        <header th:replace="~{fragment/header :: header}"></header>
         <div class="flex min-h-screen">
-            <div th:replace="~{fragment/profile  :: profile-slidebar}"></div>
-
-            <div class="flex-1 p-8 bg-white shadow-md m-4 rounded">
+            <div class="flex-1">
                 <div class="max-w-2xl mx-2">
                     <h2 class="text-xl font-semibold mb-6">Address</h2>
                     <p class="pb-5 space-y-4  text-base">This is the address where you usually receive goods.

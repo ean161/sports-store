@@ -5,14 +5,13 @@ $(document).ready(function () {
 });
 
 const datatableLang = {
-    search: "Search&ensp;",
+    search: "Tìm kiếm&ensp;",
     infoEmpty: "",
-    emptyTable: "No data available",
-    zeroRecords: "No matching records found",
-    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+    emptyTable: "Không có dữ liệu",
+    zeroRecords: "Không tìm thấy dữ liệu",
+    info: "Hiển thị từ dòng _START_ đến _END_, tổng _TOTAL_ dòng",
     lengthMenu: ""
 };
-
 
 async function post(url, data = null) {
     let res = await $.ajax({
@@ -60,10 +59,12 @@ function scrollToId(id) {
     }
 }
 
-function productCollectionMove(id) {
+    function productCollectionMove(id) {
     if (document.getElementById(id)) {
         scrollToId(id);
     } else {
         window.location.href = `/collection/${id.split("-")[1]}`;
     }
+
+
 }

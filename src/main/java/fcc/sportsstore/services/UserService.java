@@ -9,6 +9,8 @@ import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -175,5 +177,13 @@ public class UserService {
         }
         return findByUsernameIgnoreCaseAndPassword(username, hashedPassword).orElseThrow(
                 () -> new RuntimeException("Account or password does not exist."));
+    }
+
+    public Page<User> getAllByPageable(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    public Page<User> getUserByUsernameOrFullName(String search, Pageable pageable) {
+        return userRepository.findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(search, search, pageable);
     }
 }

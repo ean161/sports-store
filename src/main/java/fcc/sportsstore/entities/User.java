@@ -1,5 +1,7 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,6 +44,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "email_id")
+    @JsonIgnore
     private Email email;
 
     private Long createdAt;

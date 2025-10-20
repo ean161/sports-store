@@ -29,9 +29,9 @@ public class RandomUtil {
     public String randId(String name) {
         TimeUtil time = new TimeUtil();
 
-        return String.format("%d.ID{%s}.%s",
-                time.getCurrentTimestamp(),
+        return String.format("id_%s_%d_%s",
                 name.toUpperCase(),
+                time.getCurrentTimestamp(),
                 randString(10));
     }
 
@@ -42,9 +42,9 @@ public class RandomUtil {
     public String randToken(String name) {
         TimeUtil time = new TimeUtil();
 
-        return String.format("%d.TOKEN{%s}.%s",
-                time.getCurrentTimestamp(),
+        return String.format("token_%s_%d_%s",
                 name.toUpperCase(),
+                time.getCurrentTimestamp(),
                 randString(500));
     }
 
@@ -55,9 +55,9 @@ public class RandomUtil {
     public String randCode(String name) {
         TimeUtil time = new TimeUtil();
 
-        return String.format("%d.CODE{%s}.%s",
-                time.getCurrentTimestamp(),
+        return String.format("code_%s_%d_%s",
                 name.toUpperCase(),
+                time.getCurrentTimestamp(),
                 randString(100));
     }
 }

@@ -6,19 +6,34 @@
         <th:block th:replace="~{fragment/user/navbar :: navbar}"></th:block>
 
         <main class="max-w-7xl mx-auto px-4 py-6">
-            <section class="mt-12 cursor-pointer">
-                <h2 th:text="${collection.name}" class="text-2xl font-bold text-gray-800 mb-8"></h2>
-                <div class="grid grid-cols-5 gap-6">
-                    <a th:each="prod : ${collection.products}"
-                       th:href="${'/product/' + prod.id}"
-                       class="bg-gradient-to-br from-gray-50 to-gray-300 rounded-xl p-6 hover:scale-105">
-                        <p th:text="${prod.title}" class="font-semibold mb-2"></p>
-                        <div th:if="${prod.productMedia.size() > 0}" class="flex justify-end">
-                            <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-white rounded-lg shadow-lg p-2">
-                                <img th:if="${prod.productMedia.first.type == 'image'}" th:src="${prod.productMedia.first.dir}" class="w-full" />
+            <section class="cursor-pointer">
+
+                <h2 th:text="${collection.name}" class="text-2xl font-bold text-gray-800"></h2>
+
+                <div class="flex gap-4 overflow-x-auto py-4 mb-4 rounded-lg">
+                    <div th:each="type : ${types}"
+                         th:attr="onclick=${'scrollToId(`type-' + type.id + '`)'}"
+                         class="flex flex-col items-center bg-white rounded-xl shadow-sm hover:shadow-md px-4 py-2 cursor-pointer transition border border-gray-200 hover:border-red-500 w-50">
+                        <span th:text="${type.name}" class="font-medium text-gray-800 hover:text-red-600"></span>
+                        <p class="text-gray-500 text-sm mt-1" th:text="${type.products.size()} + ' Product'"></p>
+                    </div>
+                </div>
+
+
+                <div th:each="type : ${types}" class="mb-10" th:id="${'type-' + type.id}">
+                    <h3 th:text="${type.name}" class="text-xl font-semibold mb-4"></h3>
+
+                    <div class="grid grid-cols-5 gap-6">
+                        <a th:each="prod : ${collection.products}"
+                           th:if="${prod.productType != null and prod.productType.id == type.id}"
+                           th:href="@{'/product/' + ${prod.id}}"
+                           class="bg-gradient-to-br from-gray-50 to-gray-200 rounded-xl p-6 hover:scale-105 transition">
+                            <p th:text="${prod.title}" class="font-semibold mb-2"></p>
+                            <div th:if="${prod.productMedia.size() > 0}" class="flex justify-center">
+                                <img th:src="${prod.productMedia[0].dir}" class="w-20 h-20 rounded-lg shadow-md"/>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </section>
         </main>

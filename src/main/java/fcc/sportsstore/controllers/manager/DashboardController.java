@@ -1,6 +1,5 @@
 package fcc.sportsstore.controllers.manager;
 
-import fcc.sportsstore.services.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +15,6 @@ public class DashboardController {
 
     @GetMapping("/manage-users")
     public String manageUsers() {
-        return "pages/manager/manage-users";
+        return "manage-user";
     }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<header th:replace="~{fragment/manager/header :: header}"></header>
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+        <main class="bg-gray-100 font-sans">
+            <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
+                <th:block th:if="${session.manager != null}">
+                    <th:block th:if="${session.manager.role == 'ADMIN'}">
+                        <div th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></div>
+                    </th:block>
+                </th:block>
+                <div class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">
+                    <table id="list" class="table table-auto cell-border compact stripe hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Full name</th>
+                                <th>Status</th>
+                                <th>Gender</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+        <script src="/assets/js/pages/manager/manage-user.js"></script>
+    </th:block>
+</th:block>
+</html>
