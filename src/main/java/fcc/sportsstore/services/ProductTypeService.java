@@ -7,6 +7,9 @@ import fcc.sportsstore.repositories.ProductTypeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,5 +48,16 @@ public class ProductTypeService {
         }
 
         return types;
+    }
+
+    public Page<ProductType> getProductType(Pageable pageable) {
+        return productTypeRepository.findAll(pageable);
+    }
+
+    public Page<ProductType> getProductTypeByIdOrName(String search, Pageable pageable) {
+        return productTypeRepository.findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search,
+                                                                                            search,
+                                                                                            pageable);
+
     }
 }
