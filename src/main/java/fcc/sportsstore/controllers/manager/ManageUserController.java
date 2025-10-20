@@ -2,6 +2,7 @@ package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.utils.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -29,5 +30,12 @@ public class ManageUserController {
             return userService.getUserByUsernameOrFullName(search, pageable);
         }
         return userService.getAllByPageable(pageable);
+    }
+
+    @PostMapping("/user-details")
+    @ResponseBody
+    public Object getUserDetails(@RequestParam(value = "id") String id) {
+        Response res = new Response(1, null, userService.getById(id));
+        return res.pull();
     }
 }

@@ -21,7 +21,7 @@ async function post(url, data = null) {
     });
 
     if ("code" in res) {
-        if ("message" in res) {
+        if ("message" in res && res.message != null) {
             if (res.code === 0) {
                 out.error(res.message);
             } else if (res.code === 1) {
@@ -44,6 +44,7 @@ async function post(url, data = null) {
         }
     }
 
+    return res;
 }
 
 function scrollToId(id) {
@@ -59,12 +60,14 @@ function scrollToId(id) {
     }
 }
 
-    function productCollectionMove(id) {
+function productCollectionMove(id) {
     if (document.getElementById(id)) {
         scrollToId(id);
     } else {
         window.location.href = `/collection/${id.split("-")[1]}`;
     }
+}
 
-
+function openModal(id) {
+    $(`#${id}-btn`).click();
 }

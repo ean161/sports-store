@@ -32,9 +32,9 @@ $(document).ready(function () {
         },
         order: [[0, "desc"]],
         columns: [
-            {data: "id"},
-            {data: "username", orderable: false},
-            {data: "fullName", orderable: false},
+            { data: "id", orderable: false },
+            { data: "username", orderable: false },
+            { data: "fullName", orderable: false },
             {
                 data: "status",
                 orderable: false,
@@ -48,33 +48,30 @@ $(document).ready(function () {
                     }-800">${data}</span>`;
                 }
             },
-
             {
                 data: "gender",
                 orderable: false,
                 render: function (data, type, row) {
-                return `<span>${data == "FALSE" ? "Female" : "Male"}</span>`;
+                    return `<span>${!data ? `Female` : `Male`}</span>`;
                 }
             },
             {
                 data: "action",
+                orderable: false,
                 render: function (data, type, row) {
-                    return ` <span class="text-red-800 cursor-pointer rounded-xl bg-red-200">Set Status
-                        </span>`;
+                    return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">Details</button>`;
                 }
-            },
-            // { data: "createdDateDisplay", orderable: false },
-            // {
-            //     data: "actions",
-            //     orderable: false,
-            //     render: function (data, type, row) {
-            //         if (data == true) {
-            //             return `<button class="uk-button uk-button-secondary" onclick="revokeLicense(${row.id})">Thu hồi</button>`;
-            //         }
-            //
-            //         return ``;
-            //     }
-            // }
+            }
         ]
     });
 });
+
+async function details(id) {
+    let res = await post("/manager/user/user-details", {
+        id: id
+    });
+
+    $("#ud-id").val(res.data.id);
+
+    openModal("user-details");
+}

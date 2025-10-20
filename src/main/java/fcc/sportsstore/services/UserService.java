@@ -186,4 +186,8 @@ public class UserService {
     public Page<User> getUserByUsernameOrFullName(String search, Pageable pageable) {
         return userRepository.findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(search, search, pageable);
     }
+
+    public User getById(String id) {
+        return userRepository.findById(id).orElseThrow();
+    }
 }
