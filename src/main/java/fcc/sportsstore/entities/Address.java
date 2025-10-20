@@ -34,6 +34,8 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+
     public Address(String id, String note, String phoneNumber, String addressDetail, Province province, Wards wards, User user) {
         this.id = id;
         this.note = note;

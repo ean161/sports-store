@@ -27,7 +27,7 @@
                     <a th:href="@{/profile}" th:text="${session.user.fullName}"></a>
                 </div>
                 <div th:if="${session.user == null}" class="text-center cursor-pointer hover:text-red-600 duration-300 group">
-                    <div class="p-1 bg-white rounded-2xl pl-3 pr-3 text-black text-base font-bold hover:bg-black hover:text-white">
+                    <div class="inline-flex w-full justify-center rounded-2xl bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-600 sm:w-auto cursor-pointer">
                         <a href="/login" >Login</a>
                     </div>
                 </div>

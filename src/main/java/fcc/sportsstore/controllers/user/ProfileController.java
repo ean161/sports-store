@@ -1,9 +1,14 @@
 package fcc.sportsstore.controllers.user;
 
+import fcc.sportsstore.entities.Address;
+import fcc.sportsstore.entities.User;
+import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.services.user.ProfileService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -13,9 +18,11 @@ import java.util.Map;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final AddressService addressService;
 
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, AddressService addressService) {
         this.profileService = profileService;
+        this.addressService = addressService;
     }
 
     @GetMapping
@@ -44,4 +51,7 @@ public class ProfileController {
             return res.pull();
         }
     }
+
+
+
 }

@@ -7,49 +7,52 @@ import fcc.sportsstore.entities.Wards;
 import fcc.sportsstore.repositories.AddressRepository;
 import fcc.sportsstore.repositories.ProvinceRepository;
 import fcc.sportsstore.repositories.WardsRepository;
-import fcc.sportsstore.services.ProvinceService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AddressService {
 
+    private final AddressRepository addressRepository;
+    private final ProvinceRepository provinceRepository;
+    private final WardsRepository wardsRepository;
+    private final UserService userService;
 
-    final private AddressRepository addressRepository;
-    final private ProvinceRepository provinceRepository;
-    final private WardsRepository wardsRepository;
-    final private UserService userService;
-
-    public AddressService(AddressRepository addressRepository, ProvinceRepository provinceRepository, WardsRepository wardsRepository, UserService userService) {
+    public AddressService(AddressRepository addressRepository,
+                          ProvinceRepository provinceRepository,
+                          WardsRepository wardsRepository,
+                          UserService userService) {
         this.addressRepository = addressRepository;
         this.provinceRepository = provinceRepository;
         this.wardsRepository = wardsRepository;
         this.userService = userService;
     }
 
-
     public List<Address> getAllAdress(User user) {
         return addressRepository.findByUser(user);
     }
 
-    public String generateId() {
-        String id;
+    private String generateId() {
         RandomUtil rand = new RandomUtil();
+        String id;
         do {
             id = rand.randId("address");
         } while (addressRepository.findById(id).isPresent());
         return id;
     }
 
+    public void addAddress(HttpServletRequest request,
+                           String note,
+                           String phone,
+                           String detail,
+                           String provinceId,
+                           String wardsId) {
 
-    public void addAddress(HttpServletRequest request, String note, String phone, String detail) {
         Validate validate = new Validate();
         User caller = userService.getUserFromSession(request);
 
@@ -72,23 +75,25 @@ public class AddressService {
             throw new RuntimeException("Address detail must be 5–200 characters and can only contain , . / -");
         }
 
+        Province province = provinceRepository.findById(provinceId)
+                .orElseThrow(() -> new RuntimeException("Invalid province selected."));
+        Wards wards = wardsRepository.findById(wardsId)
+                .orElseThrow(() -> new RuntimeException("Invalid ward selected."));
+
+        if (!wards.getProvince().getId().equals(province.getId())) {
+            throw new RuntimeException("Selected ward does not belong to the selected province.");
+        }
+
         Address address = new Address();
         address.setId(generateId());
         address.setNote(note);
         address.setPhoneNumber(phone);
         address.setAddressDetail(detail);
         address.setUser(caller);
+        address.setProvince(province);
+        address.setWards(wards);
 
         addressRepository.save(address);
     }
 
-    public void deleteAddress(HttpServletRequest request, String id) {
-        User caller = userService.getUserFromSession(request);
-        Optional<Address> address = addressRepository.findById(id);
-        if (address.isEmpty()) {
-            throw new RuntimeException("Address does not exist.");
-        }
-
-        addressRepository.delete(address.get());
-    }
 }

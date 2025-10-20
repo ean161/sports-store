@@ -8,6 +8,7 @@ import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,10 @@ public class AddressController {
     private final UserService userService;
 
 
-    public AddressController(AddressService addressService, ProvinceRepository provinceRepository, WardsRepository wardsRepository, UserService userService) {
+    public AddressController(AddressService addressService,
+                             ProvinceRepository provinceRepository,
+                             WardsRepository wardsRepository,
+                             UserService userService) {
         this.addressService = addressService;
         this.provinceRepository = provinceRepository;
         this.wardsRepository = wardsRepository;
@@ -40,7 +44,7 @@ public class AddressController {
     }
 
     @GetMapping("/add")
-    public String edit(Model model) {
+    public String addForm(Model model) {
         model.addAttribute("address", new Address());
         model.addAttribute("provinces", provinceRepository.findAll());
         model.addAttribute("wards", wardsRepository.findAll());
@@ -49,16 +53,20 @@ public class AddressController {
 
     @PostMapping("/add")
     @ResponseBody
-    public Object editAddress(HttpServletRequest request,
-                              @RequestParam(value = "note", required = false) String note,
-                              @RequestParam(value = "phoneNumber", required = false) String phone,
-                              @RequestParam(value = "addressDetail", required = false) String detail) {
+    public Object addAddress(HttpServletRequest request,
+                             @RequestParam(value = "note", required = false) String note,
+                             @RequestParam(value = "phone", required = false) String phone,
+                             @RequestParam(value = "detail", required = false) String detail,
+                             @RequestParam(value = "provinceId", required = false) String provinceId,
+                             @RequestParam(value = "wardsId", required = false) String wardsId) {
         try {
-            addressService.addAddress(request, note, phone, detail);
-            Response res = new Response(1,
+            addressService.addAddress(request, note, phone, detail, provinceId, wardsId);
+
+            Response res = new Response(
+                    1,
                     "Add address successfully.",
-                    Map.of("redirect", "/address",
-                            "time", 500));
+                    Map.of("redirect", "/address", "time", 500)
+            );
             return res.pull();
 
         } catch (Exception e) {
