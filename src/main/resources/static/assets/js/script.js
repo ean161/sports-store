@@ -4,6 +4,16 @@ $(document).ready(function () {
     out = new Notyf();
 });
 
+const datatableLang = {
+    search: "Search&ensp;",
+    infoEmpty: "",
+    emptyTable: "No data available",
+    zeroRecords: "No matching records found",
+    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+    lengthMenu: ""
+};
+
+
 async function post(url, data = null) {
     let res = await $.ajax({
         url: url,
