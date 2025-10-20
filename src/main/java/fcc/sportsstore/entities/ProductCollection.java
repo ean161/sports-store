@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class ProductCollection {
     private String name;
 
     @OneToMany(mappedBy = "productCollection", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonBackReference
     private List<Product> products;
 
     private Long createdAt;

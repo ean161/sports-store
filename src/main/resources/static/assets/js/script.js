@@ -5,13 +5,14 @@ $(document).ready(function () {
 });
 
 const datatableLang = {
-    search: "Tìm kiếm&ensp;",
+    search: "Search&ensp;",
     infoEmpty: "",
-    emptyTable: "Không có dữ liệu",
-    zeroRecords: "Không tìm thấy dữ liệu",
-    info: "Hiển thị từ dòng _START_ đến _END_, tổng _TOTAL_ dòng",
+    emptyTable: "No data available",
+    zeroRecords: "No matching records found",
+    info: "Showing _START_ to _END_ of _TOTAL_ entries",
     lengthMenu: ""
 };
+
 
 async function post(url, data = null) {
     let res = await $.ajax({
@@ -29,15 +30,15 @@ async function post(url, data = null) {
             }
         }
 
-        if ("data" in res) {
-            if (typeof res.data === 'object') {
-                if ("redirect" in res.data && "time" in res.data) {
-                    setTimeout(() => {
-                        window.location.href = res.data.redirect;
-                    }, res.data.time);
-                }
-            }
-        }
+        // if ("data" in res) {
+        //     if (typeof res.data === 'object') {
+        //         if ("redirect" in res.data && res.data.redirect != null) {
+        //             setTimeout(() => {
+        //                 window.location.href = res.data.redirect;
+        //             }, res.data.time);
+        //         }
+        //     }
+        // }
 
         if (res.code === 2) {
             window.location.href = res.data;

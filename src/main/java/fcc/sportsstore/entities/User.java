@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fcc.sportsstore.utils.TimeUtil;
@@ -44,7 +45,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "email_id")
-    @JsonIgnore
+    @JsonBackReference
     private Email email;
 
     private Long createdAt;

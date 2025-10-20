@@ -190,4 +190,24 @@ public class UserService {
     public User getById(String id) {
         return userRepository.findById(id).orElseThrow();
     }
+
+   public void banUser(String id){
+        User user = userRepository.findById(id).orElseThrow();
+        if(user == null) {
+            throw  new RuntimeException("User not found");
+        }
+        user.setStatus("BANNED");
+        save(user);
+
+   }
+
+    public void pardonUser(String id){
+        User user = userRepository.findById(id).orElseThrow();
+        if(user == null) {
+            throw  new RuntimeException("User not found");
+        }
+        user.setStatus("ACTIVE");
+        save(user);
+
+    }
 }

@@ -1,6 +1,6 @@
 package fcc.sportsstore.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,21 +26,21 @@ public class Product {
     private double price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonBackReference
     private List<ProductMedia> productMedia;
 
     @ManyToOne
     @JoinColumn(name = "product_type_id")
-    @JsonIgnore
+    @JsonBackReference
     private ProductType productType;
 
     @OneToMany(mappedBy = "product")
-    @JsonIgnore
+    @JsonBackReference
     private List<ProductPropertyData> productPropertyData;
 
     @ManyToOne
     @JoinColumn(name = "product_collection_id")
-    @JsonIgnore
+    @JsonBackReference
     private ProductCollection productCollection;
 
     private Long createdAt;

@@ -1,7 +1,9 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,7 @@ public class Email {
     private String code;
 
     @OneToOne(mappedBy = "email")
-    @JsonIgnore
+    @JsonManagedReference
     private User user;
 
     private Long verifiedAt, createdAt;

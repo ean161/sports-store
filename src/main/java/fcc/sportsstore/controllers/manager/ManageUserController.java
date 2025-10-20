@@ -32,10 +32,26 @@ public class ManageUserController {
         return userService.getAllByPageable(pageable);
     }
 
-    @PostMapping("/user-details")
+    @PostMapping("/details")
     @ResponseBody
     public Object getUserDetails(@RequestParam(value = "id") String id) {
         Response res = new Response(1, null, userService.getById(id));
         return res.pull();
+    }
+
+    @PostMapping("/ban")
+    @ResponseBody
+    public Object banUser(@RequestParam(value = "id" ) String id) {
+        userService.banUser(id);
+        Response res = new Response(1, "User was banned");
+        return  res.pull();
+    }
+
+    @PostMapping("/pardon")
+    @ResponseBody
+    public Object pardonUser(@RequestParam(value = "id" ) String id) {
+        userService.pardonUser(id);
+        Response res = new Response(1, "User was pardoned");
+        return  res.pull();
     }
 }

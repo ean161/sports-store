@@ -66,12 +66,47 @@ $(document).ready(function () {
     });
 });
 
-async function details(id) {
-    let res = await post("/manager/user/user-details", {
+async function pushDetails(id) {
+    let res = await post("/manager/user/details", {
         id: id
     });
 
+    $("#ud-username-header").html(res.data.username);
     $("#ud-id").val(res.data.id);
+    $("#ud-userName").val(res.data.username);
+    $("#ud-fullName").val(res.data.fullName);
+    $("#ud-status").val(res.data.status);
+    $("#ud-gender").val(!res.data.gender ? "Female" : "Male");
+
+    if (res.data.status === "BANNED") {
+        $("#action-btns").html(`<button id="pardon-btn" type="button" command="close" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500">Pardon</button>`);
+        $("#pardon-btn").attr("onclick", `pardon('${res.data.id}')`);
+    } else if(res.data.status === "ACTIVE"){
+        $("#action-btns").html(`<button id="ban-btn" type="button" command="close" class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500">Ban</button>`);
+        $("#ban-btn").attr("onclick", `ban('${res.data.id}')`);
+    }
+}
+
+async function details(id) {
+    await pushDetails(id);
 
     openModal("user-details");
+}
+
+async function ban(id) {
+    let res = await post("/manager/user/ban", {
+        id: id
+    });
+
+    pushDetails(id);
+    list.ajax.reload();
+}
+
+async function pardon(id) {
+    let res = await post("/manager/user/pardon", {
+        id: id
+    });
+
+    pushDetails(id);
+    list.ajax.reload();
 }
