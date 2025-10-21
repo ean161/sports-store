@@ -16,13 +16,12 @@ public class ManageCollectionController {
 
     private final ProductCollectionService productCollectionService;
 
-
     public ManageCollectionController(ProductCollectionService productCollectionService) {
         this.productCollectionService = productCollectionService;
     }
 
     @GetMapping
-    public String manageCollection() {
+    public String manageCollectionPage() {
         return "pages/manager/manage-collection";
     }
 
@@ -33,6 +32,6 @@ public class ManageCollectionController {
             return productCollectionService.getCollectionByIdOrName(search, pageable);
         }
 
-        return productCollectionService.getProductCollections(pageable);
+        return productCollectionService.getAll(pageable);
     }
 }

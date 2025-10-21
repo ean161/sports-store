@@ -20,11 +20,11 @@ public class ProductService {
                 () -> new RuntimeException("Product ID not found"));
     }
 
-    public Page<Product> getAllProduct(Pageable pageable) {
+    public Page<Product> getAll(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
 
-    public Page<Product> getProductByIdOrTittle(String search, Pageable pageable) {
+    public Page<Product> getByIdOrTittle(String search, Pageable pageable) {
         return productRepository.findByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(search, search, pageable);
     }
 }

@@ -25,12 +25,6 @@ public class ForgetPasswordService {
 
     final private JavaMailService javaMailService;
 
-    /**
-     * Constructor
-     * @param userService User service
-     * @param forgetPasswordRepository Forget password repository
-     * @param javaMailService Email service
-     */
     public ForgetPasswordService(UserService userService,
                                  EmailService emailService,
                                  ForgetPasswordRepository forgetPasswordRepository,
@@ -41,10 +35,6 @@ public class ForgetPasswordService {
         this.javaMailService = javaMailService;
     }
 
-    /**
-     * Generate new id for forget password session
-     * @return New valid id
-     */
     public String generateId() {
         String id;
         RandomUtil rand = new RandomUtil();
@@ -55,20 +45,11 @@ public class ForgetPasswordService {
         return id;
     }
 
-    /**
-     * Generate new forget code
-     * @return New forget code
-     */
     public String generateCode() {
         RandomUtil rand = new RandomUtil();
         return rand.randCode("forget_password");
     }
 
-    /**
-     * Check forget code valid (based on status, expired time)
-     * @param code Forget code to check
-     * @return TRUE if valid, FALSE if invalid
-     */
     public boolean isValidCode(String code) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
@@ -76,23 +57,14 @@ public class ForgetPasswordService {
         return forgetPasswordRepository.findByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now).isPresent();
     }
 
-    /**
-     * Check forget session exists by email
-     * @param email Email to check
-     * @return TRUE if having a valid session, FALSE if not exists
-     */
     public boolean existsValidCodeByEmail(String email) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
-        Email userEmail = emailService.findByAddress(email).orElseThrow();
+        Email userEmail = emailService.getByAddress(email).orElseThrow();
 
         return forgetPasswordRepository.findByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now).isPresent();
     }
 
-    /**
-     * Request new forget password session
-     * @param email Email to request
-     */
     @Transactional
     public void requestForget(String email) {
         Validate validate = new Validate();
@@ -107,7 +79,7 @@ public class ForgetPasswordService {
             throw new RuntimeException("You have requested too many times.");
         }
 
-        User user = emailService.findUserByAddress(email);
+        User user = emailService.getUserByAddress(email);
         Email emailObj = user.getEmail();
 
         if (!emailObj.isVerified()) {
@@ -123,12 +95,6 @@ public class ForgetPasswordService {
         forgetPasswordRepository.save(forgetSession);
     }
 
-    /**
-     * Submit to forget password
-     * @param code Forget code
-     * @param password New password
-     * @param confirmPassword New password confirm
-     */
     public void forgetPassword(String code,
             String password,
             String confirmPassword) {
@@ -159,14 +125,10 @@ public class ForgetPasswordService {
         userService.save(user);
     }
 
-    /**
-     * Get a user's email by forget code
-     * @param code Forget code
-     * @return That user's code email
-     */
     public String getEmailByCode(String code) {
         ForgetPassword codeObj = forgetPasswordRepository.findByCode(code).orElseThrow(
                 () -> new RuntimeException("Forget code not found"));
+
         return codeObj.getUser().getEmail().getAddress();
     }
 }

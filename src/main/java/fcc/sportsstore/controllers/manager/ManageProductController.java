@@ -20,7 +20,7 @@ public class ManageProductController {
     }
 
     @GetMapping
-    public String manageProduct() {
+    public String manageProductPage() {
         return "pages/manager/manage-product";
     }
 
@@ -28,8 +28,8 @@ public class ManageProductController {
     @ResponseBody
     public Page<Product> list(@RequestParam(required = false) String search, Pageable pageable) {
         if(search != null && !search.isEmpty()){
-            return productService.getProductByIdOrTittle(search, pageable);
+            return productService.getByIdOrTittle(search, pageable);
         }
-        return productService.getAllProduct(pageable);
+        return productService.getAll(pageable);
     }
 }

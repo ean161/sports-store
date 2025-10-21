@@ -1,16 +1,13 @@
-<header th:fragment="header-manager" class="bg-gradient-to-br from-blue-600 to-blue-900 text-white shadow-sm">
+<header th:fragment="header-manager" class="bg-gradient-to-br from-blue-800 to-blue-900 text-white shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+            <div th:href="@{/manager/dashboard}" class="flex items-center space-x-3">
                 <div class="relative">
-                    <div class="bg-red-600 w-12 h-12 skew-x-12"></div>
-                    <i class="fas fa-flag absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-xl"></i>
+                    <img src="/assets/img/logo.png" class="w-15" />
                 </div>
                 <div>
-                    <a th:href="@{/manager}">
-                        <div class="font-bold text-xl text-wheat-300">SPORTS STORE</div>
-                    </a>
-                    <div class="text-xs text-wheat-100">HEART OF THE GAME</div>
+                    <div class="font-bold text-xl text-white">SPORTS <span class="text-blue-200">STORE</span></div>
+                    <div class="text-xs text-gray-200">HEART OF THE GAME</div>
                 </div>
             </div>
 

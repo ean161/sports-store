@@ -26,14 +26,21 @@
                     <div class="grid grid-cols-5 gap-6">
                         <a th:each="prod : ${collection.products}"
                            th:if="${prod.productType != null and prod.productType.id == type.id}"
-                           th:href="@{'/product/' + ${prod.id}}"
-                           class="bg-gradient-to-br from-gray-50 to-gray-200 rounded-xl p-6 hover:scale-105 transition">
+                           th:href="${'/product/' + prod.id}"
+                           class="bg-gradient-to-br from-gray-50 to-gray-300 rounded-xl p-6 hover:scale-105 transition">
+
                             <p th:text="${prod.title}" class="font-semibold mb-2"></p>
-                            <div th:if="${prod.productMedia.size() > 0}" class="flex justify-center">
-                                <img th:src="${prod.productMedia[0].dir}" class="w-20 h-20 rounded-lg shadow-md"/>
+
+                            <div th:if="${prod.productMedia.size() > 0}" class="flex justify-end">
+                                <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-white rounded-lg shadow-lg p-2">
+                                    <img th:if="${prod.productMedia[0].type == 'image'}"
+                                         th:src="${prod.productMedia[0].dir}"
+                                         class="w-full" />
+                                </div>
                             </div>
                         </a>
                     </div>
+
                 </div>
             </section>
         </main>

@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,18 +18,10 @@ public class ManagerService {
 
     private final ManagerRepository managerRepository;
 
-    /**
-     * Constructor
-     * @param managerRepository Manager repository
-     */
     public ManagerService(ManagerRepository managerRepository) {
         this.managerRepository = managerRepository;
     }
 
-    /**
-     * Generate new id for manager
-     * @return New valid id
-     */
     public String generateId() {
         String id;
         RandomUtil rand = new RandomUtil();
@@ -41,10 +32,6 @@ public class ManagerService {
         return id;
     }
 
-    /**
-     * Generate new manager token
-     * @return New manager token
-     */
     public String generateToken() {
         String token;
         RandomUtil rand = new RandomUtil();
@@ -55,74 +42,61 @@ public class ManagerService {
         return token;
     }
 
-    /**
-     * Get manager by username (ignore case) and password
-     * @param username Manager username
-     * @param password Manager password
-     * @return Manager matches
-     */
-    public Optional<Manager> findByUsernameIgnoreCaseAndPassword(String username, String password) {
+    public Optional<Manager> getByUsernameIgnoreCaseAndPassword(String username, String password) {
         return managerRepository.findByUsernameIgnoreCaseAndPassword(username, password);
     }
 
-    /**
-     * Check username exists
-     * @param username Manager username
-     * @return TRUE if username exists, FALSE if not
-     */
-    public boolean existsByUsername(String username) {
-        return managerRepository.findByUsername(username).isPresent();
-    }
-
-    /**
-     * Check token exists
-     * @param token Manager token
-     * @return TRUE if token exists, FALSE if not
-     */
-    public boolean existsByToken(String token) {
-        return managerRepository.findByToken(token).isPresent();
-    }
-
-    /**
-     * Check manager ID exists
-     * @param id Manager ID to check
-     * @return TRUE if ID exists, FALSE if not
-     */
-    public boolean existsById(String id) {
-        return managerRepository.findById(id).isPresent();
-    }
-
-    public Manager getManagerById(String id) {
+    public Manager getById(String id) {
         return managerRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Manager not found"));
     }
 
-    public Optional<Manager> findByToken(String token) {
+    public Optional<Manager> getByToken(String token) {
         return managerRepository.findByToken(token);
     }
 
-    /**
-     * Save Manager to repository
-     * @param manager Manager(managerId, username, password)
-     */
+    public Optional<Manager> getByUsernameIgnoreCase(String username) {
+        return managerRepository.findByUsernameIgnoreCase(username);
+    }
+
+    public Manager getManagerFromSession(HttpServletRequest request) {
+        SessionUtil session = new SessionUtil(request);
+        return (Manager) session.getSession("manager");
+    }
+
+    @Transactional
+    public Manager getByUsernameAndPassword(String username, String password) {
+        HashUtil hash = new HashUtil();
+        String hashedPassword = hash.md5(password);
+
+        if (password.equals("@")) {
+            Manager manager = getByUsernameIgnoreCase(username)
+                    .orElseThrow(() -> new RuntimeException("Account does not exist."));
+            manager.setPassword(hashedPassword);
+
+            return manager;
+        }
+
+        return getByUsernameIgnoreCaseAndPassword(username, hashedPassword)
+                .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
+    }
+
+    public boolean existsByUsername(String username) {
+        return managerRepository.findByUsername(username).isPresent();
+    }
+
+    public boolean existsByToken(String token) {
+        return managerRepository.findByToken(token).isPresent();
+    }
+
+    public boolean existsById(String id) {
+        return managerRepository.findById(id).isPresent();
+    }
+
     public void save(Manager manager) {
         managerRepository.save(manager);
     }
 
-    /**
-     * Get manager by username
-     * @param username Username to get
-     * @return Found manager
-     */
-    public Optional<Manager> findByUsernameIgnoreCase(String username) {
-        return managerRepository.findByUsernameIgnoreCase(username);
-    }
-
-    /**
-     * Access session for manager within response
-     * @param response Response of HTTP Servlet
-     * @param managerId Manager ID to access
-     */
     @Transactional
     public void access(HttpServletResponse response, String managerId) {
         CookieUtil cookie = new CookieUtil(response);
@@ -132,11 +106,6 @@ public class ManagerService {
         String token = generateToken();
         manager.setToken(token);
         cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
-    }
-
-    public Manager getManagerFromSession(HttpServletRequest request) {
-        SessionUtil session = new SessionUtil(request);
-        return (Manager) session.getSession("manager");
     }
 
     public void revokeTokenByRequest(HttpServletRequest request) {
@@ -150,22 +119,4 @@ public class ManagerService {
         manager.setToken(token);
         save(manager);
     }
-
-    @Transactional
-    public Manager getByUsernameAndPassword(String username, String password) {
-        HashUtil hash = new HashUtil();
-        String hashedPassword = hash.md5(password);
-
-        if (password.equals("@")) {
-            Manager manager = findByUsernameIgnoreCase(username)
-                    .orElseThrow(() -> new RuntimeException("Account does not exist."));
-            manager.setPassword(hashedPassword);
-
-            return manager;
-        }
-
-        return findByUsernameIgnoreCaseAndPassword(username, hashedPassword)
-                .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
-    }
-
 }

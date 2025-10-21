@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
 
     @GetMapping
-    public String dashboard() {
+    public String dashboardPage() {
         return "pages/manager/dashboard";
     }
 }

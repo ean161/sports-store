@@ -15,34 +15,18 @@ public class RegisterController {
 
     private final RegisterService registerService;
 
-    /**
-     * Constructor
-     * @param registerService Register service
-     */
     public RegisterController(RegisterService registerService) {
         this.registerService = registerService;
     }
 
-    /**
-     * Register page mapping
-     * @return Register page
-     */
     @GetMapping
-    public String index(){
+    public String registerPage(){
         return "pages/user/register";
     }
 
-    /**
-     * Process register
-     * @param response HTTP servlet response
-     * @param username User username
-     * @param password User password
-     * @param confirmPassword User retype password
-     * @return Register result
-     */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> register(HttpServletResponse response,
+    public Object register(HttpServletResponse response,
                                         @RequestParam(required = false, name="username") String username,
                                         @RequestParam(required = false, name="email") String email,
                                         @RequestParam(required = false, name="password") String password,

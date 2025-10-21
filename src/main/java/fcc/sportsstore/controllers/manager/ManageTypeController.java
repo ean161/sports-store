@@ -23,7 +23,7 @@ public class ManageTypeController {
     }
 
     @GetMapping
-    public String manageType(){
+    public String manageTypePage(){
         return "pages/manager/manage-type";
     }
 
@@ -31,9 +31,9 @@ public class ManageTypeController {
     @ResponseBody
     public Page<ProductType> list(@RequestParam(required = false) String search, Pageable pageable){
         if(search != null && !search.isEmpty()) {
-            return productTypeService.getProductTypeByIdOrName(search, pageable);
+            return productTypeService.getByIdOrName(search, pageable);
         }
 
-        return productTypeService.getProductType(pageable);
+        return productTypeService.getAll(pageable);
     }
 }

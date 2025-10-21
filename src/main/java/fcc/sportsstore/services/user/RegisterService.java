@@ -19,23 +19,14 @@ public class RegisterService {
 
     private final EmailService emailService;
 
-    /**
-     * Constructor
-     * @param userService User service
-     */
+
     public RegisterService(UserService userService,
                            EmailService emailService) {
         this.userService = userService;
         this.emailService = emailService;
     }
 
-    /**
-     * Registers a new user.
-     * Validates username and password, ensuring password and confirm password match.
-     * @param username User username
-     * @param password User password
-     * @param confirmPassword User confirmPassword
-     */
+
     @Transactional
     public void register(HttpServletResponse response,
                          String username,

@@ -15,22 +15,11 @@ public class LoginService {
     private final ManagerService managerService;
     private final LogoutService logoutService;
 
-    /**
-     * Constructor
-     *
-     * @param managerService User service
-     */
     public LoginService(ManagerService managerService, LogoutService logoutService) {
         this.managerService = managerService;
         this.logoutService = logoutService;
     }
-
-    /**
-     * Login an account
-     *
-     * @param username User username
-     * @param password User password
-     */
+    
     @Transactional
     public void login(HttpServletRequest request, HttpServletResponse response, String username, String password) {
         if (username == null || username.isEmpty()) {

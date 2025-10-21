@@ -33,7 +33,7 @@ public class AddressService {
         this.userService = userService;
     }
 
-    public List<Address> getAllAdress(User user) {
+    public List<Address> getAll(User user) {
         return addressRepository.findByUser(user);
     }
 
@@ -46,15 +46,15 @@ public class AddressService {
         return id;
     }
 
-    public void addAddress(HttpServletRequest request,
-                           String note,
-                           String phone,
-                           String detail,
-                           String provinceId,
-                           String wardsId) {
+    public void add(HttpServletRequest request,
+                    String note,
+                    String phone,
+                    String detail,
+                    String provinceId,
+                    String wardsId) {
 
         Validate validate = new Validate();
-        User caller = userService.getUserFromSession(request);
+        User caller = userService.getFromSession(request);
 
         if (note == null || note.trim().isEmpty()) {
             throw new RuntimeException("Note must not be empty.");

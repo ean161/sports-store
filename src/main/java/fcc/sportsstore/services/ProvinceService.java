@@ -8,10 +8,6 @@ public class ProvinceService {
 
     final private ProvinceRepository provinceRepository;
 
-    /**
-     * Constructor
-     * @param provinceRepository Province repository
-     */
     public ProvinceService(ProvinceRepository provinceRepository) {
         this.provinceRepository = provinceRepository;
     }

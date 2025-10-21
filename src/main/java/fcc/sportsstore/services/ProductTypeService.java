@@ -50,14 +50,13 @@ public class ProductTypeService {
         return types;
     }
 
-    public Page<ProductType> getProductType(Pageable pageable) {
+    public Page<ProductType> getAll(Pageable pageable) {
         return productTypeRepository.findAll(pageable);
     }
 
-    public Page<ProductType> getProductTypeByIdOrName(String search, Pageable pageable) {
-        return productTypeRepository.findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search,
-                                                                                            search,
-                                                                                            pageable);
+    public Page<ProductType> getByIdOrName(String search, Pageable pageable) {
+        return productTypeRepository
+                .findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
 
     }
 }

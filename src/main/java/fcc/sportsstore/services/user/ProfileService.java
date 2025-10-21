@@ -22,7 +22,7 @@ public class ProfileService {
                             String fullName,
                             String gender) {
         Validate validate = new Validate();
-        User caller = userService.getUserFromSession(request);
+        User caller = userService.getFromSession(request);
 
         if (id == null || id.isEmpty()){
             throw new RuntimeException("Profile ID must be not empty");

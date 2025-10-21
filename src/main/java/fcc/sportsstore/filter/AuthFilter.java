@@ -44,10 +44,10 @@ public class AuthFilter implements Filter {
                 "/register",
                 "/manager/login");
         List<String> unprotectedPathPrefix = List.of(
-                "/access",
+                "/access/",
                 "/forget-password",
-                "/collection",
-                "/product");
+                "/collection/",
+                "/product/");
         List<String> assets = List.of(
                 ".css",
                 ".js",
@@ -88,14 +88,14 @@ public class AuthFilter implements Filter {
             res.sendRedirect("/");
             return;
         } else if (userService.existsByToken(token)) {
-            User user = userService.findByToken(token).orElseThrow();
+            User user = userService.getByToken(token).orElseThrow();
 
             session.deleteSession("user");
             session.deleteSession("manager");
             session.setSession("user", user);
         } else if (managerService.existsByToken(token)) {
             isManager = true;
-            Manager manager = managerService.findByToken(token).orElseThrow();
+            Manager manager = managerService.getByToken(token).orElseThrow();
 
             session.deleteSession("user");
             session.deleteSession("manager");

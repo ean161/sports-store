@@ -18,7 +18,7 @@ public class LogoutController {
     }
 
     @GetMapping
-    public String index(HttpServletRequest request, HttpServletResponse response) {
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         try {
             logoutService.logout(request, response);
         } catch (Exception e) {

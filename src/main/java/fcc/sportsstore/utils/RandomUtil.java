@@ -4,11 +4,6 @@ import java.security.SecureRandom;
 
 public class RandomUtil {
 
-    /**
-     * Random a string
-     * @param length Length of result
-     * @return Random string
-     */
     public String randString(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom random = new SecureRandom();
@@ -22,10 +17,6 @@ public class RandomUtil {
         return sb.toString();
     }
 
-    /**
-     * Random new id
-     * @return New id
-     */
     public String randId(String name) {
         TimeUtil time = new TimeUtil();
 
@@ -35,10 +26,6 @@ public class RandomUtil {
                 randString(10));
     }
 
-    /**
-     * Random new user token
-     * @return New user token
-     */
     public String randToken(String name) {
         TimeUtil time = new TimeUtil();
 
@@ -48,10 +35,6 @@ public class RandomUtil {
                 randString(500));
     }
 
-    /**
-     * Random new code
-     * @return New code
-     */
     public String randCode(String name) {
         TimeUtil time = new TimeUtil();
 

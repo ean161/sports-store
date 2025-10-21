@@ -19,7 +19,7 @@ public class ManageUserController {
     }
 
     @GetMapping
-    public String index() {
+    public String manageUserPage() {
         return "pages/manager/manage-user";
     }
 
@@ -27,30 +27,30 @@ public class ManageUserController {
     @ResponseBody
     public Page<User> list(@RequestParam(required = false) String search, Pageable pageable) {
         if (search != null && !search.isEmpty()) {
-            return userService.getUserByUsernameOrFullName(search, pageable);
+            return userService.getByUsernameOrFullName(search, pageable);
         }
         return userService.getAllByPageable(pageable);
     }
 
     @PostMapping("/details")
     @ResponseBody
-    public Object getUserDetails(@RequestParam(value = "id") String id) {
+    public Object getDetails(@RequestParam(value = "id") String id) {
         Response res = new Response(1, null, userService.getById(id));
         return res.build();
     }
 
     @PostMapping("/ban")
     @ResponseBody
-    public Object banUser(@RequestParam(value = "id" ) String id) {
-        userService.banUser(id);
+    public Object ban(@RequestParam(value = "id") String id) {
+        userService.ban(id);
         Response res = new Response(1, "User was banned");
         return  res.build();
     }
 
     @PostMapping("/pardon")
     @ResponseBody
-    public Object pardonUser(@RequestParam(value = "id" ) String id) {
-        userService.pardonUser(id);
+    public Object pardon(@RequestParam(value = "id") String id) {
+        userService.pardon(id);
         Response res = new Response(1, "User was pardoned");
         return  res.build();
     }

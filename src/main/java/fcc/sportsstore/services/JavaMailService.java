@@ -11,20 +11,10 @@ public class JavaMailService {
 
     final private JavaMailSender mailSender;
 
-    /**
-     * Constructor
-     * @param mailSender Mail sender
-     */
     public JavaMailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
-    /**
-     * Send email with plain text
-     * @param to Receiver email address
-     * @param subject Mail title
-     * @param text Mail content
-     */
     public void send(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("nguyenhoaian.itech@gmail.com");
@@ -35,12 +25,6 @@ public class JavaMailService {
         mailSender.send(message);
     }
 
-    /**
-     * Send email with HTML
-     * @param to Receiver email address
-     * @param subject Mail title
-     * @param htmlContent Mail content as HTML code
-     */
     public void sendHTML(String to, String subject, String htmlContent) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -57,11 +41,6 @@ public class JavaMailService {
         mailSender.send(mimeMessage);
     }
 
-    /**
-     * Send forget password mail to user who requested
-     * @param email Requester email
-     * @param code Forget code
-     */
     public void sendForgetPasswordMail(String email, String code) {
         String content = "<p>You have submitted a request to <b><i>recover your account password</i></b>. "
                 + "If you did, click the link below to reset your password:<p>"
@@ -71,11 +50,6 @@ public class JavaMailService {
         sendHTML(email, "SPORTS STORE - Forget your password", content);
     }
 
-    /**
-     * Send verify email mail to new user
-     * @param email Creator email
-     * @param code Verify code
-     */
     public void sendEmailVerify(String email, String code) {
         String content = "<p>Welcome to Sports Store. "
                 + "Click the link below to verify your email:<p>"

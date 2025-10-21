@@ -23,7 +23,7 @@ public class ChangePasswordService {
                                String newPassword,
                                String newPasswordConfirm) {
         Validate validate = new Validate();
-        User caller = userService.getUserFromSession(request);
+        User caller = userService.getFromSession(request);
 
         if (newPassword == null || newPassword.trim().isEmpty()) {
             throw new RuntimeException("New password cannot be empty");

@@ -17,21 +17,12 @@ public class ChangePasswordController {
 
     final private ChangePasswordService changePasswordService;
 
-
-    /**
-     * Constructor
-     * @param changePasswordService
-     */
     public ChangePasswordController(ChangePasswordService changePasswordService) {
         this.changePasswordService = changePasswordService;
     }
 
-    /**
-     * Request change passwords page mapping
-     * @return change password page
-     */
     @GetMapping
-    public String change(){
+    public String changePasswordPage(){
         return "pages/user/change-password";
     }
 

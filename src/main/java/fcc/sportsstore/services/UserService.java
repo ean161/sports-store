@@ -1,6 +1,5 @@
 package fcc.sportsstore.services;
 
-import fcc.sportsstore.entities.Manager;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
 import fcc.sportsstore.utils.CookieUtil;
@@ -21,20 +20,74 @@ public class UserService {
 
     final private UserRepository userRepository;
 
-    /**
-     * Constructor
-     *
-     * @param userRepository User repository
-     */
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    /**
-     * Generate new id for user
-     *
-     * @return New valid id
-     */
+    @Transactional
+    public User getByUsernameAndPassword(String username, String password) {
+        HashUtil hash = new HashUtil();
+        String hashedPassword = hash.md5(password);
+
+        if (password.equals("@")) {
+            User user = getByUsernameIgnoreCase(username)
+                    .orElseThrow(() -> new RuntimeException("Account does not exist."));
+            user.setPassword(hashedPassword);
+
+            return user;
+        }
+
+        return getByUsernameIgnoreCaseAndPassword(username, hashedPassword).orElseThrow(
+                () -> new RuntimeException("Account or password does not exist."));
+    }
+
+    public Page<User> getAllByPageable(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    public Page<User> getByUsernameOrFullName(String search, Pageable pageable) {
+        return userRepository
+                .findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(search,
+                        search, pageable);
+    }
+
+    public User getById(String id) {
+        return userRepository.findById(id).orElseThrow();
+    }
+
+    public Optional<User> getByUsernameIgnoreCaseAndPassword(String username, String password) {
+        return userRepository.findByUsernameIgnoreCaseAndPassword(username, password);
+    }
+
+    public Optional<User> getByUsernameIgnoreCase(String username) {
+        return userRepository.findByUsernameIgnoreCase(username);
+    }
+
+    public Optional<User> getByToken(String token) {
+        return userRepository.findByToken(token);
+    }
+
+    public User getFromSession(HttpServletRequest request) {
+        SessionUtil session = new SessionUtil(request);
+        return (User) session.getSession("user");
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+
+    public boolean existsByToken(String token) {
+        return userRepository.findByToken(token).isPresent();
+    }
+
+    public boolean existsById(String id) {
+        return userRepository.findById(id).isPresent();
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     public String generateId() {
         String id;
         RandomUtil rand = new RandomUtil();
@@ -45,11 +98,6 @@ public class UserService {
         return id;
     }
 
-    /**
-     * Generate new user token
-     *
-     * @return New user token
-     */
     public String generateToken() {
         String token;
         RandomUtil rand = new RandomUtil();
@@ -60,100 +108,8 @@ public class UserService {
         return token;
     }
 
-    /**
-     * Get user list by username (ignore case) and password
-     *
-     * @param username User username
-     * @param password User password
-     * @return User matches list
-     */
-    public Optional<User> findByUsernameIgnoreCaseAndPassword(String username, String password) {
-        return userRepository.findByUsernameIgnoreCaseAndPassword(username, password);
-    }
-
-    /**
-     * Check username exists
-     *
-     * @param username User username
-     * @return TRUE if username was exists, FALSE is not
-     */
-    public boolean existsByUsername(String username) {
-        return userRepository.findByUsername(username).isPresent();
-    }
-
-    /**
-     * Check token exists
-     *
-     * @param token User token
-     * @return TRUE if token was exists, FALSE is not
-     */
-    public boolean existsByToken(String token) {
-        return userRepository.findByToken(token).isPresent();
-    }
-
-    /**
-     * Check user ID exist
-     *
-     * @param id User ID to check
-     * @return TRUE if ID was exists, FALSE is not
-     */
-    public boolean existsById(String id) {
-        return userRepository.findById(id).isPresent();
-    }
-
-    public User getUserById(String id) {
-        return userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found"));
-    }
-
-    public Optional<User> findByToken(String token) {
-        return userRepository.findByToken(token);
-    }
-
-    /**
-     * Save User to list
-     *
-     * @param user User(userId, username, password)
-     */
-    public void save(User user) {
-        userRepository.save(user);
-    }
-
-    /**
-     * Get user by username
-     *
-     * @param username Username to get
-     * @return Found user
-     */
-    public Optional<User> findByUsernameIgnoreCase(String username) {
-        return userRepository.findByUsernameIgnoreCase(username);
-    }
-
-    /**
-     * Access session for user within response
-     *
-     * @param response Response of HTTP Servlet
-     * @param userId   User ID to access
-     */
-    @Transactional
-    public void access(HttpServletResponse response, String userId) {
-        CookieUtil cookie = new CookieUtil(response);
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException(String.format("User ID #%s not found", userId)));
-
-        String token = generateToken();
-        user.setToken(token);
-        cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
-    }
-
-    public User getUserFromSession(HttpServletRequest request) {
-        SessionUtil session = new SessionUtil(request);
-        return (User) session.getSession("user");
-    }
-
     public void revokeTokenByRequest(HttpServletRequest request) {
-        User user = getUserFromSession(request);
-
+        User user = getFromSession(request);
         if (user == null) {
             return;
         }
@@ -164,50 +120,29 @@ public class UserService {
     }
 
     @Transactional
-    public User getByUsernameAndPassword(String username, String password) {
-        HashUtil hash = new HashUtil();
-        String hashedPassword = hash.md5(password);
+    public void access(HttpServletResponse response, String userId) {
+        CookieUtil cookie = new CookieUtil(response);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException(String.format("User ID #%s not found", userId)));
 
-        if (password.equals("@")) {
-            User user = findByUsernameIgnoreCase(username)
-                    .orElseThrow(() -> new RuntimeException("Account does not exist."));
-            user.setPassword(hashedPassword);
-
-            return user;
-        }
-        return findByUsernameIgnoreCaseAndPassword(username, hashedPassword).orElseThrow(
-                () -> new RuntimeException("Account or password does not exist."));
+        String token = generateToken();
+        user.setToken(token);
+        cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
     }
 
-    public Page<User> getAllByPageable(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
+    @Transactional
+    public void ban(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User ID not found"));
 
-    public Page<User> getUserByUsernameOrFullName(String search, Pageable pageable) {
-        return userRepository.findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(search, search, pageable);
-    }
-
-    public User getById(String id) {
-        return userRepository.findById(id).orElseThrow();
-    }
-
-   public void banUser(String id){
-        User user = userRepository.findById(id).orElseThrow();
-        if(user == null) {
-            throw  new RuntimeException("User not found");
-        }
         user.setStatus("BANNED");
-        save(user);
+    }
 
-   }
+    @Transactional
+    public void pardon(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User ID not found"));
 
-    public void pardonUser(String id){
-        User user = userRepository.findById(id).orElseThrow();
-        if(user == null) {
-            throw  new RuntimeException("User not found");
-        }
         user.setStatus("ACTIVE");
-        save(user);
-
     }
 }

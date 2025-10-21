@@ -14,33 +14,18 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    /**
-     * Constructor
-     * @param loginService Login service
-     */
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 
-    /**
-     * Login page mapping
-     * @return Login page
-     */
     @GetMapping
-    public String index() {
+    public String loginPage() {
         return "pages/user/login";
     }
 
-    /**
-     * Process login
-     * @param response HTTP servlet response
-     * @param username Username param
-     * @param password Password param
-     * @return Login result
-     */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> login(HttpServletRequest request,
+    public Object login(HttpServletRequest request,
                                      HttpServletResponse response,
                                      @RequestParam(required = false, name="username") String username,
                                      @RequestParam(required = false, name="password") String password) {

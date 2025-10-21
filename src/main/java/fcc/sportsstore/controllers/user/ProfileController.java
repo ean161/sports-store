@@ -20,7 +20,7 @@ public class ProfileController {
     }
 
     @GetMapping
-    public String index() {
+    public String profilePage() {
         return "pages/user/profile";
     }
 
@@ -31,10 +31,10 @@ public class ProfileController {
 
     @PostMapping("/edit")
     @ResponseBody
-    public Object editProfile(HttpServletRequest request,
-                              @RequestParam(value = "id", required = false) String id,
-                              @RequestParam(value = "full-name", required = false) String fullName,
-                              @RequestParam(value = "gender", required = false) String gender){
+    public Object edit(HttpServletRequest request,
+                       @RequestParam(value = "id", required = false) String id,
+                       @RequestParam(value = "full-name", required = false) String fullName,
+                       @RequestParam(value = "gender", required = false) String gender){
         try {
             profileService.editProfile(request, id, fullName, gender);
 
@@ -45,7 +45,4 @@ public class ProfileController {
             return res.build();
         }
     }
-
-
-
 }

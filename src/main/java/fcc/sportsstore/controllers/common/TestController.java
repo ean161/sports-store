@@ -1,6 +1,5 @@
 package fcc.sportsstore.controllers.common;
 
-import fcc.sportsstore.entities.Product;
 import fcc.sportsstore.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +16,7 @@ public class TestController {
 
     @GetMapping
     @ResponseBody
-    public String index() {
+    public String testPage() {
         return productRepository.findById("p2").orElseThrow().getProductPropertyData().get(0).getData();
-//        return null;
     }
 }

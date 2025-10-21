@@ -13,28 +13,12 @@ import java.util.Map;
 @NoArgsConstructor
 public class Response {
 
-    /**
-     * Response status code rule:
-     * - 0: Error
-     * - 1: Success
-     * - 2: Redirect user to 'data' as url
-     */
     private int code;
 
     private String message;
 
-    /**
-     * Data redirect rule:
-     * - data.redirect: URL that redirect to
-     * - data.time: Redirect time (milliseconds)
-     */
     private Object data;
 
-    /**
-     * Constructor
-     * @param code Response code (0: error, 1: success, 2: to redirect without message)
-     * @param message Response message
-     */
     public Response(int code, String message) {
         this.code = code;
         this.message = message;
@@ -46,10 +30,6 @@ public class Response {
         this.data = data;
     }
 
-    /**
-     * Get response properties as map
-     * @return Map of response
-     */
     public Map<String, Object> build() {
         Map<String, Object> res = new HashMap<>();
         res.put("code", code);

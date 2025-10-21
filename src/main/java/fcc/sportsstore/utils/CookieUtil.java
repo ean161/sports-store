@@ -10,37 +10,19 @@ public class CookieUtil {
 
     private HttpServletResponse response = null;
 
-    /**
-     * Constructor
-     * @param request HTTP servlet request
-     * @param response HTTP servlet response
-     */
     public CookieUtil(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }
 
-    /**
-     * Constructor with req
-     * @param request HTTP servlet request
-     */
     public CookieUtil(HttpServletRequest request) {
         this.request = request;
     }
 
-    /**
-     * Constructor with res
-     * @param response HTTP servlet response
-     */
     public CookieUtil(HttpServletResponse response) {
         this.response = response;
     }
 
-    /**
-     * Get cookie by key
-     * @param key Cookie key to get
-     * @return Cookie value
-     */
     public String getCookie(String key) {
         Cookie[] cookies = request.getCookies();
 
@@ -55,12 +37,6 @@ public class CookieUtil {
         return null;
     }
 
-    /**
-     * Set cookie
-     * @param key Cookie key
-     * @param value Cookie value
-     * @param expired Expired time (seconds)
-     */
     public void setCookie(String key,
               String value,
               int expired) {
@@ -74,10 +50,6 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    /**
-     * Delete cookie by key
-     * @param key Cookie key
-     */
     public void deleteCookie(String key) {
         Cookie cookie = new Cookie(key, null);
 

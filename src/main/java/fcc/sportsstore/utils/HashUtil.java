@@ -5,11 +5,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashUtil {
 
-    /**
-     * Hash input text to MD5
-     * @param input Text to hash
-     * @return Hashed text
-     */
     public String md5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AccessController {
 
     @GetMapping("/req")
-    public String index(HttpServletRequest request, HttpServletResponse response) {
+    public String accessPage(HttpServletRequest request, HttpServletResponse response) {
         CookieUtil cookie = new CookieUtil(request, response);
         cookie.setCookie("is-access", "true", 86400 * 30);
         return "redirect:/";

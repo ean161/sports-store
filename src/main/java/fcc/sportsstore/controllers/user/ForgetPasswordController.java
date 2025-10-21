@@ -14,31 +14,18 @@ public class ForgetPasswordController {
 
     final private ForgetPasswordService forgetPasswordService;
 
-    /**
-     * Constructor
-     * @param forgetPasswordService Forget password service
-     */
     public ForgetPasswordController(ForgetPasswordService forgetPasswordService) {
         this.forgetPasswordService = forgetPasswordService;
     }
 
-    /**
-     * Request forget password page mapping
-     * @return Request forget password page
-     */
     @GetMapping
-    public String request() {
+    public String forgetPasswordPage() {
         return "pages/user/forget-password/request";
     }
 
-    /**
-     * Request forget password
-     * @param email User email to forget
-     * @return Forget result
-     */
     @PostMapping
     @ResponseBody
-    public Map<String, Object> requestForget(@RequestParam(required = false, name = "email") String email) {
+    public Object requestForget(@RequestParam(required = false, name = "email") String email) {
         try {
             forgetPasswordService.requestForget(email);
             Response res = new Response(1, "Forget link was sent to your email.");
@@ -50,10 +37,6 @@ public class ForgetPasswordController {
         }
     }
 
-    /**
-     * Forget password page mapping
-     * @return Forget password page
-     */
     @GetMapping("/forget")
     public String forget(Model model, @RequestParam(required = false, name = "code") String code) {
         model.addAttribute("code", code);
@@ -70,14 +53,9 @@ public class ForgetPasswordController {
         return "pages/user/forget-password/forget";
     }
 
-    /**
-     * Forget password
-     * @param code Forget code
-     * @return Forget result
-     */
     @PostMapping("/forget")
     @ResponseBody
-    public Map<String, Object> forgetPassword(@RequestParam(required = false, name = "code") String code,
+    public Object forgetPassword(@RequestParam(required = false, name = "code") String code,
                                                 @RequestParam(required = false, name = "password") String password,
                                                 @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
         try {

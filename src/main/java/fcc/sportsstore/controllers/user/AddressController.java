@@ -35,9 +35,9 @@ public class AddressController {
     }
 
     @GetMapping
-    public String index(Model model, HttpServletRequest request) {
-        User caller = userService.getUserFromSession(request);
-        List<Address> listAddress = addressService.getAllAdress(caller);
+    public String addressPage(Model model, HttpServletRequest request) {
+        User caller = userService.getFromSession(request);
+        List<Address> listAddress = addressService.getAll(caller);
         model.addAttribute("listAddress", listAddress);
         return "pages/user/address";
     }
@@ -52,14 +52,14 @@ public class AddressController {
 
     @PostMapping("/add")
     @ResponseBody
-    public Object addAddress(HttpServletRequest request,
-                             @RequestParam(value = "note", required = false) String note,
-                             @RequestParam(value = "phone", required = false) String phone,
-                             @RequestParam(value = "detail", required = false) String detail,
-                             @RequestParam(value = "provinceId", required = false) String provinceId,
-                             @RequestParam(value = "wardsId", required = false) String wardsId) {
+    public Object add(HttpServletRequest request,
+                      @RequestParam(value = "note", required = false) String note,
+                      @RequestParam(value = "phone", required = false) String phone,
+                      @RequestParam(value = "detail", required = false) String detail,
+                      @RequestParam(value = "provinceId", required = false) String provinceId,
+                      @RequestParam(value = "wardsId", required = false) String wardsId) {
         try {
-            addressService.addAddress(request, note, phone, detail, provinceId, wardsId);
+            addressService.add(request, note, phone, detail, provinceId, wardsId);
 
             Response res = new Response(
                     1,

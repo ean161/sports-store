@@ -25,7 +25,7 @@ public class ProductCollectionController {
     }
 
     @GetMapping("/{id}")
-    public String collection(Model model,
+    public String collectionPage(Model model,
                              @PathVariable(value = "id") String id) {
         ProductCollection collection;
         try {

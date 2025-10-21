@@ -26,21 +26,11 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    /**
-     * User status rule:
-     * - ACTIVE: User that verified
-     * - BANNED: User was banned
-     */
     private String password, fullName, status;
 
     @Column(length = 550)
     private String token;
 
-    /**
-     * User gender rule:
-     * - 0/FALSE: Female
-     * - 1/TRUE: MALE
-     */
     private boolean gender;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -50,12 +40,6 @@ public class User {
 
     private Long createdAt;
 
-    /**
-     * Constructor
-     * @param id User ID
-     * @param username User username address
-     * @param password User password
-     */
     public User(String id, String username, String password) {
         this.id = id;
         this.username = username;

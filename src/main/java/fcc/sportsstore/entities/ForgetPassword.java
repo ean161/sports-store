@@ -28,12 +28,6 @@ public class ForgetPassword {
 
     private Long expiredAt, createdAt;
 
-    /**
-     * Constructor
-     * @param id Forget session ID
-     * @param code Forget session code
-     * @param user Who requested
-     */
     public ForgetPassword(String id, String code, User user) {
         this.id = id;
         this.code = code;
