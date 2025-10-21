@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 
     private final UserService userService;
+
     private final LogoutService logoutService;
 
     public LoginService(UserService userService, LogoutService logoutService) {
@@ -28,6 +29,10 @@ public class LoginService {
         }
 
         User user = userService.getByUsernameAndPassword(username, password);
+        if (user.getStatus().equals("BANNED")) {
+            throw new RuntimeException("Your account was banned.");
+        }
+
         userService.access(response, user.getId());
     }
 }

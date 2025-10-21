@@ -2,10 +2,7 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.UserRepository;
-import fcc.sportsstore.utils.CookieUtil;
-import fcc.sportsstore.utils.HashUtil;
-import fcc.sportsstore.utils.RandomUtil;
-import fcc.sportsstore.utils.SessionUtil;
+import fcc.sportsstore.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
@@ -108,22 +105,28 @@ public class UserService {
         return token;
     }
 
+    @Transactional
     public void revokeTokenByRequest(HttpServletRequest request) {
         User user = getFromSession(request);
         if (user == null) {
             return;
         }
 
-        String token = generateToken();
-        user.setToken(token);
-        save(user);
+        revokeToken(user.getId());
     }
 
     @Transactional
-    public void access(HttpServletResponse response, String userId) {
+    public void revokeToken(String id) {
+        User user = getById(id);
+        String token = generateToken();
+        user.setToken(token);
+    }
+
+    @Transactional
+    public void access(HttpServletResponse response, String id) {
         CookieUtil cookie = new CookieUtil(response);
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException(String.format("User ID #%s not found", userId)));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(String.format("User ID #%s not found", id)));
 
         String token = generateToken();
         user.setToken(token);
@@ -132,17 +135,45 @@ public class UserService {
 
     @Transactional
     public void ban(String id) {
+        if (id == null || id.isEmpty()) {
+            throw new RuntimeException("ID must be not empty.");
+        }
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User ID not found"));
 
         user.setStatus("BANNED");
+        revokeToken(id);
     }
 
     @Transactional
     public void pardon(String id) {
+        if (id == null || id.isEmpty()) {
+            throw new RuntimeException("ID must be not empty.");
+        }
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User ID not found"));
-
         user.setStatus("ACTIVE");
+    }
+
+    @Transactional
+    public void edit(String id, String fullName, boolean gender) {
+        Validate validate = new Validate();
+
+        if (id == null || id.isEmpty()) {
+            throw new RuntimeException("ID must be not empty.");
+        } else if (!existsById(id)) {
+            throw new RuntimeException("User not found");
+        } else if (fullName == null || fullName.isEmpty()) {
+            throw new RuntimeException("Full name must be not empty.");
+        } else if (!validate.isValidFullName(fullName)) {
+            throw new RuntimeException("Full name length must be from 3 - 35 chars, only contains alpha");
+        }
+
+        User user = getById(id);
+        user.setFullName(fullName);
+        user.setGender(gender);
+
     }
 }

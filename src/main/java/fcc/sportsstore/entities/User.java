@@ -31,6 +31,10 @@ public class User {
     @Column(length = 550)
     private String token;
 
+    /**
+     * 0 = FALSE = FEMALE
+     * 1 = TRUE = MALE
+     */
     private boolean gender;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

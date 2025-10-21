@@ -15,11 +15,9 @@ public class ManageUserController {
 
     private final UserService userService;
 
-    private final ManageUserService manageUserService;
 
-    public ManageUserController(UserService userService, ManageUserService manageUserService) {
+    public ManageUserController(UserService userService) {
         this.userService = userService;
-        this.manageUserService = manageUserService;
     }
 
     @GetMapping
@@ -61,9 +59,11 @@ public class ManageUserController {
 
     @PostMapping("/edit")
     @ResponseBody
-    public Object edit(@RequestParam(value = "ud-id") String id, @RequestParam("ud-full-name") String fullName) {
+    public Object edit(@RequestParam(value = "ud-id") String id,
+                       @RequestParam("ud-full-name") String fullName,
+                       @RequestParam(value = "ud-gender") boolean gender) {
         try {
-            manageUserService.edit(id, fullName);
+            userService.edit(id, fullName, gender);
 
             Response res = new Response(1, "User updated successfully.");
             return res.build();
