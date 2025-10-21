@@ -174,6 +174,5 @@ public class UserService {
         User user = getById(id);
         user.setFullName(fullName);
         user.setGender(gender);
-
     }
 }

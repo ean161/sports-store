@@ -89,9 +89,9 @@ async function loadDetails(id) {
     $("#ud-status").val(res.data.status);
 
     if (res.data.gender) {
-        $("#ud-gender-male").ischecked = true;
+        $("#ud-gender-male").attr("checked", true);
     } else {
-        $("#ud-gender-female").ischecked = true;
+        $("#ud-gender-female").attr("checked", true);
     }
 
     if (res.data.status === "BANNED") {

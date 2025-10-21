@@ -8,7 +8,7 @@ public class Validate {
             return false;
         }
 
-        return fullName.matches("^[a-zA-Z]+$");
+        return fullName.matches("^[a-zA-Z ]+$");
     }
 
     public boolean isValidCollectionName(String collectionName) {
@@ -17,7 +17,7 @@ public class Validate {
             return false;
         }
 
-        return collectionName.matches("^[a-zA-Z]+$");
+        return collectionName.matches("^[a-zA-Z ]+$");
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {
