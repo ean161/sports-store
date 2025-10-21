@@ -8,7 +8,6 @@ import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,11 +66,11 @@ public class AddressController {
                     "Add address successfully.",
                     Map.of("redirect", "/address", "time", 500)
             );
-            return res.pull();
+            return res.build();
 
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
     }
 }

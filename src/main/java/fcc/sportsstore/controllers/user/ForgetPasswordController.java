@@ -43,10 +43,10 @@ public class ForgetPasswordController {
             forgetPasswordService.requestForget(email);
             Response res = new Response(1, "Forget link was sent to your email.");
 
-            return res.pull();
+            return res.build();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
     }
 
@@ -87,10 +87,10 @@ public class ForgetPasswordController {
                     "Your password was changed.",
                     Map.of("redirect", "/",
                             "time", 3000));
-            return res.pull();
+            return res.build();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
     }
 }

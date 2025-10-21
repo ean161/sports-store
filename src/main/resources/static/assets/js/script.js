@@ -13,7 +13,6 @@ const datatableLang = {
     lengthMenu: ""
 };
 
-
 async function post(url, data = null) {
     let res = await $.ajax({
         url: url,
@@ -21,7 +20,7 @@ async function post(url, data = null) {
         data: data
     });
 
-    if ("code" in res) {
+    if (res && typeof res === "object" && "code" in res) {
         if ("message" in res && res.message != null) {
             if (res.code === 0) {
                 out.error(res.message);
@@ -30,15 +29,15 @@ async function post(url, data = null) {
             }
         }
 
-        // if ("data" in res) {
-        //     if (typeof res.data === 'object') {
-        //         if ("redirect" in res.data && res.data.redirect != null) {
-        //             setTimeout(() => {
-        //                 window.location.href = res.data.redirect;
-        //             }, res.data.time);
-        //         }
-        //     }
-        // }
+        if ("data" in res) {
+            if (res.data && typeof res.data === 'object' && !Array.isArray(res.data)) {
+                if ("redirect" in res.data && res.data.redirect != null) {
+                    setTimeout(() => {
+                        window.location.href = res.data.redirect;
+                    }, res.data.time || 0);
+                }
+            }
+        }
 
         if (res.code === 2) {
             window.location.href = res.data;

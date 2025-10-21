@@ -54,13 +54,13 @@ public class RegisterController {
                     "Register successfully.",
                     Map.of("redirect", "/login",
                             "time", 3000));
-            return res.pull();
+            return res.build();
         } catch (DataIntegrityViolationException e) {
             Response res = new Response(1, "You acted too fast, please try again later.");
-            return res.pull();
+            return res.build();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
     }
 }

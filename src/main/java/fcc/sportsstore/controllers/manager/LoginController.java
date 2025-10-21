@@ -55,10 +55,10 @@ public class LoginController {
                     "Login successfully.",
                     Map.of("redirect", "/manager",
                             "time", 3000));
-            return res.pull();
+            return res.build();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
     }
 }

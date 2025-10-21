@@ -1,6 +1,5 @@
 package fcc.sportsstore.utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,7 +50,7 @@ public class Response {
      * Get response properties as map
      * @return Map of response
      */
-    public Map<String, Object> pull() {
+    public Map<String, Object> build() {
         Map<String, Object> res = new HashMap<>();
         res.put("code", code);
         res.put("message", message);

@@ -1,17 +1,11 @@
 package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.entities.Address;
-import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.services.user.ProfileService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("/profile")
@@ -45,10 +39,10 @@ public class ProfileController {
             profileService.editProfile(request, id, fullName, gender);
 
             Response res = new Response(1, "Your profile was updated.");
-            return res.pull();
+            return res.build();
         } catch(Exception e){
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
     }
 

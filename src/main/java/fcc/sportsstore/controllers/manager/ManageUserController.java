@@ -36,7 +36,7 @@ public class ManageUserController {
     @ResponseBody
     public Object getUserDetails(@RequestParam(value = "id") String id) {
         Response res = new Response(1, null, userService.getById(id));
-        return res.pull();
+        return res.build();
     }
 
     @PostMapping("/ban")
@@ -44,7 +44,7 @@ public class ManageUserController {
     public Object banUser(@RequestParam(value = "id" ) String id) {
         userService.banUser(id);
         Response res = new Response(1, "User was banned");
-        return  res.pull();
+        return  res.build();
     }
 
     @PostMapping("/pardon")
@@ -52,6 +52,6 @@ public class ManageUserController {
     public Object pardonUser(@RequestParam(value = "id" ) String id) {
         userService.pardonUser(id);
         Response res = new Response(1, "User was pardoned");
-        return  res.pull();
+        return  res.build();
     }
 }

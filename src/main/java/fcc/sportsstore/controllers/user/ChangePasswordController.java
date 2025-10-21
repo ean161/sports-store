@@ -1,6 +1,5 @@
 package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.ChangePasswordService;
 import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,10 +47,10 @@ public class ChangePasswordController {
                     "Your password was changed.",
                     Map.of("redirect", "/profile",
                             "time", 3000));
-            return res.pull();
+            return res.build();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());
-            return res.pull();
+            return res.build();
         }
 
     }
