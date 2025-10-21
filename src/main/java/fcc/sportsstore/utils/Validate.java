@@ -11,6 +11,15 @@ public class Validate {
         return fullName.matches("^[a-zA-Z]+$");
     }
 
+    public boolean isValidCollectionName(String collectionName) {
+        collectionName = collectionName.trim();
+        if (collectionName.length() < 3 || collectionName.length() > 35) {
+            return false;
+        }
+
+        return collectionName.matches("^[a-zA-Z]+$");
+    }
+
     public boolean isValidPhoneNumber(String phoneNumber) {
         phoneNumber = phoneNumber.trim();
         return phoneNumber.matches("^0\\d{9}$");

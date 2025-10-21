@@ -27,5 +27,8 @@ public class ProductCollection {
 
     private Long createdAt;
 
-
+    public ProductCollection(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
