@@ -64,17 +64,28 @@ $(document).ready(function () {
             }
         ]
     });
+
+    $("#edit-user-form").on("submit", async function (event) {
+        event.preventDefault();
+        var data = $(this).serialize();
+
+        var res = await post("/manager/user/edit", data);
+
+        if (res.code === 1) {
+            list.ajax.reload();
+        }
+    });
 });
 
-async function pushDetails(id) {
+async function loadDetails(id) {
     let res = await post("/manager/user/details", {
         id: id
     });
 
     $("#ud-username-header").html(res.data.username);
     $("#ud-id").val(res.data.id);
-    $("#ud-userName").val(res.data.username);
-    $("#ud-fullName").val(res.data.fullName);
+    $("#ud-username").val(res.data.username);
+    $("#ud-full-name").val(res.data.fullName);
     $("#ud-status").val(res.data.status);
     $("#ud-gender").val(!res.data.gender ? "Female" : "Male");
 
@@ -88,7 +99,7 @@ async function pushDetails(id) {
 }
 
 async function details(id) {
-    await pushDetails(id);
+    await loadDetails(id);
 
     openModal("user-details");
 }
@@ -98,7 +109,7 @@ async function ban(id) {
         id: id
     });
 
-    pushDetails(id);
+    loadDetails(id);
     list.ajax.reload();
 }
 
@@ -107,6 +118,6 @@ async function pardon(id) {
         id: id
     });
 
-    pushDetails(id);
+    loadDetails(id);
     list.ajax.reload();
 }

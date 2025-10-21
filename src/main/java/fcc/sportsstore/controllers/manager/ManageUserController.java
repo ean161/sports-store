@@ -2,6 +2,7 @@ package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
+import fcc.sportsstore.services.manager.ManageUserService;
 import fcc.sportsstore.utils.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,11 @@ public class ManageUserController {
 
     private final UserService userService;
 
-    public ManageUserController(UserService userService) {
+    private final ManageUserService manageUserService;
+
+    public ManageUserController(UserService userService, ManageUserService manageUserService) {
         this.userService = userService;
+        this.manageUserService = manageUserService;
     }
 
     @GetMapping
@@ -53,5 +57,19 @@ public class ManageUserController {
         userService.pardon(id);
         Response res = new Response(1, "User was pardoned");
         return  res.build();
+    }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public Object edit(@RequestParam(value = "ud-id") String id, @RequestParam("ud-full-name") String fullName) {
+        try {
+            manageUserService.edit(id, fullName);
+
+            Response res = new Response(1, "User updated successfully.");
+            return res.build();
+        } catch (Exception e) {
+            Response res = new Response(0, e.getMessage());
+            return res.build();
+        }
     }
 }
