@@ -1,7 +1,7 @@
 <header th:fragment="header-manager" class="bg-gradient-to-br from-blue-800 to-blue-900 text-white shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-4">
         <div class="flex items-center justify-between">
-            <div th:href="@{/manager/dashboard}" class="flex items-center space-x-3">
+            <a th:href="@{/manager}" class="flex items-center space-x-3  cursor-pointer">
                 <div class="relative">
                     <img src="/assets/img/logo.png" class="w-15" />
                 </div>
@@ -9,7 +9,7 @@
                     <div class="font-bold text-xl text-white">SPORTS <span class="text-blue-200">STORE</span></div>
                     <div class="text-xs text-gray-200">HEART OF THE GAME</div>
                 </div>
-            </div>
+            </a>
 
             <div class="flex items-center space-x-10">
                 <div class="p-1 bg-white rounded-2xl pr-2">

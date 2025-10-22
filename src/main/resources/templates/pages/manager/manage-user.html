@@ -27,7 +27,6 @@
                 </div>
             </div>
 
-            <button id="user-details-btn" command="show-modal" commandfor="user-details" class="hidden"></button>
             <el-dialog>
                 <dialog id="user-details" aria-labelledby="dialog-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
                     <el-dialog-backdrop class="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"></el-dialog-backdrop>
@@ -41,54 +40,57 @@
                                             <span id="ud-username-header"></span> details
                                         </h3>
                                         <div class="mt-2 space-y-4">
-                                            <div>
-                                                <form id="edit-user-form" method="POST" class="mt-2 space-y-4">
-                                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                            ID:
-                                                        </div>
-                                                        <input id="ud-id" type="text" name="ud-id" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
+                                            <form id="edit-user-form" method="POST" class="mt-2 space-y-4">
+                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                        ID:
                                                     </div>
-                                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                            Username:
-                                                        </div>
-                                                        <input id="ud-username" type="text" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"readonly/>
+                                                    <input id="ud-id" type="text" name="ud-id" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
+                                                </div>
+                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                        Username:
                                                     </div>
-                                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                            Full name:
-                                                        </div>
-                                                        <input id="ud-full-name" type="text" name="ud-full-name" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                    <input id="ud-username" type="text" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"readonly/>
+                                                </div>
+                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                        Full name:
                                                     </div>
-                                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                            Status:
-                                                        </div>
-                                                        <input id="ud-status" type="text" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
+                                                    <input id="ud-full-name" type="text" name="ud-full-name" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                </div>
+                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                        Status:
                                                     </div>
+                                                    <input id="ud-status" type="text" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
+                                                </div>
 
-                                                    <fieldset>
-                                                        <div class="space-y-1">
-                                                            <div class="flex items-center gap-x-3">
-                                                                <input value="1" id="ud-gender-male" type="radio" name="ud-gender" checked class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                                                                <label for="ud-gender-male" class="block text-sm/6 font-medium text-gray-900">Male</label>
-                                                            </div>
-                                                            <div class="flex items-center gap-x-3">
-                                                                <input value="0" id="ud-gender-female" type="radio" name="ud-gender" class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                                                                <label for="ud-gender-female" class="block text-sm/6 font-medium text-gray-900">Female</label>
-                                                            </div>
+                                                <fieldset>
+                                                    <div class="space-y-1">
+                                                        <div class="flex items-center gap-x-3">
+                                                            <input value="1" id="ud-gender-male" type="radio" name="ud-gender" checked class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden cursor-pointer" />
+                                                            <label for="ud-gender-male" class="block text-sm/6 font-medium text-gray-900  cursor-pointer">Male</label>
                                                         </div>
-                                                    </fieldset>
+                                                        <div class="flex items-center gap-x-3">
+                                                            <input value="0" id="ud-gender-female" type="radio" name="ud-gender" class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden cursor-pointer" />
+                                                            <label for="ud-gender-female" class="block text-sm/6 font-medium text-gray-900  cursor-pointer">Female</label>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
 
+                                                <div class="flex justify-between">
                                                     <div class="flex space-x-2">
-                                                        <div id="action-btns"></div>
-                                                        <button id="update-btn" type="submit" class="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500">
+                                                        <div class="flex space-x-2" id="action-btns"></div>
+                                                        <button id="edit-btn" type="submit" class="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
                                                             Save changes
                                                         </button>
                                                     </div>
-                                                </form>
-                                            </div>
+                                                    <span class="close-modal-btn inline-flex justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 cursor-pointer">
+                                                        Close
+                                                    </span>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

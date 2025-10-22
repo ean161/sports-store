@@ -91,5 +91,14 @@ public class ProductCollectionService {
         productCollectionRepository.save(collection);
     }
 
+    @Transactional
+    public void remove(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new RuntimeException("Id must be not empty");
+        } else if (!productCollectionRepository.existsById(id)) {
+            throw new RuntimeException("Product collection id already exists");
+        }
 
+        productCollectionRepository.deleteById(id);
+    }
 }

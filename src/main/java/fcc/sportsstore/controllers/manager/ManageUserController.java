@@ -2,7 +2,6 @@ package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.UserService;
-import fcc.sportsstore.services.manager.ManageUserService;
 import fcc.sportsstore.utils.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,7 +64,7 @@ public class ManageUserController {
         try {
             userService.edit(id, fullName, gender);
 
-            Response res = new Response(1, "User updated successfully.");
+            Response res = new Response(1, "User edited successfully.");
             return res.build();
         } catch (Exception e) {
             Response res = new Response(0, e.getMessage());

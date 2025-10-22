@@ -67,4 +67,20 @@ public class ManageCollectionController {
             return res.build();
         }
     }
+
+    @PostMapping("/remove")
+    @ResponseBody
+    public Object remove(@RequestParam(value = "id", required = false) String id) {
+        try {
+            productCollectionService.remove(id);
+
+            Response res = new Response(1, "Collection removed successfully.");
+            return res.build();
+        } catch (Exception e) {
+            Response res = new Response(0, e.getMessage());
+            return res.build();
+        }
+    }
+
+
 }

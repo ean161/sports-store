@@ -32,9 +32,9 @@ $(document).ready(function () {
         },
         order: [[0, "desc"]],
         columns: [
-            { data: "id", orderable: false },
-            { data: "username", orderable: false },
-            { data: "fullName", orderable: false },
+            {data: "id", orderable: false},
+            {data: "username", orderable: false},
+            {data: "fullName", orderable: false},
             {
                 data: "status",
                 orderable: false,
@@ -67,13 +67,7 @@ $(document).ready(function () {
 
     $("#edit-user-form").on("submit", async function (event) {
         event.preventDefault();
-        var data = $(this).serialize();
-
-        var res = await post("/manager/user/edit", data);
-
-        if (res.code === 1) {
-            list.ajax.reload();
-        }
+        await edit($(this).serialize());
     });
 });
 
@@ -95,10 +89,10 @@ async function loadDetails(id) {
     }
 
     if (res.data.status === "BANNED") {
-        $("#action-btns").html(`<button id="pardon-btn" type="button" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500">Pardon</button>`);
+        $("#action-btns").html(`<button id="pardon-btn" type="button" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500  cursor-pointer">Pardon</button>`);
         $("#pardon-btn").attr("onclick", `pardon('${res.data.id}')`);
-    } else if(res.data.status === "ACTIVE"){
-        $("#action-btns").html(`<button id="ban-btn" type="button" class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500">Ban</button>`);
+    } else if (res.data.status === "ACTIVE") {
+        $("#action-btns").html(`<button id="ban-btn" type="button" class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500  cursor-pointer">Ban</button>`);
         $("#ban-btn").attr("onclick", `ban('${res.data.id}')`);
     }
 }
@@ -106,7 +100,7 @@ async function loadDetails(id) {
 async function details(id) {
     await loadDetails(id);
 
-    openModal("user-details");
+    modal("user-details");
 }
 
 async function ban(id) {
@@ -114,8 +108,11 @@ async function ban(id) {
         id: id
     });
 
-    loadDetails(id);
-    list.ajax.reload();
+    await loadDetails(id);
+    if (res.code === 1) {
+        list.ajax.reload();
+        modal("user-details");
+    }
 }
 
 async function pardon(id) {
@@ -123,6 +120,18 @@ async function pardon(id) {
         id: id
     });
 
-    loadDetails(id);
-    list.ajax.reload();
+    await loadDetails(id);
+    if (res.code === 1) {
+        list.ajax.reload();
+        modal("user-details");
+    }
+}
+
+async function edit(data) {
+    let res = await post("/manager/user/edit", data);
+
+    if (res.code === 1) {
+        list.ajax.reload();
+        modal("user-details");
+    }
 }

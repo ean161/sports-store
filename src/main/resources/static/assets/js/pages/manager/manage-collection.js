@@ -38,7 +38,7 @@ $(document).ready(function () {
                 data: "action",
                 orderable: false,
                 render: function (data, type, row) {
-                    return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">Details</button>`;
+                    return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer  cursor-pointer">Details</button>`;
                 }
             }
 
@@ -47,29 +47,18 @@ $(document).ready(function () {
 
     $("#edit-collection-form").on("submit", async function (event) {
         event.preventDefault();
-        var data = $(this).serialize();
-
-        var res = await post("/manager/collection/edit", data);
-        if (res.code === 1) {
-            list.ajax.reload();
-        }
+        await edit($(this).serialize());
     });
 
     $("#add-collection-form").on("submit", async function (event) {
         event.preventDefault();
-        var data = $(this).serialize();
-
-        var res = await post("/manager/collection/add", data);
-        if (res.code === 1) {
-            list.ajax.reload();
-        }
+        await add($(this).serialize());
     });
 
     $("#add-collection-btn-navbar").on("click", async function () {
-        openModal("add-collection");
+        modal("add-collection");
     });
 });
-
 
 async function loadDetails(id) {
     let res = await post("/manager/collection/details", {
@@ -79,14 +68,40 @@ async function loadDetails(id) {
     $("#cd-collection-header").html(res.data.name);
     $("#cd-id").val(res.data.id);
     $("#cd-name").val(res.data.name);
+    $("#cd-remove-btn").attr("onclick", `remove('${id}')`);
 }
 
 async function details(id) {
     await loadDetails(id);
 
-    openModal("collection-details");
+    modal("collection-details");
 }
 
-async function add() {
-    openModal("add-collection");
+async function remove(id) {
+    let res = await post("/manager/collection/remove", {
+        id: id
+    });
+
+    if (res.code === 1) {
+        list.ajax.reload();
+        modal("collection-details");
+    }
+}
+
+async function edit(data) {
+    let res = await post("/manager/collection/edit", data);
+
+    if (res.code === 1) {
+        list.ajax.reload();
+        modal("collection-details");
+    }
+}
+
+async function add(data) {
+    let res = await post("/manager/collection/add", data);
+
+    if (res.code === 1) {
+        list.ajax.reload();
+        modal("add-collection");
+    }
 }

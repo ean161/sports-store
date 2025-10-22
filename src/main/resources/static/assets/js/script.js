@@ -2,6 +2,10 @@ var out;
 
 $(document).ready(function () {
     out = new Notyf();
+
+    $(".close-modal-btn").on("click", (e) => {
+        modal(e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id);
+    })
 });
 
 const datatableLang = {
@@ -68,6 +72,12 @@ function productCollectionMove(id) {
     }
 }
 
-function openModal(id) {
-    $(`#${id}-btn`).click();
+function modal(id) {
+    let elm = $(`#${id}`);
+
+    if (elm.is(":hidden")) {
+        elm.fadeIn(200);
+    } else {
+        elm.fadeOut(200);
+    }
 }
