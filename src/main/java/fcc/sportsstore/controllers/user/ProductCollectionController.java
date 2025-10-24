@@ -2,8 +2,9 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.ProductType;
-import fcc.sportsstore.services.ProductCollectionService;
 import fcc.sportsstore.services.ProductTypeService;
+import fcc.sportsstore.services.user.CollectionService;
+import fcc.sportsstore.services.user.TypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,28 +17,28 @@ import java.util.List;
 @RequestMapping("/collection")
 public class ProductCollectionController {
 
-    private final ProductCollectionService productCollectionService;
-    private final ProductTypeService productTypeService;
+    private final CollectionService collectionService;
 
-    public ProductCollectionController(ProductCollectionService productCollectionService, ProductTypeService productTypeService) {
-        this.productCollectionService = productCollectionService;
-        this.productTypeService = productTypeService;
+    private final TypeService typeService;
+
+    public ProductCollectionController(CollectionService collectionService, TypeService typeService) {
+        this.collectionService = collectionService;
+        this.typeService = typeService;
     }
 
     @GetMapping("/{id}")
-    public String collectionPage(Model model,
-                                @PathVariable(value = "id") String id) {
+    public String collectionPage(Model model, @PathVariable(value = "id") String id) {
         ProductCollection collection;
         try {
-            collection = productCollectionService.getById(id);
+            collection = collectionService.getById(id);
+            model.addAttribute("collection", collection);
         } catch (Exception e) {
             return "redirect:/";
         }
 
-        List<ProductType> types = productTypeService.getInitProductTypeByCollection(collection);
+        List<ProductType> types = typeService.getInitProductTypeByCollection(collection);
         model.addAttribute("types", types);
-        model.addAttribute("collections", productCollectionService.getAll());
-        model.addAttribute("collection", collection);
+        model.addAttribute("collections", collectionService.getAll());
 
         return "pages/user/collection";
     }

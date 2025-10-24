@@ -29,27 +29,6 @@ public class ProductTypeService {
                 () -> new RuntimeException("Product collection ID not found"));
     }
 
-    public List<ProductType> getInitProductTypeByCollection(ProductCollection collection) {
-        List<ProductType> types = new ArrayList<>();
-
-        for (Product product : collection.getProducts()) {
-            ProductType type = product.getProductType();
-            if (!types.contains(type)) {
-                List<Product> collectionProducts = new ArrayList<>();
-                for (Product prod : type.getProducts()) {
-                    if (prod.getProductCollection().equals(collection)) {
-                        collectionProducts.add(prod);
-                    }
-                }
-
-                type.setProducts(collectionProducts);
-                types.add(type);
-            }
-        }
-
-        return types;
-    }
-
     public Page<ProductType> getAll(Pageable pageable) {
         return productTypeRepository.findAll(pageable);
     }
