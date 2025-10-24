@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@Controller("userAddressController")
 @RequestMapping("/address")
 public class AddressController {
     private final AddressService addressService;

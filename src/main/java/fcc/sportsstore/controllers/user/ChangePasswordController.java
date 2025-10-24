@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 
-@Controller
+@Controller("userChangePasswordController")
 @RequestMapping("/change-password")
 public class ChangePasswordController {
 

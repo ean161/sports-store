@@ -14,7 +14,7 @@ import fcc.sportsstore.utils.Validate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("userForgetPasswordService")
 public class ForgetPasswordService {
 
     final private UserService userService;

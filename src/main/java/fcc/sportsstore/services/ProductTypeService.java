@@ -12,8 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("productTypeService")
 public class ProductTypeService {
+
     private final ProductTypeRepository productTypeRepository;
 
     public ProductTypeService(ProductTypeRepository productTypeRepository) {

@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller("manageUserController")
+@Controller("managerManageUserController")
 @RequestMapping("/manager/user")
 public class ManageUserController {
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@Controller
+@Controller("userRegisterController")
 @RequestMapping("/register")
 public class RegisterController {
 

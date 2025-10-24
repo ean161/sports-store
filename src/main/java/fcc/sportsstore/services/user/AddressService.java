@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service("userAddressService")
 public class AddressService {
 
     private final AddressRepository addressRepository;

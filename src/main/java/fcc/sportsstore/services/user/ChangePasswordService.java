@@ -8,7 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import fcc.sportsstore.utils.Validate;
 
-@Service
+@Service("userChangePasswordService")
 public class ChangePasswordService {
 
     final private UserService userService;

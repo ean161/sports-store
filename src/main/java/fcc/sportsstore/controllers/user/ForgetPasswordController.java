@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@Controller
+@Controller("userForgetPasswordController")
 @RequestMapping("/forget-password")
 public class ForgetPasswordController {
 

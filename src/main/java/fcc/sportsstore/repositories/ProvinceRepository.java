@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province, String> {
-
-    Optional<Province> findByVtpReferrenceId(Integer id);
 }

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+@Service("managerService")
 public class ManagerService {
 
     private final ManagerRepository managerRepository;

@@ -13,13 +13,12 @@ import java.util.Optional;
 
 @Repository
 public interface ProductCollectionRepository extends JpaRepository<ProductCollection, String> {
+
     Page<ProductCollection> findAll(Pageable pageable);
 
     Optional<ProductCollection> findById(String id);
 
-    Page<ProductCollection> findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(String searchForId,
-                                                                                   String searchForName,
-                                                                                   Pageable pageable);
+    Page<ProductCollection> findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(String searchForId, String searchForName, Pageable pageable);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<ProductCollection> findByName(String name);

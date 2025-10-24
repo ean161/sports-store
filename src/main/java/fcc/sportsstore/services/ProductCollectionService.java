@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+@Service("productCollectionService")
 public class ProductCollectionService {
 
     final private ProductCollectionRepository productCollectionRepository;
