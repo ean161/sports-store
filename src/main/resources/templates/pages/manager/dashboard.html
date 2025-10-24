@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:replace="~{layout/dashboard :: layout(~{::content}, 'Manage users')}">
+<header th:replace="~{fragment/manager/header :: header}"></header>
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
     <th:block th:fragment="content">
-        <h2 class="text-xl font-semibold mb-6">Profile</h2>
-        <form class="space-y-4 max-w-2xl" id="edit-profile-form">
-            <p>ABC</p>
-        </form>
+        <main class="bg-gray-100 font-sans">
+            <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
+                <th:block th:if="${session.manager != null}">
+                    <th:block th:if="${session.manager.role == 'ADMIN'}">
+                        <div th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></div>
+                    </th:block>
+                </th:block>
+                <div class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">
+                    <h2 class="text-3xl font-bold">Dashboard</h2>
+                    <p class="mt-4">Sample</p>
+                </div>
+            </div>
+        </main>
+
     </th:block>
 </th:block>
 </html>

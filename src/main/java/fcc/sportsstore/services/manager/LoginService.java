@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service(value = "manager-login-service")
+@Service(value = "managerLoginService")
 public class LoginService {
 
     private final ManagerService managerService;

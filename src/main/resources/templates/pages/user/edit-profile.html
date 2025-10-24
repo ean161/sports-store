@@ -4,27 +4,68 @@
     <th:block th:fragment="content">
         <h2 class="text-xl font-semibold mb-6">Edit profile</h2>
         <form class="space-y-4 max-w-2xl" id="edit-profile-form">
-            <input name="id" th:value="${session.user.id}" hidden />
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label for="full-name" class="block font-medium mb-1">Full name:</label>
-                    <input id="full-name" name="full-name" type="text"
-                           th:value="${session.user.fullName}"
-                           class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm">
-                </div>
-                <div>
-                    <label for="gender" class="block font-medium mb-1">Gender:</label>
-                    <select name="gender" id="gender"
-                            class="w-full px-4 py-2.5 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm">
-                        <option value="1" th:selected="${session.user.gender}">Male</option>
-                        <option value="0" th:selected="${!session.user.gender}">Female</option>
-                    </select>
-                </div>
+            <input name="id" th:value="${session.user.id}" hidden/>
+
+            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">Full name:</div>
+                <input id="full-name" name="full-name" type="text"
+                       th:value="${session.user.fullName}"
+                       class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
             </div>
-            <button type="submit" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">
-                Update
-            </button>
+
+            <div>
+                <label class="block font-medium mb-1">Gender:</label>
+                <fieldset>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-x-3">
+                            <input value="1"
+                                   id="ud-gender-male"
+                                   type="radio"
+                                   name="gender"
+                                   th:checked="${session.user.gender == true}"
+                                   class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white
+                          before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden
+                          checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2
+                          focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+                          disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400
+                          forced-colors:appearance-auto forced-colors:before:hidden cursor-pointer"/>
+                            <label for="ud-gender-male"
+                                   class="block text-sm font-medium text-gray-900 cursor-pointer">
+                                Male
+                            </label>
+                        </div>
+
+                        <div class="flex items-center gap-x-3">
+                            <input value="0"
+                                   id="ud-gender-female"
+                                   type="radio"
+                                   name="gender"
+                                   th:checked="${session.user.gender == false}"
+                                   class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white
+                          before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden
+                          checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2
+                          focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+                          disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400
+                          forced-colors:appearance-auto forced-colors:before:hidden cursor-pointer"/>
+                            <label for="ud-gender-female"
+                                   class="block text-sm font-medium text-gray-900 cursor-pointer">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="flex justify-end pt-4">
+                <button type="submit"
+                        class="inline-flex justify-center rounded-md bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 sm:w-auto">
+                    Update
+                </button>
+            </div>
         </form>
+
+
         <script src="/assets/js/pages/user/profile.js"></script>
     </th:block>
 </th:block>

@@ -10,42 +10,45 @@
                     </p>
                     <div th:if="${#lists.isEmpty(listAddress)}"
                          class="text-gray-500 italic text-sm p-2 rounded-md shadow-sm bg-grey-3">
-                         You haven't added any address yet.
+                        You haven't added any address yet.
                     </div>
                 </div>
 
                 <div class="flex flex-col gap-4 max-w-3xl mb-3">
-                   <div th:each="address : ${listAddress}" class="p-2 rounded-md shadow-sm bg-grey-3">
-                       <div class ="items-center">
-                           <strong class="text-ml " th:text="${address.note}">
+                    <div th:each="address : ${listAddress}" class="p-2 rounded-md shadow-sm bg-grey-3">
+                        <div class="flex justify-between items-start">
+                            <strong class="text-ml " th:text="${address.note}"></strong>
 
-                           </strong>
-                           <p class="text-gray-700 text-sm">
-                               Address:
-                               <span th:text="${address.addressDetail + ', ' + address.province.name  + ', ' + address.wards.name}">
-                               </span>
-                           </p>
+                            <div class="space-x-2">
+                                <a th:href="@{/address/edit/{id}(id=${address.id})}"
+                                   class="text-blue-600 hover:underline text-sm font-semibold">Edit</a>
 
-                           <p class="text-gray-700 text-sm">
-                               Phone:
-                               <span th:text="${address.phoneNumber}">
-                               </span>
-                           </p>
-<!--                           <div class="w-45 text-center bg-yellow-300 text-black px-4 py-2 rounded hover:bg-yellow-400">-->
-<!--                               <a >Delete</a>-->
-<!--                           </div>-->
-                       </div>
-                   </div>
-                </div>
+                                <a th:href="@{/address/delete}"
+                                   class="text-red-600 hover:underline text-sm font-semibold">Delete</a>
+                            </div>
+                        </div>
 
-                <div class="max-w-2xl">
-                    <div class="inline-flex  justify-center rounded-md bg-blue-600 px-6 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
-                        <a th:href="@{/address/add}">Add New Address</a>
+                        <p class="text-gray-700 text-sm">
+                            Address:
+                            <span th:text="${address.addressDetail + ', ' + address.province.name + ', ' + address.wards.name}"></span>
+                        </p>
+
+                        <p class="text-gray-700 text-sm">
+                            Phone:
+                            <span th:text="${address.phoneNumber}"></span>
+                        </p>
+
                     </div>
                 </div>
             </div>
 
+            <div class="max-w-2xl">
+                <div class="inline-flex justify-center rounded-md bg-blue-600 px-6 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
+                    <a th:href="@{/address/add}">Add New Address</a>
+                </div>
+            </div>
         </div>
+
         <script src="/assets/js/pages/user/address.js"></script>
     </th:block>
 </th:block>

@@ -12,6 +12,7 @@ import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -95,5 +96,64 @@ public class AddressService {
 
         addressRepository.save(address);
     }
+
+
+    @Transactional
+    public Address edit(HttpServletRequest request,
+                              String addressId,
+                              String note,
+                              String phone,
+                              String detail,
+                              String provinceId,
+                              String wardsId) {
+        Validate validate = new Validate();
+        User caller = userService.getFromSession(request);
+
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Address not found."));
+
+        if (!address.getUser().getId().equals(caller.getId())) {
+            throw new RuntimeException("You are not allowed to edit this address.");
+        }
+
+        if (note == null || note.trim().isEmpty()) {
+            throw new RuntimeException("Note must not be empty.");
+        }
+        if (!validate.isValidNote(note)) {
+            throw new RuntimeException("Note length must be between 2 and 20 characters.");
+        }
+
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new RuntimeException("Phone number must not be empty.");
+        }
+        if (!validate.isValidPhoneNumber(phone)) {
+            throw new RuntimeException("Phone number must start with 0 and contain exactly 10 digits.");
+        }
+
+        if (detail == null || detail.trim().isEmpty()) {
+            throw new RuntimeException("Address detail must not be empty.");
+        }
+        if (!validate.isValidAddress(detail)) {
+            throw new RuntimeException("Address detail must be 5–200 characters and can only contain , . / -");
+        }
+
+        Province province = provinceRepository.findById(provinceId)
+                .orElseThrow(() -> new RuntimeException("Invalid province selected."));
+        Wards wards = wardsRepository.findById(wardsId)
+                .orElseThrow(() -> new RuntimeException("Invalid ward selected."));
+
+        if (!wards.getProvince().getId().equals(province.getId())) {
+            throw new RuntimeException("Selected ward does not belong to the selected province.");
+        }
+
+        address.setNote(note);
+        address.setPhoneNumber(phone);
+        address.setAddressDetail(detail);
+        address.setProvince(province);
+        address.setWards(wards);
+
+        return addressRepository.save(address);
+    }
+
 
 }

@@ -26,9 +26,9 @@ public class LoginController {
     @PostMapping
     @ResponseBody
     public Object login(HttpServletRequest request,
-                                     HttpServletResponse response,
-                                     @RequestParam(required = false, name="username") String username,
-                                     @RequestParam(required = false, name="password") String password) {
+                        HttpServletResponse response,
+                        @RequestParam(required = false, name="username") String username,
+                        @RequestParam(required = false, name="password") String password) {
         try {
             loginService.login(request, response, username, password);
 

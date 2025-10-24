@@ -25,6 +25,15 @@ public class ProductCollectionService {
         this.productService = productService;
     }
 
+    public String generateId() {
+        RandomUtil rand = new RandomUtil();
+        String id;
+        do {
+            id = rand.randId("collection");
+        } while (productCollectionRepository.findById(id).isPresent());
+        return id;
+    }
+
     public List<ProductCollection> getAll() {
         return productCollectionRepository.findAll();
     }
@@ -42,32 +51,8 @@ public class ProductCollectionService {
         return productCollectionRepository.findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
     }
 
-    private String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("collection");
-        } while (productCollectionRepository.findById(id).isPresent());
-        return id;
-    }
-
-
-    @Transactional
-    public void edit(String id, String name) {
-        Validate validate = new Validate();
-
-        if (id == null || id.isEmpty()) {
-            throw new RuntimeException("Product collection ID must be not empty");
-        } else if (productCollectionRepository.findById(id).isEmpty()) {
-            throw new RuntimeException("Product collection not found");
-        } else if (name == null || name.isEmpty()) {
-            throw new RuntimeException("Product collection name must be not empty");
-        } else if (!validate.isValidCollectionName(name)) {
-            throw new RuntimeException("Product collection name length must be from 3 - 35 chars, only contains alpha");
-        }
-
-        ProductCollection collection = productCollectionRepository.findById(id).orElseThrow();
-        collection.setName(name);
+    public void deleteById(String id) {
+        productCollectionRepository.deleteById(id);
     }
 
     @Transactional
@@ -76,29 +61,11 @@ public class ProductCollectionService {
     }
 
     @Transactional
-    public void add(String name) {
-        Validate validate = new Validate();
-
-        if (name == null || name.isEmpty()) {
-            throw new RuntimeException("Product collection name must be not empty");
-        } else if (existsByName(name)) {
-            throw new RuntimeException("Product collection name already exists");
-        } else if (!validate.isValidCollectionName(name)) {
-            throw new RuntimeException("Product collection name length must be from 3 - 35 chars, only contains alpha");
-        }
-
-        ProductCollection collection = new ProductCollection(generateId(), name);
-        productCollectionRepository.save(collection);
+    public boolean existsById(String id) {
+        return productCollectionRepository.findById(id).isPresent();
     }
 
-    @Transactional
-    public void remove(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("Id must be not empty");
-        } else if (!productCollectionRepository.existsById(id)) {
-            throw new RuntimeException("Product collection id already exists");
-        }
-
-        productCollectionRepository.deleteById(id);
+    public void save(ProductCollection productCollection) {
+        productCollectionRepository.save(productCollection);
     }
 }

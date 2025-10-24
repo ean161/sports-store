@@ -54,7 +54,7 @@ public class ProductTypeService {
         return productTypeRepository.findAll(pageable);
     }
 
-    public Page<ProductType> getByIdOrName(String search, Pageable pageable) {
+    public Page<ProductType> getByIdContainingIgnoreCaseOrNameContainingIgnoreCase(String search, Pageable pageable) {
         return productTypeRepository
                 .findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
 

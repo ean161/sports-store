@@ -24,7 +24,7 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Page<Product> getByIdOrTittle(String search, Pageable pageable) {
+    public Page<Product> getByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(String search, Pageable pageable) {
         return productRepository.findByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(search, search, pageable);
     }
 }

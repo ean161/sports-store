@@ -19,7 +19,27 @@ import java.util.List;
 public class AuthFilter implements Filter {
 
     final private UserService userService;
+
     final private ManagerService managerService;
+
+    private final List<String> unprotectedPath = List.of(
+            "/",
+            "/login",
+            "/logout",
+            "/register",
+            "/manager/login");
+
+    private final List<String> unprotectedPathPrefix = List.of(
+            "/access/",
+            "/forget-password",
+            "/collection/",
+            "/product/");
+
+    private final List<String> assets = List.of(
+            ".css",
+            ".js",
+            ".png",
+            ".jpg");
 
     public AuthFilter(UserService userService, ManagerService managerService) {
         this.userService = userService;
@@ -27,7 +47,9 @@ public class AuthFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
+                         FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String path = req.getRequestURI();
@@ -37,23 +59,6 @@ public class AuthFilter implements Filter {
         String token = cookie.getCookie("token");
 
         boolean hasProtected = true;
-        List<String> unprotectedPath = List.of(
-                "/",
-                "/login",
-                "/logout",
-                "/register",
-                "/manager/login");
-        List<String> unprotectedPathPrefix = List.of(
-                "/access/",
-                "/forget-password",
-                "/collection/",
-                "/product/");
-        List<String> assets = List.of(
-                ".css",
-                ".js",
-                ".png",
-                ".jpg");
-
         for (String i : assets) {
             if (path.endsWith(i)) {
                 chain.doFilter(request, response);

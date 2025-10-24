@@ -99,7 +99,6 @@ async function loadDetails(id) {
 
 async function details(id) {
     await loadDetails(id);
-
     modal("user-details");
 }
 
@@ -108,7 +107,6 @@ async function ban(id) {
         id: id
     });
 
-    await loadDetails(id);
     if (res.code === 1) {
         list.ajax.reload();
         modal("user-details");
@@ -120,7 +118,6 @@ async function pardon(id) {
         id: id
     });
 
-    await loadDetails(id);
     if (res.code === 1) {
         list.ajax.reload();
         modal("user-details");

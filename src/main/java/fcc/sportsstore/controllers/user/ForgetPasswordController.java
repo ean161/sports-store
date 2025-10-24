@@ -63,7 +63,7 @@ public class ForgetPasswordController {
 
             Response res = new Response(1,
                     "Your password was changed.",
-                    Map.of("redirect", "/",
+                    Map.of("redirect", "/login",
                             "time", 3000));
             return res.build();
         } catch (Exception e) {

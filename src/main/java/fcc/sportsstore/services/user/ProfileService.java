@@ -17,10 +17,10 @@ public class ProfileService {
     }
 
     @Transactional
-    public void editProfile(HttpServletRequest request,
-                            String id,
-                            String fullName,
-                            String gender) {
+    public void edit(HttpServletRequest request,
+                     String id,
+                     String fullName,
+                     String gender) {
         Validate validate = new Validate();
         User caller = userService.getFromSession(request);
 
@@ -38,7 +38,14 @@ public class ProfileService {
 
         boolean genderBool;
         try {
-            genderBool = Boolean.parseBoolean(gender);
+//            genderBool = Boolean.parseBoolean(gender);
+            if (gender.equals("1")) {
+                genderBool = true;
+            } else if (gender.equals("0")) {
+                genderBool = false;
+            } else {
+                throw new RuntimeException("Invalid gender value");
+            }
         } catch (Exception e) {
             throw new RuntimeException("Gender must be male for female");
         }

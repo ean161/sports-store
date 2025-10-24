@@ -73,7 +73,6 @@ async function loadDetails(id) {
 
 async function details(id) {
     await loadDetails(id);
-
     modal("collection-details");
 }
 

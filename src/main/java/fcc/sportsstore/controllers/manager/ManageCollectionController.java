@@ -2,6 +2,7 @@ package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.services.ProductCollectionService;
+import fcc.sportsstore.services.manager.ManageCollectionService;
 import fcc.sportsstore.utils.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/manager/collection")
 public class ManageCollectionController {
 
-    private final ProductCollectionService productCollectionService;
+    private final ManageCollectionService manageCollectionService;
 
-    public ManageCollectionController(ProductCollectionService productCollectionService) {
-        this.productCollectionService = productCollectionService;
+    public ManageCollectionController(ManageCollectionService manageCollectionService) {
+        this.manageCollectionService = manageCollectionService;
     }
 
     @GetMapping
@@ -26,17 +27,13 @@ public class ManageCollectionController {
     @GetMapping("/list")
     @ResponseBody
     public Page<ProductCollection> list(@RequestParam(required = false) String search, Pageable pageable) {
-        if (search != null && !search.isEmpty()) {
-            return productCollectionService.getCollectionByIdOrName(search, pageable);
-        }
-
-        return productCollectionService.getAll(pageable);
+        return manageCollectionService.list(search, pageable);
     }
 
     @PostMapping("/details")
     @ResponseBody
     public Object getDetails(@RequestParam(value = "id") String id) {
-        Response res = new Response(1, null, productCollectionService.getById(id));
+        Response res = new Response(1, null, manageCollectionService.getDetails(id));
         return res.build();
     }
 
@@ -44,7 +41,7 @@ public class ManageCollectionController {
     @ResponseBody
     public Object edit(@RequestParam(value = "cd-id") String id, @RequestParam("cd-name") String name) {
         try {
-            productCollectionService.edit(id, name);
+            manageCollectionService.edit(id, name);
 
             Response res = new Response(1, "Collection updated successfully.");
             return res.build();
@@ -58,7 +55,7 @@ public class ManageCollectionController {
     @ResponseBody
     public Object add(@RequestParam(value = "ca-name", required = false) String name) {
         try {
-            productCollectionService.add(name);
+            manageCollectionService.add(name);
 
             Response res = new Response(1, "Collection added successfully.");
             return res.build();
@@ -72,7 +69,7 @@ public class ManageCollectionController {
     @ResponseBody
     public Object remove(@RequestParam(value = "id", required = false) String id) {
         try {
-            productCollectionService.remove(id);
+            manageCollectionService.remove(id);
 
             Response res = new Response(1, "Collection removed successfully.");
             return res.build();
@@ -81,6 +78,4 @@ public class ManageCollectionController {
             return res.build();
         }
     }
-
-
 }

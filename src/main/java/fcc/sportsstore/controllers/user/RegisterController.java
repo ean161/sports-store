@@ -27,10 +27,10 @@ public class RegisterController {
     @PostMapping
     @ResponseBody
     public Object register(HttpServletResponse response,
-                                        @RequestParam(required = false, name="username") String username,
-                                        @RequestParam(required = false, name="email") String email,
-                                        @RequestParam(required = false, name="password") String password,
-                                        @RequestParam(required = false, name="confirm-password") String confirmPassword) {
+                           @RequestParam(required = false, name="username") String username,
+                           @RequestParam(required = false, name="email") String email,
+                           @RequestParam(required = false, name="password") String password,
+                           @RequestParam(required = false, name="confirm-password") String confirmPassword) {
         try {
             registerService.register(response, username, email, password, confirmPassword);
 

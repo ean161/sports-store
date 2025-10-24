@@ -38,14 +38,12 @@ public class UserService {
                 () -> new RuntimeException("Account or password does not exist."));
     }
 
-    public Page<User> getAllByPageable(Pageable pageable) {
+    public Page<User> getAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 
-    public Page<User> getByUsernameOrFullName(String search, Pageable pageable) {
-        return userRepository
-                .findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(search,
-                        search, pageable);
+    public Page<User> getByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(String search, Pageable pageable) {
+        return userRepository.findByUsernameContainingIgnoreCaseOrFullNameContainingIgnoreCase(search, search, pageable);
     }
 
     public User getById(String id) {
@@ -125,54 +123,10 @@ public class UserService {
     @Transactional
     public void access(HttpServletResponse response, String id) {
         CookieUtil cookie = new CookieUtil(response);
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("User ID #%s not found", id)));
+        User user = getById(id);
 
         String token = generateToken();
         user.setToken(token);
         cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
-    }
-
-    @Transactional
-    public void ban(String id) {
-        if (id == null || id.isEmpty()) {
-            throw new RuntimeException("ID must be not empty.");
-        }
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User ID not found"));
-
-        user.setStatus("BANNED");
-        revokeToken(id);
-    }
-
-    @Transactional
-    public void pardon(String id) {
-        if (id == null || id.isEmpty()) {
-            throw new RuntimeException("ID must be not empty.");
-        }
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User ID not found"));
-        user.setStatus("ACTIVE");
-    }
-
-    @Transactional
-    public void edit(String id, String fullName, boolean gender) {
-        Validate validate = new Validate();
-
-        if (id == null || id.isEmpty()) {
-            throw new RuntimeException("ID must be not empty.");
-        } else if (!existsById(id)) {
-            throw new RuntimeException("User not found");
-        } else if (fullName == null || fullName.isEmpty()) {
-            throw new RuntimeException("Full name must be not empty.");
-        } else if (!validate.isValidFullName(fullName)) {
-            throw new RuntimeException("Full name length must be from 3 - 35 chars, only contains alpha");
-        }
-
-        User user = getById(id);
-        user.setFullName(fullName);
-        user.setGender(gender);
     }
 }

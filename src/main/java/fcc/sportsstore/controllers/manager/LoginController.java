@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@Controller(value = "manager-login-controller")
+@Controller(value = "managerLoginController")
 @RequestMapping("/manager/login")
 public class LoginController {
 
@@ -27,9 +27,9 @@ public class LoginController {
     @PostMapping
     @ResponseBody
     public Object login(HttpServletRequest request,
-                                     HttpServletResponse response,
-                                     @RequestParam(required = false, name = "username") String username,
-                                     @RequestParam(required = false, name = "password") String password) {
+                        HttpServletResponse response,
+                        @RequestParam(required = false, name = "username") String username,
+                        @RequestParam(required = false, name = "password") String password) {
         try {
             loginService.login(request, response, username, password);
 

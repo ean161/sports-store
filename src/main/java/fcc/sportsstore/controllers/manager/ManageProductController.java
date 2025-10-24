@@ -2,6 +2,7 @@ package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.Product;
 import fcc.sportsstore.services.ProductService;
+import fcc.sportsstore.services.manager.ManageProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/manager/product")
 public class ManageProductController {
-    private final ProductService productService;
 
-    public ManageProductController(ProductService productService) {
-        this.productService = productService;
+    private final ManageProductService manageProductService;
+
+    public ManageProductController(ManageProductService manageProductService) {
+        this.manageProductService = manageProductService;
     }
 
     @GetMapping
@@ -27,9 +29,6 @@ public class ManageProductController {
     @GetMapping("/list")
     @ResponseBody
     public Page<Product> list(@RequestParam(required = false) String search, Pageable pageable) {
-        if(search != null && !search.isEmpty()){
-            return productService.getByIdOrTittle(search, pageable);
-        }
-        return productService.getAll(pageable);
+        return manageProductService.list(search, pageable);
     }
 }
