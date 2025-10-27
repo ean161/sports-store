@@ -30,4 +30,9 @@ public class ProductType {
     private List<Product> products;
 
     private Long createdAt;
+
+    public ProductType(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

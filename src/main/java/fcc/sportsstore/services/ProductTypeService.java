@@ -1,13 +1,12 @@
 package fcc.sportsstore.services;
 
-import fcc.sportsstore.entities.Product;
-import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.repositories.ProductTypeRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import fcc.sportsstore.utils.RandomUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,18 +15,21 @@ import org.springframework.stereotype.Service;
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+    private final ProductService productService;
 
-    public ProductTypeService(ProductTypeRepository productTypeRepository) {
+    public ProductTypeService(ProductTypeRepository productTypeRepository, ProductService productService) {
         this.productTypeRepository = productTypeRepository;
+        this.productService = productService;
     }
 
     public List<ProductType> getAll() {
         return productTypeRepository.findAll();
     }
+   
 
     public ProductType getById(String id) {
         return productTypeRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Product collection ID not found"));
+                () -> new RuntimeException("Product type ID not found"));
     }
 
     public Page<ProductType> getAll(Pageable pageable) {
@@ -39,4 +41,34 @@ public class ProductTypeService {
                 .findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
 
     }
+
+    public String generateId() {
+        RandomUtil rand = new RandomUtil();
+        String id;
+        do {
+            id = rand.randId("type");
+        } while (productTypeRepository.findById(id).isPresent());
+        return id;
+    }
+
+    public void deleteById(String id) {
+        productTypeRepository.deleteById(id);
+    }
+
+    @Transactional
+    public boolean existsByName(String name) {
+        return productTypeRepository.findByName(name).isPresent();
+    }
+
+    @Transactional
+    public boolean existsById(String id) {
+        return productTypeRepository.findById(id).isPresent();
+    }
+
+    public void save(ProductType productType) {
+        productTypeRepository.save(productType);
+    }
+
+
+
 }

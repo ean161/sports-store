@@ -1,7 +1,7 @@
 package fcc.sportsstore.utils;
 
 public class Validate {
-    
+
     public boolean isValidFullName(String fullName) {
         fullName = fullName.trim();
         if (fullName.length() < 3 || fullName.length() > 35) {
@@ -18,6 +18,15 @@ public class Validate {
         }
 
         return collectionName.matches("^[a-zA-Z ]+$");
+    }
+
+    public boolean isValidProductTypeName(String productTypeName) {
+        productTypeName = productTypeName.trim();
+        if (productTypeName.length() < 3 || productTypeName.length() > 35) {
+            return false;
+        }
+
+        return productTypeName.matches("^[a-zA-Z0-9 ]+$");
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {
@@ -45,8 +54,8 @@ public class Validate {
             return false;
         }
 
-        for (char c : password.toCharArray()){
-            if (!Character.isLetterOrDigit(c) ){
+        for (char c : password.toCharArray()) {
+            if (!Character.isLetterOrDigit(c)) {
                 return true;
             }
         }
@@ -66,4 +75,6 @@ public class Validate {
         String regexAddress = "^[\\p{L}0-9 ,.\\-\\/]+$";
         return address.matches(regexAddress) && address.length() >= 5 && address.length() <= 200;
     }
+
+
 }

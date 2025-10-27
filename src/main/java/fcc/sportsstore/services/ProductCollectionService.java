@@ -1,17 +1,12 @@
 package fcc.sportsstore.services;
 
-import fcc.sportsstore.entities.Address;
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.repositories.ProductCollectionRepository;
 import fcc.sportsstore.utils.RandomUtil;
-import fcc.sportsstore.utils.Validate;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Service("productCollectionService")
