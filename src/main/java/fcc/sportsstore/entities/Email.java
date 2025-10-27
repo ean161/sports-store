@@ -29,7 +29,7 @@ public class Email {
     private String code;
 
     @OneToOne(mappedBy = "email")
-    @JsonManagedReference
+    @JsonIgnore
     private User user;
 
     private Long verifiedAt, createdAt;

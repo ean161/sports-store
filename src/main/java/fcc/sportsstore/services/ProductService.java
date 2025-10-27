@@ -1,7 +1,10 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.Product;
+import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.repositories.ProductRepository;
+import fcc.sportsstore.utils.RandomUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,11 +23,38 @@ public class ProductService {
                 () -> new RuntimeException("Product ID not found"));
     }
 
+    public String generateId() {
+        RandomUtil rand = new RandomUtil();
+        String id;
+        do {
+            id = rand.randId("product");
+        } while (productRepository.findById(id).isPresent());
+        return id;
+    }
+
     public Page<Product> getAll(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
 
     public Page<Product> getByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(String search, Pageable pageable) {
         return productRepository.findByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(search, search, pageable);
+    }
+
+    public void deleteById(String id) {
+        productRepository.deleteById(id);
+    }
+
+    @Transactional
+    public boolean existsByTitle(String title) {
+        return productRepository.findByTitle(title).isPresent();
+    }
+
+    @Transactional
+    public boolean existsById(String id) {
+        return productRepository.findById(id).isPresent();
+    }
+
+    public void save(Product product) {
+        productRepository.save(product);
     }
 }

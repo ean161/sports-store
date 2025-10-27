@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +23,6 @@ public class Province {
     private Integer vtpReferrenceId;
 
     @OneToMany(mappedBy = "province",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Wards> awardsList;
 }

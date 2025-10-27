@@ -22,7 +22,7 @@ public class ProductCollection {
     private String name;
 
     @OneToMany(mappedBy = "productCollection", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @JsonIgnore
     private List<Product> products;
 
     private Long createdAt;

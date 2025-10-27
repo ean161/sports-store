@@ -13,11 +13,29 @@ public class Validate {
 
     public boolean isValidCollectionName(String collectionName) {
         collectionName = collectionName.trim();
-        if (collectionName.length() < 3 || collectionName.length() > 35) {
+        if (collectionName.length() > 35) {
             return false;
         }
 
         return collectionName.matches("^[a-zA-Z ]+$");
+    }
+
+  public boolean isValidProductTitle(String title) {
+        title = title.trim();
+        if (title.length() < 3 || title.length() > 35) {
+            return false;
+        }
+
+        return title.matches("^[a-zA-Z ]+$");
+    }
+
+    public boolean isValidProductDescription(String description) {
+        description = description.trim();
+        if (description.length() > 250) {
+            return false;
+        }
+
+        return description.matches("^[a-zA-Z ]+$");
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {

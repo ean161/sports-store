@@ -39,7 +39,6 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "email_id")
-    @JsonBackReference
     private Email email;
 
     private Long createdAt;
