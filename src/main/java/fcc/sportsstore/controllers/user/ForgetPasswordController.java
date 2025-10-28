@@ -23,20 +23,6 @@ public class ForgetPasswordController {
         return "pages/user/forget-password/request";
     }
 
-    @PostMapping
-    @ResponseBody
-    public Object requestForget(@RequestParam(required = false, name = "email") String email) {
-        try {
-            forgetPasswordService.requestForget(email);
-            Response res = new Response(1, "Forget link was sent to your email.");
-
-            return res.build();
-        } catch (Exception e) {
-            Response res = new Response(0, e.getMessage());
-            return res.build();
-        }
-    }
-
     @GetMapping("/forget")
     public String forget(Model model, @RequestParam(required = false, name = "code") String code) {
         model.addAttribute("code", code);
@@ -53,22 +39,4 @@ public class ForgetPasswordController {
         return "pages/user/forget-password/forget";
     }
 
-    @PostMapping("/forget")
-    @ResponseBody
-    public Object forgetPassword(@RequestParam(required = false, name = "code") String code,
-                                                @RequestParam(required = false, name = "password") String password,
-                                                @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
-        try {
-            forgetPasswordService.forgetPassword(code, password, confirmPassword);
-
-            Response res = new Response(1,
-                    "Your password was changed.",
-                    Map.of("redirect", "/login",
-                            "time", 3000));
-            return res.build();
-        } catch (Exception e) {
-            Response res = new Response(0, e.getMessage());
-            return res.build();
-        }
-    }
 }

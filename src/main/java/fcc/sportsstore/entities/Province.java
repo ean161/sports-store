@@ -22,7 +22,7 @@ public class Province {
 
     private Integer vtpReferrenceId;
 
-    @OneToMany(mappedBy = "province",  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Wards> awardsList;
+    private List<Wards> awards;
 }

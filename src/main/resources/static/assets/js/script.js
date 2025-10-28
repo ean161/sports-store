@@ -18,38 +18,45 @@ const datatableLang = {
 };
 
 async function post(url, data = null) {
-    let res = await $.ajax({
-        url: url,
-        type: "POST",
-        data: data
-    });
+    let res = { code: 0 };
 
-    if (res && typeof res === "object" && "code" in res) {
-        if ("message" in res && res.message != null) {
-            if (res.code === 0) {
-                out.error(res.message);
-            } else if (res.code === 1) {
-                out.success(res.message);
-            }
+    try {
+        const response = await $.ajax({
+            url,
+            type: "POST",
+            data,
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+        });
+
+        res = { ...response, code: 1 };
+
+        if (response?.message) {
+            out.success(response.message);
         }
 
-        if ("data" in res) {
-            if (res.data && typeof res.data === 'object' && !Array.isArray(res.data)) {
-                if ("redirect" in res.data && res.data.redirect != null) {
-                    setTimeout(() => {
-                        window.location.href = res.data.redirect;
-                    }, res.data.time || 0);
-                }
-            }
-        }
+    } catch (xhr) {
+        const errorResponse = xhr?.responseJSON || {};
+        const message = errorResponse.message || errorResponse.error || "Có lỗi xảy ra";
 
-        if (res.code === 2) {
-            window.location.href = res.data;
+        res = { ...errorResponse, code: 0 };
+        out.error(message);
+    }
+
+    if (res?.data && typeof res.data === "object" && !Array.isArray(res.data)) {
+        const { redirect, time = 0 } = res.data;
+        if (redirect) {
+            setTimeout(() => (window.location.href = redirect), time);
         }
+    }
+
+    if (res.code === 2 && res.data) {
+        window.location.href = res.data;
     }
 
     return res;
 }
+
 
 function scrollToId(id) {
     const element = document.getElementById(id);

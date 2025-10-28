@@ -49,30 +49,5 @@ public class AddressController {
         model.addAttribute("wards", wardsRepository.findAll());
         return "pages/user/add-address";
     }
-
-    @PostMapping("/add")
-    @ResponseBody
-    public Object add(HttpServletRequest request,
-                      @RequestParam(value = "note", required = false) String note,
-                      @RequestParam(value = "phone", required = false) String phone,
-                      @RequestParam(value = "detail", required = false) String detail,
-                      @RequestParam(value = "provinceId", required = false) String provinceId,
-                      @RequestParam(value = "wardsId", required = false) String wardsId) {
-        try {
-            addressService.add(request, note, phone, detail, provinceId, wardsId);
-
-            Response res = new Response(
-                    1,
-                    "Add address successfully.",
-                    Map.of("redirect", "/address", "time", 500)
-            );
-            return res.build();
-
-        } catch (Exception e) {
-            Response res = new Response(0, e.getMessage());
-            return res.build();
-        }
-
-    }
 }
 
