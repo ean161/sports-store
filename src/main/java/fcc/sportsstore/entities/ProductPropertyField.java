@@ -15,6 +15,7 @@ import java.util.List;
 public class ProductPropertyField {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "product_property_field_id")
     private String id;
 
@@ -22,6 +23,7 @@ public class ProductPropertyField {
 
     @ManyToOne
     @JoinColumn(name = "product_type_id")
+    @JsonIgnore
     private ProductType productType;
 
     @OneToMany(mappedBy = "productPropertyField", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -29,4 +31,9 @@ public class ProductPropertyField {
     private List<ProductPropertyData> productPropertyData;
 
     private Long createdAt;
+
+    public ProductPropertyField(String name, ProductType productType) {
+        this.name = name;
+        this.productType = productType;
+    }
 }

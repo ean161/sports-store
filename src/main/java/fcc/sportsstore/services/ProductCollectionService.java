@@ -13,11 +13,9 @@ import java.util.List;
 public class ProductCollectionService {
 
     final private ProductCollectionRepository productCollectionRepository;
-    private final ProductService productService;
 
-    public ProductCollectionService(ProductCollectionRepository productCollectionRepository, ProductService productService) {
+    public ProductCollectionService(ProductCollectionRepository productCollectionRepository) {
         this.productCollectionRepository = productCollectionRepository;
-        this.productService = productService;
     }
 
     public String generateId() {

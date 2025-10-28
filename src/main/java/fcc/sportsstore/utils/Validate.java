@@ -29,6 +29,15 @@ public class Validate {
         return typeName.matches("^[a-zA-Z0-9 ]+$");
     }
 
+    public boolean isValidProductPropertyFieldName(String fieldName) {
+        fieldName = fieldName.trim();
+        if (fieldName.length() > 20) {
+            return false;
+        }
+
+        return fieldName.matches("^[a-zA-Z0-9 ]+$");
+    }
+
     public boolean isValidProductTitle(String productTitle) {
         productTitle = productTitle.trim();
         if (productTitle.length() > 35) {
@@ -83,14 +92,33 @@ public class Validate {
 
     // Code dị coi được?
     public boolean isValidNote(String note) {
-        int length = note.trim().length();
-        return length >= 2 && length <= 20;
+       note = note.trim();
+       if(note.length() > 150){
+           return false;
+       }
+        return note.matches("^[a-zA-Z0-9 ]+$");
     }
 
     // Code dị coi được?
     public boolean isValidAddress(String address) {
         address = address.trim();
-        String regexAddress = "^[\\p{L}0-9 ,.\\-\\/]+$";
-        return address.matches(regexAddress) && address.length() >= 5 && address.length() <= 200;
+        if(address.length() <5){
+            return false;
+        }
+        return address.matches("^[\\p{L}0-9 ,.\\-\\/]+$") ;
+    }
+
+    public boolean isValidCode(String code){
+        code = code.trim();
+        if(code.length() < 8|| code.length() >35){
+            return false;
+        }
+        return code.matches("^[a-zA-Z0-9]+$");
+
+    }
+
+    public boolean isValidStatus(String status){
+        status = status.trim();
+        return status.equals("ACTIVE") || status.equals("DISABLED");
     }
 }

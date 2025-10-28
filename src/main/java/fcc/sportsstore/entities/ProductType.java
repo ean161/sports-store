@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,6 @@ public class ProductType {
     private String name;
 
     @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<ProductPropertyField> productPropertyFields;
 
     @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -34,5 +34,6 @@ public class ProductType {
     public ProductType(String id, String name) {
         this.id = id;
         this.name = name;
+        this.productPropertyFields = new ArrayList<>();
     }
 }

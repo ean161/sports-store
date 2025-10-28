@@ -7,6 +7,10 @@ $(document).ready(function () {
         event.preventDefault();
         await add($(this).serialize());
     });
+
+    $("#pta-add-property-btn").on("click", async function () {
+        addProperty("pta-properties");
+    });
 });
 
 async function add(data) {
@@ -14,6 +18,8 @@ async function add(data) {
 
     if (res.code === 1) {
         list.ajax.reload();
+        $("#add-product-type-form")[0].reset();
+        $("pta-properties").html(``);
         modal("add-product-type");
     }
 }

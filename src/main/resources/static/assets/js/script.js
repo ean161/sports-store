@@ -37,7 +37,7 @@ async function post(url, data = null) {
 
     } catch (xhr) {
         const errorResponse = xhr?.responseJSON || {};
-        const message = errorResponse.message || errorResponse.error || "Có lỗi xảy ra";
+        const message = errorResponse.message || errorResponse.error || "Something was wrong.";
 
         res = { ...errorResponse, code: 0 };
         out.error(message);
@@ -56,7 +56,6 @@ async function post(url, data = null) {
 
     return res;
 }
-
 
 function scrollToId(id) {
     const element = document.getElementById(id);
