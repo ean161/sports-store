@@ -17,16 +17,25 @@ public class Validate {
             return false;
         }
 
-        return collectionName.matches("^[a-zA-Z ]+$");
+        return collectionName.matches("^[a-zA-Z0-9 ]+$");
     }
 
-  public boolean isValidProductTitle(String title) {
-        title = title.trim();
-        if (title.length() < 3 || title.length() > 35) {
+    public boolean isValidProductTypeName(String typeName) {
+        typeName = typeName.trim();
+        if (typeName.length() > 25) {
             return false;
         }
 
-        return title.matches("^[a-zA-Z ]+$");
+        return typeName.matches("^[a-zA-Z0-9 ]+$");
+    }
+
+    public boolean isValidProductTitle(String productTitle) {
+        productTitle = productTitle.trim();
+        if (productTitle.length() > 35) {
+            return false;
+        }
+
+        return productTitle.matches("^[a-zA-Z0-9 ]+$");
     }
 
     public boolean isValidProductDescription(String description) {
@@ -35,7 +44,7 @@ public class Validate {
             return false;
         }
 
-        return description.matches("^[a-zA-Z ]+$");
+        return description.matches("^[a-zA-Z0-9 ]+$");
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {
@@ -72,14 +81,14 @@ public class Validate {
         return false;
     }
 
+    // Code dị coi được?
     public boolean isValidNote(String note) {
-        if (note == null) return false;
         int length = note.trim().length();
         return length >= 2 && length <= 20;
     }
 
+    // Code dị coi được?
     public boolean isValidAddress(String address) {
-        if (address == null) return false;
         address = address.trim();
         String regexAddress = "^[\\p{L}0-9 ,.\\-\\/]+$";
         return address.matches(regexAddress) && address.length() >= 5 && address.length() <= 200;

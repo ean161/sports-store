@@ -31,4 +31,8 @@ public class ProductType {
 
     private Long createdAt;
 
+    public ProductType(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

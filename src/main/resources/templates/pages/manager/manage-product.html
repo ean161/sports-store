@@ -12,7 +12,7 @@
                 </th:block>
                 <div class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-3xl font-bold">Manage products</h2>
+                        <h2 class="text-3xl font-bold">Manage product</h2>
                         <button id="add-product-btn-navbar"
                                 class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">
                             Add
@@ -82,8 +82,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Price:
                                                         </div>
-                                                        <input id="pd-price" type="text" name="pd-price"
-                                                               class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                        <input id="pd-price" type="number" name="pd-price" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
                                                     <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -94,7 +93,6 @@
                                                                 name="pd-type"
                                                                 class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                             <option th:each="t : ${type}"
-
                                                                     th:value="${t.id}"
                                                                     th:text="${t.name}"
                                                                     th:selected="${product != null and product.productType != null and product.productType.id == t.id}">
@@ -109,7 +107,6 @@
                                                         <select id="pd-collection"
                                                                 name="pd-collection"
                                                                 class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-
                                                             <option th:each="c : ${collection}"
                                                                     th:value="${c.id}"
                                                                     th:text="${c.name}">
@@ -121,7 +118,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Quantity:
                                                         </div>
-                                                        <input id="pd-quantity" type="text" name="pd-quantity"
+                                                        <input id="pd-quantity" type="number" name="pd-quantity"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
