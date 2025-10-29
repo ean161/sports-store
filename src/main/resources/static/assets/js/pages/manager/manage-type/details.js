@@ -13,7 +13,7 @@ async function loadDetails(id) {
     $("#ptd-id").val(res.data.id);
     $("#ptd-name").val(res.data.name);
 
-    $("#ptd-properties").html(``);
+    $("#ptd-properties").html(`<p>No item found</p>`);
     for (let p in res.data.productPropertyFields) {
         addProperty("ptd-properties", res.data.productPropertyFields[p].name);
     }

@@ -19,7 +19,7 @@ async function add(data) {
     if (res.code === 1) {
         list.ajax.reload();
         $("#add-product-type-form")[0].reset();
-        $("pta-properties").html(``);
+        $("#pta-properties").html(`<p>No item found</p>`);
         modal("add-product-type");
     }
 }
