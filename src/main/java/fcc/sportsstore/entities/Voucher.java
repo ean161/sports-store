@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Voucher {
 
     @Id
@@ -55,7 +57,7 @@ public class Voucher {
     private LocalDateTime expiredAt;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public Voucher(String code, String status, Integer maxUsedCount, Integer usedCount, String discountType, Double discountValue, Double maxDiscountValue) {
         this.code = code;

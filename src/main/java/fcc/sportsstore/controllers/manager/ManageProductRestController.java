@@ -61,9 +61,10 @@ public class ManageProductRestController {
                                  @RequestParam(value = "pa-price", required = false) Double price,
                                  @RequestParam(value = "pa-type", required = false) String type,
                                  @RequestParam(value = "pa-collection", required = false) String collection,
-                                 @RequestParam(value = "pa-quantity", required = false) Integer quantity) {
+                                 @RequestParam(value = "pa-quantity", required = false) Integer quantity,
+                                 @RequestParam(value = "pa-image", required = false) String image) {
         try {
-            manageProductService.add(title, description, price, type, collection, quantity);
+            manageProductService.add(title, description, price, type, collection, quantity, image);
 
             Response res = new Response("Product added successfully.");
             return ResponseEntity.ok(res.build());

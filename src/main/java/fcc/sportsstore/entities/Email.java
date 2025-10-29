@@ -11,12 +11,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Email {
 
     @Id
@@ -39,7 +41,7 @@ public class Email {
     private Long verifiedAt;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public Email(String address) {
         this.address = address;

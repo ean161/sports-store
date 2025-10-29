@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,16 +27,19 @@ public class ManageProductService {
 
     private final ProductPropertyDataService productPropertyDataService;
 
+    private final ProductMediaService productMediaService;
+
     public ManageProductService(ProductService productService,
                                 ProductTypeService productTypeService,
                                 ProductCollectionService productCollectionService,
                                 ProductPropertyFieldService productPropertyFieldService,
-                                ProductPropertyDataService productPropertyDataService) {
+                                ProductPropertyDataService productPropertyDataService, ProductMediaService productMediaService) {
         this.productService = productService;
         this.productTypeService = productTypeService;
         this.productCollectionService = productCollectionService;
         this.productPropertyFieldService = productPropertyFieldService;
         this.productPropertyDataService = productPropertyDataService;
+        this.productMediaService = productMediaService;
     }
 
     public Page<Product> list(String search, Pageable pageable) {
@@ -108,7 +112,7 @@ public class ManageProductService {
     }
 
     @Transactional
-    public void add(String title, String description, Double price, String productType, String collectionName, Integer quantity) {
+    public void add(String title, String description, Double price, String productType, String collectionName, Integer quantity, String image) {
         Validate validate = new Validate();
 
         if (title == null || title.isEmpty()) {
@@ -119,28 +123,33 @@ public class ManageProductService {
             throw new RuntimeException("Product description must not be empty.");
         } else if (!validate.isValidProductDescription(description)) {
             throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
-        } else if (price == null || price <= 0) {
-            throw new RuntimeException("Product price must be greater than 0.");
+        } else if (price == null || price < 0) {
+            throw new RuntimeException("Product price must be not a t anegative number.");
         } else if (quantity == null || quantity < 0) {
             throw new RuntimeException("Quantity cannot be negative.");
         } else if (productType == null || productType.isEmpty()) {
             throw new RuntimeException("Product type must not be empty.");
         } else if (collectionName == null || collectionName.isEmpty()) {
             throw new RuntimeException("Collection must not be empty.");
+        } else if (image == null || image.isEmpty()) {
+            throw new RuntimeException("Image must not be empty.");
         }
 
         ProductType type = productTypeService.getById(productType);
         ProductCollection collection = productCollectionService.getById(collectionName);
+
 
         Product product = new Product(title,
                 description,
                 price,
                 type,
                 collection,
-                quantity
-        );
+                quantity);
 
         productService.save(product);
+
+        ProductMedia media = new ProductMedia(product, image);
+        productMediaService.save(media);
     }
 
     public void remove(String id) {

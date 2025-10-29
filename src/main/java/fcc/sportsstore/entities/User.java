@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -45,7 +47,7 @@ public class User {
     private Email email;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public User(String username, String password) {
         this.username = username;
@@ -53,6 +55,5 @@ public class User {
         this.fullName = username;
         this.gender = true;
         this.status = "ACTIVE";
-
     }
 }

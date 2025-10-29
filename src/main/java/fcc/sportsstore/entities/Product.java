@@ -47,7 +47,7 @@ public class Product {
     private ProductCollection productCollection;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public Product(String title, String description, Double price, ProductType productType, ProductCollection productCollection, Integer quantity) {
         this.title = title;

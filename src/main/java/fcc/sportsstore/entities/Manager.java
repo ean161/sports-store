@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Manager {
 
     @Id
@@ -36,7 +38,7 @@ public class Manager {
     private String role;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public Manager(String username, String fullName, String password, String token, String role) {
         this.username = username;

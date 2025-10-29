@@ -7,12 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class ProductPropertyData {
 
     @Id
@@ -34,7 +36,7 @@ public class ProductPropertyData {
     private Double price;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public ProductPropertyData(ProductPropertyField productPropertyField, Product product, String data, Double price) {
         this.productPropertyField = productPropertyField;
