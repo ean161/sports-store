@@ -4,9 +4,10 @@ $(document).ready(function () {
     list = $("#list").DataTable({
         processing: true,
         serverSide: true,
-        scrollX: true,
         language: datatableLang,
-        columnDefs: [{targets: "_all", className: "dt-nowrap"}],
+        columnDefs: [
+            // { targets: "_all", className: "dt-nowrap" }
+        ],
         ajax: function (data, callback, settings) {
             let page = Math.floor(data.start / data.length);
             let size = data.length;
@@ -42,8 +43,8 @@ $(document).ready(function () {
                 data: "action",
                 orderable: false,
                 render: function (data, type, row) {
-                return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer  cursor-pointer">Details</button>`;
-            }
+                    return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer  cursor-pointer">Details</button>`;
+                }
             }
         ]
     });

@@ -13,23 +13,22 @@
                 <div class="flex-1 p-8 bg-white shadow-md m-4 rounded-xl">
                     <div class="flex items-center justify-between">
                         <h2 class="text-3xl font-bold">Manage product</h2>
-                        <button id="add-product-btn-navbar"
-                                class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">
+                        <button id="add-product-btn-navbar" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">
                             Add
                         </button>
                     </div>
                     <table id="list" class="row-border">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tittle</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Type</th>
-                            <th>Collection</th>
-                            <th>Quantity</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tittle</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                                <th>Collection</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                     </table>
                 </div>
@@ -120,6 +119,10 @@
                                                         </div>
                                                         <input id="pd-quantity" type="number" name="pd-quantity"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                    </div>
+
+                                                    <div id="pd-properties">
+
                                                     </div>
 
                                                     <div class="flex justify-between">
@@ -252,6 +255,7 @@
         </main>
 
         <script src="/assets/js/pages/manager/manage-product/list.js"></script>
+        <script src="/assets/js/pages/manager/manage-product/property-data.js"></script>
         <script src="/assets/js/pages/manager/manage-product/details.js"></script>
         <script src="/assets/js/pages/manager/manage-product/add.js"></script>
         <script src="/assets/js/pages/manager/manage-product/edit.js"></script>

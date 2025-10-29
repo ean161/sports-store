@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
 
     $("#pta-add-property-btn").on("click", async function () {
-        addProperty("pta-properties");
+        addPropertyFieldInput("pta-properties");
     });
 });
 
@@ -19,7 +19,7 @@ async function add(data) {
     if (res.code === 1) {
         list.ajax.reload();
         $("#add-product-type-form")[0].reset();
-        $("#pta-properties").html(`<p>No item found</p>`);
+        $("#pta-properties").html(``);
         modal("add-product-type");
     }
 }

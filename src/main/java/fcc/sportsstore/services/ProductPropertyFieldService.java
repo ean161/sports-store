@@ -1,6 +1,7 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.ProductPropertyField;
+import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.repositories.ProductPropertyFieldRepository;
 import fcc.sportsstore.utils.RandomUtil;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,10 @@ public class ProductPropertyFieldService {
 
     public ProductPropertyFieldService(ProductPropertyFieldRepository productPropertyFieldRepository) {
         this.productPropertyFieldRepository = productPropertyFieldRepository;
+    }
+
+    public boolean existsByNameIgnoreCaseAndProductType(String name, ProductType productType) {
+        return productPropertyFieldRepository.findByNameIgnoreCaseAndProductType(name, productType).isPresent();
     }
 
     public String generateId() {

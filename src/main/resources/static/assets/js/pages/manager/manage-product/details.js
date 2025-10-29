@@ -3,7 +3,7 @@ async function loadDetails(id) {
         id: id
     });
 
-    $("#pd-product-header").html(res.data.name);
+    $("#pd-product-header").html(res.data.title);
     $("#pd-id").val(res.data.id);
     $("#pd-title").val(res.data.title);
     $("#pd-description").val(res.data.description);
@@ -11,6 +11,8 @@ async function loadDetails(id) {
     $("#pd-type").val(res.data.productType.id);
     $("#pd-collection").val(res.data.productCollection.id);
     $("#pd-quantity").val(res.data.quantity);
+
+    loadProperties("pd-properties", res.data.productType.productPropertyFields);
 
     $("#pd-remove-btn").attr("onclick", `remove('${id}')`);
 }

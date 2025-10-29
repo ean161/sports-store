@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#ptd-add-property-btn").on("click", async function () {
-        addProperty("ptd-properties");
+        addPropertyFieldInput("ptd-properties");
     });
 });
 
@@ -13,9 +13,9 @@ async function loadDetails(id) {
     $("#ptd-id").val(res.data.id);
     $("#ptd-name").val(res.data.name);
 
-    $("#ptd-properties").html(`<p>No item found</p>`);
+    $("#ptd-properties").html(``);
     for (let p in res.data.productPropertyFields) {
-        addProperty("ptd-properties", res.data.productPropertyFields[p].name);
+        addPropertyFieldInput("ptd-properties", res.data.productPropertyFields[p].name);
     }
 
     $("#ptd-remove-btn").attr("onclick", `remove('${id}')`);

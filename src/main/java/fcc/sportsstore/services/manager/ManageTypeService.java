@@ -58,12 +58,13 @@ public class ManageTypeService {
         productType.setName(name);
         try {
             List<ProductPropertyField> mergedFields = mergeFields(productType, fields);
-            productType.setProductPropertyFields(mergedFields);
+            List<ProductPropertyField> currentFields = productType.getProductPropertyFields();
+            currentFields.clear();
+            currentFields.addAll(mergedFields);
         } catch (Exception e) {
             System.err.println("Edit product type error: " + e.getMessage());
         }
     }
-
 
     @Transactional
     public void add(String name, String[] fields) {
@@ -84,11 +85,23 @@ public class ManageTypeService {
 
         try {
             List<ProductPropertyField> mergedFields = mergeFields(productType, fields);
-            productType.setProductPropertyFields(mergedFields);
+            List<ProductPropertyField> currentFields = productType.getProductPropertyFields();
+            currentFields.clear();
+            currentFields.addAll(mergedFields);
         } catch (Exception e) {
             System.err.println("Add product type error: " + e.getMessage());
         }
         productTypeService.save(productType);
+    }
+
+    public void remove(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new RuntimeException("Id must be not empty");
+        } else if (!productTypeService.existsById(id)) {
+            throw new RuntimeException("Product-type id already exists");
+        }
+
+        productTypeService.deleteById(id);
     }
 
     private void validatePropertyFields(String[] fields, Validate validate) {
@@ -103,46 +116,24 @@ public class ManageTypeService {
         }
     }
 
-    public void remove(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("Id must be not empty");
-        } else if (!productTypeService.existsById(id)) {
-            throw new RuntimeException("Product-type id already exists");
-        }
-
-        productTypeService.deleteById(id);
-    }
-
     private List<ProductPropertyField> mergeFields(ProductType productType, String[] fields) {
-        List<ProductPropertyField> properties = productType.getProductPropertyFields();
+        List<ProductPropertyField> properties = new ArrayList<>(productType.getProductPropertyFields());
+
+        if (fields == null || fields.length == 0) {
+            properties.clear();
+            return properties;
+        }
+
         for (String field : fields) {
-            boolean isExisted = false;
-            for (ProductPropertyField fieldItem : properties) {
-                if (fieldItem.getName().equalsIgnoreCase(field)) {
-                    isExisted = true;
-                    break;
-                }
-            }
-
-            if (!isExisted) {
-                ProductPropertyField ppfEntity = new ProductPropertyField(field, productType);
-                productPropertyFieldService.save(ppfEntity);
-                properties.add(ppfEntity);
+            if (!productPropertyFieldService.existsByNameIgnoreCaseAndProductType(field, productType)) {
+                ProductPropertyField newField = new ProductPropertyField(field, productType);
+                productPropertyFieldService.save(newField);
+                properties.add(newField);
             }
         }
 
-        for (ProductPropertyField fieldItem : properties) {
-            boolean isExisted = false;
-            for (String field : fields) {
-                if (fieldItem.getName().equalsIgnoreCase(field)) {
-                    isExisted = true;
-                }
-            }
-
-            if (!isExisted) {
-                properties.remove(fieldItem);
-            }
-        }
+        properties.removeIf(property ->
+                !List.of(fields).stream().anyMatch(field -> field.equalsIgnoreCase(property.getName())));
 
         return properties;
     }

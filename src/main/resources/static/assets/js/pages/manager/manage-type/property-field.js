@@ -2,12 +2,8 @@ $(document).on("click", ".remove-property-btn", function (event) {
     $(this).parent().remove();
 });
 
-function addProperty(id, value = "") {
+function addPropertyFieldInput(id, value = "") {
     let elm = $(`#${id}`);
-
-    if (elm.text().indexOf('No item found') > -1) {
-        elm.html(``);
-    }
 
     elm.append(`<div class="flex space-x-2">
             <div class="flex w-9/10 items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">

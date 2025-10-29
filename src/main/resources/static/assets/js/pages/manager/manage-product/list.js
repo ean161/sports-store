@@ -4,10 +4,9 @@ $(document).ready(function () {
     list = $("#list").DataTable({
         processing: true,
         serverSide: true,
-        scrollX: true,
         language: datatableLang,
         columnDefs: [
-            {targets: "_all", className: "dt-nowrap"}
+            // { targets: "_all", className: "dt-nowrap" }
         ],
         ajax: function (data, callback, settings) {
             let page = Math.floor(data.start / data.length);
