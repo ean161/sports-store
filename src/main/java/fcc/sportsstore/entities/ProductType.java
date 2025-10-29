@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class ProductType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "product_type_id")
     private String id;
 
@@ -29,10 +32,10 @@ public class ProductType {
     @JsonIgnore
     private List<Product> products;
 
-    private Long createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    public ProductType(String id, String name) {
-        this.id = id;
+    public ProductType(String name) {
         this.name = name;
         this.productPropertyFields = new ArrayList<>();
     }

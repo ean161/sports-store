@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -20,6 +22,7 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     private String id;
 
@@ -28,7 +31,7 @@ public class User {
 
     private String password, fullName, status;
 
-    @Column(length = 550)
+    @Column(length = 550, unique = true)
     private String token;
 
     /**
@@ -41,17 +44,15 @@ public class User {
     @JoinColumn(name = "email_id")
     private Email email;
 
-    private Long createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    public User(String id, String username, String password) {
-        this.id = id;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.fullName = username;
         this.gender = true;
         this.status = "ACTIVE";
 
-        TimeUtil time = new TimeUtil();
-        this.createdAt = time.getCurrentTimestamp();
     }
 }

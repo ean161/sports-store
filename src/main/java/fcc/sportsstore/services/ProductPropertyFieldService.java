@@ -16,16 +16,23 @@ public class ProductPropertyFieldService {
     }
 
     public boolean existsByNameIgnoreCaseAndProductType(String name, ProductType productType) {
-        return productPropertyFieldRepository.findByNameIgnoreCaseAndProductType(name, productType).isPresent();
+        try {
+            ProductPropertyField entity = getByNameIgnoreCaseAndProductType(name, productType);
+
+            return entity != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("field");
-        } while (productPropertyFieldRepository.findById(id).isPresent());
-        return id;
+    public ProductPropertyField getByNameIgnoreCaseAndProductType(String name, ProductType productType) {
+        return productPropertyFieldRepository.findByNameIgnoreCaseAndProductType(name , productType)
+                .orElseThrow(() -> new RuntimeException(name + " field not found"));
+    }
+
+    public ProductPropertyField getByIdAndProductType(String id, ProductType productType) {
+        return productPropertyFieldRepository.findByIdAndProductType(id , productType)
+                .orElseThrow(() -> new RuntimeException(id + " field not found"));
     }
 
     public void save(ProductPropertyField productPropertyField) {

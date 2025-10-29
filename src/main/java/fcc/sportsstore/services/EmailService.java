@@ -32,13 +32,4 @@ public class EmailService {
         return emailRepository.findByAddress(address).isPresent();
     }
 
-    public String generateId() {
-        String id;
-        RandomUtil rand = new RandomUtil();
-
-        do {
-            id = rand.randId("email");
-        } while (emailRepository.findById(id).isPresent());
-        return id;
-    }
 }

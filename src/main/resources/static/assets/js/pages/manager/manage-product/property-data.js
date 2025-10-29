@@ -1,22 +1,41 @@
+$(document).on("click", ".remove-property-btn", function (event) {
+    $(this).parent().remove();
+});
+
 function loadProperties(id, list) {
     let elm = $(`#${id}`);
 
     for (let i in list) {
         let item = list[i];
 
-        elm.append(`<div>
-                <div class="flex justify-between items-center mb-4" id="property-${item.id}">
+        elm.append(`<div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
                     <h3 class="text-base font-semibold text-gray-900">
                         ${item.name}
                     </h3>
-                    <span onclick="addPropertyDataInput('${item.id}')" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
+                    <span onclick="addPropertyDataInput('${item.id}', 'pd-property-${item.id}')" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
                         Add data
                     </span>
+                </div>
+                <div id="pd-property-${item.id}" class="space-y-4">
                 </div>
             </div>`);
     }
 }
 
-function addPropertyDataInput(id) {
+function addPropertyDataInput(id, htmlId, value = "", price = 0) {
+    let elm = $(`#${htmlId}`);
 
+    elm.append(`<div class="flex space-x-2">
+            <input name="properties" value="${id}" hidden />
+            <div class="flex w-6/10 items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                <input placeholder="Data" name="fields" type="text" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" value="${value}" />
+            </div>
+            <div class="flex w-3/10 items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                <input placeholder="Price" name="prices" type="number" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" value="${price}" />
+            </div>
+            <span class="remove-property-btn w-1/10 inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-md font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
+                -
+            </span>
+        </div>`);
 }

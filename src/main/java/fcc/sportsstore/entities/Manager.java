@@ -1,14 +1,16 @@
 package fcc.sportsstore.entities;
 
 import fcc.sportsstore.utils.TimeUtil;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "manager")
@@ -17,7 +19,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Manager {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "manager_id")
     private String id;
 
@@ -26,23 +30,20 @@ public class Manager {
 
     private String password, fullName, status;
 
-    @Column(length = 550)
+    @Column(length = 550, unique = true)
     private String token;
 
     private String role;
 
-    private Long createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    public Manager(String id, String username, String fullName, String password, String token, String role) {
-        this.id = id;
+    public Manager(String username, String fullName, String password, String token, String role) {
         this.username = username;
         this.fullName = fullName;
         this.password = password;
         this.status = "ACTIVE";
         this.token = token;
         this.role = role;
-
-        TimeUtil time = new TimeUtil();
-        this.createdAt = time.getCurrentTimestamp();
     }
 }

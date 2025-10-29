@@ -80,7 +80,7 @@ public class ManageTypeService {
 
         validatePropertyFields(fields, validate);
 
-        ProductType productType = new ProductType(productTypeService.generateId(), name);
+        ProductType productType = new ProductType( name);
         productTypeService.save(productType);
 
         try {

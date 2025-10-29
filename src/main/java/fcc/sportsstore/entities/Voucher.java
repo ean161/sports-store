@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
@@ -12,6 +15,7 @@ import lombok.Setter;
 public class Voucher {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "voucher_id")
     private String id;
 
@@ -47,10 +51,13 @@ public class Voucher {
      */
     private Double maxDiscountValue;
 
-    private Long expiredAt, createdAt;
+    @CreatedDate
+    private LocalDateTime expiredAt;
 
-    public Voucher(String id, String code, String status, Integer maxUsedCount, Integer usedCount, String discountType, Double discountValue, Double maxDiscountValue) {
-        this.id = id;
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    public Voucher(String code, String status, Integer maxUsedCount, Integer usedCount, String discountType, Double discountValue, Double maxDiscountValue) {
         this.code = code;
         this.status = status;
         this.maxUsedCount = maxUsedCount;

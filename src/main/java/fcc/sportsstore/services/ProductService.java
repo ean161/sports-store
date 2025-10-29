@@ -23,15 +23,6 @@ public class ProductService {
                 () -> new RuntimeException("Product ID not found"));
     }
 
-    public String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("product");
-        } while (productRepository.findById(id).isPresent());
-        return id;
-    }
-
     public Page<Product> getAll(Pageable pageable) {
         return productRepository.findAll(pageable);
     }

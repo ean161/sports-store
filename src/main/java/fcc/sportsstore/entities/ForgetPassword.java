@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "forget_password")
@@ -14,6 +17,7 @@ import lombok.Setter;
 public class ForgetPassword {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "forget_password_id")
     private String id;
 
@@ -26,10 +30,12 @@ public class ForgetPassword {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Long expiredAt, createdAt;
+    private Long expiredAt;
 
-    public ForgetPassword(String id, String code, User user) {
-        this.id = id;
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    public ForgetPassword(String code, User user) {
         this.code = code;
         this.status = "NOT_USED_YET";
         this.user = user;
@@ -37,7 +43,6 @@ public class ForgetPassword {
         TimeUtil time = new TimeUtil();
         Long nowTimestamp = time.getCurrentTimestamp();
 
-        this.createdAt = nowTimestamp;
         this.expiredAt = nowTimestamp + (60 * 10);
     }
 }

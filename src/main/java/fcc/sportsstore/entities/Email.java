@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -17,6 +20,7 @@ import lombok.Setter;
 public class Email {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "email_id")
     private String id;
 
@@ -32,14 +36,13 @@ public class Email {
     @JsonIgnore
     private User user;
 
-    private Long verifiedAt, createdAt;
+    private Long verifiedAt;
 
-    public Email(String id, String address) {
-        this.id = id;
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    public Email(String address) {
         this.address = address;
         this.isVerified = false;
-
-        TimeUtil time = new TimeUtil();
-        this.createdAt = time.getCurrentTimestamp();
     }
 }

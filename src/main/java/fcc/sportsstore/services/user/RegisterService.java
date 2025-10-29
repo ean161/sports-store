@@ -59,11 +59,9 @@ public class RegisterService {
 
         HashUtil hash = new HashUtil();
         String hashedPassword = hash.md5(password);
-        User user = new User(userService.generateId(),
-                username,
-                hashedPassword);
+        User user = new User(username, hashedPassword);
 
-        Email emailEntity = new Email(emailService.generateId(), email);
+        Email emailEntity = new Email(email);
         user.setEmail(emailEntity);
 
         userService.save(user);

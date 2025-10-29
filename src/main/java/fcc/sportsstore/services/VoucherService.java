@@ -19,15 +19,6 @@ public class VoucherService {
         this.voucherRepository = voucherRepository;
     }
 
-    public String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("voucher");
-        } while (voucherRepository.findById(id).isPresent());
-        return id;
-    }
-
     public List<Voucher> getAll() {
         return voucherRepository.findAll();
     }

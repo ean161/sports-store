@@ -38,15 +38,6 @@ public class AddressService {
         return addressRepository.findByUser(user);
     }
 
-    private String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("address");
-        } while (addressRepository.findById(id).isPresent());
-        return id;
-    }
-
     public void add(HttpServletRequest request,
                     String note,
                     String phone,
@@ -86,7 +77,6 @@ public class AddressService {
         }
 
         Address address = new Address();
-        address.setId(generateId());
         address.setNote(note);
         address.setPhoneNumber(phone);
         address.setAddressDetail(detail);

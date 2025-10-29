@@ -58,7 +58,6 @@ public class ManageVoucherService {
             throw new RuntimeException("Max discount value must be greater than 0");
         }
         Voucher voucher = new Voucher(
-                voucherService.generateId(),
                 code,
                 status,
                 maxUsedCount,

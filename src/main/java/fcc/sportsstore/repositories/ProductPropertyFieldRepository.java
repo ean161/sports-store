@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ProductPropertyFieldRepository extends JpaRepository<ProductPropertyField, String> {
 
     Optional<ProductPropertyField> findByNameIgnoreCaseAndProductType(String name, ProductType productType);
+
+    Optional<ProductPropertyField> findByIdAndProductType(String id, ProductType productType);
 }

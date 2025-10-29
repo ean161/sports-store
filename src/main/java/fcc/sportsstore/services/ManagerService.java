@@ -22,16 +22,6 @@ public class ManagerService {
         this.managerRepository = managerRepository;
     }
 
-    public String generateId() {
-        String id;
-        RandomUtil rand = new RandomUtil();
-
-        do {
-            id = rand.randId("manager");
-        } while (managerRepository.findById(id).isPresent());
-        return id;
-    }
-
     public String generateToken() {
         String token;
         RandomUtil rand = new RandomUtil();

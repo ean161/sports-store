@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -30,7 +32,8 @@ public class ProductPropertyField {
     @JsonIgnore
     private List<ProductPropertyData> productPropertyData;
 
-    private Long createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     public ProductPropertyField(String name, ProductType productType) {
         this.name = name;

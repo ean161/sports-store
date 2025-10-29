@@ -35,16 +35,6 @@ public class ForgetPasswordService {
         this.javaMailService = javaMailService;
     }
 
-    public String generateId() {
-        String id;
-        RandomUtil rand = new RandomUtil();
-
-        do {
-            id = rand.randId("forget_password");
-        } while (forgetPasswordRepository.findById(id).isPresent());
-        return id;
-    }
-
     public String generateCode() {
         RandomUtil rand = new RandomUtil();
         return rand.randCode("forget_password");
@@ -87,8 +77,7 @@ public class ForgetPasswordService {
         }
 
         String forgetCode = generateCode();
-        ForgetPassword forgetSession = new ForgetPassword(generateId(),
-                forgetCode,
+        ForgetPassword forgetSession = new ForgetPassword(                forgetCode,
                 user);
 
         javaMailService.sendForgetPasswordMail(emailObj.getAddress(), forgetCode);

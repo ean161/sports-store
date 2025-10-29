@@ -59,7 +59,7 @@ public class ManageCollectionService {
             throw new RuntimeException("Product collection name length must be from 3 - 35 chars, only contains alpha");
         }
 
-        ProductCollection collection = new ProductCollection(productCollectionService.generateId(), name);
+        ProductCollection collection = new ProductCollection(name);
         productCollectionService.save(collection);
     }
 

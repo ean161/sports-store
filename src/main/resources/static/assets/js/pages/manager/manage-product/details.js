@@ -12,6 +12,7 @@ async function loadDetails(id) {
     $("#pd-collection").val(res.data.productCollection.id);
     $("#pd-quantity").val(res.data.quantity);
 
+    $("#pd-properties").html(``);
     loadProperties("pd-properties", res.data.productType.productPropertyFields);
 
     $("#pd-remove-btn").attr("onclick", `remove('${id}')`);

@@ -12,9 +12,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Address {
-    @Id
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
     private String note;
 
     @Column(name = "phone_number")
@@ -35,8 +37,7 @@ public class Address {
     private User user;
 
 
-    public Address(String id, String note, String phoneNumber, String addressDetail, Province province, Wards wards, User user) {
-        this.id = id;
+    public Address(String note, String phoneNumber, String addressDetail, Province province, Wards wards, User user) {
         this.note = note;
         this.phoneNumber = phoneNumber;
         this.addressDetail = addressDetail;

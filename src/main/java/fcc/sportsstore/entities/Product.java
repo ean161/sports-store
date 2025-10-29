@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,6 +18,7 @@ import java.util.List;
 public class Product {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "product_id")
     private String id;
 
@@ -37,17 +40,16 @@ public class Product {
     private ProductType productType;
 
     @OneToMany(mappedBy = "product")
-    @JsonIgnore
     private List<ProductPropertyData> productPropertyData;
 
     @ManyToOne
     @JoinColumn(name = "product_collection_id")
     private ProductCollection productCollection;
 
-    private Long createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    public Product(String id, String title, String description, Double price, ProductType productType, ProductCollection productCollection, Integer quantity) {
-        this.id = id;
+    public Product(String title, String description, Double price, ProductType productType, ProductCollection productCollection, Integer quantity) {
         this.title = title;
         this.description = description;
         this.price = price;

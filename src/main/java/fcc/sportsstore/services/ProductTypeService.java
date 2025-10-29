@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+
     private final ProductService productService;
 
     public ProductTypeService(ProductTypeRepository productTypeRepository, ProductService productService) {
@@ -25,7 +26,6 @@ public class ProductTypeService {
     public List<ProductType> getAll() {
         return productTypeRepository.findAll();
     }
-   
 
     public ProductType getById(String id) {
         return productTypeRepository.findById(id).orElseThrow(
@@ -40,15 +40,6 @@ public class ProductTypeService {
         return productTypeRepository
                 .findByIdContainingIgnoreCaseOrNameContainingIgnoreCase(search, search, pageable);
 
-    }
-
-    public String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("type");
-        } while (productTypeRepository.findById(id).isPresent());
-        return id;
     }
 
     public void deleteById(String id) {

@@ -40,10 +40,12 @@ public class ManageProductRestController {
                                   @RequestParam(value = "pd-price", required = false) Double price,
                                   @RequestParam(value = "pd-type", required = false) String productType,
                                   @RequestParam(value = "pd-collection", required = false) String collectionName,
-                                  @RequestParam(value = "pd-quantity", required = false) Integer quantity
-    ) {
+                                  @RequestParam(value = "pd-quantity", required = false) Integer quantity,
+                                  @RequestParam(value = "properties", required = false) String[] properties,
+                                  @RequestParam(value = "fields", required = false) String[] fields,
+                                  @RequestParam(value = "prices", required = false) Double[] prices) {
         try {
-            manageProductService.edit(id, title, description, price, productType, collectionName, quantity);
+            manageProductService.edit(id, title, description, price, productType, collectionName, quantity, properties, fields, prices);
 
             Response res = new Response("Product updated successfully.");
             return ResponseEntity.ok(res.build());

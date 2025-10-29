@@ -83,24 +83,14 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String generateId() {
+    public String generateToken() {
         String id;
         RandomUtil rand = new RandomUtil();
 
         do {
-            id = rand.randId("user");
-        } while (userRepository.findById(id).isPresent());
+            id = rand.randToken("user");
+        } while (userRepository.findByToken(id).isPresent());
         return id;
-    }
-
-    public String generateToken() {
-        String token;
-        RandomUtil rand = new RandomUtil();
-
-        do {
-            token = rand.randToken("user");
-        } while (userRepository.findByToken(token).isPresent());
-        return token;
     }
 
     @Transactional

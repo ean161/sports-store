@@ -18,15 +18,6 @@ public class ProductCollectionService {
         this.productCollectionRepository = productCollectionRepository;
     }
 
-    public String generateId() {
-        RandomUtil rand = new RandomUtil();
-        String id;
-        do {
-            id = rand.randId("collection");
-        } while (productCollectionRepository.findById(id).isPresent());
-        return id;
-    }
-
     public List<ProductCollection> getAll() {
         return productCollectionRepository.findAll();
     }

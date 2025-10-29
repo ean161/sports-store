@@ -15,6 +15,7 @@ import java.util.List;
 public class Province {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "province_id")
     private String id;
 
