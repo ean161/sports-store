@@ -74,7 +74,7 @@
             <section class="mt-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-gray-800">Recently Viewed Products</h2>
-                    <a href="#" class="text-blue-600 text-sm hover:underline hover:text-red-600 transition-colors">View all</a>
+                    <span class="text-gray-600 hover:text-gray-900 transition-colors">More</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-6">
@@ -163,8 +163,7 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2 th:text="${collection.name}" th:id="${'collection-' + collection.id}" class="text-2xl font-bold text-gray-800"></h2>
                     <a th:href="@{'/collection/' + ${collection.id}}" class="flex items-center gap-2 group">
-                        <span class="text-gray-600 hover:underline hover:text-blue-600 transition-colors">Explore collection</span>
-                        <img src="/assets/img/icon/red-right-arrow.png" class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        <span class="text-gray-600 hover:text-gray-900 transition-colors">More</span>
                     </a>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
