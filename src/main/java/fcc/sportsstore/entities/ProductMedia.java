@@ -30,5 +30,6 @@ public class ProductMedia {
     public ProductMedia(Product product, String dir) {
         this.product = product;
         this.dir = dir;
+        this.type = "IMAGE";
     }
 }

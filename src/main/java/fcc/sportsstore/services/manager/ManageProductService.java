@@ -74,8 +74,8 @@ public class ManageProductService {
             throw new RuntimeException("Product title length must be from 3 - 35 chars, only contains alpha");
         } else if (!validate.isValidProductDescription(description)) {
             throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
-        } else if (price == null || price <= 0) {
-            throw new RuntimeException("Product price must be greater than 0.");
+        } else if (price == null || price < 0) {
+            throw new RuntimeException("Product price must be not a negative number.");
         } else if (quantity == null || quantity < 0) {
             throw new RuntimeException("Quantity cannot be negative.");
         } else if (productType == null || productType.isEmpty()) {
@@ -84,11 +84,11 @@ public class ManageProductService {
             throw new RuntimeException("Collection must not be empty.");
         }
 
-        HashMap<String, HashMap<String, Double>> properyDataMap = new HashMap<>();
-
-        for (int i = 0; i < fields.length; i++) {
-            properyDataMap.put(datas[i], new HashMap<>(Map.of(fields[i], prices[i])));
-        }
+//        HashMap<String, HashMap<String, Double>> properyDataMap = new HashMap<>();
+//
+//        for (int i = 0; i < fields.length; i++) {
+//            properyDataMap.put(datas[i], new HashMap<>(Map.of(fields[i], prices[i])));
+//        }
 
         Product product = productService.getById(id);
         ProductType type = productTypeService.getById(productType);
@@ -101,14 +101,14 @@ public class ManageProductService {
         product.setProductCollection(collection);
         product.setQuantity(quantity);
 
-        try {
-            List<ProductPropertyData> mergedData = mergeDatas(product, properyDataMap);
-            List<ProductPropertyData> currentDatas = product.getProductPropertyData();
-            currentDatas.clear();
-            currentDatas.addAll(mergedData);
-        } catch (Exception e) {
-            System.err.println("Edit product error: " + e.getMessage());
-        }
+//        try {
+//            List<ProductPropertyData> mergedData = mergeDatas(product, properyDataMap);
+//            List<ProductPropertyData> currentDatas = product.getProductPropertyData();
+//            currentDatas.clear();
+//            currentDatas.addAll(mergedData);
+//        } catch (Exception e) {
+//            System.err.println("Edit product error: " + e.getMessage());
+//        }
     }
 
     @Transactional
@@ -124,7 +124,7 @@ public class ManageProductService {
         } else if (!validate.isValidProductDescription(description)) {
             throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
         } else if (price == null || price < 0) {
-            throw new RuntimeException("Product price must be not a t anegative number.");
+            throw new RuntimeException("Product price must be not a negative number.");
         } else if (quantity == null || quantity < 0) {
             throw new RuntimeException("Quantity cannot be negative.");
         } else if (productType == null || productType.isEmpty()) {
