@@ -10,7 +10,7 @@
             <th:block th:if="${session.manager.role == 'STAFF'}">
                 <th:block th:replace="~{fragment/manager/sidebar :: staff-slidebar}"></th:block>
             </th:block>
-            <main class="flex-1 p-8 bg-white m-4">
+            <main class="flex-1 p-8 bg-white m-4 shadow-sm">
                 <th:block th:replace="${content}"></th:block>
             </main>
         </div>

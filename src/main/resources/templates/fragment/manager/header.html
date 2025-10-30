@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <a th:href="@{/manager}" class="flex items-center space-x-3  cursor-pointer">
                 <div class="relative">
-                    <img src="/assets/img/logo.png" class="w-15" />
+                    <img src="/assets/img/logo-v1.png" class="w-15" />
                 </div>
                 <div>
                     <div class="font-bold text-xl text-white">SPORTS <span class="text-blue-200">STORE</span></div>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="text-center cursor-pointer hover:text-red-600 duration-300 group">
                     <a th:if="${session.manager != null}" href="/logout"
-                       class="text-base text-wheat-300 hover:scale-105 hover:text-red-600">Logout</a>
+                       class="text-base text-wheat-300 hover:scale-105">Logout</a>
                 </div>
             </div>
         </div>
