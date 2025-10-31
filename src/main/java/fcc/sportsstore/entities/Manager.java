@@ -41,15 +41,17 @@ public class Manager {
     @CreatedDate
     private Long createdAt;
 
-    // constructor for create staff in manage funcs
-    public Manager(String username, String fullName, String password) {
+    // constructor for create staff in manage
+    public Manager(String username, String fullName, String password, String token) {
         this.username = username;
         this.fullName = fullName;
 
-        this.status = "ACTIVE";
-        this.role = "STAFF";
-
         HashUtil hash = new HashUtil();
         this.password = hash.md5(password);
+
+        this.token = token;
+
+        this.status = "ACTIVE";
+        this.role = "STAFF";
     }
 }

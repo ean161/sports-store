@@ -78,7 +78,7 @@ public class ManageStaffService {
             throw new RuntimeException("Full name length must be from 6 - 35 chars, only contains alpha.");
         }
 
-        Manager staff = new Manager(username, fullName, password);
+        Manager staff = new Manager(username, fullName, password, managerService.generateToken());
         managerService.save(staff);
     }
 

@@ -45,7 +45,6 @@ public class ManagerService {
                 () -> new RuntimeException("Manager not found"));
     }
 
-
     public Page<Manager> getStaffs(Pageable pageable) {
         return managerRepository.findByRole("STAFF",pageable);
     }
@@ -127,7 +126,4 @@ public class ManagerService {
         manager.setToken(token);
         save(manager);
     }
-
-
-
 }
