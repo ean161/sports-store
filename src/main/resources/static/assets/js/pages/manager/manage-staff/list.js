@@ -15,7 +15,7 @@ $(document).ready(function () {
             let sortDir = data.order[0].dir;
             let search = data.search.value;
 
-            let url = `/manager/user/list?page=${page}&size=${size}&sort=${sortCol},${sortDir}`;
+            let url = `/manager/staff/list?page=${page}&size=${size}&sort=${sortCol},${sortDir}`;
             if (search) {
                 url += `&search=${encodeURIComponent(search)}`;
             }
@@ -41,26 +41,6 @@ $(document).ready(function () {
             {
                 data: "fullName",
                 orderable: false
-            },
-            {
-                data: "status",
-                orderable: false,
-                render: function (data, type, row) {
-                    return `<span class="text-${
-                        data == "ACTIVE"
-                            ? `green`
-                            : data == "BANNED"
-                                ? `red`
-                                : `grey`
-                    }-800">${data}</span>`;
-                }
-            },
-            {
-                data: "gender",
-                orderable: false,
-                render: function (data, type, row) {
-                    return `<span>${!data ? `Female` : `Male`}</span>`;
-                }
             },
             {
                 data: "action",

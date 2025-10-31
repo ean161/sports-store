@@ -12,7 +12,7 @@ async function loadDetails(id) {
     $("#vd-max-discount-value").val(res.data.maxDiscountValue);
     $("#vd-max-used").val(res.data.maxUsedCount);
     $("#vd-status").val(res.data.status);
-    $("#vd-used").val(res.data.usedCount);
+    $("#vd-used-count").val(res.data.usedCount);
 
     $("#vd-remove-btn").attr("onclick", `remove('${id}')`);
 }

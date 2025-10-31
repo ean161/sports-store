@@ -13,7 +13,7 @@ async function loadDetails(id) {
     $("#pd-quantity").val(res.data.quantity);
 
     $("#pd-properties").html(``);
-    loadProperties("pd-properties", res.data.productType.productPropertyFields);
+    loadProperties("pd", res.data.productType.productPropertyFields, res.data.productPropertyData);
 
     $("#pd-remove-btn").attr("onclick", `remove('${id}')`);
 }

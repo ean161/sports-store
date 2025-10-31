@@ -8,7 +8,7 @@
             <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
                 <th:block th:if="${session.manager != null}">
                     <th:block th:if="${session.manager.role == 'ADMIN'}">
-                        <div th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></div>
+                        <div th:replace="~{fragment/manager/sidebar :: admin-sidebar}"></div>
                     </th:block>
                 </th:block>
 

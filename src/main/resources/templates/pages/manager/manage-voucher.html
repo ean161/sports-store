@@ -7,7 +7,7 @@
             <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
                 <th:block th:if="${session.manager != null}">
                     <th:block th:if="${session.manager.role == 'ADMIN'}">
-                        <div th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></div>
+                        <div th:replace="~{fragment/manager/sidebar :: admin-sidebar}"></div>
                     </th:block>
                 </th:block>
                 <div class="flex-1 p-8 bg-white shadow-sm m-4">
@@ -66,13 +66,7 @@
                                                     <input id="vd-code" type="text" name="vd-code"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Created date:
-                                                    </div>
-                                                    <input id="vd-created-date" type="text" name="vd-created-date"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
-                                                </div>
+
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Discount type:
@@ -111,6 +105,7 @@
                                                            name="vd-max-discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
+
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Max used:
@@ -118,6 +113,15 @@
                                                     <input id="vd-max-used" type="text" name="vd-max-used"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
+
+                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                        Used count:
+                                                    </div>
+                                                    <input id="vd-used-count" type="text" name="vd-used-count"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                </div>
+
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Status:
@@ -133,23 +137,22 @@
                                                         </option>
                                                     </select>
                                                 </div>
+
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Used:
+                                                      Created at:
                                                     </div>
-                                                    <input id="vd-used" type="text" name="vd-used"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                    <input id="vd-created-date" type="text" name="vd-created-date"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
                                                 </div>
 
                                                 <div class="flex justify-between">
                                                     <div class="flex space-x-2">
                                                         <div class="flex space-x-2" id="action-btns"></div>
-                                                        <button id="edit-btn" type="submit"
-                                                                class="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
+                                                        <button id="edit-btn" type="submit" class="inline-flex justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
                                                             Save changes
                                                         </button>
-                                                        <span id="vd-remove-btn"
-                                                              class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
+                                                        <span id="vd-remove-btn" class="inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
                                                                 Remove
                                                         </span>
                                                     </div>
@@ -191,13 +194,6 @@
                                                         Code:
                                                     </div>
                                                     <input id="va-code" type="text" name="va-code"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
-                                                </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Created date:
-                                                    </div>
-                                                    <input id="va-created-date" type="text" name="va-created-date"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
@@ -249,17 +245,8 @@
                                                     <select id="va-status"
                                                             name="va-status"
                                                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                        <option value="" selected>— Select status —</option>
-                                                        <option value="ACTIVE">ACTIVE</option>
-                                                        <option value="DISABLED">DISABLED</option>
+                                                        <option value="ACTIVE" selected>ACTIVE</option>
                                                     </select>
-                                                </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Used:
-                                                    </div>
-                                                    <input id="va-used" type="text" name="va-used"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
 

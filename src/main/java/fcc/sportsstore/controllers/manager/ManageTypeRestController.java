@@ -30,9 +30,12 @@ public class ManageTypeRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> edit(@RequestParam(value = "ptd-id") String id, @RequestParam("ptd-name") String name, @RequestParam(value = "fields", required = false) String[] fields) {
+    public ResponseEntity<?> edit(@RequestParam(value = "ptd-id") String id,
+                                  @RequestParam("ptd-name") String name,
+                                  @RequestParam(value = "field-ids", required = false) String[] fieldIds,
+                                  @RequestParam(value = "fields", required = false) String[] fields) {
         try {
-            manageTypeService.edit(id, name, fields);
+            manageTypeService.edit(id, name, fieldIds, fields);
 
             Response res = new Response("Product type updated successfully.");
             return ResponseEntity.ok(res.build());
@@ -43,9 +46,11 @@ public class ManageTypeRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestParam(value = "pta-name", required = false) String name, @RequestParam(value = "fields", required = false) String[] fields) {
+    public ResponseEntity<?> add(@RequestParam(value = "pta-name", required = false) String name,
+                                 @RequestParam(value = "field-ids", required = false) String[] fieldIds,
+                                 @RequestParam(value = "fields", required = false) String[] fields) {
         try {
-            manageTypeService.add(name, fields);
+            manageTypeService.add(name, fieldIds, fields);
 
             Response res = new Response("Product type added successfully.");
             return ResponseEntity.ok(res.build());

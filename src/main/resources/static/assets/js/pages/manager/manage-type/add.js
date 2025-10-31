@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
 
     $("#pta-add-property-btn").on("click", async function () {
-        addPropertyFieldInput("pta-properties");
+        addPropertyFieldInput("NEW-ID", "pta-properties");
     });
 });
 

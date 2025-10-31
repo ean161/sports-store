@@ -15,6 +15,15 @@ public class ProductPropertyFieldService {
         this.productPropertyFieldRepository = productPropertyFieldRepository;
     }
 
+    public boolean existsById(String id) {
+        return productPropertyFieldRepository.findById(id).isPresent();
+    }
+
+    public ProductPropertyField getById(String id) {
+        return productPropertyFieldRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product property field ID not found"));
+    }
+
     public boolean existsByNameIgnoreCaseAndProductType(String name, ProductType productType) {
         try {
             ProductPropertyField entity = getByNameIgnoreCaseAndProductType(name, productType);

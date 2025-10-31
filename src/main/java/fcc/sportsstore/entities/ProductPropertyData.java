@@ -35,6 +35,11 @@ public class ProductPropertyData {
 
     private Double price;
 
+    @ManyToOne
+    @JoinColumn(name = "product_quantity_id")
+    @JsonIgnore
+    private ProductQuantity productQuantity;
+
     @CreatedDate
     private Long createdAt;
 

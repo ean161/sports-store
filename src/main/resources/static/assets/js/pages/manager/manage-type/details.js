@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#ptd-add-property-btn").on("click", async function () {
-        addPropertyFieldInput("ptd-properties");
+        addPropertyFieldInput("NEW-ID", "ptd-properties");
     });
 });
 
@@ -15,7 +15,8 @@ async function loadDetails(id) {
 
     $("#ptd-properties").html(``);
     for (let p in res.data.productPropertyFields) {
-        addPropertyFieldInput("ptd-properties", res.data.productPropertyFields[p].name);
+        let item = res.data.productPropertyFields[p];
+        addPropertyFieldInput(item.id, "ptd-properties", item.name);
     }
 
     $("#ptd-remove-btn").attr("onclick", `remove('${id}')`);

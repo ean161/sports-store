@@ -75,9 +75,22 @@ public class Validate {
         return username.matches("^[a-zA-Z0-9]+$");
     }
 
+//    public boolean isValidPassword(String password) {
+//        int length = password.length();
+//        if (length < 6 || length > 30) {
+//            return false;
+//        }
+//
+//        for (char c : password.toCharArray()){
+//            if (!Character.isLetterOrDigit(c) ){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     public boolean isValidPassword(String password) {
-        int length = password.length();
-        if (length < 6 || length > 30) {
+        password = password.trim();
+        if (password.length() < 6 || password.length() > 30) {
             return false;
         }
 
@@ -86,25 +99,24 @@ public class Validate {
                 return true;
             }
         }
-
         return false;
     }
 
-    // Code dị coi được?
     public boolean isValidNote(String note) {
-       note = note.trim();
-       if(note.length() > 150){
-           return false;
-       }
+        note = note.trim();
+        if (note.length() > 150){
+            return false;
+        }
+
         return note.matches("^[a-zA-Z0-9 ]+$");
     }
 
-    // Code dị coi được?
     public boolean isValidAddress(String address) {
         address = address.trim();
-        if(address.length() <5){
+        if (address.length() <5){
             return false;
         }
+
         return address.matches("^[\\p{L}0-9 ,.\\-\\/]+$") ;
     }
 
@@ -120,5 +132,14 @@ public class Validate {
     public boolean isValidStatus(String status){
         status = status.trim();
         return status.equals("ACTIVE") || status.equals("DISABLED");
+    }
+
+    public boolean isValidProperty(String property) {
+        int length = property.length();
+        if (length > 30) {
+            return false;
+        }
+
+        return property.matches("^[a-zA-Z0-9 ]+$");
     }
 }

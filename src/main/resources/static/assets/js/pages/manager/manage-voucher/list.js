@@ -29,7 +29,6 @@ $(document).ready(function () {
                 });
             });
         },
-        order: [[0, "desc"]],
         columns: [
             {
                 data: "id",
@@ -44,7 +43,8 @@ $(document).ready(function () {
                 orderable: false
             },
             {
-                data: "usedCount", orderable: false
+                data: "usedCount",
+                orderable: false
             },
             {
                 data: "status",

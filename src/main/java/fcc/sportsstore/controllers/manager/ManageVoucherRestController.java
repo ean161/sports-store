@@ -37,7 +37,7 @@ public class ManageVoucherRestController {
                                  @RequestParam(value = "va-max-used", required = false) Integer maxUsedCount,
                                  @RequestParam(value = "va-used", required = false) Integer usedCount,
                                  @RequestParam(value = "va-discount-type", required = false) String discountType,
-                                 @RequestParam(value = "va-max-discount-value", required = false) Double discountValue,
+                                 @RequestParam(value = "va-discount-value", required = false) Double discountValue,
                                  @RequestParam(value = "va-max-discount-value", required = false) Double maxDiscountValue) {
         try {
             manageVoucherService.add(code, status, maxUsedCount, usedCount, discountType, discountValue, maxDiscountValue);
@@ -58,7 +58,7 @@ public class ManageVoucherRestController {
             @RequestParam(value = "vd-max-used", required = false) Integer maxUsedCount,
             @RequestParam(value = "vd-used", required = false) Integer usedCount,
             @RequestParam(value = "vd-discount-type", required = false) String discountType,
-            @RequestParam(value = "vd-max-discount-value", required = false) Double discountValue,
+            @RequestParam(value = "vd-discount-value", required = false) Double discountValue,
             @RequestParam(value = "vd-max-discount-value", required = false) Double maxDiscountValue
     ) {
         try {

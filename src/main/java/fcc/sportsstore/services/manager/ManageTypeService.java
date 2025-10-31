@@ -1,5 +1,6 @@
 package fcc.sportsstore.services.manager;
 
+import fcc.sportsstore.entities.ProductPropertyData;
 import fcc.sportsstore.entities.ProductPropertyField;
 import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.services.ProductPropertyFieldService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service("managerManageTypeService")
@@ -39,7 +41,7 @@ public class ManageTypeService {
     }
 
     @Transactional
-    public void edit(String id, String name, String[] fields) {
+    public void edit(String id, String name, String[] fieldIds, String[] fields) {
         Validate validate = new Validate();
 
         if (id == null || id.isEmpty()) {
@@ -52,22 +54,13 @@ public class ManageTypeService {
             throw new RuntimeException("Product type name length must be under 35 chars, only contains alpha, space and number");
         }
 
-        validatePropertyFields(fields, validate);
-
         ProductType productType = productTypeService.getById(id);
         productType.setName(name);
-        try {
-            List<ProductPropertyField> mergedFields = mergeFields(productType, fields);
-            List<ProductPropertyField> currentFields = productType.getProductPropertyFields();
-            currentFields.clear();
-            currentFields.addAll(mergedFields);
-        } catch (Exception e) {
-            System.err.println("Edit product type error: " + e.getMessage());
-        }
+        updatePropertyField(productType, fieldIds, fields);
     }
 
     @Transactional
-    public void add(String name, String[] fields) {
+    public void add(String name, String[] fieldIds, String[] fields) {
         Validate validate = new Validate();
 
         if (name == null || name.isEmpty()) {
@@ -78,20 +71,53 @@ public class ManageTypeService {
             throw new RuntimeException("Product type name length must be from 3 - 35 chars, only contains alpha");
         }
 
-        validatePropertyFields(fields, validate);
-
-        ProductType productType = new ProductType( name);
+        ProductType productType = new ProductType(name);
         productTypeService.save(productType);
 
         try {
-            List<ProductPropertyField> mergedFields = mergeFields(productType, fields);
-            List<ProductPropertyField> currentFields = productType.getProductPropertyFields();
-            currentFields.clear();
-            currentFields.addAll(mergedFields);
+            updatePropertyField(productType, fieldIds, fields);
         } catch (Exception e) {
-            System.err.println("Add product type error: " + e.getMessage());
+            productTypeService.deleteById(productType.getId());
+            throw new RuntimeException(e.getMessage());
         }
-        productTypeService.save(productType);
+    }
+
+    @Transactional
+    public void updatePropertyField(ProductType productType, String[] fieldIds, String[] fields) {
+        Validate validate = new Validate();
+
+        List<ProductPropertyField> newFields = new ArrayList<>();
+        if (fieldIds != null && fields != null && fields.length > 0) {
+            for (int i = 0; i < fieldIds.length; i++) {
+                String id = fieldIds[i];
+                String field = fields[i];
+
+                if (id == null || id.isEmpty()) {
+                    throw new RuntimeException("Property field must be not empty.");
+                } else if (field == null || field.isEmpty() || !validate.isValidProperty(field)) {
+                    throw new RuntimeException("Property must be not empty and just contain alpha, number and space.");
+                }
+
+                ProductPropertyField fieldEntity = null;
+                if (!id.equals("NEW-ID")) {
+                    if (!productPropertyFieldService.existsById(id)) {
+                        throw new RuntimeException("Invalid property field.");
+                    } else {
+                        fieldEntity = productPropertyFieldService.getById(id);
+                        fieldEntity.setName(field);
+                    }
+                } else {
+                    fieldEntity = new ProductPropertyField(field, productType);
+                }
+
+                productPropertyFieldService.save(fieldEntity);
+                newFields.add(fieldEntity);
+            }
+        }
+
+        List<ProductPropertyField> currentFields = productType.getProductPropertyFields();
+        currentFields.clear();
+        currentFields.addAll(newFields);
     }
 
     public void remove(String id) {
@@ -102,39 +128,5 @@ public class ManageTypeService {
         }
 
         productTypeService.deleteById(id);
-    }
-
-    private void validatePropertyFields(String[] fields, Validate validate) {
-        if (fields != null) {
-            for (String field : fields) {
-                if (field == null || field.isEmpty()) {
-                    throw new RuntimeException("Property name must be not empty");
-                } else if (!validate.isValidProductPropertyFieldName(field)) {
-                    throw new RuntimeException("Product property field name length must be under 20 chars, only contains alpha, space and number");
-                }
-            }
-        }
-    }
-
-    private List<ProductPropertyField> mergeFields(ProductType productType, String[] fields) {
-        List<ProductPropertyField> properties = new ArrayList<>(productType.getProductPropertyFields());
-
-        if (fields == null || fields.length == 0) {
-            properties.clear();
-            return properties;
-        }
-
-        for (String field : fields) {
-            if (!productPropertyFieldService.existsByNameIgnoreCaseAndProductType(field, productType)) {
-                ProductPropertyField newField = new ProductPropertyField(field, productType);
-                productPropertyFieldService.save(newField);
-                properties.add(newField);
-            }
-        }
-
-        properties.removeIf(property ->
-                !List.of(fields).stream().anyMatch(field -> field.equalsIgnoreCase(property.getName())));
-
-        return properties;
     }
 }

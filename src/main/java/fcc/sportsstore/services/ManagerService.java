@@ -1,6 +1,8 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.Manager;
+import fcc.sportsstore.entities.User;
+import fcc.sportsstore.entities.Voucher;
 import fcc.sportsstore.repositories.ManagerRepository;
 import fcc.sportsstore.utils.CookieUtil;
 import fcc.sportsstore.utils.HashUtil;
@@ -8,6 +10,8 @@ import fcc.sportsstore.utils.RandomUtil;
 import fcc.sportsstore.utils.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +45,11 @@ public class ManagerService {
                 () -> new RuntimeException("Manager not found"));
     }
 
+
+    public Page<Manager> getStaffs(Pageable pageable) {
+        return managerRepository.findByRole("STAFF",pageable);
+    }
+
     public Optional<Manager> getByToken(String token) {
         return managerRepository.findByToken(token);
     }
@@ -69,6 +78,15 @@ public class ManagerService {
 
         return getByUsernameIgnoreCaseAndPassword(username, hashedPassword)
                 .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
+    }
+
+    public Page<Manager> getStaffByUsernameAndFullName(String search, Pageable pageable) {
+        return managerRepository.findByUsernameContainingIgnoreCaseAndRoleOrFullNameContainingIgnoreCaseAndRole(search, "STAFF", search, "STAFF", pageable);
+    }
+
+
+    public void deleteById(String id) {
+        managerRepository.deleteById(id);
     }
 
     public boolean existsByUsername(String username) {
@@ -109,4 +127,7 @@ public class ManagerService {
         manager.setToken(token);
         save(manager);
     }
+
+
+
 }

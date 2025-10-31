@@ -21,7 +21,6 @@ public class ManageProductRestController {
         this.manageProductService = manageProductService;
     }
 
-
     @GetMapping("/list")
     public Page<Product> list(@RequestParam(required = false) String search, Pageable pageable) {
         return manageProductService.list(search, pageable);
@@ -40,12 +39,12 @@ public class ManageProductRestController {
                                   @RequestParam(value = "pd-price", required = false) Double price,
                                   @RequestParam(value = "pd-type", required = false) String productType,
                                   @RequestParam(value = "pd-collection", required = false) String collectionName,
-                                  @RequestParam(value = "pd-quantity", required = false) Integer quantity,
-                                  @RequestParam(value = "properties", required = false) String[] properties,
-                                  @RequestParam(value = "fields", required = false) String[] fields,
+                                  @RequestParam(value = "field-ids", required = false) String[] fieldIds,
+                                  @RequestParam(value = "data-ids", required = false) String[] dataIds,
+                                  @RequestParam(value = "datas", required = false) String[] datas,
                                   @RequestParam(value = "prices", required = false) Double[] prices) {
         try {
-            manageProductService.edit(id, title, description, price, productType, collectionName, quantity, properties, fields, prices);
+            manageProductService.edit(id, title, description, price, productType, collectionName, fieldIds, dataIds, datas, prices);
 
             Response res = new Response("Product updated successfully.");
             return ResponseEntity.ok(res.build());
@@ -61,10 +60,13 @@ public class ManageProductRestController {
                                  @RequestParam(value = "pa-price", required = false) Double price,
                                  @RequestParam(value = "pa-type", required = false) String type,
                                  @RequestParam(value = "pa-collection", required = false) String collection,
-                                 @RequestParam(value = "pa-quantity", required = false) Integer quantity,
-                                 @RequestParam(value = "pa-image", required = false) String image) {
+                                 @RequestParam(value = "pa-image", required = false) String image,
+                                 @RequestParam(value = "field-ids", required = false) String[] fieldIds,
+                                 @RequestParam(value = "data-ids", required = false) String[] dataIds,
+                                 @RequestParam(value = "datas", required = false) String[] datas,
+                                 @RequestParam(value = "prices", required = false) Double[] prices) {
         try {
-            manageProductService.add(title, description, price, type, collection, quantity, image);
+            manageProductService.add(title, description, price, type, collection, image, fieldIds, dataIds, datas, prices);
 
             Response res = new Response("Product added successfully.");
             return ResponseEntity.ok(res.build());
@@ -80,6 +82,17 @@ public class ManageProductRestController {
             manageProductService.remove(id);
 
             Response res = new Response("Product removed successfully.");
+            return ResponseEntity.ok(res.build());
+        } catch (Exception e) {
+            Response res = new Response(e.getMessage());
+            return ResponseEntity.badRequest().body(res.build());
+        }
+    }
+
+    @PostMapping("/get-type")
+    public ResponseEntity<?> getProductType(@RequestParam(value = "id", required = false) String id) {
+        try {
+            Response res = new Response(manageProductService.getProductType(id));
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

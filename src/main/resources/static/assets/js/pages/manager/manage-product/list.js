@@ -29,7 +29,6 @@ $(document).ready(function () {
                 });
             });
         },
-        order: [[0, "desc"]],
         columns: [
             {
                 data: "id",
@@ -44,7 +43,9 @@ $(document).ready(function () {
                 orderable: false
             },
             {
-                data: "price", orderable: true},
+                data: "price",
+                orderable: true
+            },
             {
                 data: "productType",
                 orderable: false,
@@ -58,10 +59,6 @@ $(document).ready(function () {
                 render: (data, meta, row) => {
                     return data.name;
                 }
-            },
-            {
-                data: "quantity",
-                orderable: true
             },
             {
                 data: "action",

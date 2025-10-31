@@ -1,6 +1,5 @@
 package fcc.sportsstore.services.manager;
 
-import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.Voucher;
 import fcc.sportsstore.services.VoucherService;
 import fcc.sportsstore.utils.Validate;
@@ -22,7 +21,6 @@ public class ManageVoucherService {
         if (search != null && !search.isEmpty()) {
             return voucherService.getVoucherById(search, pageable);
         }
-
         return voucherService.getAll(pageable);
     }
 
@@ -40,23 +38,36 @@ public class ManageVoucherService {
             throw new RuntimeException("Code must not be empty");
         } else if (!validate.isValidCode(code)) {
             throw new RuntimeException("Code length must be between 8 and 35 characters and contain only letters and numbers");
-        } else if (status == null || status.isEmpty()) {
+        }
+
+        if (status == null || status.isEmpty()) {
             throw new RuntimeException("Voucher status must not be empty");
         } else if (!validate.isValidStatus(status)) {
             throw new RuntimeException("Voucher status must be one of: ACTIVE, DISABLED");
-        } else if (maxUsedCount == null || maxUsedCount <= 0) {
+        }
+
+        if (maxUsedCount == null || maxUsedCount <= 0) {
             throw new RuntimeException("Max used count must be greater than 0");
-        } else if (usedCount == null || usedCount < 0) {
-            throw new RuntimeException("Used count must be 0 or higher");
+        }
+
+        if (usedCount == null) {
+            usedCount = 0;
         } else if (usedCount > maxUsedCount) {
             throw new RuntimeException("Used count cannot exceed max used count");
-        } else if (discountType == null || discountType.isEmpty()) {
+        }
+
+        if (discountType == null || discountType.isEmpty()) {
             throw new RuntimeException("Discount type must not be empty");
-        } else if (discountValue == null || discountValue <= 0) {
+        }
+
+        if (discountValue == null || discountValue <= 0) {
             throw new RuntimeException("Discount value must be greater than 0");
-        } else if (maxDiscountValue == null || maxDiscountValue <= 0) {
+        }
+
+        if (maxDiscountValue == null || maxDiscountValue <= 0) {
             throw new RuntimeException("Max discount value must be greater than 0");
         }
+
         Voucher voucher = new Voucher(
                 code,
                 status,
@@ -78,25 +89,39 @@ public class ManageVoucherService {
 
         if (!voucherService.existsById(id)) {
             throw new RuntimeException("Voucher not found");
-        } else if (code == null || code.isEmpty()) {
+        }
+
+        if (code == null || code.isEmpty()) {
             throw new RuntimeException("Code must not be empty");
         } else if (!validate.isValidCode(code)) {
             throw new RuntimeException("Code length must be between 8 and 35 characters and contain only letters and numbers");
-        } else if (status == null || status.isEmpty()) {
+        }
+
+        if (status == null || status.isEmpty()) {
             throw new RuntimeException("Voucher status must not be empty");
         } else if (!validate.isValidStatus(status)) {
             throw new RuntimeException("Voucher status must be one of: ACTIVE, DISABLED");
-        } else if (maxUsedCount == null || maxUsedCount <= 0) {
+        }
+
+        if (maxUsedCount == null || maxUsedCount <= 0) {
             throw new RuntimeException("Max used count must be greater than 0");
-        } else if (usedCount == null || usedCount < 0) {
-            throw new RuntimeException("Used count must be 0 or higher");
+        }
+
+        if (usedCount == null) {
+            usedCount = 0;
         } else if (usedCount > maxUsedCount) {
             throw new RuntimeException("Used count cannot exceed max used count");
-        } else if (discountType == null || discountType.isEmpty()) {
+        }
+
+        if (discountType == null || discountType.isEmpty()) {
             throw new RuntimeException("Discount type must not be empty");
-        } else if (discountValue == null || discountValue <= 0) {
+        }
+
+        if (discountValue == null || discountValue <= 0) {
             throw new RuntimeException("Discount value must be greater than 0");
-        } else if (maxDiscountValue == null || maxDiscountValue <= 0) {
+        }
+
+        if (maxDiscountValue == null || maxDiscountValue <= 0) {
             throw new RuntimeException("Max discount value must be greater than 0");
         }
 
@@ -118,8 +143,6 @@ public class ManageVoucherService {
         } else if (!voucherService.existsById(id)) {
             throw new RuntimeException("Voucher not found");
         }
-
         voucherService.deleteById(id);
     }
-
 }

@@ -7,7 +7,7 @@
             <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
                 <th:block th:if="${session.manager != null}">
                     <th:block th:if="${session.manager.role == 'ADMIN'}">
-                        <div th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></div>
+                        <div th:replace="~{fragment/manager/sidebar :: admin-sidebar}"></div>
                     </th:block>
                 </th:block>
                 <div class="flex-1 p-8 bg-white shadow-sm m-4">
@@ -26,7 +26,6 @@
                                 <th>Price</th>
                                 <th>Type</th>
                                 <th>Collection</th>
-                                <th>Quantity</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -111,13 +110,6 @@
                                                                     th:text="${c.name}">
                                                             </option>
                                                         </select>
-                                                    </div>
-
-                                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                            Quantity:
-                                                        </div>
-                                                        <input id="pd-quantity" type="number" value="0" name="pd-quantity" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
                                                     <div id="pd-properties">
@@ -221,13 +213,6 @@
                                                                     th:text="${c.name}">
                                                             </option>
                                                         </select>
-                                                    </div>
-
-                                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                            Quantity:
-                                                        </div>
-                                                        <input id="pa-quantity" type="number" value="0" name="pa-quantity" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
                                                     <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">

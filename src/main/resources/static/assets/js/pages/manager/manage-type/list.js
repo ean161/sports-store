@@ -29,7 +29,6 @@ $(document).ready(function () {
                 });
             });
         },
-        order: [[0, "desc"]],
         columns: [
             {
                 data: "id",

@@ -5,10 +5,10 @@
         <header th:replace="~{fragment/manager/header :: header}"></header>
         <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6 bg-white">
             <th:block th:if="${session.manager.role == 'ADMIN'}">
-                <th:block th:replace="~{fragment/manager/sidebar :: admin-slidebar}"></th:block>
+                <th:block th:replace="~{fragment/manager/sidebar :: admin-sidebar}"></th:block>
             </th:block>
             <th:block th:if="${session.manager.role == 'STAFF'}">
-                <th:block th:replace="~{fragment/manager/sidebar :: staff-slidebar}"></th:block>
+                <th:block th:replace="~{fragment/manager/sidebar :: staff-sidebar}"></th:block>
             </th:block>
             <main class="flex-1 p-8 bg-white m-4 shadow-sm">
                 <th:block th:replace="${content}"></th:block>

@@ -54,7 +54,6 @@ public class ManageProductService {
         return productService.getById(id);
     }
 
-
     @Transactional
     public void edit(String id,
                      String title,
@@ -62,8 +61,8 @@ public class ManageProductService {
                      Double price,
                      String productType,
                      String collectionName,
-                     Integer quantity,
-                     String[] fields,
+                     String[] fieldIds,
+                     String[] dataIds,
                      String[] datas,
                      Double[] prices) {
         Validate validate = new Validate();
@@ -76,19 +75,11 @@ public class ManageProductService {
             throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
         } else if (price == null || price < 0) {
             throw new RuntimeException("Product price must be not a negative number.");
-        } else if (quantity == null || quantity < 0) {
-            throw new RuntimeException("Quantity cannot be negative.");
         } else if (productType == null || productType.isEmpty()) {
             throw new RuntimeException("Product type must not be empty.");
         } else if (collectionName == null || collectionName.isEmpty()) {
             throw new RuntimeException("Collection must not be empty.");
         }
-
-//        HashMap<String, HashMap<String, Double>> properyDataMap = new HashMap<>();
-//
-//        for (int i = 0; i < fields.length; i++) {
-//            properyDataMap.put(datas[i], new HashMap<>(Map.of(fields[i], prices[i])));
-//        }
 
         Product product = productService.getById(id);
         ProductType type = productTypeService.getById(productType);
@@ -99,20 +90,16 @@ public class ManageProductService {
         product.setPrice(price);
         product.setProductType(type);
         product.setProductCollection(collection);
-        product.setQuantity(quantity);
 
-//        try {
-//            List<ProductPropertyData> mergedData = mergeDatas(product, properyDataMap);
-//            List<ProductPropertyData> currentDatas = product.getProductPropertyData();
-//            currentDatas.clear();
-//            currentDatas.addAll(mergedData);
-//        } catch (Exception e) {
-//            System.err.println("Edit product error: " + e.getMessage());
-//        }
+        updatePropertyData(product, fieldIds, dataIds, datas, prices);
     }
 
     @Transactional
-    public void add(String title, String description, Double price, String productType, String collectionName, Integer quantity, String image) {
+    public void add(String title, String description, Double price, String productType, String collectionName, String image,
+                    String[] fieldIds,
+                    String[] dataIds,
+                    String[] datas,
+                    Double[] prices) {
         Validate validate = new Validate();
 
         if (title == null || title.isEmpty()) {
@@ -125,8 +112,6 @@ public class ManageProductService {
             throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
         } else if (price == null || price < 0) {
             throw new RuntimeException("Product price must be not a negative number.");
-        } else if (quantity == null || quantity < 0) {
-            throw new RuntimeException("Quantity cannot be negative.");
         } else if (productType == null || productType.isEmpty()) {
             throw new RuntimeException("Product type must not be empty.");
         } else if (collectionName == null || collectionName.isEmpty()) {
@@ -138,18 +123,23 @@ public class ManageProductService {
         ProductType type = productTypeService.getById(productType);
         ProductCollection collection = productCollectionService.getById(collectionName);
 
-
         Product product = new Product(title,
                 description,
                 price,
                 type,
-                collection,
-                quantity);
+                collection);
 
         productService.save(product);
 
         ProductMedia media = new ProductMedia(product, image);
         productMediaService.save(media);
+
+        try {
+            updatePropertyData(product, fieldIds, dataIds, datas, prices);
+        } catch (Exception e) {
+            productService.deleteById(product.getId());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void remove(String id) {
@@ -162,36 +152,63 @@ public class ManageProductService {
         productService.deleteById(id);
     }
 
-    private List<ProductPropertyData> mergeDatas(Product product, HashMap<String, HashMap<String, Double>> properyDataMap) {
-        List<ProductPropertyData> properties = product.getProductPropertyData();
+    @Transactional
+    public void updatePropertyData(Product product,
+                                   String[] fieldIds,
+                                   String[] dataIds,
+                                   String[] datas,
+                                   Double[] prices) {
+        Validate validate = new Validate();
 
-        if (properyDataMap == null || properyDataMap.size() == 0) {
-            properties.clear();
-            return properties;
-        }
+        List<ProductPropertyData> newDatas = new ArrayList<>();
+        if (fieldIds != null && dataIds != null && datas != null && datas.length > 0) {
+            for (int i = 0; i < dataIds.length; i++) {
+                String field = fieldIds[i]; // field id
+                String id = dataIds[i]; // data id
+                String data = datas[i]; // data val
+                Double price = prices[i]; // price of data
 
-        for (Map.Entry<String, HashMap<String, Double>> propertyEntry : properyDataMap.entrySet()) {
-            String data = propertyEntry.getKey(); // data name
-            HashMap<String, Double> fieldMap = propertyEntry.getValue();
+                if (id == null || id.isEmpty()) {
+                    throw new RuntimeException("Property data must be not empty.");
+                } else if (field == null || field.isEmpty()) {
+                    throw new RuntimeException("Property field must be not empty and just contain alpha, number and space.");
+                } else if (data == null || data.isEmpty() || !validate.isValidProperty(data)) {
+                    throw new RuntimeException("Property data must be not empty and just contain alpha, number and space.");
+                } else if (!productPropertyFieldService.existsById(field)) {
+                    throw new RuntimeException("Invalid property field.");
+                }
 
-            System.out.println("Property: " + data);
+                ProductPropertyData dataEntity = null;
+                if (!id.equals("NEW-ID")) {
+                    if (!productPropertyDataService.existsById(id)) {
+                        throw new RuntimeException("Invalid property data.");
+                    } else {
+                        dataEntity = productPropertyDataService.getById(id);
+                        dataEntity.setData(data);
+                        dataEntity.setPrice(price);
+                    }
+                } else {
+                    dataEntity = new ProductPropertyData(productPropertyFieldService.getById(field),
+                            product,
+                            data,
+                            price);
+                }
 
-            for (Map.Entry<String, Double> fieldEntry : fieldMap.entrySet()) {
-                String field = fieldEntry.getKey(); // field name
-                Double price = fieldEntry.getValue(); // data price
-
-                ProductPropertyData newData = new ProductPropertyData(
-                        productPropertyFieldService.getByIdAndProductType(field, product.getProductType()),
-                        product,
-                        data,
-                        price
-                );
-
-                productPropertyDataService.save(newData);
+                productPropertyDataService.save(dataEntity);
+                newDatas.add(dataEntity);
             }
         }
 
+        List<ProductPropertyData> currentDatas = product.getProductPropertyData();
+        if (currentDatas == null) {
+            currentDatas = new ArrayList<>();
+        }
 
-        return properties;
+        currentDatas.clear();
+        currentDatas.addAll(newDatas);
+    }
+
+    public ProductType getProductType(String id) {
+        return productTypeService.getById(id);
     }
 }

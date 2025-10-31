@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,12 +41,15 @@ public class Manager {
     @CreatedDate
     private Long createdAt;
 
-    public Manager(String username, String fullName, String password, String token, String role) {
+    // constructor for create staff in manage funcs
+    public Manager(String username, String fullName, String password) {
         this.username = username;
         this.fullName = fullName;
-        this.password = password;
+
         this.status = "ACTIVE";
-        this.token = token;
-        this.role = role;
+        this.role = "STAFF";
+
+        HashUtil hash = new HashUtil();
+        this.password = hash.md5(password);
     }
 }

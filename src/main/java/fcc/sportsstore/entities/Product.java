@@ -29,8 +29,6 @@ public class Product {
 
     private Double price;
 
-    private Integer quantity;
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<ProductMedia> productMedia;
@@ -39,7 +37,7 @@ public class Product {
     @JoinColumn(name = "product_type_id")
     private ProductType productType;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductPropertyData> productPropertyData;
 
     @ManyToOne
@@ -49,12 +47,11 @@ public class Product {
     @CreatedDate
     private Long createdAt;
 
-    public Product(String title, String description, Double price, ProductType productType, ProductCollection productCollection, Integer quantity) {
+    public Product(String title, String description, Double price, ProductType productType, ProductCollection productCollection) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.productType = productType;
         this.productCollection = productCollection;
-        this.quantity = quantity;
     }
 }
