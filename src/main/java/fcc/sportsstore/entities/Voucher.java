@@ -59,11 +59,11 @@ public class Voucher {
     @CreatedDate
     private Long createdAt;
 
-    public Voucher(String code, String status, Integer maxUsedCount, Integer usedCount, String discountType, Double discountValue, Double maxDiscountValue) {
+    public Voucher(String code, String status, Integer maxUsedCount, String discountType, Double discountValue, Double maxDiscountValue) {
         this.code = code;
         this.status = status;
         this.maxUsedCount = maxUsedCount;
-        this.usedCount = usedCount;
+        this.usedCount = 0;
         this.discountType = discountType;
         this.discountValue = discountValue;
         this.maxDiscountValue = maxDiscountValue;

@@ -17,19 +17,10 @@ public class RandomUtil {
         return sb.toString();
     }
 
-    public String randId(String name) {
-        TimeUtil time = new TimeUtil();
-
-        return String.format("id_%s_%d_%s",
-                name.toUpperCase(),
-                time.getCurrentTimestamp(),
-                randString(10));
-    }
-
     public String randToken(String name) {
         TimeUtil time = new TimeUtil();
 
-        return String.format("token_%s_%d_%s",
+        return String.format("TOKEN-%s-%d-%s",
                 name.toUpperCase(),
                 time.getCurrentTimestamp(),
                 randString(500));
@@ -38,7 +29,7 @@ public class RandomUtil {
     public String randCode(String name) {
         TimeUtil time = new TimeUtil();
 
-        return String.format("code_%s_%d_%s",
+        return String.format("CODE-%s-%d-%s",
                 name.toUpperCase(),
                 time.getCurrentTimestamp(),
                 randString(100));

@@ -2,9 +2,8 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.services.user.ForgetPasswordService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,7 +21,8 @@ public class ForgetPasswordRestController {
     @PostMapping
     public ResponseEntity<?> requestForget(@RequestParam(required = false, name = "email") String email) {
         try {
-            forgetPasswordService.requestForget(email);
+            ValidateUtil validate = new ValidateUtil();
+            forgetPasswordService.requestForget(validate.toEmail(email));
             Response res = new Response("Forget link was sent to your email.");
 
             return ResponseEntity.ok(res.build());
@@ -37,7 +37,10 @@ public class ForgetPasswordRestController {
                                  @RequestParam(required = false, name = "password") String password,
                                  @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
         try {
-            forgetPasswordService.forgetPassword(code, password, confirmPassword);
+            ValidateUtil validate = new ValidateUtil();
+            forgetPasswordService.forgetPassword(validate.toLongCode(code),
+                    validate.toPassword(password),
+                    validate.toPassword(confirmPassword));
 
             Response res = new Response(
                     "Your password was changed.",

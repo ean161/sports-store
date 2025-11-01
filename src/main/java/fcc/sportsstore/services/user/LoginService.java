@@ -22,12 +22,6 @@ public class LoginService {
 
     @Transactional
     public void login(HttpServletRequest request, HttpServletResponse response, String username, String password) {
-        if (username == null || username.isEmpty()) {
-            throw new RuntimeException("Username must be not empty.");
-        } else if (password == null || password.isEmpty()) {
-            throw new RuntimeException("Password must be not empty.");
-        }
-
         User user = userService.getByUsernameAndPassword(username, password);
         if (user.getStatus().equals("BANNED")) {
             throw new RuntimeException("Your account was banned.");

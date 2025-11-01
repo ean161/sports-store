@@ -28,8 +28,8 @@ public class ProductTypeService {
     }
 
     public ProductType getById(String id) {
-        return productTypeRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Product type ID not found"));
+        return productTypeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product type ID not found"));
     }
 
     public Page<ProductType> getAll(Pageable pageable) {
@@ -59,7 +59,4 @@ public class ProductTypeService {
     public void save(ProductType productType) {
         productTypeRepository.save(productType);
     }
-
-
-
 }

@@ -1,9 +1,8 @@
 package fcc.sportsstore.services.manager;
 
 import fcc.sportsstore.entities.Manager;
-import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.services.ManagerService;
-import fcc.sportsstore.utils.Validate;
+import fcc.sportsstore.utils.HashUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,24 +30,11 @@ public class ManageStaffService {
 
     @Transactional
     public void edit(String id, String username, String fullName) {
-        Validate validate = new Validate();
-
-        if (id == null || id.isEmpty()) {
-            throw new RuntimeException("ID must be not empty.");
-        } else if (!managerService.existsById(id)) {
+        if (!managerService.existsById(id)) {
             throw new RuntimeException("User not found");
-        } else if ((username == null) || username.isEmpty()) {
-            throw new RuntimeException("Username must not be empty.");
-        } else if (!validate.isValidUsername(username)) {
-            throw new RuntimeException("Username length must be from 6 - 30 characters.");
-        } else if (fullName == null || fullName.isEmpty()) {
-            throw new RuntimeException("Full name must be not empty");
-        } else if (!validate.isValidFullName(fullName)) {
-            throw new RuntimeException("Full name length must be from 3 - 35 chars, only contains alpha");
         }
 
         Manager staff = managerService.getById(id);
-
         if (!staff.getUsername().equals(username)) {
             if (managerService.existsByUsername(username)) {
                 throw new RuntimeException("Username was taken.");
@@ -62,20 +48,8 @@ public class ManageStaffService {
 
     @Transactional
     public void add(String username, String fullName, String password) {
-        Validate validate = new Validate();
-
-        if (username == null || username.isEmpty()) {
-            throw new RuntimeException("Username must not be empty.");
-        } else if (!validate.isValidUsername(username)) {
-            throw new RuntimeException("Username length must be from 6 - 30 characters.");
-        } else if (managerService.existsByUsername(username)) {
+        if (managerService.existsByUsername(username)) {
             throw new RuntimeException("Username is already taken.");
-        } else if (password == null || password.isEmpty()) {
-            throw new RuntimeException("Password must not be empty.");
-        } else if (fullName == null || fullName.isEmpty()) {
-            throw new RuntimeException("Full name must be not empty.");
-        } else if (!validate.isValidFullName(fullName)) {
-            throw new RuntimeException("Full name length must be from 6 - 35 chars, only contains alpha.");
         }
 
         Manager staff = new Manager(username, fullName, password, managerService.generateToken());
@@ -83,12 +57,23 @@ public class ManageStaffService {
     }
 
     public void remove(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("Id must be not empty");
-        } else if (!managerService.existsById(id)) {
+        if (!managerService.existsById(id)) {
             throw new RuntimeException("Staff not found.");
         }
 
         managerService.deleteById(id);
+    }
+
+    @Transactional
+    public void changePassword(String id,
+                               String newPassword,
+                               String newPasswordConfirm) {
+        if (!newPassword.equals(newPasswordConfirm)) {
+            throw new RuntimeException("New password and new password confirm do not match");
+        }
+
+        Manager staff = managerService.getById(id);
+        HashUtil hash = new HashUtil();
+        staff.setPassword(hash.md5(newPassword));
     }
 }

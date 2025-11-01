@@ -5,7 +5,12 @@ $(document).ready(function () {
 
     $(".close-modal-btn").on("click", (e) => {
         modal(e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id);
-    })
+    });
+
+    $("#search-bar").on("change paste keyup", function () {
+        console.log($(this).val());
+
+    });
 });
 
 const datatableLang = {
@@ -74,7 +79,8 @@ function productCollectionMove(id) {
     if (document.getElementById(id)) {
         scrollToId(id);
     } else {
-        window.location.href = `/collection/${id.split("-")[1]}`;
+        window.location.href = `/collection/${id.replaceAll("collection-", "")}`;
+        console.log(id);
     }
 }
 

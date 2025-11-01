@@ -15,7 +15,6 @@
             </div>
             <div>
                 <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-
                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">Gender:</div>
                     <select name="gender" id="gender"
                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
@@ -33,11 +32,17 @@
                        th:value="${session.user.email.address}"
                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
                        readonly>
-
-                <span href="#"
-                      class="ml-2 mr-2 text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none">
+                <!--                <span class="ml-2 mr-2 text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none verify-email">-->
+                <!--                                    (Verify)-->
+                <!--                </span>-->
+                <span th:if="${!session.user.email.verified}" id="verify-email-btn" class="ml-2 mr-2 text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none verify-email">
                     (Verify)
                 </span>
+
+                <span th:if="${session.user.email.verified}" class="ml-2 mr-2 text-xs font-medium text-green-500 select-none">
+                    (Verified)
+                </span>
+
             </div>
             <div>
                 <label class="block font-medium mb-1">Membership:</label>
@@ -60,10 +65,10 @@
                     <a th:href="@{/profile/edit}">Edit</a>
                 </div>
             </div>
-
-
         </form>
         <script src="/assets/js/pages/user/profile.js"></script>
+        <script src="/assets/js/pages/user/verify-email.js"></script>
     </th:block>
 </th:block>
+<footer th:replace="~{fragment/user/footer :: footer}"></footer>
 </html>

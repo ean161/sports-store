@@ -10,6 +10,7 @@ async function loadDetails(id) {
     $("#sd-full-name").val(res.data.fullName);
 
     $("#sd-remove-btn").attr("onclick", `remove('${id}')`);
+    $("#sd-changePassword-btn").attr("onclick", `changePasswordForm('${id}', '${res.data.fullName}')`);
 }
 
 async function details(id) {

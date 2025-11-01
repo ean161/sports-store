@@ -3,6 +3,7 @@ package fcc.sportsstore.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -51,7 +52,10 @@ public class User {
 
     public User(String username, String password) {
         this.username = username;
-        this.password = password;
+
+        HashUtil hash = new HashUtil();
+        this.password = hash.md5(password);
+
         this.fullName = username;
         this.gender = true;
         this.status = "ACTIVE";

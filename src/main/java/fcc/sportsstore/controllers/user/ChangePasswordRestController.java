@@ -2,10 +2,9 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.services.user.ChangePasswordService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,12 @@ public class ChangePasswordRestController {
                                             @RequestParam(required = false, name = "new-password") String newPassword,
                                             @RequestParam(required = false, name = "confirm-password") String newPasswordConfirm){
         try {
-            changePasswordService.changePassword(request, oldPassword, newPassword, newPasswordConfirm);
+            ValidateUtil validate = new ValidateUtil();
+            changePasswordService.changePassword(request,
+                    validate.toPassword(oldPassword),
+                    validate.toPassword(newPassword),
+                    validate.toPassword(newPasswordConfirm));
+
             Response res = new Response("Your password was changed.",
                     Map.of("redirect", "/profile",
                             "time", 3000));

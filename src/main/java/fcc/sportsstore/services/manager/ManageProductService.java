@@ -2,17 +2,14 @@ package fcc.sportsstore.services.manager;
 
 import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.*;
-import fcc.sportsstore.utils.RandomUtil;
-import fcc.sportsstore.utils.Validate;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service("managerManageProductService")
 public class ManageProductService {
@@ -64,23 +61,7 @@ public class ManageProductService {
                      String[] fieldIds,
                      String[] dataIds,
                      String[] datas,
-                     Double[] prices) {
-        Validate validate = new Validate();
-
-        if (title == null || title.isEmpty()) {
-            throw new RuntimeException("Product title must be not empty");
-        } else if (!validate.isValidProductTitle(title)) {
-            throw new RuntimeException("Product title length must be from 3 - 35 chars, only contains alpha");
-        } else if (!validate.isValidProductDescription(description)) {
-            throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
-        } else if (price == null || price < 0) {
-            throw new RuntimeException("Product price must be not a negative number.");
-        } else if (productType == null || productType.isEmpty()) {
-            throw new RuntimeException("Product type must not be empty.");
-        } else if (collectionName == null || collectionName.isEmpty()) {
-            throw new RuntimeException("Collection must not be empty.");
-        }
-
+                     String[] prices) {
         Product product = productService.getById(id);
         ProductType type = productTypeService.getById(productType);
         ProductCollection collection = productCollectionService.getById(collectionName);
@@ -99,27 +80,7 @@ public class ManageProductService {
                     String[] fieldIds,
                     String[] dataIds,
                     String[] datas,
-                    Double[] prices) {
-        Validate validate = new Validate();
-
-        if (title == null || title.isEmpty()) {
-            throw new RuntimeException("Product title must not be empty.");
-        } else if (!validate.isValidProductTitle(title)) {
-            throw new RuntimeException("Product title must be 3–35 characters and contain only letters or digits.");
-        } else if (description == null || description.isEmpty()) {
-            throw new RuntimeException("Product description must not be empty.");
-        } else if (!validate.isValidProductDescription(description)) {
-            throw new RuntimeException("Product description must be less than 250 characters and contain valid letters or digits.");
-        } else if (price == null || price < 0) {
-            throw new RuntimeException("Product price must be not a negative number.");
-        } else if (productType == null || productType.isEmpty()) {
-            throw new RuntimeException("Product type must not be empty.");
-        } else if (collectionName == null || collectionName.isEmpty()) {
-            throw new RuntimeException("Collection must not be empty.");
-        } else if (image == null || image.isEmpty()) {
-            throw new RuntimeException("Image must not be empty.");
-        }
-
+                    String[] prices) {
         ProductType type = productTypeService.getById(productType);
         ProductCollection collection = productCollectionService.getById(collectionName);
 
@@ -128,7 +89,6 @@ public class ManageProductService {
                 price,
                 type,
                 collection);
-
         productService.save(product);
 
         ProductMedia media = new ProductMedia(product, image);
@@ -143,9 +103,7 @@ public class ManageProductService {
     }
 
     public void remove(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("Id must be not empty");
-        } else if (!productService.existsById(id)) {
+        if (!productService.existsById(id)) {
             throw new RuntimeException("Product id already exists");
         }
 
@@ -157,24 +115,18 @@ public class ManageProductService {
                                    String[] fieldIds,
                                    String[] dataIds,
                                    String[] datas,
-                                   Double[] prices) {
-        Validate validate = new Validate();
+                                   String[] prices) {
+        ValidateUtil validate = new ValidateUtil();
 
         List<ProductPropertyData> newDatas = new ArrayList<>();
         if (fieldIds != null && dataIds != null && datas != null && datas.length > 0) {
             for (int i = 0; i < dataIds.length; i++) {
-                String field = fieldIds[i]; // field id
-                String id = dataIds[i]; // data id
-                String data = datas[i]; // data val
-                Double price = prices[i]; // price of data
+                String field = validate.toId(fieldIds[i]); // field id
+                String id = validate.toId(dataIds[i]); // data id
+                String data = validate.toProductPropertyData(datas[i]); // data val
+                Double price = validate.toPrice(prices[i]); // price of data
 
-                if (id == null || id.isEmpty()) {
-                    throw new RuntimeException("Property data must be not empty.");
-                } else if (field == null || field.isEmpty()) {
-                    throw new RuntimeException("Property field must be not empty and just contain alpha, number and space.");
-                } else if (data == null || data.isEmpty() || !validate.isValidProperty(data)) {
-                    throw new RuntimeException("Property data must be not empty and just contain alpha, number and space.");
-                } else if (!productPropertyFieldService.existsById(field)) {
+                if (!productPropertyFieldService.existsById(field)) {
                     throw new RuntimeException("Invalid property field.");
                 }
 

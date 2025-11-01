@@ -1,6 +1,6 @@
 package fcc.sportsstore.controllers.manager;
 
-import fcc.sportsstore.entities.ProductCollection;
+import fcc.sportsstore.utils.ValidateUtil;
 import fcc.sportsstore.entities.Voucher;
 import fcc.sportsstore.services.manager.ManageVoucherService;
 import fcc.sportsstore.utils.Response;
@@ -34,13 +34,13 @@ public class ManageVoucherRestController {
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestParam(value = "va-code", required = false) String code,
                                  @RequestParam(value = "va-status", required = false) String status,
-                                 @RequestParam(value = "va-max-used", required = false) Integer maxUsedCount,
-                                 @RequestParam(value = "va-used", required = false) Integer usedCount,
+                                 @RequestParam(value = "va-max-used", required = false) String maxUsedCount,
                                  @RequestParam(value = "va-discount-type", required = false) String discountType,
-                                 @RequestParam(value = "va-discount-value", required = false) Double discountValue,
-                                 @RequestParam(value = "va-max-discount-value", required = false) Double maxDiscountValue) {
+                                 @RequestParam(value = "va-discount-value", required = false) String discountValue,
+                                 @RequestParam(value = "va-max-discount-value", required = false) String maxDiscountValue) {
         try {
-            manageVoucherService.add(code, status, maxUsedCount, usedCount, discountType, discountValue, maxDiscountValue);
+            ValidateUtil validate = new ValidateUtil();
+            manageVoucherService.add(validate.toVoucherCode(code), status, validate.toVoucherMaxUsedCount(maxUsedCount), discountType, validate.toVoucherDiscountValue(discountValue), validate.toVoucherMaxDiscountValue(maxDiscountValue));
 
             Response res = new Response("Voucher added successfully.");
             return ResponseEntity.ok(res.build());
@@ -62,6 +62,7 @@ public class ManageVoucherRestController {
             @RequestParam(value = "vd-max-discount-value", required = false) Double maxDiscountValue
     ) {
         try {
+
             manageVoucherService.edit(id, code, status, maxUsedCount, usedCount, discountType, discountValue, maxDiscountValue);
 
             Response res = new Response("Voucher updated successfully.");
@@ -75,7 +76,8 @@ public class ManageVoucherRestController {
     @PostMapping("/remove")
     public ResponseEntity<?> remove(@RequestParam(value = "id", required = false) String id) {
         try {
-            manageVoucherService.remove(id);
+            ValidateUtil validate = new ValidateUtil();
+            manageVoucherService.remove(validate.toId(id));
 
             Response res = new Response("Voucher removed successfully.");
             return ResponseEntity.ok(res.build());

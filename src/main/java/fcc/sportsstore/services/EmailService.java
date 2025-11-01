@@ -22,8 +22,8 @@ public class EmailService {
     }
 
     public User getUserByAddress(String address) {
-        Email userEmail = emailRepository.findByAddress(address).orElseThrow(
-                () -> new RuntimeException("Email address not found"));
+        Email userEmail = emailRepository.findByAddress(address)
+                .orElseThrow(() -> new RuntimeException("Email address not found"));
 
         return userEmail.getUser();
     }
@@ -31,5 +31,8 @@ public class EmailService {
     public boolean existsByAddress(String address) {
         return emailRepository.findByAddress(address).isPresent();
     }
-
+    
+    public Email save(Email email) {
+        return emailRepository.save(email);
+    }
 }

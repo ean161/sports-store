@@ -1,10 +1,9 @@
 package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.Product;
-import fcc.sportsstore.services.ProductCollectionService;
-import fcc.sportsstore.services.ProductTypeService;
 import fcc.sportsstore.services.manager.ManageProductService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -36,15 +35,16 @@ public class ManageProductRestController {
     public ResponseEntity<?> edit(@RequestParam(value = "pd-id", required = false) String id,
                                   @RequestParam(value = "pd-title", required = false) String title,
                                   @RequestParam(value = "pd-description", required = false) String description,
-                                  @RequestParam(value = "pd-price", required = false) Double price,
+                                  @RequestParam(value = "pd-price", required = false) String price,
                                   @RequestParam(value = "pd-type", required = false) String productType,
                                   @RequestParam(value = "pd-collection", required = false) String collectionName,
                                   @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                   @RequestParam(value = "data-ids", required = false) String[] dataIds,
                                   @RequestParam(value = "datas", required = false) String[] datas,
-                                  @RequestParam(value = "prices", required = false) Double[] prices) {
+                                  @RequestParam(value = "prices", required = false) String[] prices) {
         try {
-            manageProductService.edit(id, title, description, price, productType, collectionName, fieldIds, dataIds, datas, prices);
+            ValidateUtil validate = new ValidateUtil();
+            manageProductService.edit(validate.toId(id), validate.toProductTitle(title), validate.toProductDescription(description), validate.toPrice(price), productType, collectionName, fieldIds, dataIds, datas, prices);
 
             Response res = new Response("Product updated successfully.");
             return ResponseEntity.ok(res.build());
@@ -57,16 +57,17 @@ public class ManageProductRestController {
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestParam(value = "pa-title", required = false) String title,
                                  @RequestParam(value = "pa-description", required = false) String description,
-                                 @RequestParam(value = "pa-price", required = false) Double price,
+                                 @RequestParam(value = "pa-price", required = false) String price,
                                  @RequestParam(value = "pa-type", required = false) String type,
                                  @RequestParam(value = "pa-collection", required = false) String collection,
                                  @RequestParam(value = "pa-image", required = false) String image,
                                  @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                  @RequestParam(value = "data-ids", required = false) String[] dataIds,
                                  @RequestParam(value = "datas", required = false) String[] datas,
-                                 @RequestParam(value = "prices", required = false) Double[] prices) {
+                                 @RequestParam(value = "prices", required = false) String[] prices) {
         try {
-            manageProductService.add(title, description, price, type, collection, image, fieldIds, dataIds, datas, prices);
+            ValidateUtil validate = new ValidateUtil();
+            manageProductService.add(validate.toProductTitle(title), validate.toProductDescription(description), validate.toPrice(price), type, collection, image, fieldIds, dataIds, datas, prices);
 
             Response res = new Response("Product added successfully.");
             return ResponseEntity.ok(res.build());

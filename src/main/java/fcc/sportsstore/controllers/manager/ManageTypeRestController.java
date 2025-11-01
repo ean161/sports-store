@@ -3,6 +3,7 @@ package fcc.sportsstore.controllers.manager;
 import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.services.manager.ManageTypeService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,8 @@ public class ManageTypeRestController {
                                   @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                   @RequestParam(value = "fields", required = false) String[] fields) {
         try {
-            manageTypeService.edit(id, name, fieldIds, fields);
+            ValidateUtil validate = new ValidateUtil();
+            manageTypeService.edit(validate.toId(id), validate.toProductTypeName(name), fieldIds, fields);
 
             Response res = new Response("Product type updated successfully.");
             return ResponseEntity.ok(res.build());
@@ -50,7 +52,8 @@ public class ManageTypeRestController {
                                  @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                  @RequestParam(value = "fields", required = false) String[] fields) {
         try {
-            manageTypeService.add(name, fieldIds, fields);
+            ValidateUtil validate = new ValidateUtil();
+            manageTypeService.add(validate.toProductTypeName(name), fieldIds, fields);
 
             Response res = new Response("Product type added successfully.");
             return ResponseEntity.ok(res.build());
@@ -63,7 +66,8 @@ public class ManageTypeRestController {
     @PostMapping("/remove")
     public ResponseEntity<?> remove(@RequestParam(value = "id", required = false) String id) {
         try {
-            manageTypeService.remove(id);
+            ValidateUtil validate = new ValidateUtil();
+            manageTypeService.remove(validate.toId(id));
 
             Response res = new Response("Product type removed successfully.");
             return ResponseEntity.ok(res.build());

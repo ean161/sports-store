@@ -6,7 +6,6 @@ import fcc.sportsstore.utils.HashUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import fcc.sportsstore.utils.Validate;
 
 @Service("userChangePasswordService")
 public class ChangePasswordService {
@@ -22,17 +21,10 @@ public class ChangePasswordService {
                                String oldPassword,
                                String newPassword,
                                String newPasswordConfirm) {
-        Validate validate = new Validate();
         User caller = userService.getFromSession(request);
 
-        if (newPassword == null || newPassword.trim().isEmpty()) {
-            throw new RuntimeException("New password cannot be empty");
-        } if (!validate.isValidPassword(newPassword)) {
-            throw new RuntimeException("New password length must be from 6 - 30 characters, contains a special character.");
-        } if (!newPassword.equals(newPasswordConfirm)) {
+        if (!newPassword.equals(newPasswordConfirm)) {
             throw new RuntimeException("New passwords and new password confirm do not match");
-        } if (oldPassword == null || oldPassword.trim().isEmpty()) {
-            throw new RuntimeException("Old password cannot be empty");
         }
 
         HashUtil hash = new HashUtil();

@@ -2,8 +2,8 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.services.user.RegisterService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,8 @@ public class RegisterRestController {
                                       @RequestParam(required = false, name="password") String password,
                                       @RequestParam(required = false, name="confirm-password") String confirmPassword) {
         try {
-            registerService.register(response, username, email, password, confirmPassword);
+            ValidateUtil validate = new ValidateUtil();
+            registerService.register(response, validate.toUsername(username), validate.toEmail(email), validate.toPassword(password), validate.toPassword(confirmPassword));
 
             Response res = new Response("Register successfully.",
                     Map.of("redirect", "/login", "time", 3000));

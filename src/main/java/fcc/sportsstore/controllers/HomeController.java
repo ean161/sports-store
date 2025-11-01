@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
 
-    private ProductTypeService productTypeService;
 
     private ProductCollectionService productCollectionService;
 
-    public HomeController(ProductCollectionService productCollectionService,
-                          ProductTypeService productTypeService) {
+    public HomeController(ProductCollectionService productCollectionService) {
         this.productCollectionService = productCollectionService;
-        this.productTypeService = productTypeService;
     }
 
     @GetMapping

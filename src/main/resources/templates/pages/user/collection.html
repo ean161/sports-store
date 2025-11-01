@@ -3,8 +3,6 @@
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Collection')}">
     <th:block th:fragment="content">
         <header th:replace="~{fragment/user/header :: header}"></header>
-        <th:block th:replace="~{fragment/user/navbar :: navbar}"></th:block>
-
         <main class="max-w-7xl mx-auto px-4 py-6">
             <section class="cursor-pointer">
                 <h2 th:text="${collection.name}" class="text-2xl font-bold text-gray-800"></h2>

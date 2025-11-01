@@ -33,7 +33,8 @@ public class AuthFilter implements Filter {
             "/access/",
             "/forget-password",
             "/collection/",
-            "/product/");
+            "/product/",
+            "/verify-email/");
 
     private final List<String> assets = List.of(
             ".css",

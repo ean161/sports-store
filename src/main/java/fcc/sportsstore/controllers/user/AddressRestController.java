@@ -2,6 +2,7 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,13 @@ public class AddressRestController {
                                  @RequestParam(value = "provinceId", required = false) String provinceId,
                                  @RequestParam(value = "wardsId", required = false) String wardsId) {
         try {
-            addressService.add(request, note, phone, detail, provinceId, wardsId);
+            ValidateUtil validate = new ValidateUtil();
+            addressService.add(request,
+                    validate.toAddressNote(note),
+                    validate.toPhoneNumber(phone),
+                    validate.toAddressDetail(detail),
+                    validate.toId(provinceId),
+                    validate.toId(wardsId));
 
             Response res = new Response("Add address successfully.",
                     Map.of("redirect", "/address", "time", 500));

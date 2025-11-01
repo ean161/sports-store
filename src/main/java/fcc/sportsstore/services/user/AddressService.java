@@ -8,8 +8,6 @@ import fcc.sportsstore.repositories.AddressRepository;
 import fcc.sportsstore.repositories.ProvinceRepository;
 import fcc.sportsstore.repositories.WardsRepository;
 import fcc.sportsstore.services.UserService;
-import fcc.sportsstore.utils.RandomUtil;
-import fcc.sportsstore.utils.Validate;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,27 +43,7 @@ public class AddressService {
                     String provinceId,
                     String wardsId) {
 
-        Validate validate = new Validate();
         User caller = userService.getFromSession(request);
-
-        if (note == null || note.trim().isEmpty()) {
-            throw new RuntimeException("Note must not be empty.");
-        }
-        if (!validate.isValidNote(note)) {
-            throw new RuntimeException("Note length must be between 2 and 20 characters.");
-        }
-        if (phone == null || phone.trim().isEmpty()) {
-            throw new RuntimeException("Phone number must not be empty.");
-        }
-        if (!validate.isValidPhoneNumber(phone)) {
-            throw new RuntimeException("Phone number must start with 0 and contain exactly 10 digits.");
-        }
-        if (detail == null || detail.trim().isEmpty()) {
-            throw new RuntimeException("Address detail must not be empty.");
-        }
-        if (!validate.isValidAddress(detail)) {
-            throw new RuntimeException("Address detail must be 5–200 characters and can only contain , . / -");
-        }
 
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
@@ -87,7 +65,6 @@ public class AddressService {
         addressRepository.save(address);
     }
 
-
     @Transactional
     public Address edit(HttpServletRequest request,
                               String addressId,
@@ -96,7 +73,6 @@ public class AddressService {
                               String detail,
                               String provinceId,
                               String wardsId) {
-        Validate validate = new Validate();
         User caller = userService.getFromSession(request);
 
         Address address = addressRepository.findById(addressId)
@@ -105,28 +81,6 @@ public class AddressService {
         if (!address.getUser().getId().equals(caller.getId())) {
             throw new RuntimeException("You are not allowed to edit this address.");
         }
-
-        if (note == null || note.trim().isEmpty()) {
-            throw new RuntimeException("Note must not be empty.");
-        }
-        if (!validate.isValidNote(note)) {
-            throw new RuntimeException("Note length must be between 2 and 20 characters.");
-        }
-
-        if (phone == null || phone.trim().isEmpty()) {
-            throw new RuntimeException("Phone number must not be empty.");
-        }
-        if (!validate.isValidPhoneNumber(phone)) {
-            throw new RuntimeException("Phone number must start with 0 and contain exactly 10 digits.");
-        }
-
-        if (detail == null || detail.trim().isEmpty()) {
-            throw new RuntimeException("Address detail must not be empty.");
-        }
-        if (!validate.isValidAddress(detail)) {
-            throw new RuntimeException("Address detail must be 5–200 characters and can only contain , . / -");
-        }
-
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
         Wards wards = wardsRepository.findById(wardsId)

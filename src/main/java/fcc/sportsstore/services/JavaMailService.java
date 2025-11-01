@@ -53,7 +53,7 @@ public class JavaMailService {
     public void sendEmailVerify(String email, String code) {
         String content = "<p>Welcome to Sports Store. "
                 + "Click the link below to verify your email:<p>"
-                + "<a href='https://sports-store.ean.vn/verify-email?code=" + code + "' style='background: red; color: white; padding: 2px; text-decoration: none;'>Verify your email</a>";
+                + "<a href='https://sports-store.ean.vn/verify-email/verify?code=" + code + "' style='background: red; color: white; padding: 2px; text-decoration: none;'>Verify your email</a>";
         sendHTML(email, "SPORTS STORE - Verify your email", content);
     }
 }

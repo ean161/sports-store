@@ -28,8 +28,8 @@ public class VoucherService {
     }
 
     public Voucher getById(String id) {
-        return voucherRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Product collection ID not found"));
+        return voucherRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Voucher ID not found"));
     }
 
     public Page<Voucher> getVoucherById(String search, Pageable pageable) {
@@ -37,7 +37,7 @@ public class VoucherService {
     }
 
     public void deleteById(String id) {
-            voucherRepository.deleteById(id);
+        voucherRepository.deleteById(id);
     }
 
     @Transactional
@@ -48,5 +48,4 @@ public class VoucherService {
     public void save(Voucher Voucher) {
         voucherRepository.save(Voucher);
     }
-
 }

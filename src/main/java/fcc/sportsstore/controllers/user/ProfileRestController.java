@@ -1,8 +1,8 @@
 package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.services.user.ProfileService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,8 @@ public class ProfileRestController {
                                   @RequestParam(value = "full-name", required = false) String fullName,
                                   @RequestParam(value = "gender", required = false) String gender) {
         try {
-            profileService.edit(request, id, fullName, gender);
+            ValidateUtil validate = new ValidateUtil();
+            profileService.edit(request, validate.toId(id), validate.toFullName(fullName), gender);
 
             Response res = new Response("Your profile was updated.", Map.of(
                     "redirect", "/profile",

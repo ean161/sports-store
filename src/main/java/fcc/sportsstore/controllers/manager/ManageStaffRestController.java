@@ -3,10 +3,10 @@ package fcc.sportsstore.controllers.manager;
 import fcc.sportsstore.entities.Manager;
 import fcc.sportsstore.services.manager.ManageStaffService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("managerManageStaffRestController")
@@ -35,7 +35,8 @@ public class ManageStaffRestController {
                                  @RequestParam(value = "sa-full-name", required = false) String fullName,
                                  @RequestParam(value = "sa-password", required = false) String password) {
         try {
-            manageStaffService.add(username, fullName, password);
+            ValidateUtil validate = new ValidateUtil();
+            manageStaffService.add(validate.toUsername(username), validate.toFullName(fullName), validate.toPassword(password));
 
             Response res = new Response("Staff added successfully.");
             return ResponseEntity.ok(res.build());
@@ -50,7 +51,8 @@ public class ManageStaffRestController {
                                   @RequestParam(value = "sd-username",required = false) String username,
                                   @RequestParam(value = "sd-full-name", required = false) String fullName) {
         try {
-            manageStaffService.edit(id, username, fullName);
+            ValidateUtil validate = new ValidateUtil();
+            manageStaffService.edit(validate.toId(id), validate.toUsername(username), validate.toFullName(fullName));
 
             Response res = new Response("Staff edited successfully.");
             return ResponseEntity.ok(res.build());
@@ -63,9 +65,26 @@ public class ManageStaffRestController {
     @PostMapping("/remove")
     public ResponseEntity<?> remove(@RequestParam(value = "id", required = false) String id) {
         try {
-            manageStaffService.remove(id);
+            ValidateUtil validate = new ValidateUtil();
+            manageStaffService.remove(validate.toId(id));
 
             Response res = new Response("Staff removed successfully.");
+            return ResponseEntity.ok(res.build());
+        } catch (Exception e) {
+            Response res = new Response(e.getMessage());
+            return ResponseEntity.badRequest().body(res.build());
+        }
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestParam(value = "scp-id", required = false) String id,
+                                            @RequestParam(value = "scp-new-password", required = false) String newPassword,
+                                            @RequestParam(value = "scp-confirm-new-password", required = false) String confirmNewPassword) {
+        try {
+            ValidateUtil validate = new ValidateUtil();
+            manageStaffService.changePassword(validate.toId(id), validate.toPassword(newPassword), validate.toPassword(confirmNewPassword));
+
+            Response res = new Response("Staff changed password successfully.");
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

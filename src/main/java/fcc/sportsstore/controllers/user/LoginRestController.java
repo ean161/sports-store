@@ -2,10 +2,10 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.services.user.LoginService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
@@ -25,7 +25,10 @@ public class LoginRestController {
                                    @RequestParam(required = false, name="username") String username,
                                    @RequestParam(required = false, name="password") String password) {
         try {
-            loginService.login(request, response, username, password);
+            ValidateUtil validate = new ValidateUtil();
+            loginService.login(request, response,
+                    validate.toUsername(username),
+                    password);
 
             Response res = new Response("Login successfully.",
                     Map.of("redirect", "/", "time", 3000));

@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "address")
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Address {
@@ -38,6 +38,8 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @CreatedDate
+    private Long createdAt;
 
     public Address(String note, String phoneNumber, String addressDetail, Province province, Wards wards, User user) {
         this.note = note;

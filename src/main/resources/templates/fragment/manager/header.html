@@ -1,26 +1,31 @@
-<header th:fragment="header-manager" class="bg-gradient-to-br from-blue-800 to-blue-900 text-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4">
-        <div class="flex items-center justify-between">
-            <a th:href="@{/manager}" class="flex items-center space-x-3  cursor-pointer">
-                <div class="relative">
-                    <img src="/assets/img/logo-v1.png" class="w-15" />
-                </div>
-                <div>
-                    <div class="font-bold text-3xl text-white">SPORTS <span class="text-blue-200">STORE</span></div>
-                    <div class="text-xl text-gray-200">HEART OF THE GAME</div>
-                </div>
-            </a>
-
-            <div class="flex items-center space-x-10">
+<header th:fragment="header-manager" class="bg-black text-white shadow-sm top-0 z-50">
+    <div class="border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
                 <div class="p-1 bg-white rounded-2xl pr-2">
-                    <span class="p-1 text-wheat-100 rounded-2xl mr-1 pr-2 pl-2 font-bold text-sm" th:classappend="${session.manager.role == 'ADMIN' ? 'bg-red-800' : 'bg-blue-800'}" th:text="${session.manager.role}"></span>
+                        <span class="p-1 text-wheat-100 rounded-2xl mr-1 pr-2 pl-2 font-bold text-sm"
+                              th:classappend="${session.manager.role == 'ADMIN' ? 'bg-red-800' : 'bg-blue-800'}"
+                              th:text="${session.manager.role}"></span>
                     <span th:text="${session.manager.fullName}" class="text-black"></span>
                 </div>
+
+                <a th:href="@{/manager}" class="flex items-center mr-10 space-x-3">
+                    <div class="relative">
+                        <img src="/assets/img/logo-v1.png" alt="" class="w-15">
+                    </div>
+                    <div class="text-center">
+                        <div class="font-bold text-4xl text-white tracking-wider">SPORTS <span
+                                class="text-red-600">STORE</span></div>
+                    </div>
+                </a>
+
+
                 <div class="text-center cursor-pointer hover:text-red-600 duration-300 group">
                     <a th:if="${session.manager != null}" href="/logout"
                        class="text-base text-wheat-300 hover:scale-105">Logout</a>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </header>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+        <header th:replace="~{fragment/user/header :: header}"></header>
+
+        <div class="min-h-screen p-6">
+            <div class="max-w-7xl mx-auto">
+
+                <h1 class="text-xl font-bold mb-8 tracking-wide">YOUR CART</h1>
+
+                <div class="bg-white  shadow-sm overflow-hidden mb-6">
+                    <table class="w-full">
+                        <thead class="bg-gray-100 border-b border-gray-200">
+                        <tr>
+                            <th class="text-left py-4 px-6 font-semibold text-gray-700">Product Name</th>
+                            <th class="text-left py-4 px-6 font-semibold text-gray-700">Price</th>
+                            <th class="text-left py-4 px-6 font-semibold text-gray-700">Quantity</th>
+                            <th class="text-left py-4 px-6 font-semibold text-gray-700">Total</th>
+                            <th class="py-4 px-6"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-6 px-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-20 h-20 bg-gradient-to-br from-green-300 to-green-500  flex items-center justify-center text-4xl">
+                                        🧦
+                                    </div>
+                                    <span class="font-medium text-gray-800">Official Non-slip Football Socks HCC - Lime Green</span>
+                                </div>
+                            </td>
+                            <td class="py-6 px-6">
+                                <span class="text-red-600 font-semibold">40,000₫</span>
+                            </td>
+                            <td class="py-6 px-6">
+                                <input type="number" value="1" min="1"
+                                       class="w-20 px-3 py-2 border border-gray-300  text-center focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </td>
+                            <td class="py-6 px-6">
+                                <span class="text-red-600 font-semibold">40,000₫</span>
+                            </td>
+                            <td class="py-6 px-6 text-center">
+                                <button class="text-gray-400 hover:text-red-600 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path d="M3 6h18"></path>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-between gap-4 mb-8 flex-wrap bg-gray-100 border-b border-t border-gray-200 py-2 px-2">
+                    <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 font-medium transition-colors flex items-center gap-2">
+                        <span>→</span> Continue Shopping
+                    </button>
+
+                    <div class="flex space-x-4">
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 font-medium transition-colors flex items-center gap-2">
+                            <span>×</span> Clear Cart
+                        </button>
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 font-medium transition-colors flex items-center gap-2">
+                            <span>↻</span> Update Cart
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Total Section -->
+                <div class="flex justify-end">
+                    <div class="w-full max-w-md">
+                        <div class="bg-white -lg shadow-sm p-6">
+                            <h2 class="text-xl font-bold mb-6 uppercase">Cart Total</h2>
+
+                            <div class="flex justify-between items-center mb-6 pb-6 border-b border-gray-200">
+                                <span class="text-gray-700 font-medium">Total</span>
+                                <span class="text-red-600 font-bold text-xl">40,000₫</span>
+                            </div>
+
+                            <button class="w-full bg-red-600 hover:bg-red-700 text-white py-4  font-semibold text-lg transition-colors flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                                Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragment/user/footer :: footer}"></footer>
+        <script src="/assets/js/pages/home.js"></script>
+    </th:block>
+</th:block>
+</html>

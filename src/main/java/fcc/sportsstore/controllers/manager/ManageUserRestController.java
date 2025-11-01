@@ -3,6 +3,7 @@ package fcc.sportsstore.controllers.manager;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.manager.ManageUserService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +32,16 @@ public class ManageUserRestController {
 
     @PostMapping("/ban")
     public ResponseEntity<?>  ban(@RequestParam(value = "id") String id) {
-        manageUserService.ban(id);
+        ValidateUtil validate = new ValidateUtil();
+        manageUserService.ban(validate.toId(id));
         Response res = new Response("User was banned");
         return ResponseEntity.ok(res.build());
     }
 
     @PostMapping("/pardon")
     public ResponseEntity<?>  pardon(@RequestParam(value = "id") String id) {
-        manageUserService.pardon(id);
+        ValidateUtil validate = new ValidateUtil();
+        manageUserService.pardon(validate.toId(id));
         Response res = new Response("User was pardoned");
         return ResponseEntity.ok(res.build());
     }
@@ -48,7 +51,8 @@ public class ManageUserRestController {
                        @RequestParam("ud-full-name") String fullName,
                        @RequestParam(value = "ud-gender") boolean gender) {
         try {
-            manageUserService.edit(id, fullName, gender);
+            ValidateUtil validate = new ValidateUtil();
+            manageUserService.edit(validate.toId(id), validate.toFullName(fullName), gender);
 
             Response res = new Response("User edited successfully.");
             return ResponseEntity.ok(res.build());

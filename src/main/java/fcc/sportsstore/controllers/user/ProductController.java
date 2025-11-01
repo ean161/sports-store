@@ -3,6 +3,7 @@ package fcc.sportsstore.controllers.user;
 import fcc.sportsstore.entities.Product;
 import fcc.sportsstore.services.ProductCollectionService;
 import fcc.sportsstore.services.ProductService;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,8 @@ public class ProductController {
                           @PathVariable(value = "id") String id) {
         Product prod;
         try {
-            prod = productService.getById(id);
+            ValidateUtil validate = new ValidateUtil();
+            prod = productService.getById(validate.toId(id));
         } catch (Exception e) {
             return "redirect:/";
         }

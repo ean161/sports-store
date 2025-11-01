@@ -1,13 +1,12 @@
 package fcc.sportsstore.controllers.manager;
 
 import fcc.sportsstore.entities.ProductCollection;
-import fcc.sportsstore.services.ProductCollectionService;
 import fcc.sportsstore.services.manager.ManageCollectionService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("managerManageCollectionRestController")
@@ -25,6 +24,7 @@ public class ManageCollectionRestController {
         return manageCollectionService.list(search, pageable);
     }
 
+    // ch vald
     @PostMapping("/details")
     public ResponseEntity<?> getDetails(@RequestParam(value = "id") String id) {
         Response res = new Response(manageCollectionService.getDetails(id));
@@ -34,7 +34,8 @@ public class ManageCollectionRestController {
     @PostMapping("/edit")
     public ResponseEntity<?> edit(@RequestParam(value = "cd-id") String id, @RequestParam("cd-name") String name) {
         try {
-            manageCollectionService.edit(id, name);
+            ValidateUtil validate = new ValidateUtil();
+            manageCollectionService.edit(validate.toId(id), validate.toCollectionName(name));
 
             Response res = new Response("Collection updated successfully.");
             return ResponseEntity.ok(res.build());
@@ -47,7 +48,8 @@ public class ManageCollectionRestController {
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestParam(value = "ca-name", required = false) String name) {
         try {
-            manageCollectionService.add(name);
+            ValidateUtil validate = new ValidateUtil();
+            manageCollectionService.add(validate.toCollectionName(name));
 
             Response res = new Response("Collection added successfully.");
             return ResponseEntity.ok(res.build());
@@ -60,7 +62,8 @@ public class ManageCollectionRestController {
     @PostMapping("/remove")
     public ResponseEntity<?> remove(@RequestParam(value = "id", required = false) String id) {
         try {
-            manageCollectionService.remove(id);
+            ValidateUtil validate = new ValidateUtil();
+            manageCollectionService.remove(validate.toId(id));
 
             Response res = new Response("Collection removed successfully.");
             return ResponseEntity.ok(res.build());

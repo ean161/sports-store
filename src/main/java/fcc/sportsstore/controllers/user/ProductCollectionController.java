@@ -2,9 +2,9 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.ProductType;
-import fcc.sportsstore.services.ProductTypeService;
 import fcc.sportsstore.services.user.CollectionService;
 import fcc.sportsstore.services.user.TypeService;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +30,8 @@ public class ProductCollectionController {
     public String collectionPage(Model model, @PathVariable(value = "id") String id) {
         ProductCollection collection;
         try {
-            collection = collectionService.getById(id);
+            ValidateUtil validate = new ValidateUtil();
+            collection = collectionService.getById(validate.toId(id));
             model.addAttribute("collection", collection);
         } catch (Exception e) {
             return "redirect:/";

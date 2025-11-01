@@ -13,7 +13,7 @@ function loadProperties(zone, fields, datas = null) {
                     <h3 class="text-base font-semibold text-gray-900">
                         ${item.name}
                     </h3>
-                    <span onclick="addPropertyDataInput('NEW-ID', '${item.id}', '${zone}-property-${item.id}')" class="inline-flex justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
+                    <span onclick="addPropertyDataInput('NEW-ID', '${item.id}', '${zone}-property-${item.id}')" class="inline-flex justify-center bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
                         Add data
                     </span>
                 </div>
@@ -43,7 +43,7 @@ function addPropertyDataInput(id, fieldId, htmlId, value = "", price = 0) {
             <div class="flex w-3/10 items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                 <input placeholder="Price" name="prices" type="number" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" value="${price}" />
             </div>
-            <span class="remove-property-btn w-1/10 inline-flex justify-center rounded-md bg-red-600 px-3 py-2 text-md font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
+            <span class="remove-property-btn w-1/10 inline-flex justify-center bg-red-600 px-3 py-2 text-md font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
                 -
             </span>
         </div>`);

@@ -1,18 +1,16 @@
 package fcc.sportsstore.services.manager;
 
-import fcc.sportsstore.entities.ProductPropertyData;
 import fcc.sportsstore.entities.ProductPropertyField;
 import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.services.ProductPropertyFieldService;
 import fcc.sportsstore.services.ProductTypeService;
-import fcc.sportsstore.utils.Validate;
+import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service("managerManageTypeService")
@@ -42,16 +40,8 @@ public class ManageTypeService {
 
     @Transactional
     public void edit(String id, String name, String[] fieldIds, String[] fields) {
-        Validate validate = new Validate();
-
-        if (id == null || id.isEmpty()) {
-            throw new RuntimeException("Product type ID must be not empty");
-        } else if (!productTypeService.existsById(id)) {
+        if (!productTypeService.existsById(id)) {
             throw new RuntimeException("Product type not found");
-        } else if (name == null || name.isEmpty()) {
-            throw new RuntimeException("Product type name must be not empty");
-        } else if (!validate.isValidProductTypeName(name)) {
-            throw new RuntimeException("Product type name length must be under 35 chars, only contains alpha, space and number");
         }
 
         ProductType productType = productTypeService.getById(id);
@@ -61,14 +51,8 @@ public class ManageTypeService {
 
     @Transactional
     public void add(String name, String[] fieldIds, String[] fields) {
-        Validate validate = new Validate();
-
-        if (name == null || name.isEmpty()) {
-            throw new RuntimeException("Product type name must be not empty");
-        } else if (productTypeService.existsByName(name)) {
+        if (productTypeService.existsByName(name)) {
             throw new RuntimeException("Product type name already exists");
-        } else if (!validate.isValidProductTypeName(name)) {
-            throw new RuntimeException("Product type name length must be from 3 - 35 chars, only contains alpha");
         }
 
         ProductType productType = new ProductType(name);
@@ -84,19 +68,13 @@ public class ManageTypeService {
 
     @Transactional
     public void updatePropertyField(ProductType productType, String[] fieldIds, String[] fields) {
-        Validate validate = new Validate();
+        ValidateUtil validate = new ValidateUtil();
 
         List<ProductPropertyField> newFields = new ArrayList<>();
         if (fieldIds != null && fields != null && fields.length > 0) {
             for (int i = 0; i < fieldIds.length; i++) {
-                String id = fieldIds[i];
-                String field = fields[i];
-
-                if (id == null || id.isEmpty()) {
-                    throw new RuntimeException("Property field must be not empty.");
-                } else if (field == null || field.isEmpty() || !validate.isValidProperty(field)) {
-                    throw new RuntimeException("Property must be not empty and just contain alpha, number and space.");
-                }
+                String id = validate.toId(fieldIds[i]);
+                String field = validate.toProductPropertyField(fields[i]);
 
                 ProductPropertyField fieldEntity = null;
                 if (!id.equals("NEW-ID")) {
@@ -121,9 +99,7 @@ public class ManageTypeService {
     }
 
     public void remove(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("Id must be not empty");
-        } else if (!productTypeService.existsById(id)) {
+        if (!productTypeService.existsById(id)) {
             throw new RuntimeException("Product-type id already exists");
         }
 

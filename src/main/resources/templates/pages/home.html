@@ -3,8 +3,7 @@
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
     <th:block th:fragment="content">
         <header th:replace="~{fragment/user/header :: header}"></header>
-        <th:block th:replace="~{fragment/user/navbar :: navbar}"></th:block>
-
+<!--        <th:block th:replace="~{fragment/user/navbar :: navbar}"></th:block>-->
         <main class="max-w-7xl mx-auto px-4 py-6">
             <div class="grid grid-cols-10 gap-6">
                 <section class="col-span-8 rounded-2xl overflow-hidden relative shadow-xl">
@@ -169,6 +168,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
                     <a th:each="prod : ${collection.products.subList(0, collection.products.size() < 4 ? collection.products.size() : 4)}"
                        th:href="${'/product/' + prod.id}"
+                       th:data-ptitle="${prod.title}"
                        class="group bg-white shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden block">
                         <div class="relative bg-gradient-to-br from-gray-50 to-gray-100 h-75 w-75 flex items-center justify-center overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                             <div th:if="${prod.productMedia.size() > 0}" class="w-full h-full flex items-center justify-center">
@@ -200,14 +200,14 @@
             </section>
         </main>
 
-        <section class="bg-[#14203A] text-white py-12 mt-12">
+        <section class="bg-black text-white py-12 mt-12">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold mb-8">
-                    Why choose <span class="text-red-500">Sports Store</span>
+                    Why choose <span class="text-red-500">Sports Store ?</span>
                 </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div>
+                <div class="flex gap-8 items-center">
+                    <div class="w-1/5">
                         <img src="/assets/img/sports.jpg" alt="Sport" class="rounded-lg shadow-lg">
                     </div>
 
@@ -220,13 +220,13 @@
                             <span class="absolute top-0 right-0 text-6xl font-bold text-white/10 select-none">01</span>
                         </div>
 
-                        <div class="relative border-t border-gray-600 pt-4 hover:scale-105 transition-transform">
-                            <h3 class="text-xl font-bold mb-2">Athletes</h3>
-                            <p class="text-gray-300">
-                                Helping athletes get genuine products at great prices with professional advice and excellent experiences!
-                            </p>
-                            <span class="absolute top-0 right-0 text-6xl font-bold text-white/10 select-none">02</span>
-                        </div>
+<!--                        <div class="relative border-t border-gray-600 pt-4 hover:scale-105 transition-transform">-->
+<!--                            <h3 class="text-xl font-bold mb-2">Athletes</h3>-->
+<!--                            <p class="text-gray-300">-->
+<!--                                Helping athletes get genuine products at great prices with professional advice and excellent experiences!-->
+<!--                            </p>-->
+<!--                            <span class="absolute top-0 right-0 text-6xl font-bold text-white/10 select-none">02</span>-->
+<!--                        </div>-->
 
                         <div class="relative border-t border-gray-600 pt-4 hover:scale-105 transition-transform">
                             <h3 class="text-xl font-bold mb-2">Sports Field Owners</h3>
