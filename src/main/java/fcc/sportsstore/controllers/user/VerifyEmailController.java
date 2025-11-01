@@ -24,9 +24,6 @@ public class VerifyEmailController {
 
     @GetMapping("/verify")
     public String verify(Model model, @RequestParam(required = false, name = "code") String code) {
-        // Code k ton tai
-        // Code da dung
-        // Code het han
         String result = "";
         try {
             ValidateUtil validate = new ValidateUtil();

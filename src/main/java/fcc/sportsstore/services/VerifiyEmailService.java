@@ -1,9 +1,13 @@
 package fcc.sportsstore.services;
 
+import fcc.sportsstore.entities.Email;
 import fcc.sportsstore.entities.ForgetPassword;
 import fcc.sportsstore.entities.VerifyEmail;
 import fcc.sportsstore.repositories.VerifyEmailRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service("verifyEmailService")
 public class VerifiyEmailService {
@@ -23,5 +27,7 @@ public class VerifiyEmailService {
                 .orElseThrow(() -> new RuntimeException("Verify code not found."));
     }
 
-
+    public List<VerifyEmail> getByEmailAndStatusAndExpiredAtGreaterThan(Email email, String status, Long expiredAt){
+        return verifyEmailRepository.findByEmailAndStatusAndExpiredAtGreaterThan(email, status, expiredAt);
+    }
 }

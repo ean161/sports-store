@@ -9,9 +9,13 @@ import fcc.sportsstore.services.JavaMailService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.VerifiyEmailService;
 import fcc.sportsstore.utils.RandomUtil;
+import fcc.sportsstore.utils.TimeUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service("userVerifyEmailService")
 public class VerifyEmailService {
@@ -39,7 +43,13 @@ public class VerifyEmailService {
         User caller = userService.getFromSession(request);
         Email email = caller.getEmail();
 
-        if (email.isVerified()) {
+        TimeUtil time = new TimeUtil();
+        Long nowTimestamp = time.getCurrentTimestamp();
+        List<VerifyEmail> validCodeRemaining = verifiyEmailService.getByEmailAndStatusAndExpiredAtGreaterThan(email, "NOT_VERIFIED_YET", nowTimestamp);
+
+        if (validCodeRemaining.size() >= 3) {
+            throw new RuntimeException("You have requested too many times.");
+        } else if (email.isVerified()) {
             throw new RuntimeException("This email was verified before.");
         }
 
@@ -69,4 +79,5 @@ public class VerifyEmailService {
 
         return email.getAddress();
     }
+
 }
