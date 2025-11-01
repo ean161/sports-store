@@ -47,7 +47,7 @@ public class ManageUserRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?>  edit(@RequestParam(value = "ud-id") String id,
+    public ResponseEntity<?>  edit(@RequestParam(value = "id") String id,
                        @RequestParam("ud-full-name") String fullName,
                        @RequestParam(value = "ud-gender") boolean gender) {
         try {

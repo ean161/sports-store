@@ -3,14 +3,9 @@
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Verify email')}">
     <th:block th:fragment="content">
         <div class="flex h-dvh bg-white">
-            <div class="w-1/2 m-auto">
-                <div class="w-3/5 m-auto">
-                    <div>
-                        <h1 class="font-bold mb-8 text-5xl">Verify email</h1>
-                    </div>
-
-                    <p th:text="${result}"></p>
-                </div>
+            <div class="w-1/5 m-auto text-center items-center">
+                <h1 class="font-bold mb-8 text-5xl">Verify email</h1>
+                <p th:text="${result}"></p>
             </div>
         </div>
 

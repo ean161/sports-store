@@ -67,9 +67,9 @@ public class VerifyEmailService {
         Email email = verifyEmail.getEmail();
 
         if (verifyEmail.getStatus().equals("VERIFIED")) {
-            throw new RuntimeException("This verify session was used.");
+            throw new RuntimeException("This link was used before.");
         } else if (verifyEmail.isExpired()) {
-            throw new RuntimeException("This verify session was expired.");
+            throw new RuntimeException("This link was expired.");
         } else if (email.isVerified()) {
             throw new RuntimeException("This email address was verified before.");
         }

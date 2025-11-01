@@ -34,8 +34,8 @@ public class ForgetPasswordRestController {
 
     @PostMapping("/forget")
     public ResponseEntity<?> forgetPassword(@RequestParam(required = false, name = "code") String code,
-                                 @RequestParam(required = false, name = "password") String password,
-                                 @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
+                                            @RequestParam(required = false, name = "password") String password,
+                                            @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
         try {
             ValidateUtil validate = new ValidateUtil();
             forgetPasswordService.forgetPassword(validate.toLongCode(code),

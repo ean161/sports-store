@@ -58,7 +58,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             ID:
                                                         </div>
-                                                        <input id="pd-id" type="text" name="pd-id"
+                                                        <input id="pd-id" type="text" name="id"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
                                                                readonly/>
                                                     </div>
@@ -67,7 +67,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Title:
                                                         </div>
-                                                        <input id="pd-title" type="text" name="pd-title"
+                                                        <input id="pd-title" type="text" name="title"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
@@ -75,7 +75,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Description:
                                                         </div>
-                                                        <input id="pd-description" type="text" name="pd-description"
+                                                        <input id="pd-description" type="text" name="description"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
@@ -83,7 +83,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Price:
                                                         </div>
-                                                        <input id="pd-price" type="number" value="0" name="pd-price" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                        <input id="pd-price" type="number" value="0" name="price" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
                                                     <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -91,7 +91,7 @@
                                                             Type:
                                                         </div>
                                                         <select id="pd-type"
-                                                                name="pd-type"
+                                                                name="type"
                                                                 class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                             <option th:each="t : ${type}"
                                                                     th:value="${t.id}"
@@ -106,7 +106,7 @@
                                                             Collection:
                                                         </div>
                                                         <select id="pd-collection"
-                                                                name="pd-collection"
+                                                                name="collection"
                                                                 class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                             <option th:each="c : ${collection}"
                                                                     th:value="${c.id}"
@@ -167,7 +167,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Title:
                                                         </div>
-                                                        <input id="pa-title" type="text" name="pa-title"
+                                                        <input id="pa-title" type="text" name="title"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
@@ -175,7 +175,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Description:
                                                         </div>
-                                                        <input id="pa-description" type="text" name="pa-description"
+                                                        <input id="pa-description" type="text" name="description"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
@@ -183,7 +183,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Price:
                                                         </div>
-                                                        <input id="pa-price" type="number" value="0" name="pa-price"
+                                                        <input id="pa-price" type="number" value="0" name="price"
                                                                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
@@ -192,7 +192,7 @@
                                                             Product type:
                                                         </div>
                                                         <select id="pa-type"
-                                                                name="pa-type"
+                                                                name="type"
                                                                 class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                             <option value="">-- Select --</option>
                                                             <option th:each="t : ${type}"
@@ -208,7 +208,7 @@
                                                             Collection:
                                                         </div>
                                                         <select id="pa-collection"
-                                                                name="pa-collection"
+                                                                name="collection"
                                                                 class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                             <option value="">-- Select --</option>
                                                             <option th:each="c : ${collection}"
@@ -222,7 +222,7 @@
                                                         <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                             Image:
                                                         </div>
-                                                        <input id="pa-image" type="text" name="pa-image" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                        <input id="pa-image" type="text" name="image" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                     </div>
 
                                                     <div id="pa-properties">

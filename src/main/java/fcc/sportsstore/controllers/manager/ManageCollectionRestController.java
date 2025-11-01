@@ -32,7 +32,7 @@ public class ManageCollectionRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> edit(@RequestParam(value = "cd-id") String id, @RequestParam("cd-name") String name) {
+    public ResponseEntity<?> edit(@RequestParam(value = "id") String id, @RequestParam("name") String name) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageCollectionService.edit(validate.toId(id), validate.toCollectionName(name));
@@ -46,7 +46,7 @@ public class ManageCollectionRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestParam(value = "ca-name", required = false) String name) {
+    public ResponseEntity<?> add(@RequestParam(value = "name", required = false) String name) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageCollectionService.add(validate.toCollectionName(name));

@@ -31,8 +31,8 @@ public class ManageTypeRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> edit(@RequestParam(value = "ptd-id") String id,
-                                  @RequestParam("ptd-name") String name,
+    public ResponseEntity<?> edit(@RequestParam(value = "id") String id,
+                                  @RequestParam("name") String name,
                                   @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                   @RequestParam(value = "fields", required = false) String[] fields) {
         try {
@@ -48,7 +48,7 @@ public class ManageTypeRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestParam(value = "pta-name", required = false) String name,
+    public ResponseEntity<?> add(@RequestParam(value = "name", required = false) String name,
                                  @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                  @RequestParam(value = "fields", required = false) String[] fields) {
         try {

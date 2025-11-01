@@ -3,32 +3,30 @@
 <th:block th:replace="~{layout/base :: layout(~{::content}, 'Forget Password')}">
     <th:block th:fragment="content">
         <div class="flex h-dvh bg-white">
-            <div class="w-1/2 m-auto">
-                <div class="w-3/5 m-auto">
-                    <div>
-                        <h1 class="font-bold mb-8 text-5xl">Forget password</h1>
-                    </div>
-                    <form th:if="${isExistCode}" class="space-y-4" id="forget-password-form">
-                        <input name="code" id="code" th:value="${code}" class="hidden"/>
-                        <div>
-                            <label for="email" class="font-medium mb-1 block">Email</label>
-                            <input th:value="${email}" name="email" id="email" class="w-full p-2 pl-4 border-2 rounded-2xl border-solid border-gray-200" type="text" placeholder="Enter your email" disabled/>
-                        </div>
-                        <div>
-                            <label for="password" class="font-medium mb-1 block">Password</label>
-                            <input name="password" id="password" class="w-full p-2 pl-4 border-2 rounded-2xl border-solid border-gray-200" type="password" placeholder="Enter your password"/>
-                        </div>
-                        <div>
-                            <label for="confirm-password" class="font-medium mb-1 block">Confirm password</label>
-                            <input name="confirm-password" id="confirm-password" class="w-full p-2 pl-4 border-2 rounded-2xl border-solid border-gray-200" type="password" placeholder="Confirm your password"/>
-                        </div>
-                        <button class="inline-flex w-full justify-center rounded-xl bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
-                            Submit
-                        </button>
-                    </form>
-
-                    <p th:if="${!isExistCode}">Invalid code.</p>
+            <div class="w-1/5 m-auto text-center items-center">
+                <div>
+                    <h1 class="font-bold mb-8 text-5xl">Forget password</h1>
                 </div>
+                <form th:if="${isExistCode}" class="space-y-4" id="forget-password-form">
+                    <input name="code" id="code" th:value="${code}" class="hidden"/>
+                    <div>
+                        <label for="email" class="font-medium mb-1 block">Email</label>
+                        <input th:value="${email}" name="email" id="email" class="w-full p-2 pl-4 border-2 rounded-2xl border-solid border-gray-200" type="text" placeholder="Enter your email" disabled/>
+                    </div>
+                    <div>
+                        <label for="password" class="font-medium mb-1 block">Password</label>
+                        <input name="password" id="password" class="w-full p-2 pl-4 border-2 rounded-2xl border-solid border-gray-200" type="password" placeholder="Enter your password"/>
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="font-medium mb-1 block">Confirm password</label>
+                        <input name="confirm-password" id="confirm-password" class="w-full p-2 pl-4 border-2 rounded-2xl border-solid border-gray-200" type="password" placeholder="Confirm your password"/>
+                    </div>
+                    <button class="inline-flex w-full justify-center rounded-xl bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
+                        Submit
+                    </button>
+                </form>
+
+                <p th:if="${!isExistCode}">This link was expired or used before.</p>
             </div>
         </div>
 

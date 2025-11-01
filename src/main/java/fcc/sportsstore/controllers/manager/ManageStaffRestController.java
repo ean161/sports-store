@@ -31,9 +31,9 @@ public class ManageStaffRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestParam(value = "sa-username", required = false) String username,
-                                 @RequestParam(value = "sa-full-name", required = false) String fullName,
-                                 @RequestParam(value = "sa-password", required = false) String password) {
+    public ResponseEntity<?> add(@RequestParam(value = "username", required = false) String username,
+                                 @RequestParam(value = "full-name", required = false) String fullName,
+                                 @RequestParam(value = "password", required = false) String password) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageStaffService.add(validate.toUsername(username), validate.toFullName(fullName), validate.toPassword(password));
@@ -47,9 +47,9 @@ public class ManageStaffRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> edit(@RequestParam(value = "sd-id", required = false) String id,
-                                  @RequestParam(value = "sd-username",required = false) String username,
-                                  @RequestParam(value = "sd-full-name", required = false) String fullName) {
+    public ResponseEntity<?> edit(@RequestParam(value = "id", required = false) String id,
+                                  @RequestParam(value = "username",required = false) String username,
+                                  @RequestParam(value = "full-name", required = false) String fullName) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageStaffService.edit(validate.toId(id), validate.toUsername(username), validate.toFullName(fullName));
@@ -77,9 +77,9 @@ public class ManageStaffRestController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestParam(value = "scp-id", required = false) String id,
-                                            @RequestParam(value = "scp-new-password", required = false) String newPassword,
-                                            @RequestParam(value = "scp-confirm-new-password", required = false) String confirmNewPassword) {
+    public ResponseEntity<?> changePassword(@RequestParam(value = "id", required = false) String id,
+                                            @RequestParam(value = "new-password", required = false) String newPassword,
+                                            @RequestParam(value = "confirm-new-password", required = false) String confirmNewPassword) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageStaffService.changePassword(validate.toId(id), validate.toPassword(newPassword), validate.toPassword(confirmNewPassword));

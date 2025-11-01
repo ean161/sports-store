@@ -32,12 +32,12 @@ public class ManageVoucherRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestParam(value = "va-code", required = false) String code,
-                                 @RequestParam(value = "va-status", required = false) String status,
-                                 @RequestParam(value = "va-max-used", required = false) String maxUsedCount,
-                                 @RequestParam(value = "va-discount-type", required = false) String discountType,
-                                 @RequestParam(value = "va-discount-value", required = false) String discountValue,
-                                 @RequestParam(value = "va-max-discount-value", required = false) String maxDiscountValue) {
+    public ResponseEntity<?> add(@RequestParam(value = "code", required = false) String code,
+                                 @RequestParam(value = "status", required = false) String status,
+                                 @RequestParam(value = "max-used", required = false) String maxUsedCount,
+                                 @RequestParam(value = "discount-type", required = false) String discountType,
+                                 @RequestParam(value = "discount-value", required = false) String discountValue,
+                                 @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageVoucherService.add(validate.toVoucherCode(code), status, validate.toVoucherMaxUsedCount(maxUsedCount), discountType, validate.toVoucherDiscountValue(discountValue), validate.toVoucherMaxDiscountValue(maxDiscountValue));
@@ -52,14 +52,14 @@ public class ManageVoucherRestController {
 
     @PostMapping("/edit")
     public ResponseEntity<?> edit(
-            @RequestParam(value = "vd-id", required = false) String id,
-            @RequestParam(value = "vd-code", required = false) String code,
-            @RequestParam(value = "vd-status", required = false) String status,
-            @RequestParam(value = "vd-max-used", required = false) Integer maxUsedCount,
-            @RequestParam(value = "vd-used", required = false) Integer usedCount,
-            @RequestParam(value = "vd-discount-type", required = false) String discountType,
-            @RequestParam(value = "vd-discount-value", required = false) Double discountValue,
-            @RequestParam(value = "vd-max-discount-value", required = false) Double maxDiscountValue
+            @RequestParam(value = "id", required = false) String id,
+            @RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "max-used", required = false) Integer maxUsedCount,
+            @RequestParam(value = "used", required = false) Integer usedCount,
+            @RequestParam(value = "discount-type", required = false) String discountType,
+            @RequestParam(value = "discount-value", required = false) Double discountValue,
+            @RequestParam(value = "max-discount-value", required = false) Double maxDiscountValue
     ) {
         try {
 

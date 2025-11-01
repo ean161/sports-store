@@ -32,12 +32,12 @@ public class ManageProductRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> edit(@RequestParam(value = "pd-id", required = false) String id,
-                                  @RequestParam(value = "pd-title", required = false) String title,
-                                  @RequestParam(value = "pd-description", required = false) String description,
-                                  @RequestParam(value = "pd-price", required = false) String price,
-                                  @RequestParam(value = "pd-type", required = false) String productType,
-                                  @RequestParam(value = "pd-collection", required = false) String collectionName,
+    public ResponseEntity<?> edit(@RequestParam(value = "id", required = false) String id,
+                                  @RequestParam(value = "title", required = false) String title,
+                                  @RequestParam(value = "description", required = false) String description,
+                                  @RequestParam(value = "price", required = false) String price,
+                                  @RequestParam(value = "type", required = false) String productType,
+                                  @RequestParam(value = "collection", required = false) String collectionName,
                                   @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                   @RequestParam(value = "data-ids", required = false) String[] dataIds,
                                   @RequestParam(value = "datas", required = false) String[] datas,
@@ -55,12 +55,12 @@ public class ManageProductRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestParam(value = "pa-title", required = false) String title,
-                                 @RequestParam(value = "pa-description", required = false) String description,
-                                 @RequestParam(value = "pa-price", required = false) String price,
-                                 @RequestParam(value = "pa-type", required = false) String type,
-                                 @RequestParam(value = "pa-collection", required = false) String collection,
-                                 @RequestParam(value = "pa-image", required = false) String image,
+    public ResponseEntity<?> add(@RequestParam(value = "title", required = false) String title,
+                                 @RequestParam(value = "description", required = false) String description,
+                                 @RequestParam(value = "price", required = false) String price,
+                                 @RequestParam(value = "type", required = false) String type,
+                                 @RequestParam(value = "collection", required = false) String collection,
+                                 @RequestParam(value = "image", required = false) String image,
                                  @RequestParam(value = "field-ids", required = false) String[] fieldIds,
                                  @RequestParam(value = "data-ids", required = false) String[] dataIds,
                                  @RequestParam(value = "datas", required = false) String[] datas,

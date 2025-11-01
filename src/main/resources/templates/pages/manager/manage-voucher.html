@@ -55,7 +55,7 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         ID:
                                                     </div>
-                                                    <input id="vd-id" type="text" name="vd-id"
+                                                    <input id="vd-id" type="text" name="id"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
                                                            readonly/>
                                                 </div>
@@ -63,7 +63,7 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Code:
                                                     </div>
-                                                    <input id="vd-code" type="text" name="vd-code"
+                                                    <input id="vd-code" type="text" name="code"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
@@ -72,7 +72,7 @@
                                                         Discount type:
                                                     </div>
                                                     <select id="vd-discount-type"
-                                                            name="vd-discount-type"
+                                                            name="discount-type"
                                                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                         <option value="STATIC"
                                                                 th:selected="${voucher.discountType == 'STATIC'}">STATIC
@@ -87,14 +87,14 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Discount value:
                                                     </div>
-                                                    <input id="vd-discount-value" type="text" name="vd-discount-value"
+                                                    <input id="vd-discount-value" type="text" name="discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Expired date:
                                                     </div>
-                                                    <input id="vd-expired-date" type="text" name="vd-expired-date"
+                                                    <input id="vd-expired-date" type="text" name="expired-date"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -102,7 +102,7 @@
                                                         Max discount value:
                                                     </div>
                                                     <input id="vd-max-discount-value" type="text"
-                                                           name="vd-max-discount-value"
+                                                           name="max-discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
@@ -110,7 +110,7 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Max used:
                                                     </div>
-                                                    <input id="vd-max-used" type="text" name="vd-max-used"
+                                                    <input id="vd-max-used" type="text" name="max-used"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
@@ -118,7 +118,7 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Used count:
                                                     </div>
-                                                    <input id="vd-used-count" type="text" name="vd-used-count"
+                                                    <input id="vd-used-count" type="text" name="used-count"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
@@ -127,7 +127,7 @@
                                                         Status:
                                                     </div>
                                                     <select id="vd-status"
-                                                            name="vd-status"
+                                                            name="status"
                                                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                         <option value="ACTIVE"
                                                                 th:selected="${voucher.status == 'ACTIVE'}">ACTIVATE
@@ -142,7 +142,7 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                       Created at:
                                                     </div>
-                                                    <input id="vd-created-date" type="text" name="vd-created-date"
+                                                    <input id="vd-created-date" type="text" name="created-date"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
                                                 </div>
 
@@ -193,7 +193,7 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Code:
                                                     </div>
-                                                    <input id="va-code" type="text" name="va-code"
+                                                    <input id="va-code" type="text" name="code"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
@@ -202,7 +202,7 @@
                                                         Discount type:
                                                     </div>
                                                     <select id="va-discount-type"
-                                                            name="va-discount-type"
+                                                            name="discount-type"
                                                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                         <option value="" selected>— Select discount type —</option>
                                                         <option value="PERCENT">PERCENT</option>
@@ -213,14 +213,14 @@
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Discount value:
                                                     </div>
-                                                    <input id="va-discount-value" type="text" name="va-discount-value"
+                                                    <input id="va-discount-value" type="text" name="discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Expired date:
                                                     </div>
-                                                    <input id="va-expired-date" type="text" name="va-expired-date"
+                                                    <input id="va-expired-date" type="text" name="expired-date"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -228,14 +228,14 @@
                                                         Max discount value:
                                                     </div>
                                                     <input id="va-max-discount-value" type="text"
-                                                           name="va-max-discount-value"
+                                                           name="max-discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Max used:
                                                     </div>
-                                                    <input id="va-max-used" type="text" name="va-max-used"
+                                                    <input id="va-max-used" type="text" name="max-used"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -243,7 +243,7 @@
                                                         Status:
                                                     </div>
                                                     <select id="va-status"
-                                                            name="va-status"
+                                                            name="status"
                                                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                         <option value="ACTIVE" selected>ACTIVE</option>
                                                     </select>

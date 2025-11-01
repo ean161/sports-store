@@ -182,7 +182,7 @@ public class ValidateUtil {
     }
 
     public String toEmail(String input) {
-        return toStringForm("Email", input, 6, 20, true, true, false, true);
+        return toStringForm("Email", input, 6, 50, true, true, false, true);
     }
 
     public String toLongCode(String input) {
