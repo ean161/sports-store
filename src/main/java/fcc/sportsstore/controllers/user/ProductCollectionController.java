@@ -39,7 +39,6 @@ public class ProductCollectionController {
 
         List<ProductType> types = typeService.getInitProductTypeByCollection(collection);
         model.addAttribute("types", types);
-        model.addAttribute("collections", collectionService.getAll());
 
         return "pages/user/collection";
     }

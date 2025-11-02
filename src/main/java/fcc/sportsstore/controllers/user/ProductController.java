@@ -35,7 +35,6 @@ public class ProductController {
             return "redirect:/";
         }
 
-        model.addAttribute("collections", productCollectionService.getAll());
         model.addAttribute("product", prod);
         return "pages/user/product";
     }

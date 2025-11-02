@@ -110,7 +110,7 @@ public class ValidateUtil {
     }
 
     public String toId(String input) {
-        return toStringForm("ID", input, 1, 100, true, true, false, true);
+        return toStringForm("ID", input, 36, 36, true, true, false, true);
     }
 
     public String toUsername(String input) {
@@ -182,10 +182,14 @@ public class ValidateUtil {
     }
 
     public String toEmail(String input) {
-        return toStringForm("Email", input, 6, 50, true, true, false, true);
+        return toStringForm("Email", input, 10, 50, true, true, false, true);
     }
 
     public String toLongCode(String input) {
         return toStringForm("Code", input, 100, 255, true, true, false, true);
+    }
+
+    public Integer toAmount(String input) {
+        return toIntegerForm("Amount/quantity", input, 1, Integer.MAX_VALUE);
     }
 }

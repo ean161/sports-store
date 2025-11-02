@@ -4,7 +4,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4 text-white text-sm">
                     <div th:if="${session.user != null}" class="flex items-center 5 gap-2">
-                        <img src="/assets/img/icon/user1.png" alt="user" class="w-6 h-6">
+                        <a th:href="@{/profile}"><img src="/assets/img/icon/user1.png" alt="user" class="w-6 h-6"></a>
                         <a th:href="@{/profile}" th:text="${session.user.fullName}" class="hover:text-gray-300"></a>
                     </div>
                     <div th:if="${session.user == null}" class="flex items-center space-x-1">
@@ -37,11 +37,10 @@
                         </button>
                     </div>
 
-                    <a th:href="@{/cart}" class="relative text-white hover:text-gray-300">
+                    <a th:if="${session.user != null}" th:href="@{/cart}" class="relative text-white hover:text-gray-300">
                         <img src="/assets/img/icon/cart1.png" alt="cart" class="w-8 h-8">
-                        <span th:if="${cartItemCount != null && cartItemCount > 0}"
-                              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
-                              th:text="${cartItemCount}">0</span>
+                        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                              th:text="${cart_count}">0</span>
                     </a>
                 </div>
             </div>

@@ -73,7 +73,7 @@ public class ManageTypeService {
         List<ProductPropertyField> newFields = new ArrayList<>();
         if (fieldIds != null && fields != null && fields.length > 0) {
             for (int i = 0; i < fieldIds.length; i++) {
-                String id = validate.toId(fieldIds[i]);
+                String id = fieldIds[i];
                 String field = validate.toProductPropertyField(fields[i]);
 
                 ProductPropertyField fieldEntity = null;

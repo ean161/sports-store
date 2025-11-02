@@ -31,23 +31,21 @@ public class ManageUserRestController {
     }
 
     @PostMapping("/ban")
-    public ResponseEntity<?>  ban(@RequestParam(value = "id") String id) {
-        ValidateUtil validate = new ValidateUtil();
-        manageUserService.ban(validate.toId(id));
+    public ResponseEntity<?> ban(@RequestParam(value = "id") String id) {
+        manageUserService.ban(id);
         Response res = new Response("User was banned");
         return ResponseEntity.ok(res.build());
     }
 
     @PostMapping("/pardon")
-    public ResponseEntity<?>  pardon(@RequestParam(value = "id") String id) {
-        ValidateUtil validate = new ValidateUtil();
-        manageUserService.pardon(validate.toId(id));
+    public ResponseEntity<?> pardon(@RequestParam(value = "id") String id) {
+        manageUserService.pardon(id);
         Response res = new Response("User was pardoned");
         return ResponseEntity.ok(res.build());
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?>  edit(@RequestParam(value = "id") String id,
+    public ResponseEntity<?> edit(@RequestParam(value = "id") String id,
                        @RequestParam("ud-full-name") String fullName,
                        @RequestParam(value = "ud-gender") boolean gender) {
         try {

@@ -1,0 +1,50 @@
+package fcc.sportsstore.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.List;
+
+@Entity
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class ProductSnapshot {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "product_snapshot_id")
+    private String id;
+
+    private String productId;
+
+    private String title;
+
+    private Double price;
+
+    @CreatedDate
+    private Long createdAt;
+
+    @OneToMany(mappedBy = "productSnapshot", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductPropertyDataSnapshot> productPropertyDataSnapshots;
+
+    public ProductSnapshot(String productId, String title, Double price) {
+        this.productId = productId;
+        this.title = title;
+        this.price = price;
+    }
+
+    public Double getPrice() {
+        Double total = this.price;
+        for (ProductPropertyDataSnapshot item : productPropertyDataSnapshots) {
+            total += item.getPrice();
+        }
+
+        return total;
+    }
+}

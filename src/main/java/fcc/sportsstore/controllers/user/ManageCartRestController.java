@@ -1,0 +1,39 @@
+package fcc.sportsstore.controllers.user;
+
+
+import fcc.sportsstore.services.user.ManageCartService;
+import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+@RestController("userCartRestController")
+@RequestMapping("/cart")
+public class ManageCartRestController {
+
+    private final ManageCartService manageCartService;
+
+    public ManageCartRestController(ManageCartService manageCartService) {
+        this.manageCartService = manageCartService;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> add(HttpServletRequest request, @RequestParam(value = "id") String productId, @RequestParam Map<String, String> params, @RequestParam(value = "amount") String amount) {
+        try {
+            ValidateUtil validate = new ValidateUtil();
+            manageCartService.add(request, validate.toId(productId), params, validate.toAmount(amount));
+
+            Response res = new Response("Product added to cart successfully.");
+            return ResponseEntity.ok(res.build());
+        } catch (Exception e) {
+            Response res = new Response(e.getMessage());
+            return ResponseEntity.badRequest().body(res.build());
+        }
+    }
+}

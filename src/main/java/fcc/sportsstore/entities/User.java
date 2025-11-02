@@ -47,6 +47,10 @@ public class User {
     @JoinColumn(name = "email_id")
     private Email email;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Item> items;
+
     @CreatedDate
     private Long createdAt;
 

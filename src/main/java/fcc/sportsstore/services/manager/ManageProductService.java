@@ -122,7 +122,7 @@ public class ManageProductService {
         if (fieldIds != null && dataIds != null && datas != null && datas.length > 0) {
             for (int i = 0; i < dataIds.length; i++) {
                 String field = validate.toId(fieldIds[i]); // field id
-                String id = validate.toId(dataIds[i]); // data id
+                String id = dataIds[i]; // data id
                 String data = validate.toProductPropertyData(datas[i]); // data val
                 Double price = validate.toPrice(prices[i]); // price of data
 
