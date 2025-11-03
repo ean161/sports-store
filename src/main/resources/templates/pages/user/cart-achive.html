@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+        <header th:replace="~{fragment/user/header :: header}"></header>
+
+        <div class="max-w-7xl p-6 mt-4 mb-4 mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Your cart</h2>
+            <div class="bg-white shadow-sm overflow-hidden mb-6">
+                <table class="w-full">
+                    <thead class="bg-gray-100 border-b border-gray-200">
+                        <tr>
+                            <th class="text-left py-4 px-6 text-gray-700">Image</th>
+                            <th class="text-left py-4 px-6 text-gray-700">Product Name</th>
+                            <th class="text-left py-4 px-6 text-gray-700">Price</th>
+                            <th class="text-left py-4 px-6 text-gray-700">Quantity</th>
+                            <th class="text-left py-4 px-6 text-gray-700">Total</th>
+                            <th class="py-4 px-6"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="item : ${item}" class="border-b border-gray-100">
+                        <td class="py-6 px-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-300 to-green-500 flex items-center justify-center">
+                                    <img th:if="${liveProds.get(item).productMedia != null && liveProds.get(item).productMedia.first != null}"
+                                         th:src="${liveProds.get(item).productMedia.first.dir}"
+                                         alt="Product Image"
+                                         class="w-20 h-20 object-cover rounded">
+                                </div>
+
+                            </div>
+                        </td>
+                        <td class="py-6 px-6">
+                            <span class="font-medium text-gray-800" th:text="${item.productSnapshot.title}">Product Name</span>
+                        </td>
+
+                        <td class="py-6 px-6">
+                            <span class="text-red-600"
+                                  th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT')} + '₫'">
+                            </span>
+                        </td>
+
+                        <td class="py-6 px-6">
+                            <input type="number"
+                                   th:value="${item.quantity}"
+                                   min="1"
+                                   class="w-20 px-3 py-2 border border-gray-300 text-center focus:outline-none focus:ring-2 focus:ring-red-500" />
+                        </td>
+
+                        <td class="py-6 px-6">
+                            <span class="text-red-600"
+                                  th:text="${#numbers.formatDecimal(item.totalPrice, 0, 'COMMA', 0, 'POINT')} + '₫'">
+                            </span>
+                        </td>
+
+                        <!--                            <td class="py-6 px-6 text-center">-->
+                        <!--                                <button class="text-gray-400 hover:text-red-600 transition-colors">-->
+                        <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"-->
+                        <!--                                         viewBox="0 0 24 24"-->
+                        <!--                                         fill="none" stroke="currentColor" stroke-width="2"-->
+                        <!--                                         stroke-linecap="round" stroke-linejoin="round">-->
+                        <!--                                        <path d="M3 6h18"></path>-->
+                        <!--                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>-->
+                        <!--                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>-->
+                        <!--                                    </svg>-->
+                        <!--                                </button>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+
+                    <tr th:if="${#lists.isEmpty(item)}">
+                        <td colspan="5" class="py-6 text-center text-gray-500 italic">
+                            Giỏ hàng của bạn đang trống.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="mb-8 py-2">
+                <button class="text-center inline-flex w-full justify-center bg-red-600 px-5 py-2 text-white shadow-xs hover:bg-red-500 sm:w-auto cursor-pointer">
+                    Clear
+                </button>
+            </div>
+
+
+            <div class="flex justify-end">
+                <div class="w-full max-w-md">
+                    <div class="bg-white shadow-sm p-4">
+                        <h2 class="font-bold mb-4">Total</h2>
+
+                        <p class="text-red-600 font-bold py-2 text-3xl text-right"
+                            th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + '₫'">
+                            0₫
+                        </p>
+                        <button class="text-center inline-flex w-full justify-center bg-green-600 px-5 py-2 text-white shadow-xs hover:bg-green-500 sm:w-auto cursor-pointer">
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragment/user/footer :: footer}"></footer>
+        <script src="/assets/js/pages/home.js"></script>
+    </th:block>
+</th:block>
+</html>

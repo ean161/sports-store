@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,7 @@ public class ManageCartService {
 
     private final ProductPropertyDataService productPropertyDataService;
 
-    private final ProductPropertyDataSnapshotService productPropertyDataSnapshotService;
+    private final ProductPropertySnapshotService productPropertySnapshotService;
 
     private final ProductMediaService productMediaService;
 
@@ -33,14 +32,14 @@ public class ManageCartService {
                              ProductService productService,
                              ProductSnapshotService productSnapshotService,
                              ProductPropertyDataService productPropertyDataService,
-                             ProductPropertyDataSnapshotService productPropertyDataSnapshotService,
+                             ProductPropertySnapshotService productPropertySnapshotService,
                              ProductMediaService productMediaService) {
         this.itemService = itemService;
         this.userService = userService;
         this.productService = productService;
         this.productSnapshotService = productSnapshotService;
         this.productPropertyDataService = productPropertyDataService;
-        this.productPropertyDataSnapshotService = productPropertyDataSnapshotService;
+        this.productPropertySnapshotService = productPropertySnapshotService;
         this.productMediaService = productMediaService;
     }
 
@@ -50,7 +49,7 @@ public class ManageCartService {
         ProductSnapshot prodSnapshot = toProductSnapshot(prod);
         productSnapshotService.save(prodSnapshot);
 
-        List<ProductPropertyDataSnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot,
+        List<ProductPropertySnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot,
                 extractPropertyData(params));
 
         if (!isValidPropertyList(prod, propSnapshot)) {
@@ -60,6 +59,21 @@ public class ManageCartService {
         propSnapshot.addAll(propSnapshot);
         Item item = new Item("CART", user, prodSnapshot, quantity);
         itemService.save(item);
+    }
+
+    public void remove(HttpServletRequest request, String id) {
+        try {
+            User user = userService.getFromSession(request);
+            Item item = itemService.getById(id);
+            if (!user.getId().equals(item.getUser().getId())) {
+                throw new RuntimeException();
+            }
+
+            itemService.deleteById(id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Invalid cart item to remove");
+        }
     }
 
     private List<ProductPropertyData> extractPropertyData(Map<String, String> params) {
@@ -81,15 +95,17 @@ public class ManageCartService {
     }
 
     @Transactional
-    private List<ProductPropertyDataSnapshot> toPropertyDataSnapshot(ProductSnapshot prodSnapshot,
-                                                                     List<ProductPropertyData> properties) {
-        List<ProductPropertyDataSnapshot> result = new ArrayList<>();
+    private List<ProductPropertySnapshot> toPropertyDataSnapshot(ProductSnapshot prodSnapshot,
+                                                                 List<ProductPropertyData> properties) {
+        List<ProductPropertySnapshot> result = new ArrayList<>();
         for (ProductPropertyData item : properties) {
-            ProductPropertyDataSnapshot snapshot = new ProductPropertyDataSnapshot(item.getId(),
+            ProductPropertySnapshot snapshot = new ProductPropertySnapshot(item.getProductPropertyField().getId(),
+                    item.getId(),
+                    item.getProductPropertyField().getName(),
                     item.getData(),
                     item.getPrice(),
                     prodSnapshot);
-            productPropertyDataSnapshotService.save(snapshot);
+            productPropertySnapshotService.save(snapshot);
             result.add(snapshot);
         }
 
@@ -100,14 +116,14 @@ public class ManageCartService {
         return new ProductSnapshot(prod.getId(), prod.getTitle(), prod.getPrice());
     }
 
-    private boolean isValidPropertyList(Product product, List<ProductPropertyDataSnapshot> propSnapshot) {
+    private boolean isValidPropertyList(Product product, List<ProductPropertySnapshot> propSnapshot) {
         List<ProductPropertyField> fields = product.getProductType().getProductPropertyFields();
         if (fields.size() != propSnapshot.size()) {
             return false;
         }
 
         List<String> duplicateList = new ArrayList<>();
-        for (ProductPropertyDataSnapshot item : propSnapshot) {
+        for (ProductPropertySnapshot item : propSnapshot) {
             String dataId = item.getProductPropertyDataId();
             if (duplicateList.contains(dataId)) {
                 return false;
@@ -122,11 +138,5 @@ public class ManageCartService {
     public List<Item> getUserCart(HttpServletRequest request){
         User user = userService.getFromSession(request);
         return itemService.getByUserAndType(user, "CART");
-    }
-
-    public ProductMedia getItemThumbnail(Item item) {
-        String productSnapshotId = item.getProductSnapshot().getProductId();
-        Product prod = productService.getById(productSnapshotId);
-        return prod.getProductMedia().getFirst();
     }
 }

@@ -36,4 +36,18 @@ public class ManageCartRestController {
             return ResponseEntity.badRequest().body(res.build());
         }
     }
+
+    @PostMapping("/remove")
+    public ResponseEntity<?> remove(HttpServletRequest request, @RequestParam(value = "id") String id) {
+        try {
+            ValidateUtil validate = new ValidateUtil();
+            manageCartService.remove(request, validate.toId(id));
+
+            Response res = new Response();
+            return ResponseEntity.ok(res.build());
+        } catch (Exception e) {
+            Response res = new Response(e.getMessage());
+            return ResponseEntity.badRequest().body(res.build());
+        }
+    }
 }

@@ -12,14 +12,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class ProductPropertyDataSnapshot {
+public class ProductPropertySnapshot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "product_property_data_snapshot_id")
+    @Column(name = "product_property_snapshot_id")
     private String id;
 
+    private String productPropertyFieldId;
+
     private String productPropertyDataId;
+
+    private String name;
 
     private String data;
 
@@ -32,8 +36,15 @@ public class ProductPropertyDataSnapshot {
     @JoinColumn(name = "product_snapshot_id")
     private ProductSnapshot productSnapshot;
 
-    public ProductPropertyDataSnapshot(String productPropertyDataId, String data, Double price, ProductSnapshot productSnapshot) {
+    public ProductPropertySnapshot(String productPropertyFieldId,
+                                   String productPropertyDataId,
+                                   String name,
+                                   String data,
+                                   Double price,
+                                   ProductSnapshot productSnapshot) {
+        this.productPropertyFieldId = productPropertyFieldId;
         this.productPropertyDataId = productPropertyDataId;
+        this.name = name;
         this.data = data;
         this.price = price;
         this.productSnapshot = productSnapshot;
