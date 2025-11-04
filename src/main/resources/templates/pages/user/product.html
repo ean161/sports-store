@@ -59,7 +59,7 @@
                                            class="font-medium text-gray-800 w-16 text-center outline-none
                   [appearance:textfield]
                   [&::-webkit-inner-spin-button]:appearance-none
-                  [&::-webkit-outer-spin-button]:appearance-none" />
+                  [&::-webkit-outer-spin-button]:appearance-none"/>
 
                                     <button type="button" id="increase-btn"
                                             class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-l border-gray-300">
@@ -91,7 +91,8 @@
                         No related products available.
                     </div>
 
-                    <div th:unless="${#lists.isEmpty(sameTypeProducts)}" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6 mt-4">
+                    <div th:unless="${#lists.isEmpty(sameTypeProducts)}"
+                         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6 mt-4">
                         <a th:each="p : ${sameTypeProducts.subList(0, sameTypeProducts.size() < 4 ? sameTypeProducts.size() : 4)}"
                            th:href="@{'/product/' + ${p.id}}"
                            th:data-ptitle="${p.title}"

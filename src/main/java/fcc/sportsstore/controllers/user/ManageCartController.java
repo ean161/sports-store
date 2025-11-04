@@ -53,6 +53,7 @@ public class ManageCartController {
         for (Item item : items) {
             total += item.getTotalPrice();
         }
+
         model.addAttribute("total", total);
         model.addAttribute("item", items);
         model.addAttribute("liveProds", liveProds);

@@ -51,24 +51,24 @@ async function updateQuantity(id, quantity){
 
 function updateItemTotal(id) {
     let row = $(`#item-${id}`);
-    let priceText = row.find(".item-price").text().replace(/[^\d]/g, "");
+    let priceText = row.find(".item-price").text().replace(/[^\d.]/g, "");
     let price = parseFloat(priceText);
 
-    let quantity = parseInt(row.find(`#quantity-${id}`).text()) ;
+    let quantity = parseInt(row.find(`#quantity-${id}`).text());
     let total = price * quantity;
 
-    row.find(".item-total").text(total.toLocaleString("vi-VN") + " ₫");
+    row.find(".item-total").text(total + " ₫");
 }
 
 
 function updateTotal() {
     let sum = 0;
     $(".item-total").each(function () {
-        let totalText = $(this).text().replace(/[^\d]/g, "");
-        sum += parseFloat(totalText) ;
+        let totalText = $(this).text().replace(/[^\d.]/g, "");
+        sum += parseFloat(totalText);
     });
 
-    $(".check-out button span").text(sum.toLocaleString("vi-VN") + " ₫");
+    $(".check-out button span").text(sum + " ₫");
 }
 
 

@@ -6,7 +6,7 @@
 
         <div class="flex min-h-screen max-w-7xl mx-auto px-4 py-6">
             <div th:replace="~{fragment/user/sidebar :: sidebar}"></div>
-            <main class="flex-1 p-8 m-4 bg-gray-50 shadow-sm">
+            <main class="flex-1 p-8 m-4">
                 <th:block th:replace="${content}"></th:block>
             </main>
         </div>

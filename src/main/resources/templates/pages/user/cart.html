@@ -12,8 +12,11 @@
                         <tr class="border-b-2 border-gray-300">
                             <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">Product</th>
                             <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Price</th>
-                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Quantity</th>
-                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Total price</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Quantity
+                            </th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Total
+                                price
+                            </th>
                             <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Action</th>
                         </tr>
                         </thead>
@@ -31,7 +34,7 @@
                                     <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 relative w-24 h-24 flex-shrink-0 border border-gray-200">
                                         <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
                                             <img th:src="${liveProds.get(item) == null ? '/assets/img/wrong.png' : liveProds.get(item).productMedia.first.dir}"
-                                                 class="w-full h-full object-cover" />
+                                                 class="w-full h-full object-cover"/>
                                             <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
                                         </a>
                                     </div>
@@ -42,7 +45,8 @@
                                                class="block font-semibold hover:text-blue-600 transition-colors truncate"></b>
                                         </a>
                                         <div class="text-xs text-gray-600 mt-2 space-y-1">
-                                            <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}" class="flex gap-1">
+                                            <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}"
+                                               class="flex gap-1">
                                                 <span th:text="${prop.name + ':'}" class="font-medium"></span>
                                                 <span th:text="${prop.data}"></span>
                                             </p>
@@ -51,7 +55,10 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                <span class="item-price" th:text="${item.productSnapshot.price} + ' ₫'"></span>
+                                    <span class="item-price"
+                                          th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}">
+                                    </span>
+
                             </td>
                             <td class="py-4 px-6">
                                 <div class="flex items-center justify-center">
@@ -71,7 +78,7 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center text-red-500 font-bold whitespace-nowrap">
-                                <span class="item-total" th:text="${item.totalPrice} + ' ₫'"></span>
+                                <span class="item-total" th:text="${#numbers.formatDecimal(item.totalPrice ,0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <button th:id="${'remove-item-' + item.id}"
