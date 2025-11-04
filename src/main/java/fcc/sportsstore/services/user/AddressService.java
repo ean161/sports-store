@@ -19,16 +19,16 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
     private final ProvinceRepository provinceRepository;
-    private final WardRepository wardsRepository;
+    private final WardRepository wardRepository;
     private final UserService userService;
 
     public AddressService(AddressRepository addressRepository,
                           ProvinceRepository provinceRepository,
-                          WardRepository wardsRepository,
+                          WardRepository wardRepository,
                           UserService userService) {
         this.addressRepository = addressRepository;
         this.provinceRepository = provinceRepository;
-        this.wardsRepository = wardsRepository;
+        this.wardRepository = wardRepository;
         this.userService = userService;
     }
 
@@ -41,16 +41,16 @@ public class AddressService {
                     String phone,
                     String detail,
                     String provinceId,
-                    String wardsId) {
+                    String wardId) {
 
         User caller = userService.getFromSession(request);
 
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
-        Ward wards = wardsRepository.findById(wardsId)
+        Ward ward = wardRepository.findById(wardId)
                 .orElseThrow(() -> new RuntimeException("Invalid ward selected."));
 
-        if (!wards.getProvince().getId().equals(province.getId())) {
+        if (!ward.getProvince().getId().equals(province.getId())) {
             throw new RuntimeException("Selected ward does not belong to the selected province.");
         }
 
@@ -60,7 +60,7 @@ public class AddressService {
         address.setAddressDetail(detail);
         address.setUser(caller);
         address.setProvince(province);
-        address.setWards(wards);
+        address.setWard(ward);
 
         addressRepository.save(address);
     }
@@ -72,7 +72,7 @@ public class AddressService {
                               String phone,
                               String detail,
                               String provinceId,
-                              String wardsId) {
+                              String wardId) {
         User caller = userService.getFromSession(request);
 
         Address address = addressRepository.findById(addressId)
@@ -83,10 +83,10 @@ public class AddressService {
         }
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
-        Ward wards = wardsRepository.findById(wardsId)
+        Ward ward = wardRepository.findById(wardId)
                 .orElseThrow(() -> new RuntimeException("Invalid ward selected."));
 
-        if (!wards.getProvince().getId().equals(province.getId())) {
+        if (!ward.getProvince().getId().equals(province.getId())) {
             throw new RuntimeException("Selected ward does not belong to the selected province.");
         }
 
@@ -94,10 +94,8 @@ public class AddressService {
         address.setPhoneNumber(phone);
         address.setAddressDetail(detail);
         address.setProvince(province);
-        address.setWards(wards);
+        address.setWard(ward);
 
         return addressRepository.save(address);
     }
-
-
 }

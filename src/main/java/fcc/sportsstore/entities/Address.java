@@ -30,8 +30,8 @@ public class Address {
     private Province province;
 
     @ManyToOne
-    @JoinColumn(name = "wards_id")
-    private Ward wards;
+    @JoinColumn(name = "ward_id")
+    private Ward ward;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -40,12 +40,12 @@ public class Address {
     @CreatedDate
     private Long createdAt;
 
-    public Address(String note, String phoneNumber, String addressDetail, Province province, Ward wards, User user) {
+    public Address(String note, String phoneNumber, String addressDetail, Province province, Ward ward, User user) {
         this.note = note;
         this.phoneNumber = phoneNumber;
         this.addressDetail = addressDetail;
         this.province = province;
-        this.wards = wards;
+        this.ward = ward;
         this.user = user;
     }
 }
