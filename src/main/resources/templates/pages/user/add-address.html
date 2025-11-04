@@ -5,7 +5,7 @@
         <div class="flex min-h-screen">
             <div class="flex-1">
                 <form id="add-address-form" class="space-y-4" method="post" th:action="@{/address/add}">
-                    <h2 class="text-xl font-semibold mb-6">Add address</h2>
+                    <h2 class="text-3xl font-semibold mb-6">Add address</h2>
                     <div class="grid grid-cols-2 gap-4">
                         <input name="id" th:value="${session.user.id}" hidden />
                         <div>

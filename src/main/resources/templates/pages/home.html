@@ -167,12 +167,12 @@
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10">
                     <a th:each="prod : ${collection.products.subList(0, collection.products.size() < 4 ? collection.products.size() : 4)}"
-                         th:href="${'/product/' + prod.id}"
-                         th:data-ptitle="${prod.title}"
-                         class="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all relative h-100 hover:scale-102">
+                       th:href="${'/product/' + prod.id}"
+                       th:data-ptitle="${prod.title}"
+                       class="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all relative h-100 hover:scale-102">
                         <img th:src="${prod.productMedia.first.dir}"
                              alt="Product image"
-                             class="w-full h-full object-cover" />
+                             class="w-full h-full object-cover"/>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
                         <div class="absolute inset-0 p-5 flex flex-col justify-end">
                             <p class="text-white font-medium mb-1 text-xl" th:text="${prod.title}"></p>

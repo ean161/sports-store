@@ -5,55 +5,88 @@
         <header th:replace="~{fragment/user/header :: header}"></header>
         <main class="max-w-7xl mx-auto px-4 py-6">
             <section class="mt-12">
-                <h2 class="text-3xl font-bold text-gray-800 text-center mb-8">Your cart</h2>
-                <table class="w-full">
-                    <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total price</th>
-                        <th>&ensp;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="item : ${item}" th:id="${'item-' + item.id}">
-                        <td class="py-3 flex space-x-3 items-center">
-                            <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 relative w-[100px] h-[100px]">
-                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
-                                    <img th:src="${liveProds.get(item) == null ? '/assets/img/wrong.png' : liveProds.get(item).productMedia.first.dir}"
-                                         class="w-full object-cover" />
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
-                                </a>
-                            </div>
-                            <div>
-                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
-                                    <b th:text="${liveProds.get(item) == null ? item.productSnapshot.title : liveProds.get(item).title}"
-                                       th:classappend="${liveProds.get(item) == null ? 'line-through text-gray-500' : ''}"
-                                       class="py-3"></b>
-                                </a>
-                                <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}">
-                                    <span th:text="${prop.name + ': '}"></span>
-                                    <span th:text="${prop.data}"></span>
-                                </p>
-                            </div>
-                        </td>
-                        <td th:text="${item.productSnapshot.price}" class="py-3 pl-3"></td>
-                        <td th:text="${item.quantity}" class="py-3 pl-3"></td>
-                        <td th:text="${item.totalPrice}" class="py-3 pl-3"></td>
-                        <td class="py-3 pl-3">
-                            <button th:id="${'remove-item-' + item.id}"
-                                    class="remove-item-btn text-center bg-red-600 px-5 py-2 text-white shadow-xs hover:bg-red-500 sm:w-auto cursor-pointer">
-                                Remove
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="w-4/5 mx-auto mt-4 flex justify-end">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Your cart</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead>
+                        <tr class="border-b-2 border-gray-300">
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">Product</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Price</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Quantity</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Total price</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        <tr th:if="${#lists.isEmpty(item)}">
+                            <td colspan="5" class="py-4 px-6 text-center text-gray-600 font-medium">
+                                No items available.
+                            </td>
+                        </tr>
+                        <tr th:each="item : ${item}"
+                            th:id="${'item-' + item.id}"
+                            class="hover:bg-gray-50 transition-colors">
+                            <td class="py-4 px-6">
+                                <div class="flex space-x-4 items-center">
+                                    <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 relative w-24 h-24 flex-shrink-0 border border-gray-200">
+                                        <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
+                                            <img th:src="${liveProds.get(item) == null ? '/assets/img/wrong.png' : liveProds.get(item).productMedia.first.dir}"
+                                                 class="w-full h-full object-cover" />
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+                                        </a>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
+                                            <b th:text="${liveProds.get(item) == null ? item.productSnapshot.title : liveProds.get(item).title}"
+                                               th:classappend="${liveProds.get(item) == null ? 'line-through text-gray-500' : 'text-gray-800'}"
+                                               class="block font-semibold hover:text-blue-600 transition-colors truncate"></b>
+                                        </a>
+                                        <div class="text-xs text-gray-600 mt-2 space-y-1">
+                                            <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}" class="flex gap-1">
+                                                <span th:text="${prop.name + ':'}" class="font-medium"></span>
+                                                <span th:text="${prop.data}"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
+                                <span class="item-price" th:text="${item.productSnapshot.price} + ' ₫'"></span>
+                            </td>
+                            <td class="py-4 px-6">
+                                <div class="flex items-center justify-center">
+                                    <div class="inline-flex items-center border border-gray-300 overflow-hidden">
+                                        <button th:id="${item.id}"
+                                                class="decrease-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-r border-gray-300">
+                                            <span class="text-lg">−</span>
+                                        </button>
+                                        <span th:text="${item.quantity}"
+                                              th:id="${'quantity-' + item.id}"
+                                              class="font-medium text-gray-800 min-w-[3rem] text-center px-4"></span>
+                                        <button th:id="${item.id}"
+                                                class="increase-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-l border-gray-300">
+                                            <span class="text-lg">+</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 text-center text-red-500 font-bold whitespace-nowrap">
+                                <span class="item-total" th:text="${item.totalPrice} + ' ₫'"></span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <button th:id="${'remove-item-' + item.id}"
+                                        class="remove-item-btn bg-red-600 px-4 py-2 text-white text-sm font-medium shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="check-out w-full mx-auto mt-4 flex justify-end">
                     <button class="text-center bg-green-600 px-5 py-2 text-white shadow-xs hover:bg-green-500 sm:w-auto cursor-pointer">
                         Checkout
-                        <span th:text="${total}"></span>
+                        <span th:text="${total} + ' ₫'"></span>
                     </button>
                 </div>
             </section>

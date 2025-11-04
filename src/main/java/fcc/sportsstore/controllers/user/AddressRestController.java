@@ -32,8 +32,8 @@ public class AddressRestController {
                     validate.toAddressNote(note),
                     validate.toPhoneNumber(phone),
                     validate.toAddressDetail(detail),
-                    validate.toId(provinceId),
-                    validate.toId(wardsId));
+                    provinceId,
+                    wardsId);
 
             Response res = new Response("Add address successfully.",
                     Map.of("redirect", "/address", "time", 500));

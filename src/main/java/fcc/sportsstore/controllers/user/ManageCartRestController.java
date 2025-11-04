@@ -50,4 +50,18 @@ public class ManageCartRestController {
             return ResponseEntity.badRequest().body(res.build());
         }
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> update(HttpServletRequest request,
+                                    @RequestParam("id") String id,
+                                    @RequestParam("quantity") String quantity){
+
+        try {
+            ValidateUtil validate = new ValidateUtil();
+            manageCartService.updateItemQuantity(request, validate.toId(id), validate.toAmount(quantity));
+            return ResponseEntity.ok(new Response().build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new Response(e.getMessage()).build());
+        }
+    }
 }

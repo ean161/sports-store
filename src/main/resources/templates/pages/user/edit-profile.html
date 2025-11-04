@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:replace="~{layout/profile :: layout(~{::content}, 'Edit profile')}">
     <th:block th:fragment="content">
-        <h2 class="text-xl font-semibold mb-6">Edit profile</h2>
+        <h2 class="text-3xl font-semibold mb-6">Edit profile</h2>
         <form class="space-y-4 max-w-2xl" id="edit-profile-form">
             <input name="id" th:value="${session.user.id}" hidden/>
 

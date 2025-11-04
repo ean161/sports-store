@@ -76,6 +76,18 @@ public class ManageCartService {
         }
     }
 
+    @Transactional
+    public void updateItemQuantity(HttpServletRequest request, String id, Integer quantity) {
+        User user = userService.getFromSession(request);
+        Item item = itemService.getById(id);
+
+        if (!user.getId().equals(item.getUser().getId())) {
+            throw new RuntimeException("Invalid user");
+        }
+
+        item.setQuantity(quantity);
+    }
+
     private List<ProductPropertyData> extractPropertyData(Map<String, String> params) {
         List<ProductPropertyData> result = new ArrayList<>();
         for (String key : params.keySet()) {
@@ -95,8 +107,8 @@ public class ManageCartService {
     }
 
     @Transactional
-    private List<ProductPropertySnapshot> toPropertyDataSnapshot(ProductSnapshot prodSnapshot,
-                                                                 List<ProductPropertyData> properties) {
+    protected List<ProductPropertySnapshot> toPropertyDataSnapshot(ProductSnapshot prodSnapshot,
+                                                                   List<ProductPropertyData> properties) {
         List<ProductPropertySnapshot> result = new ArrayList<>();
         for (ProductPropertyData item : properties) {
             ProductPropertySnapshot snapshot = new ProductPropertySnapshot(item.getProductPropertyField().getId(),
@@ -135,7 +147,7 @@ public class ManageCartService {
         return true;
     }
 
-    public List<Item> getUserCart(HttpServletRequest request){
+    public List<Item> getUserCart(HttpServletRequest request) {
         User user = userService.getFromSession(request);
         return itemService.getByUserAndType(user, "CART");
     }

@@ -2,12 +2,15 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.Product;
 import fcc.sportsstore.entities.ProductCollection;
+import fcc.sportsstore.entities.ProductType;
 import fcc.sportsstore.repositories.ProductRepository;
 import fcc.sportsstore.utils.RandomUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("productService")
 public class ProductService {
@@ -48,4 +51,9 @@ public class ProductService {
     public void save(Product product) {
         productRepository.save(product);
     }
+
+    public List<Product> getByType(ProductType type) {
+        return productRepository.findByProductType(type);
+    }
+
 }

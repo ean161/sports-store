@@ -15,14 +15,8 @@ public class HomeController {
 
     private ProductCollectionService productCollectionService;
 
-//    private CartService cartService;
-
-    private UserService userService;
-
-    public HomeController(ProductCollectionService productCollectionService, UserService userService) {
+    public HomeController(ProductCollectionService productCollectionService) {
         this.productCollectionService = productCollectionService;
-//        this.cartService = cartService;
-        this.userService = userService;
     }
 
     @GetMapping
