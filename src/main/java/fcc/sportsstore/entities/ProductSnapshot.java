@@ -27,6 +27,8 @@ public class ProductSnapshot {
 
     private Double price;
 
+    private boolean isAvailable;
+
     @CreatedDate
     private Long createdAt;
 
@@ -37,6 +39,7 @@ public class ProductSnapshot {
         this.productId = productId;
         this.title = title;
         this.price = price;
+        this.isAvailable = true;
     }
 
     public Double getPrice() {

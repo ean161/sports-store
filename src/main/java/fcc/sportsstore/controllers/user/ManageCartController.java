@@ -1,11 +1,9 @@
 package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.entities.Item;
-import fcc.sportsstore.entities.Product;
-import fcc.sportsstore.entities.ProductPropertyField;
-import fcc.sportsstore.entities.ProductPropertySnapshot;
+import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.ItemService;
 import fcc.sportsstore.services.ProductService;
+import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.ManageCartService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,27 +24,30 @@ public class ManageCartController {
     private final UserService userService;
 
     private final ProductService productService;
+
     private final ItemService itemService;
 
-    public ManageCartController(ManageCartService manageCartService, UserService userService, ProductService productService, ItemService itemService) {
+    private final ProductSnapshotService productSnapshotService;
+
+    public ManageCartController(ManageCartService manageCartService, UserService userService, ProductService productService, ItemService itemService, ProductSnapshotService productSnapshotService) {
         this.manageCartService = manageCartService;
         this.userService = userService;
         this.productService = productService;
         this.itemService = itemService;
+        this.productSnapshotService = productSnapshotService;
     }
 
     @GetMapping
     public String cartPage(Model model, HttpServletRequest request) {
         HashMap<Item, Product> liveProds = new HashMap<>();
-//        HashMap<String, L> liveFields = new HashMap<>();
         List<Item> items = manageCartService.getUserCart(request);
 
         for (Item item : items) {
             liveProds.put(item, itemService.getLiveProduct(item));
+            ProductSnapshot snap = item.getProductSnapshot();
+            snap.setAvailable(productSnapshotService.isAvailable(snap, true));
 
-//            for (ProductPropertySnapshot snapshot : item.getProductSnapshot().getProductPropertySnapshots()) {
-//                liveFields.put(snapshot.getId(), itemService.getLiveField(snapshot));
-//            }
+            System.out.println(item.getProductSnapshot().getTitle() + " " + productSnapshotService.isAvailable(item.getProductSnapshot(), true));
         }
 
         Double total = 0.0;
@@ -57,7 +58,6 @@ public class ManageCartController {
         model.addAttribute("total", total);
         model.addAttribute("item", items);
         model.addAttribute("liveProds", liveProds);
-//        model.addAttribute("liveFields", liveFields);
         return "pages/user/cart";
     }
 }

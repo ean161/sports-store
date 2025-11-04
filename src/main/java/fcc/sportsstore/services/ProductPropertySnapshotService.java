@@ -2,6 +2,7 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.ProductPropertySnapshot;
 import fcc.sportsstore.repositories.ProductPropertySnapshotRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,4 +17,5 @@ public class ProductPropertySnapshotService {
     public void save(ProductPropertySnapshot productPropertySnapshot) {
         productPropertySnapshotRepository.save(productPropertySnapshot);
     }
+
 }

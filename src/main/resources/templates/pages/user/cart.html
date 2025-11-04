@@ -43,6 +43,7 @@
                                             <b th:text="${liveProds.get(item) == null ? item.productSnapshot.title : liveProds.get(item).title}"
                                                th:classappend="${liveProds.get(item) == null ? 'line-through text-gray-500' : 'text-gray-800'}"
                                                class="block font-semibold hover:text-blue-600 transition-colors truncate"></b>
+                                            <span th:if="${!item.productSnapshot.available}">(Changed)</span>
                                         </a>
                                         <div class="text-xs text-gray-600 mt-2 space-y-1">
                                             <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}"
@@ -55,10 +56,9 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                    <span class="item-price"
-                                          th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}">
-                                    </span>
-
+                                <span class="item-price"
+                                      th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}">
+                                </span>
                             </td>
                             <td class="py-4 px-6">
                                 <div class="flex items-center justify-center">
