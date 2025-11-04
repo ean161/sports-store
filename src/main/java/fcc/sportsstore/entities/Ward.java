@@ -13,16 +13,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Wards {
+public class Ward {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "wards_id")
+    @Column(name = "ward_id")
     private String id;
 
     private String name;
 
-    private int vtpReferrenceId;
+    @Column(unique = true)
+    private int vtpId;
 
     @ManyToOne
     @JoinColumn(name = "province_id")
@@ -31,8 +32,9 @@ public class Wards {
     @CreatedDate
     private Long createdAt;
 
-    public Wards(String name, int vtpReferrenceId) {
+    public Ward(String name, int vtpId, Province province) {
         this.name = name;
-        this.vtpReferrenceId = vtpReferrenceId;
+        this.vtpId = vtpId;
+        this.province = province;
     }
 }

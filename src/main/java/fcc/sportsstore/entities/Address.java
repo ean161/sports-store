@@ -1,7 +1,6 @@
 package fcc.sportsstore.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +31,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "wards_id")
-    private Wards wards;
+    private Ward wards;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -41,7 +40,7 @@ public class Address {
     @CreatedDate
     private Long createdAt;
 
-    public Address(String note, String phoneNumber, String addressDetail, Province province, Wards wards, User user) {
+    public Address(String note, String phoneNumber, String addressDetail, Province province, Ward wards, User user) {
         this.note = note;
         this.phoneNumber = phoneNumber;
         this.addressDetail = addressDetail;

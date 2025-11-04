@@ -24,12 +24,18 @@ public class Province {
 
     private String name;
 
-    private Integer vtpReferrenceId;
+    @Column(unique = true)
+    private Integer vtpId;
 
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Wards> awards;
+    private List<Ward> awards;
 
     @CreatedDate
     private Long createdAt;
+
+    public Province(String name, Integer vtpId) {
+        this.name = name;
+        this.vtpId = vtpId;
+    }
 }

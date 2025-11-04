@@ -3,10 +3,10 @@ package fcc.sportsstore.services.user;
 import fcc.sportsstore.entities.Address;
 import fcc.sportsstore.entities.Province;
 import fcc.sportsstore.entities.User;
-import fcc.sportsstore.entities.Wards;
+import fcc.sportsstore.entities.Ward;
 import fcc.sportsstore.repositories.AddressRepository;
 import fcc.sportsstore.repositories.ProvinceRepository;
-import fcc.sportsstore.repositories.WardsRepository;
+import fcc.sportsstore.repositories.WardRepository;
 import fcc.sportsstore.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
     private final ProvinceRepository provinceRepository;
-    private final WardsRepository wardsRepository;
+    private final WardRepository wardsRepository;
     private final UserService userService;
 
     public AddressService(AddressRepository addressRepository,
                           ProvinceRepository provinceRepository,
-                          WardsRepository wardsRepository,
+                          WardRepository wardsRepository,
                           UserService userService) {
         this.addressRepository = addressRepository;
         this.provinceRepository = provinceRepository;
@@ -47,7 +47,7 @@ public class AddressService {
 
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
-        Wards wards = wardsRepository.findById(wardsId)
+        Ward wards = wardsRepository.findById(wardsId)
                 .orElseThrow(() -> new RuntimeException("Invalid ward selected."));
 
         if (!wards.getProvince().getId().equals(province.getId())) {
@@ -83,7 +83,7 @@ public class AddressService {
         }
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
-        Wards wards = wardsRepository.findById(wardsId)
+        Ward wards = wardsRepository.findById(wardsId)
                 .orElseThrow(() -> new RuntimeException("Invalid ward selected."));
 
         if (!wards.getProvince().getId().equals(province.getId())) {
