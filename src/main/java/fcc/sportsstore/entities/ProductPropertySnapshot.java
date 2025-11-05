@@ -19,12 +19,16 @@ public class ProductPropertySnapshot {
     @Column(name = "product_property_snapshot_id")
     private String id;
 
+    // id goc cua field
     private String productPropertyFieldId;
 
+    // id goc cua data
     private String productPropertyDataId;
 
+    // field = Size, Color
     private String name;
 
+    // data = X, M, Red,...
     private String data;
 
     private Double price;

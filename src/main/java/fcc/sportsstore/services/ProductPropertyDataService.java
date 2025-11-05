@@ -31,4 +31,8 @@ public class ProductPropertyDataService {
         return productPropertyDataRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product property data ID not found."));
     }
+
+    public boolean existsByIdAndPrice(String id, Double price) {
+        return productPropertyDataRepository.existsByIdAndPrice(id, price);
+    }
 }
