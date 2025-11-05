@@ -28,6 +28,7 @@
                         </tr>
                         <tr th:each="item : ${item}"
                             th:id="${'item-' + item.id}"
+                            th:data-available="${item.productSnapshot.available}"
                             class="hover:bg-gray-50 transition-colors">
                             <td class="py-4 px-6">
                                 <div class="flex space-x-4 items-center">
@@ -56,29 +57,26 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                <span class="item-price"
-                                      th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}">
-                                </span>
+                                <span class="item-price" th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></span>
                             </td>
                             <td class="py-4 px-6">
                                 <div class="flex items-center justify-center">
                                     <div class="inline-flex items-center border border-gray-300 overflow-hidden">
-                                        <button th:id="${item.id}"
-                                                class="decrease-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-r border-gray-300">
+                                        <button th:id="${item.id}" class="decrease-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-r border-gray-300">
                                             <span class="text-lg">−</span>
                                         </button>
                                         <span th:text="${item.quantity}"
                                               th:id="${'quantity-' + item.id}"
                                               class="font-medium text-gray-800 min-w-[3rem] text-center px-4"></span>
-                                        <button th:id="${item.id}"
-                                                class="increase-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-l border-gray-300">
+                                        <button th:id="${item.id}" class="increase-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-l border-gray-300">
                                             <span class="text-lg">+</span>
                                         </button>
                                     </div>
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center text-red-500 font-bold whitespace-nowrap">
-                                <span class="item-total" th:text="${#numbers.formatDecimal(item.totalPrice ,0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
+                                <span class="item-total"
+                                      th:text="${#numbers.formatDecimal(item.totalPrice ,0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <button th:id="${'remove-item-' + item.id}"
@@ -91,10 +89,10 @@
                     </table>
                 </div>
                 <div class="check-out w-full mx-auto mt-4 flex justify-end">
-                    <button class="text-center bg-green-600 px-5 py-2 text-white shadow-xs hover:bg-green-500 sm:w-auto cursor-pointer">
+                    <a th:href="@{/checkout}" class="text-center bg-green-600 px-5 py-2 text-white shadow-xs hover:bg-green-500 sm:w-auto cursor-pointer">
                         Checkout
                         <span th:text="${total} + ' ₫'"></span>
-                    </button>
+                    </a>
                 </div>
             </section>
         </main>

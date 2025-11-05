@@ -21,18 +21,12 @@ public class ManageCartController {
 
     private final ManageCartService manageCartService;
 
-    private final UserService userService;
-
-    private final ProductService productService;
-
     private final ItemService itemService;
 
     private final ProductSnapshotService productSnapshotService;
 
-    public ManageCartController(ManageCartService manageCartService, UserService userService, ProductService productService, ItemService itemService, ProductSnapshotService productSnapshotService) {
+    public ManageCartController(ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService) {
         this.manageCartService = manageCartService;
-        this.userService = userService;
-        this.productService = productService;
         this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
     }

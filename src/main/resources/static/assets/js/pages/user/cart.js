@@ -32,6 +32,7 @@ $(document).ready(function () {
             updateTotal();
         }
     });
+
     updateTotal();
 });
 
@@ -45,34 +46,24 @@ async function updateQuantity(id, quantity){
     await post("/cart/update", {
         id: id,
         quantity: quantity
-    })
-
+    });
 }
 
 function updateItemTotal(id) {
     let row = $(`#item-${id}`);
-    let priceText = row.find(".item-price").text().replace(/[^\d.]/g, "");
-    let price = parseFloat(priceText);
-
+    let price = parseFloat(row.find(".item-price").text());
     let quantity = parseInt(row.find(`#quantity-${id}`).text());
     let total = price * quantity;
 
     row.find(".item-total").text(total + " ₫");
 }
 
-
 function updateTotal() {
     let sum = 0;
-    $(".item-total").each(function () {
-        let totalText = $(this).text().replace(/[^\d.]/g, "");
+    $("tbody tr[data-available='true']").each(function () {
+        let totalText = $(this).find(".item-total").text();
         sum += parseFloat(totalText);
     });
 
     $(".check-out button span").text(sum + " ₫");
 }
-
-
-
-
-
-
