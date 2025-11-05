@@ -33,7 +33,20 @@ public class AddressService {
     }
 
     public List<Address> getAll(User user) {
-        return addressRepository.findByUser(user);
+        return addressRepository.findByUserOrderByIsDefaultDescCreatedAtDesc(user);
+    }
+
+    public Address getAddressByIdForUser(HttpServletRequest request, String addressId) {
+        User caller = userService.getFromSession(request);
+
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Address not found."));
+
+        if (!address.getUser().getId().equals(caller.getId())) {
+            throw new RuntimeException("You are not allowed to access this address.");
+        }
+
+        return address;
     }
 
     public void add(HttpServletRequest request,
@@ -54,13 +67,14 @@ public class AddressService {
             throw new RuntimeException("Selected ward does not belong to the selected province.");
         }
 
-        Address address = new Address();
-        address.setNote(note);
-        address.setPhoneNumber(phone);
-        address.setAddressDetail(detail);
-        address.setUser(caller);
-        address.setProvince(province);
-        address.setWard(ward);
+        Address address = new Address(
+                note,
+                phone,
+                detail,
+                province,
+                ward,
+                caller
+        );
 
         addressRepository.save(address);
     }
@@ -98,4 +112,55 @@ public class AddressService {
 
         return addressRepository.save(address);
     }
+
+    @Transactional
+    public void setDefault(HttpServletRequest request, String addressId) {
+        User caller = userService.getFromSession(request);
+
+        Address selected = addressRepository.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Address not found."));
+
+        if (!selected.getUser().getId().equals(caller.getId())) {
+            throw new RuntimeException("Address not belongs to you.");
+        }
+
+        Address currentDefault = addressRepository.findFirstByUserAndIsDefaultTrue(caller);
+
+        if (currentDefault != null && !currentDefault.getId().equals(addressId)) {
+            currentDefault.setDefault(false);
+            addressRepository.save(currentDefault);
+        }
+
+        if (!selected.isDefault()) {
+            selected.setDefault(true);
+            addressRepository.save(selected);
+        }
+    }
+
+    public Address getDefault(HttpServletRequest request) {
+        User caller = userService.getFromSession(request);
+        return addressRepository.findFirstByUserAndIsDefaultTrue(caller);
+    }
+
+    public List<Ward> getWardsByProvinceId(String provinceId) {
+        return wardRepository.findByProvinceId(provinceId);
+    }
+    @Transactional
+    public void delete(HttpServletRequest request, String addressId) {
+        User caller = userService.getFromSession(request);
+
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Address not found."));
+
+        if (!address.getUser().getId().equals(caller.getId())) {
+            throw new RuntimeException("You are not allowed to delete this address.");
+        }
+
+        if (address.isDefault()) {
+            throw new RuntimeException("Cannot delete default address. Please set another address as default first.");
+        }
+
+        addressRepository.delete(address);
+    }
+
 }

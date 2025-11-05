@@ -1,9 +1,6 @@
 package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.entities.Item;
-import fcc.sportsstore.entities.Product;
-import fcc.sportsstore.entities.ProductPropertyField;
-import fcc.sportsstore.entities.ProductPropertySnapshot;
+import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.ItemService;
 import fcc.sportsstore.services.ProductService;
 import fcc.sportsstore.services.UserService;
@@ -12,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
@@ -38,15 +36,11 @@ public class ManageCartController {
     @GetMapping
     public String cartPage(Model model, HttpServletRequest request) {
         HashMap<Item, Product> liveProds = new HashMap<>();
-//        HashMap<String, L> liveFields = new HashMap<>();
         List<Item> items = manageCartService.getUserCart(request);
 
         for (Item item : items) {
             liveProds.put(item, itemService.getLiveProduct(item));
 
-//            for (ProductPropertySnapshot snapshot : item.getProductSnapshot().getProductPropertySnapshots()) {
-//                liveFields.put(snapshot.getId(), itemService.getLiveField(snapshot));
-//            }
         }
 
         Double total = 0.0;
@@ -57,7 +51,7 @@ public class ManageCartController {
         model.addAttribute("total", total);
         model.addAttribute("item", items);
         model.addAttribute("liveProds", liveProds);
-//        model.addAttribute("liveFields", liveFields);
         return "pages/user/cart";
     }
+
 }

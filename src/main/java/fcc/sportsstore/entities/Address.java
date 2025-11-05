@@ -40,6 +40,8 @@ public class Address {
     @CreatedDate
     private Long createdAt;
 
+    private boolean isDefault;
+
     public Address(String note, String phoneNumber, String addressDetail, Province province, Ward ward, User user) {
         this.note = note;
         this.phoneNumber = phoneNumber;
