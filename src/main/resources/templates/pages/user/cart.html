@@ -10,12 +10,17 @@
                     <table class="w-full border-collapse">
                         <thead>
                         <tr class="border-b-2 border-gray-300">
-                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">Product</th>
-                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Price</th>
-                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Quantity
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50" colspan="2">
+                                Product
                             </th>
-                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Total
-                                price
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">
+                                Price
+                            </th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">
+                                Quantity
+                            </th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">
+                                Total price
                             </th>
                             <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Action</th>
                         </tr>
@@ -29,7 +34,10 @@
                         <tr th:each="item : ${item}"
                             th:id="${'item-' + item.id}"
                             th:data-available="${item.productSnapshot.available}"
-                            class="hover:bg-gray-50 transition-colors">
+                            class="hover:bg-gray-50 transition-colors item-line">
+                            <td class="py-4 px-6">
+                                <input type="checkbox" th:name="${'select-' + item.id}" class="item-select" />
+                            </td>
                             <td class="py-4 px-6">
                                 <div class="flex space-x-4 items-center">
                                     <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 relative w-24 h-24 flex-shrink-0 border border-gray-200">
@@ -57,7 +65,7 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                <span class="item-price" th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></span>
+                                <span class="item-price" th:text="${item.productSnapshot.price}"></span>
                             </td>
                             <td class="py-4 px-6">
                                 <div class="flex items-center justify-center">
@@ -67,7 +75,7 @@
                                         </button>
                                         <span th:text="${item.quantity}"
                                               th:id="${'quantity-' + item.id}"
-                                              class="font-medium text-gray-800 min-w-[3rem] text-center px-4"></span>
+                                              class="item-quantity font-medium text-gray-800 min-w-[3rem] text-center px-4"></span>
                                         <button th:id="${item.id}" class="increase-btn w-10 h-10 flex items-center justify-center hover:bg-gray-100 text-gray-600 transition-colors border-l border-gray-300">
                                             <span class="text-lg">+</span>
                                         </button>
@@ -75,8 +83,7 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6 text-center text-red-500 font-bold whitespace-nowrap">
-                                <span class="item-total"
-                                      th:text="${#numbers.formatDecimal(item.totalPrice ,0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
+                                <span class="item-total"></span>
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <button th:id="${'remove-item-' + item.id}"
@@ -84,14 +91,14 @@
                                     Remove
                                 </button>
                             </td>
-                        </tr>
+                        </td>
                         </tbody>
                     </table>
                 </div>
                 <div class="check-out w-full mx-auto mt-4 flex justify-end">
                     <a th:href="@{/checkout}" class="text-center bg-green-600 px-5 py-2 text-white shadow-xs hover:bg-green-500 sm:w-auto cursor-pointer">
                         Checkout
-                        <span th:text="${total} + ' ₫'"></span>
+                        <span id="totalCart"></span>
                     </a>
                 </div>
             </section>

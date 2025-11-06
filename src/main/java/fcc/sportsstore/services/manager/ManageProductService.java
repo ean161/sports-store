@@ -55,7 +55,7 @@ public class ManageProductService {
     public void edit(String id,
                      String title,
                      String description,
-                     Double price,
+                     Integer price,
                      String productType,
                      String collectionName,
                      String[] fieldIds,
@@ -76,7 +76,7 @@ public class ManageProductService {
     }
 
     @Transactional
-    public void add(String title, String description, Double price, String productType, String collectionName, String image,
+    public void add(String title, String description, Integer price, String productType, String collectionName, String image,
                     String[] fieldIds,
                     String[] dataIds,
                     String[] datas,
@@ -124,7 +124,7 @@ public class ManageProductService {
                 String field = validate.toId(fieldIds[i]); // field id
                 String id = dataIds[i]; // data id
                 String data = validate.toProductPropertyData(datas[i]); // data val
-                Double price = validate.toPrice(prices[i]); // price of data
+                Integer price = validate.toPrice(prices[i]); // price of data
 
                 if (!productPropertyFieldService.existsById(field)) {
                     throw new RuntimeException("Invalid property field.");

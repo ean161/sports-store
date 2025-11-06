@@ -29,7 +29,7 @@ public class Product {
     @Column(length = 500)
     private String description;
 
-    private Double price;
+    private Integer price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -49,7 +49,7 @@ public class Product {
     @CreatedDate
     private Long createdAt;
 
-    public Product(String title, String description, Double price, ProductType productType, ProductCollection productCollection) {
+    public Product(String title, String description, Integer price, ProductType productType, ProductCollection productCollection) {
         this.title = title;
         this.description = description;
         this.price = price;

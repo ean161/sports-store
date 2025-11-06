@@ -33,7 +33,7 @@ public class ProductPropertyData {
 
     private String data;
 
-    private Double price;
+    private Integer price;
 
     @ManyToOne
     @JoinColumn(name = "product_quantity_id")
@@ -43,7 +43,7 @@ public class ProductPropertyData {
     @CreatedDate
     private Long createdAt;
 
-    public ProductPropertyData(ProductPropertyField productPropertyField, Product product, String data, Double price) {
+    public ProductPropertyData(ProductPropertyField productPropertyField, Product product, String data, Integer price) {
         this.productPropertyField = productPropertyField;
         this.product = product;
         this.data = data;

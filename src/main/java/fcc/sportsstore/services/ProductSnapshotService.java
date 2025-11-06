@@ -33,7 +33,7 @@ public class ProductSnapshotService {
         productSnapshotRepository.save(productSnapshot);
     }
 
-    public boolean isAvailable(ProductSnapshot snapshot, boolean hasPriceCheck) {
+    public boolean isAvailable(ProductSnapshot snapshot) {
         if (!productService.existsById(snapshot.getProductId())) {
             return false;
         }
@@ -42,12 +42,6 @@ public class ProductSnapshotService {
         for (ProductPropertySnapshot prop : snapshot.getProductPropertySnapshots()) {
             if (!productPropertyDataService.existsById(prop.getProductPropertyDataId())) {
                 return false;
-            }
-
-            if (hasPriceCheck) {
-                if (!productPropertyDataService.existsByIdAndPrice(prop.getProductPropertyDataId(), prop.getPrice())) {
-                    return false;
-                }
             }
 
             snapFields.add(prop.getProductPropertyFieldId());
@@ -62,5 +56,22 @@ public class ProductSnapshotService {
         }
 
         return true;
+    }
+
+    public void refreshPrice(ProductSnapshot snapshot) {
+        if (!isAvailable(snapshot)) {
+            return;
+        }
+
+        for (ProductPropertySnapshot prop : snapshot.getProductPropertySnapshots()) {
+            Integer currentDataPrice = productPropertyDataService.getById(prop.getProductPropertyDataId()).getPrice();
+            prop.setPrice(currentDataPrice);
+
+            productPropertySnapshotService.save(prop);
+        }
+
+        Integer currentProdPrice = productService.getById(snapshot.getProductId()).getPrice();
+        snapshot.setPrice(currentProdPrice);
+        productSnapshotRepository.save(snapshot);
     }
 }

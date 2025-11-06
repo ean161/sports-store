@@ -32,7 +32,7 @@ public class ProductPropertyDataService {
                 .orElseThrow(() -> new RuntimeException("Product property data ID not found."));
     }
 
-    public boolean existsByIdAndPrice(String id, Double price) {
+    public boolean existsByIdAndPrice(String id, Integer price) {
         return productPropertyDataRepository.existsByIdAndPrice(id, price);
     }
 }

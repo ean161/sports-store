@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ProductPropertyDataRepository extends JpaRepository<ProductPropertyData, String> {
 
-    boolean existsByIdAndPrice(String id, Double price);
+    boolean existsByIdAndPrice(String id, Integer price);
 }

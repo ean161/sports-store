@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
+
 @Entity
 @Table(name = "address")
 @Getter @Setter
@@ -36,6 +38,9 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pack> packs;
 
     @CreatedDate
     private Long createdAt;

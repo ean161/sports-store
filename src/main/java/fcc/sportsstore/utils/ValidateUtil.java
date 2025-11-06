@@ -145,8 +145,8 @@ public class ValidateUtil {
         return toStringForm("Description", input, 3, 500, true, true, true, true);
     }
 
-    public Double toPrice(String input) {
-        return toDoubleForm("Price", input, 0f, Double.MAX_VALUE);
+    public Integer toPrice(String input) {
+        return toIntegerForm("Price", input, 0, Integer.MAX_VALUE);
     }
 
     public String toProductTypeName(String input) {

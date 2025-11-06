@@ -8,7 +8,7 @@
                 <div class="overflow-x-auto">
 <!--                    <section class="bg-white shadow-sm bg-gray-50 mb-4">-->
 <!--                        <div class="px-6 py-4 shadow-sm bg-gray-3">-->
-<!--                            <h2 class="text-lg font-semibold text-gray-800 flex items-center">-->
+<!--                            <h2 class=" font-semibold text-gray-800 flex items-center">-->
 <!--                                <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">-->
 <!--                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>-->
 <!--                                </svg>-->
@@ -22,11 +22,11 @@
                         <table class="w-full border-collapse">
                             <thead>
                             <tr class="border-b-2 border-gray-300">
-                                <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">Product
+                                <th class="py-4 px-6 text-left  font-semibold text-gray-700 bg-gray-50">Product
                                 </th>
-                                <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Price
+                                <th class="py-4 px-6 text-center  font-semibold text-gray-700 bg-gray-50">Price
                                 </th>
-                                <th class="py-4 px-6 text-center text-sm font-semibold text-gray-700 bg-gray-50">Total
+                                <th class="py-4 px-6 text-center  font-semibold text-gray-700 bg-gray-50">Total
                                     price
                                 </th>
                             </tr>
@@ -41,7 +41,7 @@
                                 th:id="${'item-' + item.id}"
                                 th:data-available="${item.productSnapshot.available}"
                                 class="hover:bg-gray-50 transition-colors"
-                                th:if="${liveProds.get(item) != null}">
+                                th:if="${item.productSnapshot.available}">
                                 <td class="py-4 px-6">
                                     <div class="flex space-x-4 items-center">
                                         <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 relative w-24 h-24 flex-shrink-0 border border-gray-200">
@@ -52,11 +52,10 @@
                                             </a>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
-                                                <b th:text="${liveProds.get(item) == null ? item.productSnapshot.title : liveProds.get(item).title}"
-                                                   th:classappend="${liveProds.get(item) == null ? 'line-through text-gray-500' : 'text-gray-800'}"
+                                            <a th:href="${'/product/' + liveProds.get(item).id}">
+                                                <b th:text="${liveProds.get(item).title}"
+                                                   th:classappend="text-gray-800"
                                                    class="block font-semibold hover:text-blue-600 transition-colors truncate"></b>
-                                                <span th:if="${!item.productSnapshot.available}">(Changed)</span>
                                             </a>
                                             <div class="text-xs text-gray-600 mt-2 space-y-1">
                                                 <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}"
@@ -69,103 +68,106 @@
                                     </div>
                                 </td>
                                 <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                    <span class="item-price" th:text="${#numbers.formatDecimal(item.productSnapshot.price, 0, 'COMMA', 0, 'POINT') + ' ₫'}"></span>
+                                    <span class="item-price" th:text="${item.productSnapshot.price}"></span>
                                     <span> x</span>
                                     <span th:text="${item.quantity}"
                                           th:id="${'quantity-' + item.id}"
                                           class="font-medium text-gray-800 min-w-[3rem] text-center"></span>
                                 </td>
-                                <td class="py-4 px-6 text-center text-red-500 font-bold whitespace-nowrap">
+                                <td class="py-4 px-6 text-end text-red-500 font-bold whitespace-nowrap">
                                     <span class="item-total"
-                                          th:text="${#numbers.formatDecimal(item.totalPrice ,0, 'COMMA', 0, 'POINT')} + ' ₫'"></span>
+                                          th:text="${item.totalPrice}"></span>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </section>
 
-                    <section class="bg-white">
-                        <div class="px-6 py-4 border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                                              clip-rule="evenodd"/>
-                                    </svg>
-                                    <span class="text-gray-800">Voucher</span>
+                    <section class="bg-white shadow-sm overflow-hidden mx-auto">
+<!--                        <div class="px-6 py-5 border-b border-gray-200">-->
+<!--                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">-->
+<!--                                <div class="flex items-center space-x-2">-->
+<!--                                    <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">-->
+<!--                                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>-->
+<!--                                        <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>-->
+<!--                                    </svg>-->
+<!--                                    <span class="text-gray-900 font-medium">Voucher Code</span>-->
+<!--                                </div>-->
+<!--                                <div class="flex items-center gap-2 flex-1 sm:flex-none sm:w-96">-->
+<!--                                    <input-->
+<!--                                            id="voucher-code"-->
+<!--                                            name="voucher-code"-->
+<!--                                            type="text"-->
+<!--                                            placeholder="Enter voucher code"-->
+<!--                                            class="flex-1 px-4 py-2  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">-->
+<!--                                    <button-->
+<!--                                            id="apply-voucher-btn"-->
+<!--                                            type="button"-->
+<!--                                            class="px-5 py-2  font-medium text-gray-900 bg-white border border-gray-300 rounded-md hover:bg-gray-900 hover:text-white hover:border-gray-900 transition duration-200 whitespace-nowrap">-->
+<!--                                        Apply-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-6 py-6 bg-gray-50">
+                            <div class="space-y-2">
+                                <h3 class=" font-semibold text-gray-900 mb-3">Delivery Address</h3>
+
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white border border-gray-200"
+                                     th:if="${defaultAddress == null}">
+                                    <p class="text-gray-500 ">You haven't added any address yet.</p>
+                                    <a href="/address" class="px-4 py-2  font-medium text-center text-gray-900 bg-white border border-gray-300 hover:bg-gray-900 hover:text-white transition duration-200 whitespace-nowrap">
+                                        Update now
+                                    </a>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 flex-1
-                                       outline-gray-50 has-[input:focus-within]:outline-gray-600 outline-gray-300 has-[input:focus-within]:outline-indigo-600">
-                                        <input id="voucher-code" name="voucher-code" type="text"
-                                               placeholder="Enter voucher code"
-                                               class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
-                                    </div>
 
-                                    <button id="apply-voucher-btn"
-                                            type="button"
-                                            class="text-center inline-flex w-full justify-center border-gray-300 border-1 rounded-md px-5 py-2 text-sm font-semibold text-black hover:text-white shadow-xs hover:bg-black sm:w-auto cursor-pointer">
-                                        Apply
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 px-6 py-4 bg-gray-50">
-                            <div>
-                                <div class="flex justify-between">
-                                    <div class="w-full flex justify-between "
-                                         th:if="${#lists.isEmpty(listAddress) || defaultAddress == null}">
-                                        <p class="text-gray-500 italic text-sm p-2">You haven't added any address
-                                            yet.</p>
-                                        <a href="/address"
-                                           class="justify-end text-center inline-flex w-full justify-center border-gray-300 border-1 rounded-md px-5 py-2 font-semibold text-black hover:text-white shadow-xs hover:bg-black sm:w-auto cursor-pointer">Update
-                                            now</a>
-                                    </div>
-                                    <div>
-                                <span class="font-semibold text-gray-800"
-                                      th:if="${session.user != null and defaultAddress != null}"
-                                      th:text="${session.user.fullName} + ' | ' + ${defaultAddress.phoneNumber}">
+                                <div class="p-4 bg-white border border-gray-200"
+                                     th:if="${defaultAddress != null}">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <span class="font-semibold text-gray-900"
+                                              th:text="${session.user.fullName} + ' | ' + ${defaultAddress.phoneNumber}">
                                         </span>
-                                        <p class="text-gray-600 text-sm mt-2"
-                                           th:text="${defaultAddress != null ? defaultAddress.addressDetail + ', ' + defaultAddress.province.name + ', ' + defaultAddress.ward.name : ''}">
-                                        </p>
                                     </div>
+                                    <p class="text-gray-600 "
+                                       th:text="${defaultAddress.addressDetail + ', ' + defaultAddress.province.name + ', ' + defaultAddress.ward.name}">
+                                    </p>
                                 </div>
                             </div>
-                            <div>
-                                <div class="space-y-3">
-                                    <div class="payment flex justify-between text-sm">
-                                        <p class="text-gray-600">Total cost of goods</p>
-                                        <span class="text-gray-800" th:text="${total} + ' ₫'"></span>
+
+                            <div class="space-y-3">
+                                <h3 class=" font-semibold text-gray-900 mb-3">Payment Summary</h3>
+                                <div class="p-4 bg-white border border-gray-200 space-y-3">
+                                    <div class="flex justify-between ">
+                                        <span class="text-gray-600">Total cost of goods</span>
+                                        <span class="text-gray-900 font-medium" th:text="${total} + '₫'"></span>
                                     </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600">Tổng tiền phí vận chuyển</span>
-                                        <span class="text-gray-800">30.000₫</span>
+                                    <div class="flex justify-between ">
+                                        <span class="text-gray-600">Shipping fee</span>
+                                        <span class="text-gray-900 font-medium">30.000₫</span>
                                     </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600">Total shipping cost</span>
-                                        <span class="text-red-600">-₫6.000</span>
+                                    <div class="flex justify-between ">
+                                        <span class="text-gray-600">Discount</span>
+                                        <span class="text-red-600 font-medium">-6.000₫</span>
                                     </div>
-                                    <div class="payment flex justify-between text-lg font-semibold pt-3 border-t border-gray-300">
-                                        <p class="text-gray-800">Total payment</p>
-                                        <span class="text-red-600 text-2xl" th:text="${total} + ' ₫'"></span>
+                                    <div class="pt-3 border-t border-gray-200">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-900 font-semibold">Total payment</span>
+                                            <span class="text-red-600 text-2xl font-bold" th:text="${total} + '₫'">524.000₫</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="py-4 border-t border-gray-200">
-                            <div class="flex items-center justify-between">
+                        <div class="px-6 py-5 border-t border-gray-200 bg-white">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                                 <p class="text-xs text-gray-600">
                                     Clicking "Order" means you agree to abide by
-                                    <a href="#" class="text-blue-600">Sports store Terms</a>
+                                    <a href="#" class="text-blue-600 hover:text-blue-700 underline">Sports Store Terms</a>
                                 </p>
-                                <button class="text-center bg-red-600 px-5 py-2 text-white shadow-xs hover:bg-red-500 sm:w-auto cursor-pointer">
-                                    Order
+                                <button class="px-8 py-3  font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm hover:shadow transition duration-200 whitespace-nowrap">
+                                    Place Order
                                 </button>
                             </div>
                         </div>

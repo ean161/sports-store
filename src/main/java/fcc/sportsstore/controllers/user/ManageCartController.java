@@ -37,19 +37,12 @@ public class ManageCartController {
         List<Item> items = manageCartService.getUserCart(request);
 
         for (Item item : items) {
+            productSnapshotService.refreshPrice(item.getProductSnapshot());
             liveProds.put(item, itemService.getLiveProduct(item));
             ProductSnapshot snap = item.getProductSnapshot();
-            snap.setAvailable(productSnapshotService.isAvailable(snap, true));
-
-            System.out.println(item.getProductSnapshot().getTitle() + " " + productSnapshotService.isAvailable(item.getProductSnapshot(), true));
+            snap.setAvailable(productSnapshotService.isAvailable(snap));
         }
 
-        Double total = 0.0;
-        for (Item item : items) {
-            total += item.getTotalPrice();
-        }
-
-        model.addAttribute("total", total);
         model.addAttribute("item", items);
         model.addAttribute("liveProds", liveProds);
         return "pages/user/cart";

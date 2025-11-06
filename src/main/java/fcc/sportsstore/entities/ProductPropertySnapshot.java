@@ -31,7 +31,7 @@ public class ProductPropertySnapshot {
     // data = X, M, Red,...
     private String data;
 
-    private Double price;
+    private Integer price;
 
     @CreatedDate
     private Long createdAt;
@@ -44,7 +44,7 @@ public class ProductPropertySnapshot {
                                    String productPropertyDataId,
                                    String name,
                                    String data,
-                                   Double price,
+                                   Integer price,
                                    ProductSnapshot productSnapshot) {
         this.productPropertyFieldId = productPropertyFieldId;
         this.productPropertyDataId = productPropertyDataId;

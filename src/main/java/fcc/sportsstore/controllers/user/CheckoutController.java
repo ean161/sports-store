@@ -39,32 +39,21 @@ public class CheckoutController {
 
     @GetMapping
     public String checkoutPage(Model model,  HttpServletRequest request, HttpSession session){
-        User user = (User) session.getAttribute("user");
-        User caller = userService.getFromSession(request);
         Address defaultAddress = addressService.getDefault(request);
-        List<Address> listAddress = addressService.getAll(caller);
 
         HashMap<Item, Product> liveProds = new HashMap<>();
         List<Item> items = manageCartService.getUserCart(request);
 
         for (Item item : items) {
+            productSnapshotService.refreshPrice(item.getProductSnapshot());
             liveProds.put(item, itemService.getLiveProduct(item));
             ProductSnapshot snap = item.getProductSnapshot();
-            snap.setAvailable(productSnapshotService.isAvailable(snap, true));
-
-            System.out.println(item.getProductSnapshot().getTitle() + " " + productSnapshotService.isAvailable(item.getProductSnapshot(), true));
+            snap.setAvailable(productSnapshotService.isAvailable(snap));
         }
 
-        Double total = 0.0;
-        for (Item item : items) {
-            total += item.getTotalPrice();
-        }
-
-        model.addAttribute("defaultAddress", defaultAddress);
-        model.addAttribute("listAddress", listAddress);
-        model.addAttribute("total", total);
         model.addAttribute("item", items);
         model.addAttribute("liveProds", liveProds);
+        model.addAttribute("defaultAddress", defaultAddress);
         return "pages/user/checkout";
     }
 }

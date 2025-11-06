@@ -37,7 +37,9 @@ public class Item {
 
     private Integer quantity;
 
-    private Double totalPrice;
+    @ManyToOne
+    @JoinColumn(name = "pack_id")
+    private Pack pack;
 
     @CreatedDate
     private Long createdAt;
@@ -49,7 +51,7 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public Double getTotalPrice() {
+    public Integer getTotalPrice() {
         return productSnapshot.getPrice() * quantity;
     }
 }

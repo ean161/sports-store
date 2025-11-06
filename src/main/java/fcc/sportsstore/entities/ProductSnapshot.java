@@ -25,7 +25,7 @@ public class ProductSnapshot {
 
     private String title;
 
-    private Double price;
+    private Integer price;
 
     private boolean isAvailable;
 
@@ -35,15 +35,15 @@ public class ProductSnapshot {
     @OneToMany(mappedBy = "productSnapshot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductPropertySnapshot> productPropertySnapshots;
 
-    public ProductSnapshot(String productId, String title, Double price) {
+    public ProductSnapshot(String productId, String title, Integer price) {
         this.productId = productId;
         this.title = title;
         this.price = price;
         this.isAvailable = true;
     }
 
-    public Double getPrice() {
-        Double total = this.price;
+    public Integer getPrice() {
+        Integer total = this.price;
         for (ProductPropertySnapshot item : productPropertySnapshots) {
             total += item.getPrice();
         }
