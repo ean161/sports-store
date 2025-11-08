@@ -3,6 +3,7 @@ package fcc.sportsstore.controllers.user;
 import fcc.sportsstore.entities.Address;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.ProductCollectionService;
+import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.AddressService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -16,14 +17,18 @@ public class ProfileController {
 
     private final AddressService addressService;
 
-    public ProfileController(AddressService addressService) {
-        this.addressService = addressService;
-    }
-    @GetMapping
-    public String profilePage(Model model, HttpServletRequest request, HttpSession session) {
+    private final UserService userService;
 
-        User user = (User) session.getAttribute("user");
-        Address defaultAddress = addressService.getDefault(request);
+    public ProfileController(AddressService addressService, UserService userService) {
+        this.addressService = addressService;
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public String profilePage(Model model, HttpServletRequest request) {
+        User user = userService.getFromSession(request);
+        Address defaultAddress = addressService.getDefault(user);
+
         model.addAttribute("defaultAddress", defaultAddress);
         return "pages/user/profile";
     }

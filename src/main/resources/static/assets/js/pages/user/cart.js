@@ -3,10 +3,11 @@ var selectedItem = [];
 $(document).ready(function () {
     $(".item-select").on("click", function () {
         let target = $(this)[0].name;
-        if (selectedItem.indexOf(target) == -1) {
+        console.log(selectedItem.indexOf(target));
+        if (selectedItem.indexOf(target) === -1) {
             selectedItem.push(target);
         } else {
-            selectedItem.unshift(target);
+            selectedItem = selectedItem.filter(item => item !== target);
         }
 
         console.log(selectedItem);
@@ -51,6 +52,13 @@ $(document).ready(function () {
     $(".selected-cart-item").on("click", async function () {
         updateTotal();
     });
+
+    // $("#select-item-to-checkout-form").on("submit", async function () {
+    //     event.preventDefault();
+    //     var data = $(this).serialize();
+    //
+    //     console.log(data);
+    // });
 
     updateTotal();
 });

@@ -23,7 +23,7 @@ public class Item {
 
     /**
      * CART: Pending for payment, in cart
-     * PAID: After payment successfully
+     * ORDER: Order processed item
      */
     private String type;
 

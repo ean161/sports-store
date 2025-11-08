@@ -27,7 +27,7 @@ public class ValidateUtil {
         if (length < minLength) {
             throw new IllegalArgumentException(String.format("%s must be at least %d characters.", title, minLength));
         } else if (length > maxLength) {
-            throw new IllegalArgumentException(String.format("%s must be equals or less than %d characters.", title, minLength));
+            throw new IllegalArgumentException(String.format("%s must be equals or less than %d characters.", title, maxLength));
         }
 
         StringBuilder regex = new StringBuilder();

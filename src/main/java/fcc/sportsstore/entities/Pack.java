@@ -21,7 +21,12 @@ public class Pack {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     /**
+     * PENDING_PAYMENT: Waiting for payment
      * PENDING_APPROVAL: Waiting for staff confirm
      * PENDING_ORDER: Preparing the pack
      * IN_TRANSIT: Moved to delivery
@@ -37,12 +42,11 @@ public class Pack {
 
     /**
      * DRAFT: Waiting for online banking transaction
-     * NOT_YET: Not pay yet
      * PAID: Paid pack
      */
     private String paymentStatus;
 
-    private Double shippingFee;
+    private Integer shippingFee;
 
     @OneToMany(mappedBy = "pack", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items;
@@ -53,4 +57,14 @@ public class Pack {
 
     @CreatedDate
     private Long createdAt;
+
+    public Pack(User user, String status, String paymentType, Integer shippingFee, List<Item> items, Address address) {
+        this.user = user;
+        this.status = status;
+        this.paymentType = paymentType;
+        this.paymentStatus = "NOT_PAY_YET";
+        this.shippingFee = shippingFee;
+        this.items = items;
+        this.address = address;
+    }
 }

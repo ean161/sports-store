@@ -147,8 +147,7 @@ public class ManageCartService {
         return true;
     }
 
-    public List<Item> getUserCart(HttpServletRequest request) {
-        User user = userService.getFromSession(request);
+    public List<Item> getUserCart(User user) {
         return itemService.getByUserAndType(user, "CART");
     }
 }

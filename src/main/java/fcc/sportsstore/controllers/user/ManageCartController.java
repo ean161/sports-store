@@ -25,16 +25,20 @@ public class ManageCartController {
 
     private final ProductSnapshotService productSnapshotService;
 
-    public ManageCartController(ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService) {
+    private final UserService userService;
+
+    public ManageCartController(ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService, UserService userService) {
         this.manageCartService = manageCartService;
         this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
+        this.userService = userService;
     }
 
     @GetMapping
     public String cartPage(Model model, HttpServletRequest request) {
         HashMap<Item, Product> liveProds = new HashMap<>();
-        List<Item> items = manageCartService.getUserCart(request);
+        User user = userService.getFromSession(request);
+        List<Item> items = manageCartService.getUserCart(user);
 
         for (Item item : items) {
             productSnapshotService.refreshPrice(item.getProductSnapshot());

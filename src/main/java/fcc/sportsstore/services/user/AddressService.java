@@ -137,9 +137,8 @@ public class AddressService {
         }
     }
 
-    public Address getDefault(HttpServletRequest request) {
-        User caller = userService.getFromSession(request);
-        return addressRepository.findFirstByUserAndIsDefaultTrue(caller);
+    public Address getDefault(User user) {
+        return addressRepository.findFirstByUserAndIsDefaultTrue(user);
     }
 
     public List<Ward> getWardsByProvinceId(String provinceId) {

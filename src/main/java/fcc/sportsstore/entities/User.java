@@ -51,6 +51,10 @@ public class User {
     @JsonIgnore
     private List<Item> items;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Pack> packs;
+
     @CreatedDate
     private Long createdAt;
 
