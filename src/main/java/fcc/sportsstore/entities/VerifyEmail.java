@@ -6,6 +6,9 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity
 @Table(name = "verify_email")
 @Getter
@@ -53,5 +56,11 @@ public class VerifyEmail {
         Long nowTimestamp = time.getCurrentTimestamp();
 
         return nowTimestamp > expiredAt;
+    }
+
+    public String getCreatedAt() {
+        Date date = new Date(createdAt);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        return formatter.format(date);
     }
 }

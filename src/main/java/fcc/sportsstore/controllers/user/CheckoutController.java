@@ -2,6 +2,7 @@ package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.ItemService;
+import fcc.sportsstore.services.PackService;
 import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.AddressService;
@@ -35,17 +36,20 @@ public class CheckoutController {
 
     private final UserService userService;
 
-    public CheckoutController(CheckoutService checkoutService, AddressService addressService, ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService, UserService userService) {
+    private final PackService packService;
+
+    public CheckoutController(CheckoutService checkoutService, AddressService addressService, ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService, UserService userService, PackService packService) {
         this.checkoutService = checkoutService;
         this.addressService = addressService;
         this.manageCartService = manageCartService;
         this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
         this.userService = userService;
+        this.packService = packService;
     }
 
     @GetMapping
-    public String checkoutPage(Model model, HttpServletRequest request){
+    public String checkoutPage(Model model, HttpServletRequest request) {
         return "redirect:/cart";
     }
 
@@ -56,7 +60,6 @@ public class CheckoutController {
         if (params == null || params.keySet().size() == 0) {
             return "redirect:/cart";
         }
-
 
         Integer cartTotal = 0;
         User user = userService.getFromSession(request);
@@ -79,6 +82,7 @@ public class CheckoutController {
         }
 
         model.addAttribute("item", items);
+        model.addAttribute("shippingFee", checkoutService.getShippingFee());
         model.addAttribute("liveProds", liveProds);
         model.addAttribute("cartTotal", cartTotal);
         model.addAttribute("defaultAddress", defaultAddress);
@@ -105,9 +109,23 @@ public class CheckoutController {
     }
 
     @GetMapping("/pay/{orderId}")
-    public String payPage(@PathVariable(value = "orderId") String id){
-        // Man hinh QR
-        // id = id Item
-        return null;
+    public String payPage(@PathVariable(value = "orderId") String id,
+                          Model model,
+                          HttpServletRequest request) {
+        User user = userService.getFromSession(request);
+        Address defaultAddress = addressService.getDefault(user);
+
+        Pack pack = packService.getByIdAndUserAndStatus(id, user, "PENDING_PAYMENT");
+        if (pack == null) {
+            return "redirect:/cart";
+        }
+
+        Integer cartTotal = pack.getTotalPrice();
+        model.addAttribute("shippingFee", checkoutService.getShippingFee());
+        model.addAttribute("defaultAddress", defaultAddress);
+        model.addAttribute("pack", pack);
+        model.addAttribute("userEmail", user.getEmail());
+        model.addAttribute("cartTotal", cartTotal);
+        return "pages/user/online-banking";
     }
 }

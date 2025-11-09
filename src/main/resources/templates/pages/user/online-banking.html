@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/base :: layout(~{::content}, 'Home')}">
+    <th:block th:fragment="content">
+        <header th:replace="~{fragment/user/header :: header}"></header>
+        <main class="max-w-7xl mx-auto px-4 py-6">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white shadow-md p-8">
+                        <div class="mb-6">
+                            <!--                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">-->
+                            <!--                    <p class="text-green-700 font-medium">-->
+                            <!--                        Cảm ơn bạn. Đơn hàng của bạn đã được nhận.-->
+                            <!--                    </p>-->
+                            <!--                </div>-->
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex">
+                                    <span class="w-40 font-medium">Order Code:</span>
+                                    <span class="font-semibold" th:text="${pack.sign}" id="pack-sign"></span>
+                                </li>
+                                <li class="flex">
+                                    <span class="w-40 font-medium">Date:</span>
+                                    <span th:text="${#dates.format(pack.createdAt, 'dd/MM/yyyy')}"></span>
+                                </li>
+                                <li class="flex">
+                                    <span class="w-40 font-medium">Email:</span>
+                                    <span class="text-blue-600"  th:text="${session.user.email.address}"></span>
+                                </li>
+                                <li class="flex">
+                                    <span class="w-40 font-medium">Address:</span>
+                                    <span class="flex-1 text-blue-600" th:text="${defaultAddress.addressDetail + ', ' + defaultAddress.province.name + ', ' + defaultAddress.ward.name}"></span>
+                                </li>
+                                <li class="flex">
+                                    <span class="w-40 font-medium">Total:</span>
+                                    <span class="font-bold text-lg"  th:text="${cartTotal}"></span>
+                                </li>
+                                <li class="flex">
+                                    <span class="w-40 font-medium">Pay method:</span>
+                                    <span>Online Banking (Scan QR)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <hr class="my-6 border-gray-200">
+
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                                Bank transfer information
+                            </h2>
+
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                                <p class="text-red-600 font-medium text-sm">
+                                    Please check the content <span class="font-bold" th:text="${pack.sign}"></span>
+                                </p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="flex border-b border-gray-200 pb-3">
+                                    <span class="w-40 text-gray-600 font-medium">Name:</span>
+                                    <span class="font-medium">Nguyen Hoai An</span>
+                                </div>
+                                <div class="flex border-b border-gray-200 pb-3">
+                                    <span class="w-40 text-gray-600 font-medium">Account number:</span>
+                                    <span class="font-medium">15780251</span>
+                                </div>
+                                <div class="flex border-b border-gray-200 pb-3">
+                                    <span class="w-40 text-gray-600 font-medium">Bank:</span>
+                                    <span class="font-medium">Ngân hàng thương mại cổ phần Á Châu (ACB)</span>
+                                </div>
+                                <div class="flex border-b border-gray-200 pb-3">
+                                    <span class="w-40 text-gray-600 font-medium">Amount:</span>
+                                    <span class="font-bold text-lg" th:text="${cartTotal}"> <span class="text-sm">vnđ</span></span>
+                                </div>
+                                <div class="flex">
+                                    <span class="w-40 text-gray-600 font-medium">Transfer details:</span>
+                                    <span class="font-bold text-blue-600" th:text="${pack.sign}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white shadow-md p-8">
+                        <h1 class="text-2xl font-bold text-gray-800 text-center mb-6">
+                            Banking QR
+                        </h1>
+
+                        <div class="flex justify-center mb-6">
+                            <div class="bg-white p-2">
+                                <div class="bg-gray-100 flex items-center justify-center relative overflow-hidden">
+                                    <img th:src="@{'https://qr.sepay.vn/img?acc=15780251&bank=ACB&amount=' + ${pack.totalPrice} + '&des=' + ${pack.sign}}" class="w-full h-full">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--            </div>-->
+        </main>
+
+        <footer th:replace="~{fragment/user/footer :: footer}"></footer>
+        <script src="/assets/js/pages/user/online-banking.js"></script>
+    </th:block>
+</th:block>
+</html>

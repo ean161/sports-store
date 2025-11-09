@@ -8,6 +8,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -52,5 +55,11 @@ public class ProductPropertySnapshot {
         this.data = data;
         this.price = price;
         this.productSnapshot = productSnapshot;
+    }
+
+    public String getCreatedAt() {
+        Date date = new Date(createdAt);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        return formatter.format(date);
     }
 }

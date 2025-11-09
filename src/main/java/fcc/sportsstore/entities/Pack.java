@@ -1,6 +1,5 @@
 package fcc.sportsstore.entities;
 
-import fcc.sportsstore.entities.Item;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +8,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,17 +27,18 @@ public class Pack {
     private User user;
 
     /**
-     * PENDING_PAYMENT: Waiting for payment
-     * PENDING_APPROVAL: Waiting for staff confirm
-     * PENDING_ORDER: Preparing the pack
-     * IN_TRANSIT: Moved to delivery
-     * SUCCESS: Delivered pack
+     * PENDING_PAYMENT: Waiting for payment.///
+     * PENDING_APPROVAL: Waiting for staff confirm.
+     * PENDING_ORDER: Preparing the pack.
+     * IN_TRANSIT: Moved to delivery.
+     * SUCCESS: Delivered pack.
+     * CANCELLED: Cancelled order.
      */
     private String status;
 
     /**
      * COD: Cost on delivery
-     * OB: Via online banking
+     * OB: Via online bankingx
      */
     private String paymentType;
 
@@ -55,16 +57,43 @@ public class Pack {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    private String sign;
+
     @CreatedDate
     private Long createdAt;
 
-    public Pack(User user, String status, String paymentType, Integer shippingFee, List<Item> items, Address address) {
+    public Pack(User user, String sign, String status, String paymentType, Integer shippingFee, List<Item> items, Address address) {
         this.user = user;
+        this.sign = sign;
         this.status = status;
         this.paymentType = paymentType;
         this.paymentStatus = "NOT_PAY_YET";
         this.shippingFee = shippingFee;
         this.items = items;
         this.address = address;
+    }
+
+    public Integer getItemCount() {
+        int count = 0;
+        for (Item i : items) {
+            count += i.getQuantity();
+        }
+
+        return count;
+    }
+
+    public Integer getTotalPrice() {
+        int total = shippingFee;
+        for(Item i : items) {
+            total += i.getTotalPrice();
+        }
+
+        return total;
+    }
+
+    public String getCreatedAt() {
+        Date date = new Date(createdAt);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        return formatter.format(date);
     }
 }

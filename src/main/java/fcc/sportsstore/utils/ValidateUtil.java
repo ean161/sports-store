@@ -192,4 +192,8 @@ public class ValidateUtil {
     public Integer toAmount(String input) {
         return toIntegerForm("Amount/quantity", input, 1, Integer.MAX_VALUE);
     }
+
+    public String toBankingSign(String input) {
+        return toStringForm("Banking sign", input, 10, 10, true, true, false, false);
+    }
 }

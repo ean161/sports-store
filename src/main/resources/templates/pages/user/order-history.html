@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/profile :: layout(~{::content}, 'Profile')}">
+    <th:block th:fragment="content">
+        <main>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Header -->
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">My orders</h2>
+                    <p class="text-gray-600">Manage and track all your orders</p>
+                </div>
+
+                <!-- Table Container -->
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead class="border-b-2 gap-4 border-gray-300">
+                        <tr>
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">
+                                Order ID
+                            </th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">
+                                Product
+                            </th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">
+                                Total Price
+                            </th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">
+                                Status
+                            </th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">
+                                Order Date
+                            </th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold text-gray-700 bg-gray-50">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        <tr th:each="pack : ${packs}" class="hover:bg-blue-50 transition-colors duration-200">
+                            <td class="px-6 py-5 whitespace-nowrap">
+                                <div class="font-bold text-lg text-blue-600" th:text="'#' + ${pack.sign}"></div>
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <div th:each="item : ${pack.items}"
+                                     class="flex items-center gap-4 mb-3 last:mb-0">
+                                    <img th:src="${liveProds.get(item).productMedia.first.dir}"
+                                         class="w-14 h-14 object-cover shadow-md" alt="Product">
+                                    <div class="text-sm font-semibold text-gray-900"
+                                         th:text="${item.productSnapshot.title}"></div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-5 whitespace-nowrap">
+                                <div class="font-bold text-red-600"
+                                     th:text="${pack.totalPrice} + '₫'"></div>
+                            </td>
+
+                            <td class="px-6 py-5 whitespace-nowrap">
+                                <span th:if="${pack.status == 'SUCCESS'}"
+                                      class="px-4 py-2 inline-flex text-xs font-bold bg-green-100 text-green-700">Success</span>
+                                <span th:if="${pack.status == 'PENDING_APPROVAL'}"
+                                      class="px-4 py-2 inline-flex text-xs font-bold bg-yellow-100 text-yellow-700">Pending approval</span>
+                                <span th:if="${pack.status == 'IN_TRANSIT'}"
+                                      class="px-4 py-2 inline-flex text-xs font-bold bg-yellow-100 text-yellow-700">In transit</span>
+                                <span th:if="${pack.status == 'PENDING_PAYMENT'}"
+                                      class="px-4 py-2 inline-flex text-xs font-bold bg-yellow-100 text-yellow-700">Pending payment</span>
+                                <span th:if="${pack.status == 'PENDING_ORDER'}"
+                                      class="px-4 py-2 inline-flex text-xs font-bold bg-yellow-100 text-yellow-700">Pending order</span>
+                                <span th:if="${pack.status == 'CANCELLED'}"
+                                      class="px-4 py-2 inline-flex text-xs font-bold bg-red-100 text-red-700">Cancelled</span>
+                            </td>
+
+                            <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-700 font-medium"
+                                th:text="${pack.createdAt}"></td>
+
+                            <td class="px-6 py-5 whitespace-nowrap text-center">
+                                <span th:if="${pack.status == 'PENDING_PAYMENT'}">
+                                    <a th:href="@{'/checkout/pay/' + ${pack.id}}"
+                                       class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition-colors duration-200">
+                                        <span>Payment</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </th:block>
+</th:block>
+<footer th:replace="~{fragment/user/footer :: footer}"></footer>
+</html>

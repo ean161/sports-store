@@ -18,6 +18,10 @@ $(document).ready(function () {
         let id = $(this)[0].id.replaceAll("remove-item-", "");
         $(`#item-${id}`).remove();
 
+        let itemCountElm = $("#in-cart-item-count");
+        let itemCount = parseInt(itemCountElm.text());
+        itemCountElm.text(itemCount - 1);
+
         updateTotal();
         await remove(id);
     });

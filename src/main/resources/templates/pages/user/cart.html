@@ -28,7 +28,7 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <tr th:if="${#lists.isEmpty(item)}">
-                                    <td colspan="5" class="py-4 px-6 text-center text-gray-600 font-medium">
+                                    <td colspan="6" class="py-4 px-6 text-center text-gray-600 font-medium">
                                         No items available.
                                     </td>
                                 </tr>
@@ -37,7 +37,7 @@
                                     th:data-available="${item.productSnapshot.available}"
                                     class="hover:bg-gray-50 transition-colors item-line">
                                     <td class="py-4 px-6">
-                                        <input type="checkbox" th:name="${'select-' + item.id}" class="item-select" />
+                                        <input type="checkbox" th:name="${'select-' + item.id}" class="item-select w-4 h-4" />
                                     </td>
                                     <td class="py-4 px-6">
                                         <div class="flex space-x-4 items-center">

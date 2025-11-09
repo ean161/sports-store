@@ -18,4 +18,16 @@ $(document).ready(function() {
         }
     });
 
+    $(".add-item-btn").on("click", async function (event) {
+        let id = $(this)[0].id.replaceAll("add-item-", "");
+        $(`#item-${id}`).add();
+
+        let itemCountElm = $("#in-cart-item-count");
+        let itemCount = parseInt(itemCountElm.text());
+        itemCountElm.text(itemCount + 1);
+
+        updateTotal();
+        await remove(id);
+    });
+
 });

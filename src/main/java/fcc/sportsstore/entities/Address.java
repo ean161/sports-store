@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -54,5 +56,11 @@ public class Address {
         this.province = province;
         this.ward = ward;
         this.user = user;
+    }
+
+    public String getCreatedAt() {
+        Date date = new Date(createdAt);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        return formatter.format(date);
     }
 }

@@ -7,6 +7,7 @@ import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.ManageCartService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,10 +36,12 @@ public class ManageCartController {
     }
 
     @GetMapping
-    public String cartPage(Model model, HttpServletRequest request) {
+    public String cartPage(Model model, HttpServletRequest request, HttpSession session) {
         HashMap<Item, Product> liveProds = new HashMap<>();
         User user = userService.getFromSession(request);
         List<Item> items = manageCartService.getUserCart(user);
+
+        manageCartService.refreshCartItemCount(request, session);
 
         for (Item item : items) {
             productSnapshotService.refreshPrice(item.getProductSnapshot());

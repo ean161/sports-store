@@ -145,11 +145,11 @@
                                     <h3 class=" font-semibold text-gray-900 mb-3">Payment</h3>
 
                                     <div>
-                                        <input type="radio" id="pt-cod" name="payment-type" value="COD" checked />
+                                        <input type="radio" id="pt-cod" name="payment-type" value="COD" checked >
                                         <label for="pt-cod">&ensp;COD</label>
                                     </div>
                                     <div>
-                                        <input type="radio" id="pt-ob" name="payment-type" value="OB" />
+                                        <input type="radio" id="pt-ob" name="payment-type" value="OB" >
                                         <label for="pt-ob">&ensp;Online banking</label>
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                                     </div>
                                     <div class="flex justify-between ">
                                         <span class="text-gray-600">Shipping fee</span>
-                                        <span class="text-gray-900 font-medium">0</span>
+                                        <span class="text-gray-900 font-medium" th:text="${shippingFee}">0</span>
                                     </div>
                                     <div class="flex justify-between ">
                                         <span class="text-gray-600">Discount</span>
@@ -173,7 +173,7 @@
                                     <div class="pt-3 border-t border-gray-200">
                                         <div class="flex justify-between items-center">
                                             <span class="text-gray-900 font-semibold">Total payment</span>
-                                            <span class="text-red-600 text-2xl font-bold" th:text="${cartTotal}"></span>
+                                            <span class="text-red-600 text-2xl font-bold" th:text="${cartTotal + shippingFee}"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@
                                     Clicking "Confirm order" means you agree to abide by
                                     <a href="#" class="text-blue-600 hover:text-blue-700 underline">Sports Store Terms</a>
                                 </p>
-                                <button type="submit" class="px-8 py-3  font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm hover:shadow transition duration-200 whitespace-nowrap">
+                                <button type="submit" class="px-8 py-3  font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm hover:shadow transition duration-200 whitespace-nowrap cursor-pointer">
                                     Confirm order
                                 </button>
                             </div>

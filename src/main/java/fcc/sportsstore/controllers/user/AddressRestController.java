@@ -116,11 +116,5 @@ public class AddressRestController {
             return ResponseEntity.badRequest().body(res.build());
         }
     }
-//    @GetMapping("/wards-by-province/{provinceId}")
-//    public List<Ward> getWardsByProvince(@PathVariable String provinceId, Ward ward) {
-//        return addressService.getWardsByProvinceId(provinceId);
-//    }
-
-
 }
 

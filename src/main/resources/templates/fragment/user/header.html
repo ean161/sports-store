@@ -40,7 +40,7 @@
                     <a th:if="${session.user != null}" th:href="@{/cart}" class="relative text-white hover:text-gray-300">
                         <img src="/assets/img/icon/cart1.png" alt="cart" class="w-8 h-8">
                         <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
-                              th:text="${cart_count}">0</span>
+                              th:text="${session.inCartItemCount}" id="in-cart-item-count">0</span>
                     </a>
                 </div>
             </div>

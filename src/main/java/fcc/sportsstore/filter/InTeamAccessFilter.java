@@ -17,7 +17,7 @@ public class InTeamAccessFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String path = req.getRequestURI();
 
-        if (path.startsWith("/access/")) {
+        if (path.startsWith("/access/") || path.startsWith("/checkout/paid")) {
             chain.doFilter(request, response);
             return;
         }

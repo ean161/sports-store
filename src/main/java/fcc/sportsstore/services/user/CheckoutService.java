@@ -2,17 +2,17 @@ package fcc.sportsstore.services.user;
 
 import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.*;
+import fcc.sportsstore.utils.RandomUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service("userCheckoutService")
 public class CheckoutService {
-
-    private final Integer SHIPPING_FEE = 0;
 
     private final PackService packService;
 
@@ -45,6 +45,7 @@ public class CheckoutService {
                       Map<String, String> selectedItems,
                       String paymentType) {
         paymentType = paymentType.toUpperCase();
+        RandomUtil rand = new RandomUtil();
         User user = userService.getFromSession(request);
         Address address = addressService.getDefault(user);
 
@@ -62,7 +63,20 @@ public class CheckoutService {
 
         items.removeIf(item -> !selectedItems.containsKey("select-" + item.getId()));
 
-        Pack pack = new Pack(user, status, paymentType, SHIPPING_FEE, items, address);
+        for (Item item : items) {
+            if (!item.getType().equals("CART")) {
+                throw new RuntimeException("Selected item isn't valid in cart.");
+            } else if (!productSnapshotService.isAvailable(item.getProductSnapshot())) {
+                throw new RuntimeException("Selected item outdated or unavailable.");
+            }
+        }
+
+        if (items == null || items.isEmpty() || items.size() == 0) {
+            throw new RuntimeException("Item list must be not empty.");
+        }
+
+        String sign = "SPST" + rand.randString(6).toUpperCase();
+        Pack pack = new Pack(user, sign, status, paymentType, getShippingFee(), items, address);
         packService.save(pack);
 
         items.forEach(item -> {
@@ -71,9 +85,28 @@ public class CheckoutService {
         });
 
         return switch (paymentType.toUpperCase()) {
-            case "COD" -> String.format("/checkout/pay/" + pack.getId());
-            case "OB" -> "/order-history";
+            case "OB" -> String.format("/checkout/pay/" + pack.getId());
+            case "COD" -> "/order-history";
             default -> throw new IllegalArgumentException("Payment type not found.");
         };
+    }
+
+    public void paidWebhook(String code, Integer amount) {
+        Pack pack = packService.getBySignAndStatus(code, "PENDING_PAYMENT");
+        if (!Objects.equals(pack.getTotalPrice(), amount)) {
+            throw new RuntimeException("Invalid pack total price.");
+        }
+
+        pack.setStatus("PENDING_APPROVAL");
+        packService.save(pack);
+    }
+
+    public boolean isPaid(String sign, HttpServletRequest request) {
+        User user = userService.getFromSession(request);
+        return packService.getByUserAndStatusNotAndSign(user, "PENDING_PAYMENT", sign).isPresent();
+    }
+
+    public Integer getShippingFee() {
+        return 30000;
     }
 }

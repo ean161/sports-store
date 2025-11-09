@@ -3,6 +3,7 @@ package fcc.sportsstore.services.user;
 import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +62,7 @@ public class ManageCartService {
         itemService.save(item);
     }
 
-    public void remove(HttpServletRequest request, String id) {
+    public void remove(HttpServletRequest request, HttpSession session, String id) {
         try {
             User user = userService.getFromSession(request);
             Item item = itemService.getById(id);
@@ -70,6 +71,8 @@ public class ManageCartService {
             }
 
             itemService.deleteById(id);
+
+            refreshCartItemCount(request, session);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Invalid cart item to remove");
@@ -149,5 +152,12 @@ public class ManageCartService {
 
     public List<Item> getUserCart(User user) {
         return itemService.getByUserAndType(user, "CART");
+    }
+
+    public Integer refreshCartItemCount(HttpServletRequest request, HttpSession session) {
+        User user = userService.getFromSession(request);
+        List<Item> items = getUserCart(user);
+        session.setAttribute("inCartItemCount", items.size());
+        return items.size();
     }
 }

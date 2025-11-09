@@ -5,6 +5,7 @@ import fcc.sportsstore.services.user.ManageCartService;
 import fcc.sportsstore.utils.Response;
 import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +39,10 @@ public class ManageCartRestController {
     }
 
     @PostMapping("/remove")
-    public ResponseEntity<?> remove(HttpServletRequest request, @RequestParam(value = "id") String id) {
+    public ResponseEntity<?> remove(HttpServletRequest request, HttpSession session, @RequestParam(value = "id") String id) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageCartService.remove(request, validate.toId(id));
+            manageCartService.remove(request, session, validate.toId(id));
 
             Response res = new Response();
             return ResponseEntity.ok(res.build());
