@@ -46,8 +46,8 @@ public class ManageUserRestController {
 
     @PostMapping("/edit")
     public ResponseEntity<?> edit(@RequestParam(value = "id") String id,
-                       @RequestParam("ud-full-name") String fullName,
-                       @RequestParam(value = "ud-gender") boolean gender) {
+                       @RequestParam("full-name") String fullName,
+                       @RequestParam(value = "gender") boolean gender) {
         try {
             ValidateUtil validate = new ValidateUtil();
             manageUserService.edit(validate.toId(id),

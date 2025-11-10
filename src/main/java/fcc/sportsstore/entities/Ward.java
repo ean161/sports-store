@@ -14,6 +14,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "ward")
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Ward {

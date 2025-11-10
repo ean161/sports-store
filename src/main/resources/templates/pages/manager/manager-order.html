@@ -59,7 +59,7 @@
                                                 </div>
                                                 <input id="oh-id" type="text" name="id"
                                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                                       disabled/>
+                                                       readonly/>
                                             </div>
 
                                             <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -68,7 +68,7 @@
                                                 </div>
                                                 <input id="oh-user" type="text" name="user"
                                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                                       disabled/>
+                                                       readonly/>
                                             </div>
 
                                             <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -77,7 +77,7 @@
                                                 </div>
                                                 <input id="oh-sign" type="text" name="sign"
                                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                                       disabled/>
+                                                       readonly/>
                                             </div>
 
                                             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -102,8 +102,23 @@
                                                 </div>
                                                 <input id="oh-payment-type" type="text" name="payment-type"
                                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                                       disabled/>
+                                                       readonly/>
                                             </div>
+                                            <div>
+                                                <table class="w-full">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product</th>
+                                                            <th>Quantity</th>
+                                                            <th>Notes</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="oh-items">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
 
 
                                             <div class="flex justify-between">

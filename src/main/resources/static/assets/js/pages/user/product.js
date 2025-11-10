@@ -19,6 +19,12 @@ $(document).ready(function() {
     });
 
     $(".add-item-btn").on("click", async function (event) {
+        if ($("#login-btn").text().indexOf("Login") != -1) {
+            window.location.href = "/login";
+            return;
+        }
+
+
         let id = $(this)[0].id.replaceAll("add-item-", "");
         $(`#item-${id}`).add();
 
@@ -29,5 +35,4 @@ $(document).ready(function() {
         updateTotal();
         await remove(id);
     });
-
 });

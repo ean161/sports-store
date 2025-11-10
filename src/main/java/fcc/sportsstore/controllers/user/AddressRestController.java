@@ -104,7 +104,7 @@ public class AddressRestController {
     }
 
 //    @PostMapping("/wards")
-//    public ResponseEntity<?> getWardsByProvince(@RequestParam("provinceId") String provinceId) {
+//    public ResponseEntity<?> getWardByProvince(@RequestParam("provinceId") String provinceId) {
 //        try {
 //            List<Ward> wards = wardRepository.findByProvinceId(provinceId);
 //            return ResponseEntity.ok(wards);
@@ -115,9 +115,9 @@ public class AddressRestController {
 //    }
 
     @PostMapping("/wards-by-province")
-    public ResponseEntity<?> getWardsByProvince(@RequestParam("provinceId") String provinceId) {
+    public ResponseEntity<?> getWardByProvince(@RequestParam("provinceId") String provinceId) {
         try {
-            List<Ward> wards = addressService.getWardsByProvinceId(provinceId);
+            List<Ward> wards = addressService.getWardByProvinceId(provinceId);
             return ResponseEntity.ok(wards);
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

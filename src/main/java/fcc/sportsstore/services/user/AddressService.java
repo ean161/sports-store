@@ -141,7 +141,7 @@ public class AddressService {
         return addressRepository.findFirstByUserAndIsDefaultTrue(user);
     }
 
-    public List<Ward> getWardsByProvinceId(String provinceId) {
+    public List<Ward> getWardByProvinceId(String provinceId) {
         return wardRepository.findByProvinceId(provinceId);
     }
     @Transactional

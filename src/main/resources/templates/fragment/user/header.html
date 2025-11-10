@@ -8,7 +8,7 @@
                         <a th:href="@{/profile}" th:text="${session.user.fullName}" class="hover:text-gray-300"></a>
                     </div>
                     <div th:if="${session.user == null}" class="flex items-center space-x-1">
-                        <a th:href="@{/login}" class="hover:text-gray-300 flex items-center justify-center gap-2">
+                        <a id="login-btn" th:href="@{/login}" class="hover:text-gray-300 flex items-center justify-center gap-2">
                             <img src="/assets/img/icon/user1.png" alt="user" class="w-6 h-6">
                             Login
                         </a>

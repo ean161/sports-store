@@ -49,7 +49,7 @@ public class AddressController {
         model.addAttribute("provinces", provinceRepository.findAll());
 
         if (provinceId != null && !provinceId.isEmpty()) {
-            List<Ward> wards = addressService.getWardsByProvinceId(provinceId);
+            List<Ward> wards = addressService.getWardByProvinceId(provinceId);
             model.addAttribute("wards", wards);
         } else {
             model.addAttribute("wards", new ArrayList<>());
@@ -71,7 +71,7 @@ public class AddressController {
         model.addAttribute("provinces", provinceRepository.findAll());
 
         if (provinceId != null && !provinceId.isEmpty()) {
-            model.addAttribute("wards", addressService.getWardsByProvinceId(provinceId));
+            model.addAttribute("wards", addressService.getWardByProvinceId(provinceId));
         } else {
             model.addAttribute("wards", wardRepository.findByProvinceId(address.getProvince().getId()));
         }
