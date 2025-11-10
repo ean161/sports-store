@@ -73,15 +73,15 @@
                                         </div>
                                     </td>
                                     <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                        <span class="item-price" th:text="${item.productSnapshot.price}"></span>
+                                        <span class="item-price" th:text="${item.productSnapshot.price} + '₫'"></span>
                                         <span> x</span>
                                         <span th:text="${item.quantity}"
                                               th:id="${'quantity-' + item.id}"
                                               class="font-medium text-gray-800 min-w-[3rem] text-center"></span>
                                     </td>
-                                    <td class="py-4 px-6 text-end text-red-500 font-bold whitespace-nowrap">
+                                    <td class="py-4 px-6 text-center text-red-500 font-bold whitespace-nowrap">
                                         <span class="item-total"
-                                              th:text="${item.totalPrice}"></span>
+                                              th:text="${item.totalPrice} + '₫'"></span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -160,11 +160,11 @@
                                 <div class="p-4 bg-white border border-gray-200 space-y-3">
                                     <div class="flex justify-between ">
                                         <span class="text-gray-600">Total cost of goods</span>
-                                        <span class="text-gray-900 font-medium" th:text="${cartTotal}"></span>
+                                        <span class="text-gray-900 font-medium" th:text="${cartTotal} + '₫'"></span>
                                     </div>
                                     <div class="flex justify-between ">
                                         <span class="text-gray-600">Shipping fee</span>
-                                        <span class="text-gray-900 font-medium" th:text="${shippingFee}">0</span>
+                                        <span class="text-gray-900 font-medium" th:text="${shippingFee} + '₫'">0</span>
                                     </div>
                                     <div class="flex justify-between ">
                                         <span class="text-gray-600">Discount</span>
@@ -173,7 +173,7 @@
                                     <div class="pt-3 border-t border-gray-200">
                                         <div class="flex justify-between items-center">
                                             <span class="text-gray-900 font-semibold">Total payment</span>
-                                            <span class="text-red-600 text-2xl font-bold" th:text="${cartTotal + shippingFee}"></span>
+                                            <span class="text-red-600 text-2xl font-bold" th:text="${cartTotal + shippingFee} + '₫'"></span>
                                         </div>
                                     </div>
                                 </div>

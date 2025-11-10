@@ -57,6 +57,8 @@ public class ManagerService {
         return managerRepository.findByUsernameIgnoreCase(username);
     }
 
+
+
     public Manager getManagerFromSession(HttpServletRequest request) {
         SessionUtil session = new SessionUtil(request);
         return (Manager) session.getSession("manager");

@@ -30,7 +30,7 @@ public class LoginRestController {
             loginService.login(request, response, validate.toUsername(username), password);
 
             Response res = new Response("Login successfully.",
-                    Map.of("redirect", "/manager", "time", 3000));
+                    Map.of("redirect", "/manager/order", "time", 3000));
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

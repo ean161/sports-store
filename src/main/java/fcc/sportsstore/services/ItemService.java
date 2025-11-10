@@ -37,7 +37,7 @@ public class ItemService {
     }
 
     public List<Item> getByUserAndType(User user, String type){
-        return itemRepository.findByUserAndType(user, type);
+        return itemRepository.findByUserAndTypeOrderByCreatedAtDesc(user, type);
     }
 
     public Product getLiveProduct(Item item) {

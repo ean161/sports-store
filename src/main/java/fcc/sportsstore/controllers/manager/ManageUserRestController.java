@@ -50,7 +50,8 @@ public class ManageUserRestController {
                        @RequestParam(value = "ud-gender") boolean gender) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageUserService.edit(validate.toId(id), validate.toFullName(fullName), gender);
+            manageUserService.edit(validate.toId(id),
+                    validate.toFullName(fullName), gender);
 
             Response res = new Response("User edited successfully.");
             return ResponseEntity.ok(res.build());

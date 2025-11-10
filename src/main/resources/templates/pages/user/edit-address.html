@@ -7,7 +7,7 @@
                 <form id="edit-address-form"
                       th:action="@{/address/edit}" method="post"
                       class="space-y-4">
-                    <h2 class="text-3xl font-semibold mb-6">Edit address</h2>
+                    <h2 class="text-3xl font-bold mb-6">Edit address</h2>
 
                     <input type="hidden" name="id" th:value="${address.id}"/>
                     <div class="grid grid-cols-2 gap-4">
@@ -15,21 +15,20 @@
                             <label class="block font-semibold text-sm mb-2">
                                 Note <span class="text-red-500">*</span>
                             </label>
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 space-y-2 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                <input name="note" type="text"
-                                       th:value="${address.note}"
-                                       class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
-                            </div>
+
+                            <input name="note" type="text"
+                                   th:value="${address.note}"
+                                   class="w-full px-4 py-2.5 border border-2 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm border border-gray-300">
                         </div>
                         <div>
                             <label class="block font-semibold text-sm mb-2">
                                 Phone Number <span class="text-red-500">*</span>
                             </label>
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 space-y-2 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                <input name="phone" type="tel"
-                                       th:value="${address.phoneNumber}"
-                                       class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
-                            </div>
+
+                            <input name="phone" type="tel"
+                                   th:value="${address.phoneNumber}"
+                                   class="w-full px-4 py-2.5 border border-2 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm border border-gray-300">
+
                         </div>
                     </div>
 
@@ -37,11 +36,11 @@
                         <label class="block font-semibold text-sm mb-2">
                             Address <span class="text-red-500">*</span>
                         </label>
-                        <div class="flex items-center rounded-md bg-white pl-3 outline-1 space-y-2 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                            <input name="detail" type="text"
-                                   th:value="${address.addressDetail}"
-                                   class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
-                        </div>
+
+                        <input name="detail" type="text"
+                               th:value="${address.addressDetail}"
+                               class="w-full px-4 py-2.5 border border-2 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm border border-gray-300">
+
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
@@ -49,33 +48,33 @@
                             <label class="block font-semibold text-sm mb-2">
                                 Province <span class="text-red-500">*</span>
                             </label>
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 space-y-2 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                <select id="province-select" name="provinceId"
-                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
-                                    <option value="">-- Province --</option>
-                                    <option th:each="p : ${provinces}"
-                                            th:value="${p.id}"
-                                            th:text="${p.name}"
-                                            th:selected="${address.province != null and address.province.id == p.id}">
-                                    </option>
-                                </select>
-                            </div>
+
+                            <select id="province-select" name="provinceId"
+                                    class="w-full px-4 py-2.5 border border-2 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm border border-gray-300">
+                                <option value="">-- Province --</option>
+                                <option th:each="p : ${provinces}"
+                                        th:value="${p.id}"
+                                        th:text="${p.name}"
+                                        th:selected="${address.province != null and address.province.id == p.id}">
+                                </option>
+                            </select>
+
                         </div>
                         <div>
                             <label class="block font-semibold text-sm mb-2">
                                 Ward
                             </label>
-                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 space-y-2 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                <select id="ward-select" name="wardId"
-                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
-                                    <option value="">-- Ward --</option>
-                                    <option th:each="w : ${wards}"
-                                            th:value="${w.id}"
-                                            th:text="${w.name}"
-                                            th:selected="${address.ward != null and address.ward.id == w.id}">
-                                    </option>
-                                </select>
-                            </div>
+
+                            <select id="ward-select" name="wardId"
+                                    class="w-full px-4 py-2.5 border border-2 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm border border-gray-300">
+                                <option value="">-- Ward --</option>
+                                <option th:each="w : ${wards}"
+                                        th:value="${w.id}"
+                                        th:text="${w.name}"
+                                        th:selected="${address.ward != null and address.ward.id == w.id}">
+                                </option>
+                            </select>
+
                         </div>
                     </div>
 

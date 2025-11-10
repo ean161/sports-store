@@ -64,4 +64,5 @@ public class Product {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         return formatter.format(date);
     }
+
 }

@@ -9,12 +9,9 @@ import fcc.sportsstore.services.user.AddressService;
 import fcc.sportsstore.services.user.CheckoutService;
 import fcc.sportsstore.services.user.ManageCartService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +57,6 @@ public class CheckoutController {
         if (params == null || params.keySet().size() == 0) {
             return "redirect:/cart";
         }
-
         Integer cartTotal = 0;
         User user = userService.getFromSession(request);
         Address defaultAddress = addressService.getDefault(user);

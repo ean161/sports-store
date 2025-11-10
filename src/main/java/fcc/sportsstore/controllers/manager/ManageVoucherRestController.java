@@ -40,7 +40,10 @@ public class ManageVoucherRestController {
                                  @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageVoucherService.add(validate.toVoucherCode(code), status, validate.toVoucherMaxUsedCount(maxUsedCount), discountType, validate.toVoucherDiscountValue(discountValue), validate.toVoucherMaxDiscountValue(maxDiscountValue));
+            manageVoucherService.add(validate.toVoucherCode(code), status,
+                    validate.toVoucherMaxUsedCount(maxUsedCount), discountType,
+                    validate.toVoucherDiscountValue(discountValue),
+                    validate.toVoucherMaxDiscountValue(maxDiscountValue));
 
             Response res = new Response("Voucher added successfully.");
             return ResponseEntity.ok(res.build());
@@ -55,15 +58,19 @@ public class ManageVoucherRestController {
             @RequestParam(value = "id", required = false) String id,
             @RequestParam(value = "code", required = false) String code,
             @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "max-used", required = false) Integer maxUsedCount,
+            @RequestParam(value = "max-used", required = false) String maxUsedCount,
             @RequestParam(value = "used", required = false) Integer usedCount,
             @RequestParam(value = "discount-type", required = false) String discountType,
-            @RequestParam(value = "discount-value", required = false) Double discountValue,
-            @RequestParam(value = "max-discount-value", required = false) Double maxDiscountValue
+            @RequestParam(value = "discount-value", required = false) String discountValue,
+            @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue
     ) {
         try {
-
-            manageVoucherService.edit(id, code, status, maxUsedCount, usedCount, discountType, discountValue, maxDiscountValue);
+            ValidateUtil validate = new ValidateUtil();
+            manageVoucherService.edit(validate.toId(id),
+                    validate.toVoucherCode(code), status,
+                    validate.toVoucherMaxUsedCount(maxUsedCount), usedCount, discountType,
+                    validate.toVoucherDiscountValue(discountValue),
+                    validate.toVoucherMaxDiscountValue(maxDiscountValue));
 
             Response res = new Response("Voucher updated successfully.");
             return ResponseEntity.ok(res.build());

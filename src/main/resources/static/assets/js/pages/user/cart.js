@@ -101,11 +101,11 @@ function updateTotal() {
         let qty = parseInt(quantityElm.text()) || 0;
         let totalPrice = price * qty;
 
-        totalElm.text(totalPrice);
+        totalElm.text(totalPrice + '₫');
         if (isSelect.prop("checked")) {
             totalCart += totalPrice;
         }
     });
 
-    $("#totalCart").text(totalCart);
+    $("#totalCart ").text(totalCart + '₫');
 }

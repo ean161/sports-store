@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:replace="~{layout/profile :: layout(~{::content}, 'Profile')}">
     <th:block th:fragment="content">
-        <h2 class="text-3xl font-semibold mb-6">Profile</h2>
+        <h2 class="text-3xl font-bold mb-6">Profile</h2>
         <form class="space-y-4 max-w-2xl" id="edit-profile-form">
             <input name="id" th:value="${session.user.id}" hidden>
             <div>
@@ -14,7 +14,7 @@
                         placeholder="Enter your full name"
                         th:value="${session.user.fullName}"
                         class="w-full px-4 py-2.5 border border-2 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 text-sm border border-gray-300"
-                        readonly>
+                        disabled>
             </div>
             <!--            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">-->
             <!--                <div class="shrink-0  text-gray-500 select-none  font-medium">Full name:</div>-->
@@ -24,17 +24,17 @@
             <!--                       readonly>-->
             <!--            </div>-->
 
-<!--            <div>-->
-<!--                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">-->
-<!--                    <div class="shrink-0  text-gray-500 select-none  font-medium">Gender:</div>-->
-<!--                    <select name="gender" id="gender"-->
-<!--                            class="block min-w-0 grow py-1.5 pr-3 pl-1  text-gray-900 placeholder:text-gray-400 focus:outline-none "-->
-<!--                            disabled>-->
-<!--                        <option value="1" disabled th:selected="${session.user.gender}">Male</option>-->
-<!--                        <option value="0" disabled th:selected="${!session.user.gender}">Female</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div>-->
+            <!--                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">-->
+            <!--                    <div class="shrink-0  text-gray-500 select-none  font-medium">Gender:</div>-->
+            <!--                    <select name="gender" id="gender"-->
+            <!--                            class="block min-w-0 grow py-1.5 pr-3 pl-1  text-gray-900 placeholder:text-gray-400 focus:outline-none "-->
+            <!--                            disabled>-->
+            <!--                        <option value="1" disabled th:selected="${session.user.gender}">Male</option>-->
+            <!--                        <option value="0" disabled th:selected="${!session.user.gender}">Female</option>-->
+            <!--                    </select>-->
+            <!--                </div>-->
+            <!--            </div>-->
 
             <div>
                 <label for="gender" class="block font-medium mb-1">Gender</label>
@@ -48,7 +48,7 @@
 
             <div>
                 <label for="email" class="block font-medium mb-1">Email</label>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2" >
                     <div class="flex-1 relative">
                         <input
                                 id="email"
@@ -58,42 +58,43 @@
                                 th:value="${session.user.email.address}"
                                 class="w-full px-4 py-2.5 bg-white rounded-lg focus:outline-none focus:ring-2 text-sm border pr-10"
                                 th:classappend="${session.user.email.verified} ? 'border-green-300 focus:ring-green-300' : 'border-gray-300 focus:ring-gray-300'"
-                                readonly>
+                                disabled>
 
                         <span th:if="${session.user.email.verified}"
                               class="absolute right-3 top-1/2 -translate-y-1/2 text-green-500">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-          <path fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                clip-rule="evenodd"/>
-        </svg>
-      </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                 class="w-5 h-5">
+                                <path fill-rule="evenodd"
+                                      d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                      </span>
                     </div>
 
                     <button
                             th:if="${!session.user.email.verified}"
                             id="verify-email-btn"
                             type="button"
-                            class="text-center inline-flex w-full justify-center border-gray-300 border-1 rounded-md px-5 py-2  font-semibold text-black hover:text-white shadow-xs hover:bg-black sm:w-auto cursor-pointer">
+                            class="text-center inline-flex w-full justify-center border-gray-300 border-1 rounded-md px-5 py-2  font-semibold text-black hover:text-white shadow-xs hover:bg-black sm:w-auto cursor-pointer" >
                         Verify
                     </button>
                 </div>
             </div>
-<!--            <div>-->
-<!--                <label class="block font-medium mb-1">Address:</label>-->
-<!--                <div th:if="${defaultAddress != null}" class="text-gray-700  leading-relaxed">-->
-<!--                    <div class="flex space-x-1 items-center">-->
-<!--                        <span th:text="${defaultAddress.addressDetail}"></span>-->
-<!--                        <a th:href="@{/address}"-->
-<!--                           class="text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none">(Update)</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <p th:if="${defaultAddress == null}" class="text-gray-500 ">-->
-<!--                    No information yet-->
-<!--                    <a th:href="@{/address}"-->
-<!--                       class="text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none">(Update)</a>-->
-<!--                </p>-->
-<!--            </div>-->
+            <!--            <div>-->
+            <!--                <label class="block font-medium mb-1">Address:</label>-->
+            <!--                <div th:if="${defaultAddress != null}" class="text-gray-700  leading-relaxed">-->
+            <!--                    <div class="flex space-x-1 items-center">-->
+            <!--                        <span th:text="${defaultAddress.addressDetail}"></span>-->
+            <!--                        <a th:href="@{/address}"-->
+            <!--                           class="text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none">(Update)</a>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <p th:if="${defaultAddress == null}" class="text-gray-500 ">-->
+            <!--                    No information yet-->
+            <!--                    <a th:href="@{/address}"-->
+            <!--                       class="text-xs font-medium text-blue-400 hover:text-blue-600 cursor-pointer select-none">(Update)</a>-->
+            <!--                </p>-->
+            <!--            </div>-->
             <div class="flex justify-end pt-4">
                 <div class="text-center inline-flex w-full justify-center bg-blue-600 px-5 py-2  font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">
                     <a th:href="@{/profile/edit}">Edit</a>

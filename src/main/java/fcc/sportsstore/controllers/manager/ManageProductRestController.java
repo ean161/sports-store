@@ -67,7 +67,10 @@ public class ManageProductRestController {
                                  @RequestParam(value = "prices", required = false) String[] prices) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageProductService.add(validate.toProductTitle(title), validate.toProductDescription(description), validate.toPrice(price), type, collection, image, fieldIds, dataIds, datas, prices);
+            manageProductService.add(validate.toProductTitle(title),
+                    validate.toProductDescription(description),
+                    validate.toPrice(price), type, collection,
+                    image, fieldIds, dataIds, datas, prices);
 
             Response res = new Response("Product added successfully.");
             return ResponseEntity.ok(res.build());

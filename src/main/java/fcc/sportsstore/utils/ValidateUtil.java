@@ -170,7 +170,7 @@ public class ValidateUtil {
     }
 
     public String toAddressNote(String input) {
-        return toStringForm("Address note", input, 2, 20, true, false, true, false);
+        return toStringForm("Address note", input, 2, 20, true, true, true, false);
     }
 
     public String toPhoneNumber(String input) {

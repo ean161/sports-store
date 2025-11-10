@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController ("userRegisterRestController")
+@RestController("userRegisterRestController")
 @RequestMapping("/register")
 public class RegisterRestController {
 
@@ -21,13 +21,16 @@ public class RegisterRestController {
 
     @PostMapping
     public ResponseEntity<?> register(HttpServletResponse response,
-                                      @RequestParam(required = false, name="username") String username,
-                                      @RequestParam(required = false, name="email") String email,
-                                      @RequestParam(required = false, name="password") String password,
-                                      @RequestParam(required = false, name="confirm-password") String confirmPassword) {
+                                      @RequestParam(required = false, name = "username") String username,
+                                      @RequestParam(required = false, name = "email") String email,
+                                      @RequestParam(required = false, name = "password") String password,
+                                      @RequestParam(required = false, name = "confirm-password") String confirmPassword) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            registerService.register(response, validate.toUsername(username), validate.toEmail(email), validate.toPassword(password), validate.toPassword(confirmPassword));
+            registerService.register(response, validate.toUsername(username),
+                    validate.toEmail(email),
+                    validate.toPassword(password),
+                    validate.toPassword(confirmPassword));
 
             Response res = new Response("Register successfully.",
                     Map.of("redirect", "/login", "time", 3000));

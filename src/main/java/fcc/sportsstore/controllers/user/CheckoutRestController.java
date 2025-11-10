@@ -33,7 +33,8 @@ public class CheckoutRestController {
     @PostMapping("/is-paid")
     public ResponseEntity<?> isPaid(@RequestParam(value = "sign") String sign, HttpServletRequest request) {
         try {
-            Response res = new Response(checkoutService.isPaid(sign, request));
+            ValidateUtil validate = new ValidateUtil();
+            Response res = new Response(checkoutService.isPaid(validate.toBankingSign(sign), request));
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

@@ -35,7 +35,8 @@ public class ManageCollectionRestController {
     public ResponseEntity<?> edit(@RequestParam(value = "id") String id, @RequestParam("name") String name) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageCollectionService.edit(validate.toId(id), validate.toCollectionName(name));
+            manageCollectionService.edit(validate.toId(id),
+                    validate.toCollectionName(name));
 
             Response res = new Response("Collection updated successfully.");
             return ResponseEntity.ok(res.build());

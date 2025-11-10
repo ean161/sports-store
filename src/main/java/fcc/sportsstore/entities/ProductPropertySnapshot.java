@@ -1,5 +1,7 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +43,7 @@ public class ProductPropertySnapshot {
 
     @ManyToOne
     @JoinColumn(name = "product_snapshot_id")
+    @JsonIgnore
     private ProductSnapshot productSnapshot;
 
     public ProductPropertySnapshot(String productPropertyFieldId,

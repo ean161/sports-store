@@ -36,24 +36,20 @@ public class OrderHistoryController {
     }
 
     @GetMapping
-    public String view(HttpServletRequest request, Model model) {
+    public String orderHistoryPage(HttpServletRequest request, Model model) {
         User user = userService.getFromSession(request);
         List<Pack> packs = packService.getByUser(user);
 
         HashMap<Item, Product> liveProds = new HashMap<>();
-        List<Item> items = itemService.getByUserAndType(user, "ORDER");
 
-        for (Item item : items) {
-            productSnapshotService.refreshPrice(item.getProductSnapshot());
-            liveProds.put(item, itemService.getLiveProduct(item));
-            ProductSnapshot snap = item.getProductSnapshot();
-            snap.setAvailable(productSnapshotService.isAvailable(snap));
+        for (Pack pack : packs) {
+            for (Item item : pack.getItems()) {
+                liveProds.put(item, itemService.getLiveProduct(item));
+            }
         }
 
-        model.addAttribute("item", items);
-        model.addAttribute("liveProds", liveProds);
         model.addAttribute("packs", packs);
-
+        model.addAttribute("liveProds", liveProds);
         return "pages/user/order-history";
     }
 }

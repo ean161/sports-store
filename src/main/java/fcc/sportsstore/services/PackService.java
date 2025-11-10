@@ -1,8 +1,13 @@
 package fcc.sportsstore.services;
 
+import fcc.sportsstore.entities.Manager;
 import fcc.sportsstore.entities.Pack;
+import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.PackRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -31,17 +36,28 @@ public class PackService {
                 .orElseThrow(() -> new RuntimeException("Pack not found."));
     }
 
-
     public void save(Pack pack) {
         packRepository.save(pack);
     }
 
     public List<Pack> getByUser(User user) {
-       return packRepository.findByUser(user);
+       return packRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
-    // !Status
     public Optional<Pack> getByUserAndStatusNotAndSign(User user, String status, String sign) {
         return packRepository.findByUserAndStatusNotAndSign(user, status, sign);
+    }
+
+    public Page<Pack> getOrderByUser_usernameOrSign(String search, Pageable pageable) {
+        return packRepository.findByUser_usernameContainingIgnoreCaseOrSignContainingIgnoreCase(search , search, pageable);
+    }
+
+    public Page<Pack> getAll(Pageable pageable) {
+        return packRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public boolean existsById(String id) {
+        return packRepository.findById(id).isPresent();
     }
 }

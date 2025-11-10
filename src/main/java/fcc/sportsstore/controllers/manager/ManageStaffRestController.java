@@ -48,7 +48,7 @@ public class ManageStaffRestController {
 
     @PostMapping("/edit")
     public ResponseEntity<?> edit(@RequestParam(value = "id", required = false) String id,
-                                  @RequestParam(value = "username",required = false) String username,
+                                  @RequestParam(value = "username", required = false) String username,
                                   @RequestParam(value = "full-name", required = false) String fullName) {
         try {
             ValidateUtil validate = new ValidateUtil();
@@ -82,7 +82,9 @@ public class ManageStaffRestController {
                                             @RequestParam(value = "confirm-new-password", required = false) String confirmNewPassword) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageStaffService.changePassword(validate.toId(id), validate.toPassword(newPassword), validate.toPassword(confirmNewPassword));
+            manageStaffService.changePassword(validate.toId(id),
+                    validate.toPassword(newPassword),
+                    validate.toPassword(confirmNewPassword));
 
             Response res = new Response("Staff changed password successfully.");
             return ResponseEntity.ok(res.build());

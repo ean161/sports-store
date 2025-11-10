@@ -60,7 +60,13 @@ public class AddressRestController {
                               @RequestParam("provinceId") String provinceId,
                               @RequestParam("wardId") String wardId) {
         try {
-            addressService.edit(request, addressId, note, phone, detail, provinceId, wardId);
+            ValidateUtil validate = new ValidateUtil();
+            addressService.edit(request,
+                    validate.toId(addressId),
+                    validate.toAddressNote(note),
+                    validate.toPhoneNumber(phone),
+                    validate.toAddressDetail(detail),
+                    provinceId,wardId);
             Response res = new Response("Update address successfully.",
                     Map.of("redirect", "/address", "time", 500));
             return ResponseEntity.ok(res.build());
@@ -73,7 +79,8 @@ public class AddressRestController {
     @PostMapping("/set-default/{id}")
     public ResponseEntity<?> setDefault(HttpServletRequest request, @PathVariable String id) {
         try {
-            addressService.setDefault(request, id);
+            ValidateUtil validate = new ValidateUtil();
+            addressService.setDefault(request, validate.toId(id));
             Response res = new Response("Set default successfully.", Map.of("reload", true));
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
@@ -85,7 +92,8 @@ public class AddressRestController {
     @PostMapping("/delete/{id}")
     public ResponseEntity<?> deleteAddress(HttpServletRequest request, @PathVariable String id) {
         try {
-            addressService.delete(request, id);
+            ValidateUtil validate = new ValidateUtil();
+            addressService.delete(request, validate.toId(id));
             Response res = new Response("Delete address successfully.",
                     Map.of("reload", true));
             return ResponseEntity.ok(res.build());

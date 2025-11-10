@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,7 @@ public class Address {
     private User user;
 
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Pack> packs;
 
     @CreatedDate
