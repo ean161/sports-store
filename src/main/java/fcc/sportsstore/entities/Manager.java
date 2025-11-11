@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fcc.sportsstore.utils.HashUtil;
 import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "manager")
@@ -39,6 +41,10 @@ public class Manager {
     private String token;
 
     private String role;
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Pack> packs;
 
     @CreatedDate
     private Long createdAt;

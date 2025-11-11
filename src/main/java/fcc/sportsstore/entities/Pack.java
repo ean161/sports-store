@@ -58,6 +58,10 @@ public class Pack {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private Manager manager;
+
     private String sign;
 
     @CreatedDate

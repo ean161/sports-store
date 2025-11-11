@@ -13,6 +13,8 @@ async function loadDetails(id) {
     $("#oh-total-price").val(`${res.data.totalPrice}₫`);
     $("#oh-created-at").val(res.data.createdAt);
 
+    $("#oh-modifier").val(res.data.manager ? res.data.manager.fullName : "Not edited yet.")
+
     for (let iKey in res.data.items) {
         let pack = res.data.items[iKey];
         let item = pack.productSnapshot;

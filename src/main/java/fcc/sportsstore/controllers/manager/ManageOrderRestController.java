@@ -4,6 +4,7 @@ import fcc.sportsstore.entities.Pack;
 import fcc.sportsstore.services.manager.ManageOrderService;
 import fcc.sportsstore.utils.Response;
 import fcc.sportsstore.utils.ValidateUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +31,12 @@ public class ManageOrderRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> edit(@RequestParam(value = "id") String id,
+    public ResponseEntity<?> edit(HttpServletRequest request,
+                                  @RequestParam(value = "id") String id,
                                   @RequestParam(value = "status") String status) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageOrderService.edit(validate.toId(id), status);
+            manageOrderService.edit(request, validate.toId(id), status);
 
             Response res = new Response("Order history updated successfully.");
             return ResponseEntity.ok(res.build());

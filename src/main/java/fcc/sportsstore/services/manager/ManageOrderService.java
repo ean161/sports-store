@@ -5,6 +5,7 @@ import fcc.sportsstore.entities.Pack;
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.services.ManagerService;
 import fcc.sportsstore.services.PackService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,11 @@ import java.util.Map;
 public class ManageOrderService {
 
     private final PackService packService ;
+    private final ManagerService managerService;
 
-    public ManageOrderService(PackService packService) {
+    public ManageOrderService(PackService packService, ManagerService managerService) {
         this.packService = packService;
+        this.managerService = managerService;
     }
 
     public Page<Pack> list(String search, Pageable pageable) {
@@ -35,7 +38,7 @@ public class ManageOrderService {
     }
 
     @Transactional
-    public void edit(String id, String status) {
+    public void edit(HttpServletRequest request, String id, String status) {
         List<String> availableStatus = List.of("PENDING_PAYMENT",
                 "PENDING_APPROVAL",
                 "PENDING_ORDER",
@@ -51,6 +54,7 @@ public class ManageOrderService {
         }
 
         Pack pack = packService.getById(id);
+        pack.setManager(managerService.getManagerFromSession(request));
         pack.setStatus(status);
     }
 }
