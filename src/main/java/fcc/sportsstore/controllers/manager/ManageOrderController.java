@@ -10,6 +10,6 @@ public class ManageOrderController {
 
     @GetMapping
     public String manageOrderPage(){
-        return "pages/manager/manager-order";
+        return "pages/manager/manage-order";
     }
 }
