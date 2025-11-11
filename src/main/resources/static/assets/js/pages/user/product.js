@@ -1,3 +1,5 @@
+var selectedProp = {};
+
 $(document).ready(function() {
     $("#item-form").on("submit", async function (event) {
         event.preventDefault();
@@ -18,12 +20,25 @@ $(document).ready(function() {
         }
     });
 
+    $(".select-option").on("click", function () {
+        let propId = $(this).attr("alt");
+        let propPrice = parseInt($(this).attr("data"));
+        let prodPrice = parseInt($("#root-prod-price").val());
+        let totalPrice = prodPrice;
+
+        selectedProp[propId] = propPrice;
+        for (let f in selectedProp) {
+            totalPrice += selectedProp[f];
+        }
+
+        $("#display-prod-price").text(`${totalPrice}₫`)
+    })
+
     $(".add-item-btn").on("click", async function (event) {
         if ($("#login-btn").text().indexOf("Login") != -1) {
             window.location.href = "/login";
             return;
         }
-
 
         let id = $(this)[0].id.replaceAll("add-item-", "");
         $(`#item-${id}`).add();

@@ -17,7 +17,8 @@
                         <div>
                             <h1 class="text-2xl-removed-removed font-bold" th:text="${product.title}"></h1>
                             <p class="text-gray-700 leading-relaxed" th:text="${product.description}"></p>
-                            <p class="text-red-600 text-3xl font-bold" th:text="${product.price} + '₫'"></p>
+                            <p id="display-prod-price" class="text-red-600 text-3xl font-bold" th:text="${product.price} + '₫'"></p>
+                            <input id="root-prod-price" th:value="${product.price}" hidden />
                         </div>
 
                         <input id="id" name="id" th:value="${product.id}" hidden/>
@@ -36,8 +37,10 @@
                                            class="hidden peer"/>
 
                                     <label th:for="${'property-data-id-' + foption.id}"
+                                           th:alt="${f.id}"
                                            th:text="${foption.data}"
-                                           class="px-4 py-2 border-2 border-gray-300 cursor-pointer
+                                           th:data="${foption.price}"
+                                           class="select-option px-4 py-2 border-2 border-gray-300 cursor-pointer
                                           text-black hover:border-black transition
                                           peer-checked:border-black peer-checked:bg-black peer-checked:text-white">
                                     </label>
