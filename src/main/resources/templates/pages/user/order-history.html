@@ -42,11 +42,15 @@
                             <td class="px-3 py-3 w-full">
                                 <div th:each="item : ${pack.items}"
                                      class="flex items-start gap-3 mb-3 last:mb-0 min-w-0">
-                                    <img th:src="${liveProds.get(item).productMedia.first.dir}"
-                                         class="w-14 h-14 object-cover shadow-md flex-shrink-0" alt="Product">
+<!--                                    <img th:src="${liveProds.get(item).productMedia.first.dir}"-->
+<!--                                         class="w-14 h-14 object-cover shadow-md flex-shrink-0" alt="Product">-->
+                                    <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
+                                        <img th:src="${liveProds.get(item) == null ? '/assets/img/wrong.png' : liveProds.get(item).productMedia.first.dir}"
+                                             class="w-14 h-14 object-cover flex-shrink-0" alt="Product" />
+                                    </a>
                                     <div class="min-w-0 flex-1">
                                         <div class="text-xs font-medium text-gray-900 truncate"
-                                             th:text="${item.productSnapshot.title}"></div>
+                                             th:text="${item.productSnapshot.title + ' (x' + item.getQuantity() + ')'}"></div>
                                         <div class="text-xs text-gray-600 mt-2 space-y-1">
                                             <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}"
                                                class="flex gap-1 min-w-0">

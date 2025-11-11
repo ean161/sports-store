@@ -31,6 +31,10 @@ $(document).ready(function () {
         let qtyElem = $(`#quantity-${id}`);
         let quantity = parseInt(qtyElem.text()) + 1;
 
+        if (quantity >= 100) {
+            return;
+        }
+
         qtyElem.text(quantity);
         await updateQuantity(id, quantity);
 

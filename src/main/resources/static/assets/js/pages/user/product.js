@@ -10,7 +10,12 @@ $(document).ready(function() {
 
     $("#increase-btn").on("click", function() {
         let amount = parseInt($("#amount-input").val());
+        if (amount >= 100) {
+            return;
+        }
+
         $("#amount-input").val(amount + 1);
+        calcPrice();
     });
 
     $("#decrease-btn").on("click", function() {
@@ -18,20 +23,16 @@ $(document).ready(function() {
         if (amount > 1) {
             $("#amount-input").val(amount - 1);
         }
+
+        calcPrice();
     });
 
     $(".select-option").on("click", function () {
         let propId = $(this).attr("alt");
         let propPrice = parseInt($(this).attr("data"));
-        let prodPrice = parseInt($("#root-prod-price").val());
-        let totalPrice = prodPrice;
 
         selectedProp[propId] = propPrice;
-        for (let f in selectedProp) {
-            totalPrice += selectedProp[f];
-        }
-
-        $("#display-prod-price").text(`${totalPrice}₫`)
+        calcPrice();
     })
 
     $(".add-item-btn").on("click", async function (event) {
@@ -51,3 +52,15 @@ $(document).ready(function() {
         await remove(id);
     });
 });
+
+function calcPrice() {
+    let prodPrice = parseInt($("#root-prod-price").val());
+    let qty = parseInt($("#amount-input").val());
+    let totalPrice = prodPrice;
+
+    for (let f in selectedProp) {
+        totalPrice += selectedProp[f];
+    }
+
+    $("#display-prod-price").text(`${totalPrice * qty}₫`)
+}

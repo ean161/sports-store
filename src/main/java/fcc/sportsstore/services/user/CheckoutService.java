@@ -84,6 +84,10 @@ public class CheckoutService {
             item.setPack(pack);
         });
 
+        if (pack.getTotalPrice() < 0) {
+            throw new RuntimeException("Pack price not valid.");
+        }
+
         return switch (paymentType.toUpperCase()) {
             case "OB" -> String.format("/checkout/pay/" + pack.getId());
             case "COD" -> "/order-history";

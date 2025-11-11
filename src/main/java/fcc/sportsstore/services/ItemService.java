@@ -31,6 +31,10 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    public List<Item> getSameItemCart(User user, String productId) {
+        return itemRepository.findByUserAndTypeAndProductSnapshot_productId(user, "CART", productId);
+    }
+
     public Item getById(String id) {
         return itemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Item not found."));

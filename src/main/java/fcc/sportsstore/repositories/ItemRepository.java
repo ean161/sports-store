@@ -13,4 +13,5 @@ public interface ItemRepository extends JpaRepository<Item, String> {
 
     List<Item> findByUserAndTypeOrderByCreatedAtDesc(User user, String type);
 
+    List<Item> findByUserAndTypeAndProductSnapshot_productId(User user, String type, String productId);
 }

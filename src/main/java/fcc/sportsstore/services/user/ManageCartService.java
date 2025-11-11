@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service("userManageCartService")
 public class ManageCartService {
@@ -44,6 +45,7 @@ public class ManageCartService {
         this.productMediaService = productMediaService;
     }
 
+    @Transactional
     public void add(HttpServletRequest request, String productId, Map<String, String> params, Integer quantity) {
         User user = userService.getFromSession(request);
         Product prod = productService.getById(productId);
@@ -55,6 +57,40 @@ public class ManageCartService {
 
         if (!isValidPropertyList(prod, propSnapshot)) {
             throw new IllegalArgumentException("Please select enough product option to add.");
+        }
+
+        List<Item> sameItem = itemService.getSameItemCart(user, productId);
+        for (Item item : sameItem) {
+            List<ProductPropertySnapshot> cartSnaps = item.getProductSnapshot().getProductPropertySnapshots();
+            List<ProductPropertySnapshot> currentSnap = propSnapshot;
+            if (cartSnaps.size() != propSnapshot.size()) {
+                break;
+            }
+
+            boolean areEqual = true;
+            if (cartSnaps.size() != currentSnap.size()) {
+                areEqual = false;
+            } else {
+                for (int i = 0; i < cartSnaps.size(); i++) {
+                    ProductPropertySnapshot a = cartSnaps.get(i);
+                    ProductPropertySnapshot b = currentSnap.get(i);
+
+                    if (!Objects.equals(a.getProductPropertyFieldId(), b.getProductPropertyFieldId())
+                            || !Objects.equals(a.getProductPropertyDataId(), b.getProductPropertyDataId())
+                            || !Objects.equals(a.getName(), b.getName())
+                            || !Objects.equals(a.getData(), b.getData())
+                            || !Objects.equals(a.getPrice(), b.getPrice())) {
+
+                        areEqual = false;
+                        break;
+                    }
+                }
+            }
+
+            if (areEqual) {
+                item.setQuantity(item.getQuantity() + quantity);
+                return;
+            }
         }
 
         propSnapshot.addAll(propSnapshot);

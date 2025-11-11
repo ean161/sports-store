@@ -36,6 +36,7 @@ public class ProductPropertySnapshot {
     // data = X, M, Red,...
     private String data;
 
+    // gia cua property
     private Integer price;
 
     @CreatedDate
