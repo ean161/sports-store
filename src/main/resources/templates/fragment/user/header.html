@@ -15,7 +15,7 @@
                     </div>
                 </div>
 
-                <a th:href="@{/}" class="flex items-center ml-50 space-x-3">
+                <a th:href="@{/}" class="flex items-center mr-35 space-x-3">
                     <div class="relative">
                         <img src="/assets/img/logo-v1.png" alt="" class="w-15">
                     </div>
@@ -27,14 +27,14 @@
 
                 <div class="flex items-center space-x-4">
                     <div class="relative">
-                        <input id="search-bar"
-                               type="text"
-                               placeholder="Search (keywords, etc)"
-                               class="w-56 px-4 py-1.5 bg-white rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
-                        >
-                        <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600">
-                            <i class="fas fa-search"></i>
-                        </button>
+<!--                        <input id="search-bar"-->
+<!--                               type="text"-->
+<!--                               placeholder="Search (keywords, etc)"-->
+<!--                               class="w-56 px-4 py-1.5 bg-white rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"-->
+<!--                        >-->
+<!--                        <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600">-->
+<!--                            <i class="fas fa-search"></i>-->
+<!--                        </button>-->
                     </div>
 
                     <a th:if="${session.user != null}" th:href="@{/cart}" class="relative text-white hover:text-gray-300">

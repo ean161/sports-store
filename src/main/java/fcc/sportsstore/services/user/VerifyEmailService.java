@@ -47,7 +47,7 @@ public class VerifyEmailService {
         Long nowTimestamp = time.getCurrentTimestamp();
         List<VerifyEmail> validCodeRemaining = verifiyEmailService.getByEmailAndStatusAndExpiredAtGreaterThan(email, "NOT_VERIFIED_YET", nowTimestamp);
 
-        if (validCodeRemaining.size() >= 3) {
+        if (validCodeRemaining.size() > 3) {
             throw new RuntimeException("You have requested too many times.");
         } else if (email.isVerified()) {
             throw new RuntimeException("This email was verified before.");

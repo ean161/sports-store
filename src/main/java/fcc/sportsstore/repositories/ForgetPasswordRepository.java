@@ -6,6 +6,8 @@ import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,7 +16,7 @@ public interface ForgetPasswordRepository extends JpaRepository<ForgetPassword, 
     Optional<ForgetPassword> findByCode(String code);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<ForgetPassword> findByUserAndStatusAndExpiredAtGreaterThan(User user, String status, Long now);
+    List<ForgetPassword> findByUserAndStatusAndExpiredAtGreaterThan(User user, String status, Long now);
 
     Optional<ForgetPassword> findByCodeAndStatusAndExpiredAtGreaterThan(String code, String status, Long now);
 }

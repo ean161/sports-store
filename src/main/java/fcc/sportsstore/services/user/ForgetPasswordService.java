@@ -46,19 +46,19 @@ public class ForgetPasswordService {
         return forgetPasswordRepository.findByCodeAndStatusAndExpiredAtGreaterThan(code,"NOT_USED_YET", now).isPresent();
     }
 
-    public boolean existsValidCodeByEmail(String email) {
+    public Integer existsValidCodeByEmail(String email) {
         TimeUtil time = new TimeUtil();
         Long now = time.getCurrentTimestamp();
         Email userEmail = emailService.getByAddress(email).orElseThrow();
 
-        return forgetPasswordRepository.findByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now).isPresent();
+        return forgetPasswordRepository.findByUserAndStatusAndExpiredAtGreaterThan(userEmail.getUser(), "NOT_USED_YET", now).size();
     }
 
     @Transactional
     public void requestForget(String email) {
         if (!emailService.existsByAddress(email)) {
             throw new RuntimeException("Email not exist.");
-        } else if (existsValidCodeByEmail(email)){
+        } else if (existsValidCodeByEmail(email) > 3){
             throw new RuntimeException("You have requested too many times.");
         }
 
