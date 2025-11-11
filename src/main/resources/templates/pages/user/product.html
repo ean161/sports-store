@@ -116,6 +116,11 @@
                                class="text-center inline-flex w-full justify-center bg-black px-5 py-2 font-semibold text-white shadow-xs hover:bg-red-500 sm:w-auto cursor-pointer">How
                                 to choose size</a>
                         </li>
+                        <li>
+                            <a href="#tab3"
+                               class="text-center inline-flex w-full justify-center bg-black px-5 py-2 font-semibold text-white shadow-xs hover:bg-red-500 sm:w-auto cursor-pointer">Customer
+                                reviews</a>
+                        </li>
                     </ul>
                     <div id="productTabContent" class="space-y-8">
                         <div class="bg-white border-gray-500" id="tab1">
@@ -128,7 +133,7 @@
                                 <p>You can use the size filter to quickly find the model that fits you best.</p>
 
                                 <p class="font-bold mb-2">Step 2: Click on the product you want to buy</p>
-                                <p>Click the <span class="text-red-600 font-bold">BUY NOW</span> red button and don’t
+                                <p>Click the <span class="text-red-600 font-bold">BUY NOW</span> red button and don't
                                     forget to select your size.</p>
 
                                 <p class="font-bold mb-2">Step 3: Fill in your order information</p>
@@ -178,6 +183,121 @@
                                         <div class="">
                                             <img src="/assets/img/size_guide.png" alt="clothing size"
                                                  class="w-100 h-80">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Reviews Tab -->
+                        <div class="bg-white border-gray-500" id="tab3">
+                            <h2 class="text-2xl font-bold mb-6 border-b-2 border-red-500 pb-2 inline-block">
+                                Customer reviews</h2>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                                <!-- Review Statistics -->
+                                <div class="lg:col-span-1">
+                                    <div class="bg-gray-50 p-6 top-6 w-full">
+                                        <h3 class="text-xl font-bold mb-4">Overall Rating</h3>
+
+                                        <div class="text-center mb-6 pb-6 border-b border-gray-200">
+                                            <div class="text-5xl font-bold text-red-600 mb-2">4.5</div>
+                                            <div class="flex justify-center text-yellow-400 text-2xl mb-2">
+                                                <span>★★★★</span><span class="text-gray-300">★</span>
+                                            </div>
+                                            <p class="text-gray-600">Based on 156 reviews</p>
+                                        </div>
+
+                                        <div class="space-y-3">
+                                            <div class="flex items-center space-x-3">
+                                                <span class="text-sm font-semibold w-12">5 star</span>
+                                                <div class="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                    <div class="bg-yellow-400 h-full rounded-full" style="width: 57%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 w-8">89</span>
+                                            </div>
+                                            <div class="flex items-center space-x-3">
+                                                <span class="text-sm font-semibold w-12">4 star</span>
+                                                <div class="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                    <div class="bg-yellow-400 h-full rounded-full" style="width: 29%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 w-8">45</span>
+                                            </div>
+                                            <div class="flex items-center space-x-3">
+                                                <span class="text-sm font-semibold w-12">3 star</span>
+                                                <div class="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                    <div class="bg-yellow-400 h-full rounded-full" style="width: 12%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 w-8">18</span>
+                                            </div>
+                                            <div class="flex items-center space-x-3">
+                                                <span class="text-sm font-semibold w-12">2 star</span>
+                                                <div class="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                    <div class="bg-yellow-400 h-full rounded-full" style="width: 2%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 w-8">3</span>
+                                            </div>
+                                            <div class="flex items-center space-x-3">
+                                                <span class="text-sm font-semibold w-12">1 star</span>
+                                                <div class="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                    <div class="bg-yellow-400 h-full rounded-full" style="width: 1%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-600 w-8">1</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="review-form-section" class="bg-gray-50 p-6">
+                                    <h3 class="text-xl font-bold mb-6">Write your review</h3>
+                                    <form id="review-form" method="POST" th:action="@{'/product/' + ${product.id} + '/review'}" class="space-y-4">
+                                        <div>
+                                            <label class="block font-semibold mb-2">Your rating: <span class="text-red-600">*</span></label>
+                                            <div id="star-rating" class="flex space-x-1 text-3xl cursor-pointer">
+                                                <span class="star-icon text-gray-300 hover:text-yellow-400 transition" data-rating="1">★</span>
+                                                <span class="star-icon text-gray-300 hover:text-yellow-400 transition" data-rating="2">★</span>
+                                                <span class="star-icon text-gray-300 hover:text-yellow-400 transition" data-rating="3">★</span>
+                                                <span class="star-icon text-gray-300 hover:text-yellow-400 transition" data-rating="4">★</span>
+                                                <span class="star-icon text-gray-300 hover:text-yellow-400 transition" data-rating="5">★</span>
+                                            </div>
+                                            <input type="hidden" id="rating-value" name="rating" required>
+                                        </div>
+
+                                        <div>
+                                            <label class="block font-semibold mb-2">Review content: <span class="text-red-600">*</span></label>
+                                            <textarea name="content" required rows="4"
+                                                      class="w-full px-4 py-2 border-2 border-gray-300 focus:border-red-500 focus:outline-none transition resize-none"></textarea>
+                                        </div>
+
+                                        <button type="submit"
+                                                class="w-full bg-red-600 text-white font-semibold py-3 mt-3 hover:bg-red-500 transition shadow-lg">
+                                            Submit review
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <div class="space-y-6">
+                                        <div class="border-b border-t border-gray-200 p-6">
+                                            <div class="flex items-start justify-between mb-3">
+                                                <div class="flex items-center space-x-3">
+                                                    <div>
+                                                        <p class="font-bold">Nguyen Van A</p>
+                                                        <p class="text-sm text-gray-500">October 15, 2024</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex text-yellow-400 text-lg">
+                                                    ★★★★★
+                                                </div>
+                                            </div>
+                                            <h4 class="font-bold mb-2">Great product, worth the money!</h4>
+                                            <p class="text-gray-700 mb-3">I bought these shoes for basketball and I must say I'm very satisfied. Good leather quality, soft sole, fits well. True to European size. Fast delivery, careful packaging. Will definitely come back for more!</p>
+                                            <div class="flex gap-2 mb-3">
+                                                <img th:if="${product.productMedia.size() > 0}"
+                                                     th:src="${product.productMedia.get(0).dir}"
+                                                     alt="Review image"
+                                                     class="w-20 h-20 object-cover rounded-lg cursor-pointer hover:opacity-80 transition">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

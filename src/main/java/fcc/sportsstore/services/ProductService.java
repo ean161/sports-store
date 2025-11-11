@@ -30,6 +30,10 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
+    public List<Product> getAll() {
+        return productRepository.findAll();
+    }
+
     public Page<Product> getByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(String search, Pageable pageable) {
         return productRepository.findByIdContainingIgnoreCaseOrTitleContainingIgnoreCase(search, search, pageable);
     }

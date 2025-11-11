@@ -30,25 +30,17 @@ public class Feedback {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Integer rating; // 1-5
+    private Integer rating;
+
 
     @Column(name = "comment", length = 255)
     private String comment;
 
-    @Column(length = 20)
-    private String status;
 
     @CreatedDate
     @Column(name = "created_at")
     private Long createdAt;
 
-    public Feedback(Product product, User user, Integer rating, String comment, String status) {
-        this.product = product;
-        this.user = user;
-        this.rating = rating;
-        this.comment = comment;
-        this.status = status;
-    }
 
     public Feedback(Product product, User user, Integer rating, String comment) {
         this.product = product;

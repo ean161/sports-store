@@ -1,6 +1,7 @@
 package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.ProductCollection;
+import fcc.sportsstore.entities.User;
 import fcc.sportsstore.repositories.ProductCollectionRepository;
 import fcc.sportsstore.utils.RandomUtil;
 import jakarta.transaction.Transactional;
@@ -52,4 +53,5 @@ public class ProductCollectionService {
     public void save(ProductCollection productCollection) {
         productCollectionRepository.save(productCollection);
     }
+
 }

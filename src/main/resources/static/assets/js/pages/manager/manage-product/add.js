@@ -27,3 +27,32 @@ async function add(data) {
         modal("add-product");
     }
 }
+
+function loadProperties(zone, fields, datas = null) {
+    let elm = $(`#${zone}-properties`);
+
+    for (let i in fields) {
+        let item = fields[i];
+
+        elm.append(`<div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-base font-semibold text-gray-900">
+                        ${item.name}
+                    </h3>
+                    <span onclick="addPropertyDataInput('NEW-ID', '${item.id}', '${zone}-property-${item.id}')" class="inline-flex justify-center bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
+                        Add data
+                    </span>
+                </div>
+                <div id="${zone}-property-${item.id}" class="space-y-4">
+                </div>
+            </div>`);
+    }
+
+    if (datas != null) {
+        for (let j in datas) {
+            let item = datas[j];
+
+            addPropertyDataInput(item.id, item.productPropertyField.id, `${zone}-property-${item.productPropertyField.id}`, item.data, item.price);
+        }
+    }
+}

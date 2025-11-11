@@ -39,7 +39,6 @@ public class ManageFeedbackService {
         }
 
         Feedback feedback = feedbackService.getById(id);
-        feedback.setStatus(status.toUpperCase());
         feedbackService.save(feedback);
     }
 

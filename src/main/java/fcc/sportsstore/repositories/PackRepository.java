@@ -1,6 +1,7 @@
 package fcc.sportsstore.repositories;
 
 import fcc.sportsstore.entities.Pack;
+import fcc.sportsstore.entities.Product;
 import fcc.sportsstore.entities.ProductCollection;
 import fcc.sportsstore.entities.User;
 import org.springframework.data.domain.Page;
@@ -26,4 +27,6 @@ public interface PackRepository extends JpaRepository<Pack, String> {
     Page<Pack> findByUser_usernameContainingIgnoreCaseOrSignContainingIgnoreCase(String searchForStatus,
                                                                                  String searchForPaymentType,
                                                                                  Pageable pageable);
+
+    boolean existsByUserAndProductSnapshotsProductAndStatus(User user, Product product, String status);
 }

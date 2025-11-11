@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_collection_id")
     private ProductCollection productCollection;
+
+   
 
     @CreatedDate
     private Long createdAt;

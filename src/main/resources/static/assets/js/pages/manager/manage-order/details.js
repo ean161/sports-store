@@ -3,6 +3,9 @@ async function loadDetails(id) {
         id: id
     });
 
+    console.log(res.data);
+    // return;
+
     let items = ``;
     $("#oh-detail-header").html(res.data.sign);
     $("#oh-id").val(res.data.id);
@@ -15,12 +18,12 @@ async function loadDetails(id) {
 
     $("#oh-modifier").val(res.data.manager ? res.data.manager.fullName : "Not edited yet.")
 
-    for (let iKey in res.data.items) {
-        let pack = res.data.items[iKey];
-        let item = pack.productSnapshot;
+    for (let iKey in res.data.productSnapshots) {
+        let item = res.data.productSnapshots[iKey];
+        console.log(item);
         items += `<tr>
                 <td>${item.title}</td>
-                <td>${pack.quantity}</td>
+                <td>${item.quantity}</td>
                 <td>`;
 
         for (let pKey in item.productPropertySnapshots) {

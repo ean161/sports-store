@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String details(@PathVariable("id") String id, Model model, HttpServletRequest request, HttpSession session) {
+    public String details(@PathVariable("id") String id, Model model, HttpServletRequest request) {
         try {
             ValidateUtil validate = new ValidateUtil();
             Product product = productService.getById(validate.toId(id));
