@@ -10,6 +10,8 @@ async function loadDetails(id) {
     $("#oh-sign").val(res.data.sign);
     $("#oh-status").val(res.data.status);
     $("#oh-payment-type").val(res.data.paymentType);
+    $("#oh-total-price").val(`${res.data.totalPrice}₫`);
+    $("#oh-created-at").val(res.data.createdAt);
 
     for (let iKey in res.data.items) {
         let pack = res.data.items[iKey];

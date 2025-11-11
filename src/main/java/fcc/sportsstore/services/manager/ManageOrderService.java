@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 @Service("managerManageOrderService")
 public class ManageOrderService {
 
@@ -33,8 +36,18 @@ public class ManageOrderService {
 
     @Transactional
     public void edit(String id, String status) {
+        List<String> availableStatus = List.of("PENDING_PAYMENT",
+                "PENDING_APPROVAL",
+                "PENDING_ORDER",
+                "IN_TRANSIT",
+                "REFUNDING",
+                "SUCCESS",
+                "CANCELLED");
+
         if (!packService.existsById(id)) {
-            throw new RuntimeException("Product collection not found");
+            throw new RuntimeException("Product collection not found.");
+        } else if (!availableStatus.contains(status)) {
+            throw new RuntimeException("Status not found.");
         }
 
         Pack pack = packService.getById(id);

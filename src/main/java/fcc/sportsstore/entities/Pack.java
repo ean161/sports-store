@@ -33,6 +33,7 @@ public class Pack {
      * IN_TRANSIT: Moved to delivery.
      * SUCCESS: Delivered pack.
      * CANCELLED: Cancelled order.
+     * REFUNDING: Refunding order.
      */
     private String status;
 
