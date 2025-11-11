@@ -28,8 +28,8 @@
                                     <th class="py-4 px-6 text-center  font-semibold text-gray-700 bg-gray-50">
                                         Price
                                     </th>
-                                    <th class="py-4 px-6 text-center  font-semibold text-gray-700 bg-gray-50">Total
-                                        price
+                                    <th class="py-4 px-6 text-center  font-semibold text-gray-700 bg-gray-50">
+                                        Total price
                                     </th>
                                 </tr>
                             </thead>
@@ -41,16 +41,16 @@
                                 </tr>
                                 <tr th:each="item : ${item}"
                                     th:id="${'item-' + item.id}"
-                                    th:data-available="${item.productSnapshot.available}"
+                                    th:data-available="${item.available}"
                                     class="hover:bg-gray-50 transition-colors"
-                                    th:if="${item.productSnapshot.available && liveProds.get(item) != null}">
+                                    th:if="${item.available && liveProds.get(item) != null}">
                                     <td class="py-4 px-6" hidden>
                                         <input type="checkbox" th:name="${'select-' + item.id}" class="item-select" checked />
                                     </td>
                                     <td class="py-4 px-6">
                                         <div class="flex space-x-4 items-center">
                                             <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 relative w-24 h-24 flex-shrink-0 border border-gray-200">
-                                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
+                                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productId}">
                                                     <img th:src="${liveProds.get(item) == null ? '/assets/img/wrong.png' : liveProds.get(item).productMedia.first.dir}"
                                                          class="w-full h-full object-cover"/>
                                                     <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
@@ -63,7 +63,7 @@
                                                        class="block font-semibold hover:text-blue-600 transition-colors truncate"></b>
                                                 </a>
                                                 <div class="text-xs text-gray-600 mt-2 space-y-1">
-                                                    <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}"
+                                                    <p th:each="prop : ${item.productPropertySnapshots}"
                                                        class="flex gap-1">
                                                         <span th:text="${prop.name + ':'}" class="font-medium"></span>
                                                         <span th:text="${prop.data}"></span>
@@ -73,7 +73,7 @@
                                         </div>
                                     </td>
                                     <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                        <span class="item-price" th:text="${item.productSnapshot.price} + '₫'"></span>
+                                        <span class="item-price" th:text="${item.price} + '₫'"></span>
                                         <span> x</span>
                                         <span th:text="${item.quantity}"
                                               th:id="${'quantity-' + item.id}"

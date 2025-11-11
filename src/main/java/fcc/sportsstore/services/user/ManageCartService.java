@@ -15,13 +15,11 @@ import java.util.Objects;
 @Service("userManageCartService")
 public class ManageCartService {
 
-    private final ItemService itemService;
+    private final ProductSnapshotService productSnapshotService;
 
     private final UserService userService;
 
     private final ProductService productService;
-
-    private final ProductSnapshotService productSnapshotService;
 
     private final ProductPropertyDataService productPropertyDataService;
 
@@ -29,17 +27,10 @@ public class ManageCartService {
 
     private final ProductMediaService productMediaService;
 
-    public ManageCartService(ItemService itemService,
-                             UserService userService,
-                             ProductService productService,
-                             ProductSnapshotService productSnapshotService,
-                             ProductPropertyDataService productPropertyDataService,
-                             ProductPropertySnapshotService productPropertySnapshotService,
-                             ProductMediaService productMediaService) {
-        this.itemService = itemService;
+    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService) {
+        this.productSnapshotService = productSnapshotService;
         this.userService = userService;
         this.productService = productService;
-        this.productSnapshotService = productSnapshotService;
         this.productPropertyDataService = productPropertyDataService;
         this.productPropertySnapshotService = productPropertySnapshotService;
         this.productMediaService = productMediaService;
@@ -49,7 +40,7 @@ public class ManageCartService {
     public Integer add(HttpServletRequest request, String productId, Map<String, String> params, Integer quantity) {
         User user = userService.getFromSession(request);
         Product prod = productService.getById(productId);
-        ProductSnapshot prodSnapshot = toProductSnapshot(prod);
+        ProductSnapshot prodSnapshot = new ProductSnapshot(prod.getId(), prod.getTitle(), prod.getPrice());
         productSnapshotService.save(prodSnapshot);
 
         Integer cartCount = refreshCartItemCount(request);
@@ -61,23 +52,26 @@ public class ManageCartService {
             throw new IllegalArgumentException("Please select enough product option to add.");
         }
 
-        Item sameItem = getSameCartItem(user, productId, propSnapshot);
-        if (sameItem != null) {
-            sameItem.setQuantity(sameItem.getQuantity() + quantity);
+        ProductSnapshot sameProductSnapshot = getSameCartProductSnapshot(user, productId, propSnapshot);
+        if (sameProductSnapshot != null) {
+            sameProductSnapshot.setQuantity(sameProductSnapshot.getQuantity() + quantity);
             return cartCount;
         }
 
         propSnapshot.addAll(propSnapshot);
-        Item item = new Item("CART", user, prodSnapshot, quantity);
-        itemService.save(item);
+        prodSnapshot.setType("CART");
+        prodSnapshot.setUser(user);
+        prodSnapshot.setQuantity(quantity);
+        prodSnapshot.setProductPropertySnapshots(propSnapshot);
+        productSnapshotService.save(prodSnapshot);
 
         return ++cartCount;
     }
 
-    public Item getSameCartItem(User user, String productId, List<ProductPropertySnapshot> currentSnap) {
-        List<Item> sameItem = itemService.getSameItemCart(user, productId);
-        for (Item item : sameItem) {
-            List<ProductPropertySnapshot> cartSnaps = item.getProductSnapshot().getProductPropertySnapshots();
+    public ProductSnapshot getSameCartProductSnapshot(User user, String productId, List<ProductPropertySnapshot> currentSnap) {
+        List<ProductSnapshot> sameProductSnapshot = productSnapshotService.getSameProductSnapshotCart(user, productId);
+        for (ProductSnapshot item : sameProductSnapshot) {
+            List<ProductPropertySnapshot> cartSnaps = item.getProductPropertySnapshots();
             if (cartSnaps.size() != currentSnap.size()) {
                 return null;
             }
@@ -109,12 +103,12 @@ public class ManageCartService {
     public void remove(HttpServletRequest request, HttpSession session, String id) {
         try {
             User user = userService.getFromSession(request);
-            Item item = itemService.getById(id);
+            ProductSnapshot item = productSnapshotService.getById(id);
             if (!user.getId().equals(item.getUser().getId())) {
                 throw new RuntimeException();
             }
 
-            itemService.deleteById(id);
+            productSnapshotService.deleteById(id);
 
             refreshCartItemCount(request);
         } catch (Exception e) {
@@ -126,7 +120,7 @@ public class ManageCartService {
     @Transactional
     public void updateItemQuantity(HttpServletRequest request, String id, Integer quantity) {
         User user = userService.getFromSession(request);
-        Item item = itemService.getById(id);
+        ProductSnapshot item = productSnapshotService.getById(id);
 
         if (!user.getId().equals(item.getUser().getId())) {
             throw new RuntimeException("Invalid user");
@@ -171,10 +165,6 @@ public class ManageCartService {
         return result;
     }
 
-    private ProductSnapshot toProductSnapshot(Product prod) {
-        return new ProductSnapshot(prod.getId(), prod.getTitle(), prod.getPrice());
-    }
-
     private boolean isValidPropertyList(Product product, List<ProductPropertySnapshot> propSnapshot) {
         List<ProductPropertyField> fields = product.getProductType().getProductPropertyFields();
         if (fields.size() != propSnapshot.size()) {
@@ -194,14 +184,14 @@ public class ManageCartService {
         return true;
     }
 
-    public List<Item> getUserCart(User user) {
-        return itemService.getByUserAndType(user, "CART");
+    public List<ProductSnapshot> getUserCart(User user) {
+        return productSnapshotService.getByUserAndType(user, "CART");
     }
 
     public Integer refreshCartItemCount(HttpServletRequest request) {
         User user = userService.getFromSession(request);
-        List<Item> items = getUserCart(user);
-        request.getSession().setAttribute("inCartItemCount", items.size());
+        List<ProductSnapshot> items = getUserCart(user);
+        request.getSession().setAttribute("inCartProductSnapshotCount", items.size());
         return items.size();
     }
 }

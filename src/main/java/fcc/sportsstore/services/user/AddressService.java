@@ -45,7 +45,6 @@ public class AddressService {
         if (!address.getUser().getId().equals(caller.getId())) {
             throw new RuntimeException("You are not allowed to access this address.");
         }
-
         return address;
     }
 

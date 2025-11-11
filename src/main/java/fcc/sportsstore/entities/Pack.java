@@ -27,7 +27,7 @@ public class Pack {
     private User user;
 
     /**
-     * PENDING_PAYMENT: Waiting for payment.///
+     * PENDING_PAYMENT: Waiting for payment./ => To Pay
      * PENDING_APPROVAL: Waiting for staff confirm.
      * PENDING_ORDER: Preparing the pack.
      * IN_TRANSIT: Moved to delivery.
@@ -52,7 +52,7 @@ public class Pack {
     private Integer shippingFee;
 
     @OneToMany(mappedBy = "pack", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item> items;
+    private List<ProductSnapshot> productSnapshots;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -67,20 +67,20 @@ public class Pack {
     @CreatedDate
     private Long createdAt;
 
-    public Pack(User user, String sign, String status, String paymentType, Integer shippingFee, List<Item> items, Address address) {
+    public Pack(User user, String sign, String status, String paymentType, Integer shippingFee, List<ProductSnapshot> productSnapshots, Address address) {
         this.user = user;
         this.sign = sign;
         this.status = status;
         this.paymentType = paymentType;
         this.paymentStatus = "NOT_PAY_YET";
         this.shippingFee = shippingFee;
-        this.items = items;
+        this.productSnapshots = productSnapshots;
         this.address = address;
     }
 
-    public Integer getItemCount() {
+    public Integer getProductSnapshotCount() {
         int count = 0;
-        for (Item i : items) {
+        for (ProductSnapshot i : productSnapshots) {
             count += i.getQuantity();
         }
 
@@ -89,7 +89,7 @@ public class Pack {
 
     public Integer getTotalPrice() {
         int total = shippingFee;
-        for(Item i : items) {
+        for(ProductSnapshot i : productSnapshots) {
             total += i.getTotalPrice();
         }
 

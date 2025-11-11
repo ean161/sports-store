@@ -34,30 +34,30 @@
                                 </tr>
                                 <tr th:each="item : ${item}"
                                     th:id="${'item-' + item.id}"
-                                    th:data-available="${item.productSnapshot.available}"
+                                    th:data-available="${item.available}"
                                     class="hover:bg-gray-50 transition-colors item-line"
-                                    th:classappend="${!item.productSnapshot.available ? 'bg-red-50' : ''}">
+                                    th:classappend="${!item.available ? 'bg-red-50' : ''}">
                                     <td class="py-4 px-6">
-                                        <input th:disabled="${!item.productSnapshot.available}" type="checkbox" th:name="${'select-' + item.id}" class="item-select w-4 h-4" />
+                                        <input th:disabled="${!item.available}" type="checkbox" th:name="${'select-' + item.id}" class="item-select w-4 h-4" />
                                     </td>
                                     <td class="py-4 px-6">
                                         <div class="flex space-x-4 items-center">
                                             <div class="rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:-translate-y-1 relative w-24 h-24 flex-shrink-0 border border-gray-200">
-                                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
+                                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productId}">
                                                     <img th:src="${liveProds.get(item) == null ? '/assets/img/wrong.png' : liveProds.get(item).productMedia.first.dir}"
                                                          class="w-full h-full object-cover"/>
                                                     <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
                                                 </a>
                                             </div>
                                             <div class="flex-1 min-w-0">
-                                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productSnapshot.productId}">
-                                                    <b th:text="${liveProds.get(item) == null ? item.productSnapshot.title : liveProds.get(item).title}"
+                                                <a th:href="${liveProds.get(item) == null ? '#' : '/product/' + item.productId}">
+                                                    <b th:text="${liveProds.get(item) == null ? item.title : liveProds.get(item).title}"
                                                        th:classappend="${liveProds.get(item) == null ? 'line-through text-gray-500' : 'text-gray-800'}"
                                                        class="block font-semibold hover:text-blue-600 transition-colors truncate"></b>
-                                                    <span th:if="${!item.productSnapshot.available}">(Outdated)</span>
+                                                    <span th:if="${!item.available}">(Outdated)</span>
                                                 </a>
                                                 <div class="text-xs text-gray-600 mt-2 space-y-1">
-                                                    <p th:each="prop : ${item.productSnapshot.productPropertySnapshots}"
+                                                    <p th:each="prop : ${item.productPropertySnapshots}"
                                                        class="flex gap-1">
                                                         <span th:text="${prop.name + ':'}" class="font-medium"></span>
                                                         <span th:text="${prop.data}"></span>
@@ -67,7 +67,7 @@
                                         </div>
                                     </td>
                                     <td class="py-4 px-6 text-center font-semibold text-gray-800 whitespace-nowrap">
-                                        <span class="item-price" th:text="${item.productSnapshot.price} + '₫'"></span>
+                                        <span class="item-price" th:text="${item.price} + '₫'"></span>
                                     </td>
                                     <td class="py-4 px-6">
                                         <div class="flex items-center justify-center">

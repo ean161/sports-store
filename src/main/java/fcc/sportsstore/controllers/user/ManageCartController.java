@@ -1,7 +1,7 @@
 package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.*;
-import fcc.sportsstore.services.ItemService;
+import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.ProductService;
 import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.UserService;
@@ -22,31 +22,28 @@ public class ManageCartController {
 
     private final ManageCartService manageCartService;
 
-    private final ItemService itemService;
-
     private final ProductSnapshotService productSnapshotService;
 
     private final UserService userService;
 
-    public ManageCartController(ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService, UserService userService) {
+    public ManageCartController(ManageCartService manageCartService, ProductSnapshotService productSnapshotService, UserService userService) {
         this.manageCartService = manageCartService;
-        this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
         this.userService = userService;
     }
 
     @GetMapping
     public String cartPage(Model model, HttpServletRequest request, HttpSession session) {
-        HashMap<Item, Product> liveProds = new HashMap<>();
+        HashMap<ProductSnapshot, Product> liveProds = new HashMap<>();
         User user = userService.getFromSession(request);
-        List<Item> items = manageCartService.getUserCart(user);
+        List<ProductSnapshot> items = manageCartService.getUserCart(user);
 
         manageCartService.refreshCartItemCount(request);
 
-        for (Item item : items) {
-            productSnapshotService.refreshPrice(item.getProductSnapshot());
-            liveProds.put(item, itemService.getLiveProduct(item));
-            ProductSnapshot snap = item.getProductSnapshot();
+        for (ProductSnapshot item : items) {
+            productSnapshotService.refreshPrice(item);
+            liveProds.put(item, productSnapshotService.getLiveProduct(item));
+            ProductSnapshot snap = item;
             snap.setAvailable(productSnapshotService.isAvailable(snap));
         }
 
@@ -54,4 +51,7 @@ public class ManageCartController {
         model.addAttribute("liveProds", liveProds);
         return "pages/user/cart";
     }
+
+
+
 }

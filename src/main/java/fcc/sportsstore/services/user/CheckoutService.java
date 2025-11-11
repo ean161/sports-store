@@ -16,7 +16,7 @@ public class CheckoutService {
 
     private final PackService packService;
 
-    private final ItemService itemService;
+    private final ProductSnapshotService itemService;
 
     private final ProductSnapshotService productSnapshotService;
 
@@ -29,7 +29,7 @@ public class CheckoutService {
     private final UserService userService;
     private final AddressService addressService;
 
-    public CheckoutService(PackService packService, ItemService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService) {
+    public CheckoutService(PackService packService, ProductSnapshotService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService) {
         this.packService = packService;
         this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
@@ -42,7 +42,7 @@ public class CheckoutService {
 
     @Transactional
     public String order(HttpServletRequest request,
-                      Map<String, String> selectedItems,
+                      Map<String, String> selectedProductSnapshots,
                       String paymentType) {
         paymentType = paymentType.toUpperCase();
         RandomUtil rand = new RandomUtil();
@@ -59,20 +59,20 @@ public class CheckoutService {
             throw new IllegalArgumentException("You haven't avaiable default address to order.");
         }
 
-        List<Item> items = manageCartService.getUserCart(user);
+        List<ProductSnapshot> items = manageCartService.getUserCart(user);
 
-        items.removeIf(item -> !selectedItems.containsKey("select-" + item.getId()));
+        items.removeIf(item -> !selectedProductSnapshots.containsKey("select-" + item.getId()));
 
-        for (Item item : items) {
+        for (ProductSnapshot item : items) {
             if (!item.getType().equals("CART")) {
                 throw new RuntimeException("Selected item isn't valid in cart.");
-            } else if (!productSnapshotService.isAvailable(item.getProductSnapshot())) {
+            } else if (!productSnapshotService.isAvailable(item)) {
                 throw new RuntimeException("Selected item outdated or unavailable.");
             }
         }
 
         if (items == null || items.isEmpty() || items.size() == 0) {
-            throw new RuntimeException("Item list must be not empty.");
+            throw new RuntimeException("ProductSnapshot list must be not empty.");
         }
 
         String sign = "SPST" + rand.randString(6).toUpperCase();

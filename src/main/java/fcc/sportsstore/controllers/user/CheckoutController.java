@@ -1,7 +1,7 @@
 package fcc.sportsstore.controllers.user;
 
 import fcc.sportsstore.entities.*;
-import fcc.sportsstore.services.ItemService;
+import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.PackService;
 import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.UserService;
@@ -27,19 +27,16 @@ public class CheckoutController {
 
     private final ManageCartService manageCartService;
 
-    private final ItemService itemService;
-
     private final ProductSnapshotService productSnapshotService;
 
     private final UserService userService;
 
     private final PackService packService;
 
-    public CheckoutController(CheckoutService checkoutService, AddressService addressService, ManageCartService manageCartService, ItemService itemService, ProductSnapshotService productSnapshotService, UserService userService, PackService packService) {
+    public CheckoutController(CheckoutService checkoutService, AddressService addressService, ManageCartService manageCartService, ProductSnapshotService productSnapshotService, UserService userService, PackService packService) {
         this.checkoutService = checkoutService;
         this.addressService = addressService;
         this.manageCartService = manageCartService;
-        this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
         this.userService = userService;
         this.packService = packService;
@@ -61,19 +58,19 @@ public class CheckoutController {
         User user = userService.getFromSession(request);
         Address defaultAddress = addressService.getDefault(user);
 
-        HashMap<Item, Product> liveProds = new HashMap<>();
-        List<Item> items = manageCartService.getUserCart(user);
+        HashMap<ProductSnapshot, Product> liveProds = new HashMap<>();
+        List<ProductSnapshot> items = manageCartService.getUserCart(user);
 
-        for (Item item : items) {
+        for (ProductSnapshot item : items) {
             if (!params.containsKey("select-" + item.getId())) {
                 continue;
             }
 
             cartTotal += item.getTotalPrice();
-            productSnapshotService.refreshPrice(item.getProductSnapshot());
-            liveProds.put(item, itemService.getLiveProduct(item));
+            productSnapshotService.refreshPrice(item);
+            liveProds.put(item, productSnapshotService.getLiveProduct(item));
 
-            ProductSnapshot snap = item.getProductSnapshot();
+            ProductSnapshot snap = item;
             snap.setAvailable(productSnapshotService.isAvailable(snap));
         }
 

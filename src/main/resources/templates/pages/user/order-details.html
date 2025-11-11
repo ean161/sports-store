@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{layout/profile :: layout(~{::content}, 'Order Details')}">
+    <th:block th:fragment="content">
+        <main>
+            <div class="w-full mx-auto max-w-4xl">
+                <div class="mb-4">
+                    <a th:href="@{/order-history}" class="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1">
+                        <span>Back to Orders</span>
+                    </a>
+                </div>
+
+                <div>
+                    <h2 class="text-3xl font-bold">Order <span th:text="'#' + ${pack.sign}"></span> details</h2>
+                    <p class="pb-3 space-y-4 mt-4 text-base text-gray-700">Manage and track your order</p>
+                </div>
+
+                <div class="overflow-hidden bg-white rounded-lg shadow border border-gray-200">
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">ID</label>
+                            <input type="text"
+                                   th:value="${pack.id}"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm"
+                                   readonly/>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Order code</label>
+                            <input type="text"
+                                   th:value="${pack.sign}"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm"
+                                   readonly/>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Status</label>
+                            <div class="px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900">
+                <span th:if="${pack.status == 'SUCCESS'}"
+                      class="px-3 py-1 inline-flex text-xs bg-green-100 text-green-700 rounded">Completed</span>
+                                <span th:if="${pack.status == 'PENDING_APPROVAL'}"
+                                      class="px-3 py-1 inline-flex text-xs bg-yellow-100 text-yellow-700 rounded">Pending approval</span>
+                                <span th:if="${pack.status == 'IN_TRANSIT'}"
+                                      class="px-3 py-1 inline-flex text-xs bg-yellow-100 text-yellow-700 rounded">To Ship</span>
+                                <span th:if="${pack.status == 'PENDING_PAYMENT'}"
+                                      class="px-3 py-1 inline-flex text-xs bg-yellow-100 text-yellow-700 rounded">To Pay</span>
+                                <span th:if="${pack.status == 'PENDING_ORDER'}"
+                                      class="px-3 py-1 inline-flex text-xs bg-yellow-100 text-yellow-700 rounded">Pending order</span>
+                                <span th:if="${pack.status == 'CANCELLED'}"
+                                      class="px-3 py-1 inline-flex text-xs bg-red-100 text-red-700 rounded">Cancelled</span>
+                                <span th:if="${pack.status == 'REFUNDING'}"
+                                      class="px-3 py-1 inline-flex text-xs bg-orange-100 text-orange-700 rounded">Refunding</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Payment type</label>
+                            <input type="text"
+                                   th:value="${pack.paymentType != null ? pack.paymentType : 'N/A'}"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm"
+                                   readonly/>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Payment status</label>
+                            <input type="text"
+                                   th:value="${pack.paymentStatus != null ? pack.paymentStatus : 'N/A'}"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm"
+                                   readonly/>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Shipping fee</label>
+                            <input type="text"
+                                   th:value="${pack.shippingFee} + '₫'"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm"
+                                   readonly/>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Total price</label>
+                            <input type="text"
+                                   th:value="${pack.totalPrice} + '₫'"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-red-600 font-medium text-base"
+                                   readonly/>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Order date</label>
+                            <input type="text"
+                                   th:value="${pack.createdAt}"
+                                   class="w-full px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm"
+                                   readonly/>
+                        </div>
+
+<!--                        <div th:if="${pack.address != null}" class="md:col-span-2">-->
+<!--                            <label class="block text-sm font-semibold text-gray-700 mb-1">Shipping address</label>-->
+<!--                            <div class="px-3 py-3 bg-gray-100 border border-gray-300 rounded text-gray-900 text-sm space-y-0.5">-->
+<!--                                <p th:text="${pack.address.fullName}"></p>-->
+<!--                                <p th:text="${pack.address.phone}"></p>-->
+<!--                                <p th:text="${pack.address.addressLine}"></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+
+                    <div class="border-t border-gray-200">
+                        <div class="p-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Products</label>
+                            <div class="overflow-x-auto border rounded">
+                                <table class="w-full border-collapse">
+                                    <thead class="bg-gray-100 border-b">
+                                    <tr>
+                                        <th class="px-3 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">Product</th>
+                                        <th class="px-3 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">Quantity</th>
+                                        <th class="px-3 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">Unit price</th>
+                                        <th class="px-3 py-3 text-right text-sm font-semibold text-gray-700 bg-gray-50">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                    <tr th:each="productSnapshot : ${productSnapshots}" class="hover:bg-blue-50 transition-colors duration-200">
+                                        <td class="px-3 py-3">
+                                            <div class="min-w-0">
+                                                <p th:text="${productSnapshot.title}" class="text-sm font-medium text-gray-900 truncate"></p>
+                                                <div th:if="${!#lists.isEmpty(productSnapshot.productPropertySnapshots)}" class="text-xs text-gray-600 mt-1 space-y-0.5">
+                                                    <p th:each="prop : ${productSnapshot.productPropertySnapshots}">
+                                                        <span th:text="${prop.name} + ': ' + ${prop.data}"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3 text-sm" th:text="${productSnapshot.quantity}"></td>
+                                        <td class="px-3 py-3 text-sm">
+                        <span th:if="${liveProds.get(productSnapshot) != null}"
+                              th:text="${liveProds.get(productSnapshot).price} + '₫'"></span>
+                                            <span th:unless="${liveProds.get(productSnapshot) != null}">N/A</span>
+                                        </td>
+                                        <td class="px-3 py-3 text-right text-sm font-medium">
+                                            <span th:text="${productSnapshot.price} + '₫'"></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr th:if="${#lists.isEmpty(productSnapshots)}">
+                                        <td colspan="4" class="px-3 py-3 text-center text-gray-600 font-medium">
+                                            No items
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="flex justify-end gap-2 pt-4">
+                                <a th:href="@{/order-history}"
+                                   class="inline-flex justify-center bg-gray-600 px-3 py-3 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 cursor-pointer">
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </th:block>
+</th:block>
+<footer th:replace="~{fragment/user/footer :: footer}"></footer>
+</html>

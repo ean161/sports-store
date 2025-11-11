@@ -74,4 +74,37 @@ public class ProductSnapshotService {
         snapshot.setPrice(currentProdPrice);
         productSnapshotRepository.save(snapshot);
     }
+
+    public List<ProductSnapshot> getSameProductSnapshotCart(User user, String productId) {
+        return productSnapshotRepository.findByUserAndTypeAndProductId(user, "CART", productId);
+    }
+
+    public ProductSnapshot getById(String id) {
+        return productSnapshotRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ProductSnapshot not found."));
+    }
+
+    public List<ProductSnapshot> getByUserAndType(User user, String type){
+        return productSnapshotRepository.findByUserAndTypeOrderByCreatedAtDesc(user, type);
+    }
+
+    public Product getLiveProduct(ProductSnapshot productSnapshot) {
+        try {
+            return productService.getById(productSnapshot.getProductId());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public ProductPropertyField getLiveField(ProductPropertySnapshot productPropertySnapshot) {
+        try {
+            return productPropertyFieldService.getById(productPropertySnapshot.getProductPropertyFieldId());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void deleteById(String id) {
+        productSnapshotRepository.deleteById(id);
+    }
 }
