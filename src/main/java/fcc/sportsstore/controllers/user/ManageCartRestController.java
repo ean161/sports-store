@@ -28,9 +28,9 @@ public class ManageCartRestController {
     public ResponseEntity<?> add(HttpServletRequest request, @RequestParam(value = "id") String productId, @RequestParam Map<String, String> params, @RequestParam(value = "amount") String amount) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageCartService.add(request, validate.toId(productId), params, validate.toAmount(amount));
+            int cartCount = manageCartService.add(request, validate.toId(productId), params, validate.toAmount(amount));
 
-            Response res = new Response("Product added to cart successfully.");
+            Response res = new Response("Product added to cart successfully.", cartCount);
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

@@ -6,6 +6,7 @@ $(document).ready(function() {
         var data = $(this).serialize();
 
         var res = await post("/cart/add", data);
+        $("#in-cart-item-count").text(res.data);
     });
 
     $("#increase-btn").on("click", function() {
@@ -35,22 +36,18 @@ $(document).ready(function() {
         calcPrice();
     })
 
-    $(".add-item-btn").on("click", async function (event) {
-        if ($("#login-btn").text().indexOf("Login") != -1) {
-            window.location.href = "/login";
-            return;
-        }
-
-        let id = $(this)[0].id.replaceAll("add-item-", "");
-        $(`#item-${id}`).add();
-
-        let itemCountElm = $("#in-cart-item-count");
-        let itemCount = parseInt(itemCountElm.text());
-        itemCountElm.text(itemCount + 1);
-
-        updateTotal();
-        await remove(id);
-    });
+    // $(".add-item-btn").on("click", async function (event) {
+    //     if ($("#login-btn").text().indexOf("Login") != -1) {
+    //         window.location.href = "/login";
+    //         return;
+    //     }
+    //
+    //     let id = $(this)[0].id.replaceAll("add-item-", "");
+    //     $(`#item-${id}`).add();
+    //
+    //     updateTotal();
+    //     await remove(id);
+    // });
 });
 
 function calcPrice() {

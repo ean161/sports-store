@@ -118,7 +118,7 @@ public class AuthFilter implements Filter {
             res.sendRedirect("/");
             return;
         } else if (isManager && !path.startsWith("/manager")) {
-            res.sendRedirect("/manager/dashboard");
+            res.sendRedirect("/manager/order");
             return;
         }
 

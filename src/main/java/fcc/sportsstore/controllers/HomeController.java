@@ -26,7 +26,7 @@ public class HomeController {
 
     @GetMapping
     public String homePage(Model model, HttpServletRequest request, HttpSession session) {
-        manageCartService.refreshCartItemCount(request, session);
+        manageCartService.refreshCartItemCount(request);
         model.addAttribute("collections", productCollectionService.getAll());
         return "pages/home";
     }

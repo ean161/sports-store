@@ -41,7 +41,7 @@ public class ManageCartController {
         User user = userService.getFromSession(request);
         List<Item> items = manageCartService.getUserCart(user);
 
-        manageCartService.refreshCartItemCount(request, session);
+        manageCartService.refreshCartItemCount(request);
 
         for (Item item : items) {
             productSnapshotService.refreshPrice(item.getProductSnapshot());

@@ -46,11 +46,13 @@ public class ManageCartService {
     }
 
     @Transactional
-    public void add(HttpServletRequest request, String productId, Map<String, String> params, Integer quantity) {
+    public Integer add(HttpServletRequest request, String productId, Map<String, String> params, Integer quantity) {
         User user = userService.getFromSession(request);
         Product prod = productService.getById(productId);
         ProductSnapshot prodSnapshot = toProductSnapshot(prod);
         productSnapshotService.save(prodSnapshot);
+
+        Integer cartCount = refreshCartItemCount(request);
 
         List<ProductPropertySnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot,
                 extractPropertyData(params));
@@ -59,43 +61,49 @@ public class ManageCartService {
             throw new IllegalArgumentException("Please select enough product option to add.");
         }
 
-        List<Item> sameItem = itemService.getSameItemCart(user, productId);
-        for (Item item : sameItem) {
-            List<ProductPropertySnapshot> cartSnaps = item.getProductSnapshot().getProductPropertySnapshots();
-            List<ProductPropertySnapshot> currentSnap = propSnapshot;
-            if (cartSnaps.size() != propSnapshot.size()) {
-                break;
-            }
-
-            boolean areEqual = true;
-            if (cartSnaps.size() != currentSnap.size()) {
-                areEqual = false;
-            } else {
-                for (int i = 0; i < cartSnaps.size(); i++) {
-                    ProductPropertySnapshot a = cartSnaps.get(i);
-                    ProductPropertySnapshot b = currentSnap.get(i);
-
-                    if (!Objects.equals(a.getProductPropertyFieldId(), b.getProductPropertyFieldId())
-                            || !Objects.equals(a.getProductPropertyDataId(), b.getProductPropertyDataId())
-                            || !Objects.equals(a.getName(), b.getName())
-                            || !Objects.equals(a.getData(), b.getData())
-                            || !Objects.equals(a.getPrice(), b.getPrice())) {
-
-                        areEqual = false;
-                        break;
-                    }
-                }
-            }
-
-            if (areEqual) {
-                item.setQuantity(item.getQuantity() + quantity);
-                return;
-            }
+        Item sameItem = getSameCartItem(user, productId, propSnapshot);
+        if (sameItem != null) {
+            sameItem.setQuantity(sameItem.getQuantity() + quantity);
+            return cartCount;
         }
 
         propSnapshot.addAll(propSnapshot);
         Item item = new Item("CART", user, prodSnapshot, quantity);
         itemService.save(item);
+
+        return ++cartCount;
+    }
+
+    public Item getSameCartItem(User user, String productId, List<ProductPropertySnapshot> currentSnap) {
+        List<Item> sameItem = itemService.getSameItemCart(user, productId);
+        for (Item item : sameItem) {
+            List<ProductPropertySnapshot> cartSnaps = item.getProductSnapshot().getProductPropertySnapshots();
+            if (cartSnaps.size() != currentSnap.size()) {
+                return null;
+            }
+
+            boolean areEqual = true;
+            for (int i = 0; i < cartSnaps.size(); i++) {
+                ProductPropertySnapshot a = cartSnaps.get(i);
+                ProductPropertySnapshot b = currentSnap.get(i);
+
+                if (!Objects.equals(a.getProductPropertyFieldId(), b.getProductPropertyFieldId())
+                        || !Objects.equals(a.getProductPropertyDataId(), b.getProductPropertyDataId())
+                        || !Objects.equals(a.getName(), b.getName())
+                        || !Objects.equals(a.getData(), b.getData())
+                        || !Objects.equals(a.getPrice(), b.getPrice())) {
+
+                    areEqual = false;
+                    break;
+                }
+            }
+
+            if (areEqual) {
+                return item;
+            }
+        }
+
+        return null;
     }
 
     public void remove(HttpServletRequest request, HttpSession session, String id) {
@@ -108,7 +116,7 @@ public class ManageCartService {
 
             itemService.deleteById(id);
 
-            refreshCartItemCount(request, session);
+            refreshCartItemCount(request);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Invalid cart item to remove");
@@ -190,10 +198,10 @@ public class ManageCartService {
         return itemService.getByUserAndType(user, "CART");
     }
 
-    public Integer refreshCartItemCount(HttpServletRequest request, HttpSession session) {
+    public Integer refreshCartItemCount(HttpServletRequest request) {
         User user = userService.getFromSession(request);
         List<Item> items = getUserCart(user);
-        session.setAttribute("inCartItemCount", items.size());
+        request.getSession().setAttribute("inCartItemCount", items.size());
         return items.size();
     }
 }
