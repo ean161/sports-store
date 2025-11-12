@@ -46,6 +46,10 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductPropertyData> productPropertyData;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProductQuantity> productQuantities;
+
     @ManyToOne
     @JoinColumn(name = "product_collection_id")
     private ProductCollection productCollection;

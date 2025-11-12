@@ -95,7 +95,7 @@ public class CheckoutController {
         try {
             redirectTo = checkoutService.order(request, params, paymentType);
         } catch (Exception e) {
-            return "redirect:/cart";
+            return "redirect:/cart?error=" + e.getMessage();
         }
 
         return "redirect:" + redirectTo;

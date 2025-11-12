@@ -32,8 +32,8 @@ public class TestController {
         this.provinceRepository = provinceRepository;
     }
 
-    @GetMapping
-    @ResponseBody
+//    @GetMapping
+//    @ResponseBody
     public String testPage() {
 //        return productRepository.findById("p2").orElseThrow().getProductPropertyData().get(0).getData();
         try {

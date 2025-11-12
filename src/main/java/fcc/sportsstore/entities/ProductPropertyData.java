@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_property_data")
@@ -38,10 +40,9 @@ public class ProductPropertyData {
 
     private Integer price;
 
-    @ManyToOne
-    @JoinColumn(name = "product_quantity_id")
+    @ManyToMany(mappedBy = "productPropertyData")
     @JsonIgnore
-    private ProductQuantity productQuantity;
+    private Set<ProductQuantity> productQuantities = new HashSet<>();
 
     @CreatedDate
     private Long createdAt;

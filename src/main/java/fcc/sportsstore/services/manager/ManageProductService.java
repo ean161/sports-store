@@ -121,16 +121,16 @@ public class ManageProductService {
         List<ProductPropertyData> newDatas = new ArrayList<>();
         if (fieldIds != null && dataIds != null && datas != null && datas.length > 0) {
             for (int i = 0; i < dataIds.length; i++) {
-                String field = validate.toId(fieldIds[i]); // field id
-                String id = dataIds[i]; // data id
-                String data = validate.toProductPropertyData(datas[i]); // data val
-                Integer price = validate.toPrice(prices[i]); // price of data
+                String field = validate.toId(fieldIds[i]);
+                String id = dataIds[i];
+                String data = validate.toProductPropertyData(datas[i]);
+                Integer price = validate.toPrice(prices[i]);
 
                 if (!productPropertyFieldService.existsById(field)) {
                     throw new RuntimeException("Invalid property field.");
                 }
 
-                ProductPropertyData dataEntity = null;
+                ProductPropertyData dataEntity;
                 if (!id.equals("NEW-ID")) {
                     if (!productPropertyDataService.existsById(id)) {
                         throw new RuntimeException("Invalid property data.");
@@ -140,10 +140,12 @@ public class ManageProductService {
                         dataEntity.setPrice(price);
                     }
                 } else {
-                    dataEntity = new ProductPropertyData(productPropertyFieldService.getById(field),
+                    dataEntity = new ProductPropertyData(
+                            productPropertyFieldService.getById(field),
                             product,
                             data,
-                            price);
+                            price
+                    );
                 }
 
                 productPropertyDataService.save(dataEntity);
@@ -156,9 +158,26 @@ public class ManageProductService {
             currentDatas = new ArrayList<>();
         }
 
-        currentDatas.clear();
-        currentDatas.addAll(newDatas);
+        List<ProductPropertyData> toRemove = currentDatas.stream()
+                .filter(old -> newDatas.stream().noneMatch(n -> n.getId().equals(old.getId())))
+                .toList();
+
+        for (ProductPropertyData oldData : toRemove) {
+            for (ProductQuantity pq : oldData.getProductQuantities()) {
+                pq.getProductPropertyData().remove(oldData);
+            }
+        }
+
+        currentDatas.removeAll(toRemove);
+        for (ProductPropertyData nd : newDatas) {
+            if (currentDatas.stream().noneMatch(cd -> cd.getId().equals(nd.getId()))) {
+                currentDatas.add(nd);
+            }
+        }
+
+        product.setProductPropertyData(currentDatas);
     }
+
 
     public ProductType getProductType(String id) {
         return productTypeService.getById(id);
