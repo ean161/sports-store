@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "product_property_field")
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

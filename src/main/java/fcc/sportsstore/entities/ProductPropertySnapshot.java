@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
+@Table(name = "product_property_snapshot")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

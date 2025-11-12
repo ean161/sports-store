@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "email")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

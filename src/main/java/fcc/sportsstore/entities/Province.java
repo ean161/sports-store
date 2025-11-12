@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "province")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
+@Table(name = "product_quantity")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class ProductQuantity {

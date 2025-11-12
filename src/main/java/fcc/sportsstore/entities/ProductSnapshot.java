@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "product_snapshot")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

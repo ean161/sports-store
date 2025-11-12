@@ -32,8 +32,8 @@ public class TestController {
         this.provinceRepository = provinceRepository;
     }
 
-//        @GetMapping
-//    @ResponseBody
+    @GetMapping
+    @ResponseBody
     public String testPage() {
 //        return productRepository.findById("p2").orElseThrow().getProductPropertyData().get(0).getData();
         try {
@@ -49,10 +49,18 @@ public class TestController {
                     new TypeReference<List<HashMap<String, Object>>>() {}
             );
 
+            HashMap<String, Province> prvs = new HashMap<>();
+
+
             // Print result
             for (HashMap<String, Object> province : provinces) {
 //                Province prv = new Province();
-                Ward prv = new Ward(province.get("WARDS_NAME").toString(), Integer.parseInt(province.get("WARDS_ID").toString()), provinceRepository.findByVtpId(Integer.parseInt(province.get("PROVINCE_ID").toString())).orElseThrow());
+                String pId = province.get("PROVINCE_ID").toString();
+                if (!prvs.containsKey(pId)) {
+                    prvs.put(pId, provinceRepository.findByVtpId(Integer.parseInt(pId)).orElseThrow());
+                }
+                // provinceRepository.findByVtpId(Integer.parseInt(pId)).orElseThrow()
+                Ward prv = new Ward(province.get("WARDS_NAME").toString(), Integer.parseInt(province.get("WARDS_ID").toString()), prvs.get(pId));
                 wardService.save(prv);
             }
         } catch (Exception e) {

@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "customer")
 @Getter
 @Setter
 @NoArgsConstructor @AllArgsConstructor

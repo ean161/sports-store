@@ -40,9 +40,11 @@ public class FeedbackService {
     public void deleteById(String id) {
         feedbackRepository.deleteById(id);
     }
-        public boolean hasPurchasedProduct(User user, Product product) {
-            return packRepository.existsByUserAndProductSnapshotsProductAndStatus(user, product, "SUCCESS");
-        }
+
+    public boolean hasPurchasedProduct(User user, Product product) {
+        return false;
+//        return packRepository.existsByUserAndProductSnapshotsProductAndStatus(user, product, "SUCCESS");
+    }
 
     public Feedback addFeedback(User user, Product product, Integer rating, String comment) {
         if (!hasPurchasedProduct(user, product)) {

@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "product")
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

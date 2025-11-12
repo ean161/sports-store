@@ -13,8 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@Table(name = "voucher")
 @Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Voucher {
 

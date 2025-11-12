@@ -12,9 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
+@Table(name = "ward")
 @Getter
 @Setter
-@Table(name = "ward")
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Ward {

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Table(name = "product_property_data")
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

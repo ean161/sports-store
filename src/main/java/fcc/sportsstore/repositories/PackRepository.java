@@ -28,5 +28,5 @@ public interface PackRepository extends JpaRepository<Pack, String> {
                                                                                  String searchForPaymentType,
                                                                                  Pageable pageable);
 
-    boolean existsByUserAndProductSnapshotsProductAndStatus(User user, Product product, String status);
+//    boolean existsByUserAndProductSnapshotsProductAndStatus(User user, Product product, String status);
 }

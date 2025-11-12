@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "pack")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

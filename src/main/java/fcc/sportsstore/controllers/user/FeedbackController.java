@@ -27,12 +27,12 @@ public class FeedbackController {
 
     @GetMapping("/product/{productId}")
     public String listFeedback(@PathVariable("productId") String productId, Model model) {
-        ValidateUtil validate = new ValidateUtil();
-        Product product = productService.getById(validate.toId(productId));
-
-        List<Feedback> feedbacks = feedbackService.getByProduct(product);
-        model.addAttribute("product", product);
-        model.addAttribute("feedbacks", feedbacks);
+//        ValidateUtil validate = new ValidateUtil();
+//        Product product = productService.getById(validate.toId(productId));
+//
+//        List<Feedback> feedbacks = feedbackService.getByProduct(product);
+//        model.addAttribute("product", product);
+//        model.addAttribute("feedbacks", feedbacks);
 
         return "pages/user/feedback";
     }
@@ -44,25 +44,25 @@ public class FeedbackController {
             @RequestParam("rating") Integer rating,
             HttpServletRequest request
     ) {
-        try {
-            ValidateUtil validate = new ValidateUtil();
-            Product product = productService.getById(validate.toId(productId));
-            User user = (User) request.getSession().getAttribute("user");
-
-            if (user == null) {
-                return "redirect:/login";
-            }
-
-            Feedback feedback = new Feedback();
-            feedback.setProduct(product);
-            feedback.setUser(user);
-            feedback.setContent(content);
-            feedback.setRating(rating);
-            feedbackService.save(feedback);
-
-            return "redirect:/product/" + productId; // Quay lại trang chi tiết sản phẩm
-        } catch (Exception e) {
+//        try {
+//            ValidateUtil validate = new ValidateUtil();
+//            Product product = productService.getById(validate.toId(productId));
+//            User user = (User) request.getSession().getAttribute("user");
+//
+//            if (user == null) {
+//                return "redirect:/login";
+//            }
+//
+//            Feedback feedback = new Feedback();
+//            feedback.setProduct(product);
+//            feedback.setUser(user);
+//            feedback.setContent(content);
+//            feedback.setRating(rating);
+//            feedbackService.save(feedback);
+//
+//            return "redirect:/product/" + productId; // Quay lại trang chi tiết sản phẩm
+//        } catch (Exception e) {
             return "redirect:/";
-        }
+//        }
     }
 }
