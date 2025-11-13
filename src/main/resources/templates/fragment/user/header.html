@@ -2,20 +2,7 @@
     <div class="border-gray-800">
         <div class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4 text-white text-sm">
-                    <div th:if="${session.user != null}" class="flex items-center 5 gap-2">
-                        <a th:href="@{/profile}"><img src="/assets/img/icon/user1.png" alt="user" class="w-6 h-6"></a>
-                        <a th:href="@{/profile}" th:text="${session.user.fullName}" class="hover:text-gray-300"></a>
-                    </div>
-                    <div th:if="${session.user == null}" class="flex items-center space-x-1">
-                        <a id="login-btn" th:href="@{/login}" class="hover:text-gray-300 flex items-center justify-center gap-2">
-                            <img src="/assets/img/icon/user1.png" alt="user" class="w-6 h-6">
-                            Login
-                        </a>
-                    </div>
-                </div>
-
-                <a th:href="@{/}" class="flex items-center ml-50 space-x-3">
+                <a th:href="@{/}" class="flex items-center space-x-3">
                     <div class="relative">
                         <img src="/assets/img/logo-v1.png" alt="" class="w-15">
                     </div>
@@ -23,24 +10,36 @@
                         <div class="font-bold text-4xl text-white tracking-wider">SPORTS <span class="text-red-600">STORE</span></div>
                     </div>
                 </a>
+                <div class="w-[40%]">
+                    <input id="search-bar"
+                           type="text"
+                           placeholder="Search (keywords, etc)"
+                           class="w-full px-4 py-2 bg-white rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
+                           th:value="${param != null && param.keyword != null ? param.keyword : ''}">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
 
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <input id="search-bar"
-                               type="text"
-                               placeholder="Search (keywords, etc)"
-                               class="w-56 px-4 py-1.5 bg-white rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
-                               th:value="${param != null && param.keyword != null ? param.keyword : ''}">
-                        <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-
+                <div class="flex items-center space-x-8">
                     <a th:if="${session.user != null}" th:href="@{/cart}" class="relative text-white hover:text-gray-300">
                         <img src="/assets/img/icon/cart1.png" alt="cart" class="w-8 h-8">
                         <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
                               th:text="${session.inCartItemCount}" id="in-cart-item-count">0</span>
                     </a>
+
+                    <div class="flex items-center space-x-4 text-white text-sm">
+                        <div th:if="${session.user != null}" class="flex items-center 5 gap-2">
+                            <a th:href="@{/profile}" th:text="${session.user.fullName}" class="hover:text-gray-300"></a>
+                            <a th:href="@{/profile}"><img src="/assets/img/sample-avatar.png" alt="user" class="w-8 h-8 ml-1"></a>
+                        </div>
+                        <div th:if="${session.user == null}" class="flex items-center space-x-1">
+                            <a id="login-btn" th:href="@{/login}" class="hover:text-gray-300 flex items-center justify-center gap-2">
+                                <img src="/assets/img/icon/user1.png" alt="user" class="w-6 h-6">
+                                Login
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
