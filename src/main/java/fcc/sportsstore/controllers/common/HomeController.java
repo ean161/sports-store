@@ -1,8 +1,6 @@
-package fcc.sportsstore.controllers;
+package fcc.sportsstore.controllers.common;
 
-import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.ProductCollectionService;
-import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.ManageCartService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

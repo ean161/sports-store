@@ -35,7 +35,8 @@ public class AuthFilter implements Filter {
             "/collection/",
             "/product/",
             "/verify-email/",
-            "/checkout/paid");
+            "/checkout/paid",
+            "/search/");
 
     private final List<String> assets = List.of(
             ".css",

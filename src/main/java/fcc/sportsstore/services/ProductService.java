@@ -60,4 +60,7 @@ public class ProductService {
         return productRepository.findByProductType(type);
     }
 
+    public List<Product> searchOnBar(String keyword) {
+        return productRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
+    }
 }

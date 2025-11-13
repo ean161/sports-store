@@ -56,8 +56,7 @@ public class Voucher {
      */
     private Double maxDiscountValue;
 
-    @CreatedDate
-    private LocalDateTime expiredAt;
+    private Long expiredAt;
 
     @CreatedDate
     private Long createdAt;
