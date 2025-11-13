@@ -2,7 +2,6 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.Voucher;
 import fcc.sportsstore.repositories.VoucherRepository;
-import fcc.sportsstore.utils.RandomUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +31,7 @@ public class VoucherService {
                 .orElseThrow(() -> new RuntimeException("Voucher ID not found"));
     }
 
-    public Page<Voucher> getVoucherById(String search, Pageable pageable) {
+    public Page<Voucher> getById(String search, Pageable pageable) {
         return voucherRepository.findByIdContainingIgnoreCase(search, pageable);
     }
 

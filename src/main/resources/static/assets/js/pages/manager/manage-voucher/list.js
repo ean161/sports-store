@@ -54,7 +54,7 @@ $(document).ready(function () {
                 data: "action",
                 orderable: false,
                 render: function (data, type, row) {
-                    return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto  cursor-pointer">Details</button>`;
+                    return `<button onclick="details('${row.id}')" class="inline-flex w-full justify-center bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:w-auto cursor-pointer">Details</button>`;
                 }
             }
         ]

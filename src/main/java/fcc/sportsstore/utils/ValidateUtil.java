@@ -154,7 +154,7 @@ public class ValidateUtil {
     }
 
     public String toVoucherCode(String input) {
-        return toStringForm("Voucher code", input, 3, 35, true, false, true, false);
+        return toStringForm("Voucher code", input, 3, 35, true, true, false, false);
     }
 
     public Integer toVoucherMaxUsedCount(String input) {
@@ -199,5 +199,27 @@ public class ValidateUtil {
 
     public String toBankingSign(String input) {
         return toStringForm("Banking sign", input, 10, 10, true, true, false, false);
+    }
+
+    public String toVoucherDiscountType(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("Discount type must be not empty.");
+        }
+
+        if (!input.equalsIgnoreCase("PERCENT") && !input.equalsIgnoreCase("STATIC")) {
+            throw new IllegalArgumentException("Discount type not valid.");
+        }
+
+        return input.trim().toUpperCase();
+    }
+
+    public Long toTimestamp(String input) {
+
+        if (!input.contains("-") || !input.contains(":")) {
+            throw new IllegalArgumentException("Selected time invalid.");
+        }
+
+        TimeUtil timeUtil = new TimeUtil();
+        return timeUtil.getTimestamp(input);
     }
 }

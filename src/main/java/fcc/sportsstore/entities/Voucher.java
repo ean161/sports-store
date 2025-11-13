@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,14 +62,15 @@ public class Voucher {
     @CreatedDate
     private Long createdAt;
 
-    public Voucher(String code, String status, Integer maxUsedCount, String discountType, Double discountValue, Double maxDiscountValue) {
+    public Voucher(String code, Integer maxUsedCount, String discountType, Double discountValue, Double maxDiscountValue, Long expiredAt) {
         this.code = code;
-        this.status = status;
+        this.status = "ACTIVE";
         this.maxUsedCount = maxUsedCount;
         this.usedCount = 0;
         this.discountType = discountType;
         this.discountValue = discountValue;
         this.maxDiscountValue = maxDiscountValue;
+        this.expiredAt = expiredAt;
     }
 
     public String getCreatedAt() {

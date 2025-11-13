@@ -1,20 +1,41 @@
 async function loadDetails(id) {
+    $("#voucher-details-form")[0].reset();
     let res = await post("/manager/voucher/details", {
         id: id
     });
-    $("#vd-voucher-header").html(res.data.name);
+
+    if (res.data.expiredAt == -1) {
+        $("#vd-expired-at-container").hide();
+    } else {
+        $("#vd-expired-at-container").show();
+    }
+
+    if (res.data.discountType == "STATIC") {
+        $("#vd-max-discount-value-container").hide();
+    } else {
+        $("#vd-max-discount-value-container").show();
+    }
+
+    if (res.data.status == "ACTIVE") {
+        $("#active-btn").hide();
+        $("#disable-btn").show();
+    } else {
+        $("#active-btn").show();
+        $("#disable-btn").hide();
+    }
+
+    $("#vd-voucher-header").html(res.data.code);
     $("#vd-id").val(res.data.id);
     $("#vd-code").val(res.data.code);
-    $("#vd-created-date").val(res.data.createdAt);
     $("#vd-discount-type").val(res.data.discountType);
-    $("#vd-discount-value").val(res.data.discountValue);
-    $("#vd-expired-date").val(res.data.expiredAt);
+    $("#vd-discount-value").val(`${res.data.discountValue}${res.data.discountType == "PERCENT" ? "%" : "₫"}`);
     $("#vd-max-discount-value").val(res.data.maxDiscountValue);
-    $("#vd-max-used").val(res.data.maxUsedCount);
+    $("#vd-used").val(`${res.data.usedCount}/${res.data.maxUsedCount}`);
     $("#vd-status").val(res.data.status);
-    $("#vd-used-count").val(res.data.usedCount);
+    $("#vd-expired-at").val(res.data.createdAt);
+    $("#vd-created-at").val(res.data.createdAt);
 
-    $("#vd-remove-btn").attr("onclick", `remove('${id}')`);
+    $("#vd-remove-btn").attr("onclick", `disableVoucher('${id}')`);
 }
 
 async function details(id) {

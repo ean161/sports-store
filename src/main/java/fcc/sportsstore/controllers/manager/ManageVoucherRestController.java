@@ -33,17 +33,19 @@ public class ManageVoucherRestController {
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestParam(value = "code", required = false) String code,
-                                 @RequestParam(value = "status", required = false) String status,
                                  @RequestParam(value = "max-used", required = false) String maxUsedCount,
                                  @RequestParam(value = "discount-type", required = false) String discountType,
                                  @RequestParam(value = "discount-value", required = false) String discountValue,
-                                 @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue) {
+                                 @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue,
+                                 @RequestParam(value = "expired-at", required = false) String expiredAt) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageVoucherService.add(validate.toVoucherCode(code), status,
-                    validate.toVoucherMaxUsedCount(maxUsedCount), discountType,
+            manageVoucherService.add(validate.toVoucherCode(code),
+                    validate.toVoucherMaxUsedCount(maxUsedCount),
+                    validate.toVoucherDiscountType(discountType),
                     validate.toVoucherDiscountValue(discountValue),
-                    validate.toVoucherMaxDiscountValue(maxDiscountValue));
+                    validate.toVoucherMaxDiscountValue(maxDiscountValue),
+                    expiredAt);
 
             Response res = new Response("Voucher added successfully.");
             return ResponseEntity.ok(res.build());
@@ -53,26 +55,40 @@ public class ManageVoucherRestController {
         }
     }
 
-    @PostMapping("/edit")
-    public ResponseEntity<?> edit(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam(value = "code", required = false) String code,
-            @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "max-used", required = false) String maxUsedCount,
-            @RequestParam(value = "used", required = false) Integer usedCount,
-            @RequestParam(value = "discount-type", required = false) String discountType,
-            @RequestParam(value = "discount-value", required = false) String discountValue,
-            @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue
-    ) {
+//    @PostMapping("/edit")
+//    public ResponseEntity<?> edit(
+//            @RequestParam(value = "id", required = false) String id,
+//            @RequestParam(value = "code", required = false) String code,
+//            @RequestParam(value = "status", required = false) String status,
+//            @RequestParam(value = "max-used", required = false) String maxUsedCount,
+//            @RequestParam(value = "used", required = false) Integer usedCount,
+//            @RequestParam(value = "discount-type", required = false) String discountType,
+//            @RequestParam(value = "discount-value", required = false) String discountValue,
+//            @RequestParam(value = "max-discount-value", required = false) String maxDiscountValue
+//    ) {
+//        try {
+//            ValidateUtil validate = new ValidateUtil();
+//            manageVoucherService.edit(validate.toId(id),
+//                    validate.toVoucherCode(code), status,
+//                    validate.toVoucherMaxUsedCount(maxUsedCount), usedCount, discountType,
+//                    validate.toVoucherDiscountValue(discountValue),
+//                    validate.toVoucherMaxDiscountValue(maxDiscountValue));
+//
+//            Response res = new Response("Voucher updated successfully.");
+//            return ResponseEntity.ok(res.build());
+//        } catch (Exception e) {
+//            Response res = new Response(e.getMessage());
+//            return ResponseEntity.badRequest().body(res.build());
+//        }
+//    }
+
+    @PostMapping("/disable")
+    public ResponseEntity<?> disable(@RequestParam(value = "id", required = false) String id) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageVoucherService.edit(validate.toId(id),
-                    validate.toVoucherCode(code), status,
-                    validate.toVoucherMaxUsedCount(maxUsedCount), usedCount, discountType,
-                    validate.toVoucherDiscountValue(discountValue),
-                    validate.toVoucherMaxDiscountValue(maxDiscountValue));
+            manageVoucherService.disable(validate.toId(id));
 
-            Response res = new Response("Voucher updated successfully.");
+            Response res = new Response("Voucher disabled successfully.");
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());
@@ -80,13 +96,13 @@ public class ManageVoucherRestController {
         }
     }
 
-    @PostMapping("/remove")
-    public ResponseEntity<?> remove(@RequestParam(value = "id", required = false) String id) {
+    @PostMapping("/active")
+    public ResponseEntity<?> active(@RequestParam(value = "id", required = false) String id) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            manageVoucherService.remove(validate.toId(id));
+            manageVoucherService.active(validate.toId(id));
 
-            Response res = new Response("Voucher removed successfully.");
+            Response res = new Response("Voucher re-active successfully.");
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());
