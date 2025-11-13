@@ -5,6 +5,11 @@ $(document).ready(function() {
         event.preventDefault();
         var data = $(this).serialize();
 
+        if ($("#login-btn").text().indexOf("Login") != -1) {
+            window.location.href = "/login";
+            return;
+        }
+
         var res = await post("/cart/add", data);
         $("#in-cart-item-count").text(res.data);
     });
@@ -37,10 +42,6 @@ $(document).ready(function() {
     })
 
     // $(".add-item-btn").on("click", async function (event) {
-    //     if ($("#login-btn").text().indexOf("Login") != -1) {
-    //         window.location.href = "/login";
-    //         return;
-    //     }
     //
     //     let id = $(this)[0].id.replaceAll("add-item-", "");
     //     $(`#item-${id}`).add();
