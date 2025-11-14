@@ -59,16 +59,21 @@
                                 <p class="text-sm font-medium text-gray-900" th:text="${pack.id}"></p>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Order Code</label>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Order
+                                    Code</label>
                                 <p class="text-sm font-medium text-gray-900" th:text="${pack.sign}"></p>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment Type</label>
-                                <p class="text-sm font-medium text-gray-900" th:text="${pack.paymentType != null ? pack.paymentType : 'N/A'}"></p>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment
+                                    Type</label>
+                                <p class="text-sm font-medium text-gray-900"
+                                   th:text="${pack.paymentType != null ? pack.paymentType : 'N/A'}"></p>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment Status</label>
-                                <p class="text-sm font-medium text-gray-900" th:text="${pack.paymentStatus != null ? pack.paymentStatus : 'N/A'}"></p>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment
+                                    Status</label>
+                                <p class="text-sm font-medium text-gray-900"
+                                   th:text="${pack.paymentStatus != null ? pack.paymentStatus : 'N/A'}"></p>
                             </div>
                         </div>
                     </div>
@@ -80,8 +85,10 @@
                     </div>
                     <div class="px-6 py-4">
                         <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-900" th:text="${pack.address.note  + ' | ' + pack.address.phoneNumber}"></p>
-                            <p class="text-sm text-gray-700" th:text="${pack.address.addressDetail + ', ' + pack.address.province.name + ', ' + pack.address.ward.name}"></p>
+                            <p class="text-sm font-medium text-gray-900"
+                               th:text="${pack.address.note  + ' | ' + pack.address.phoneNumber}"></p>
+                            <p class="text-sm text-gray-700"
+                               th:text="${pack.address.addressDetail + ', ' + pack.address.province.name + ', ' + pack.address.ward.name}"></p>
                         </div>
                     </div>
                 </div>
@@ -122,9 +129,12 @@
                                         <div class="flex-1 min-w-0">
                                             <a th:href="${liveProds.get(productSnapshot) == null ? '#' : '/product/' + productSnapshot.productId}"
                                                class="text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors block">
-                                                <span th:text="${productSnapshot.title + 'FeedBack'}"></span>
+                                                <span th:text="${productSnapshot.title}"></span>
+                                                <span class="ml-3 text-gray-700 hover:text-blue-600"
+                                                      th:if="${pack.status == 'SUCCESS'}"
+                                                >(Feedback)</span>
                                             </a>
-                                                <div th:if="${!#lists.isEmpty(productSnapshot.productPropertySnapshots)}"
+                                            <div th:if="${!#lists.isEmpty(productSnapshot.productPropertySnapshots)}"
                                                  class="space-y-1 mt-2">
                                                 <p th:each="prop : ${productSnapshot.productPropertySnapshots}"
                                                    class="text-xs text-gray-600">
@@ -165,6 +175,14 @@
                            class="inline-flex justify-center bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer rounded">
                             <span>Pay Now</span>
                         </a>
+                    </th:block>
+                    <th:block th:if="${pack.status == 'PENDING_PAYMENT' || pack.status == 'PENDING_APPROVAL'}">
+                        <form method="post" th:action="@{'/order-history/cancel/' + ${pack.id}}">
+                            <button type="submit"
+                                    class="inline-flex justify-center bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer rounded">
+                                Cancel
+                            </button>
+                        </form>
                     </th:block>
                     <a th:href="@{/order-history}"
                        class="inline-flex justify-center bg-gray-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 cursor-pointer rounded">

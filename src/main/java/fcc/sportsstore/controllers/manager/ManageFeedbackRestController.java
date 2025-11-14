@@ -3,6 +3,8 @@ package fcc.sportsstore.controllers.manager;
 import fcc.sportsstore.entities.Feedback;
 import fcc.sportsstore.services.manager.ManageFeedbackService;
 import fcc.sportsstore.utils.Response;
+import fcc.sportsstore.utils.ValidateUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -42,11 +44,25 @@ public class ManageFeedbackRestController {
         }
     }
 
-    @PostMapping("/remove")
-    public ResponseEntity<?> remove(@RequestParam("id") String id) {
+//    @PostMapping("/remove")
+//    public ResponseEntity<?> remove(@RequestParam("id") String id) {
+//        try {
+//            manageFeedbackService.remove(id);
+//            Response res = new Response("Feedback removed successfully.");
+//            return ResponseEntity.ok(res.build());
+//        } catch (Exception e) {
+//            Response res = new Response(e.getMessage());
+//            return ResponseEntity.badRequest().body(res.build());
+//        }
+//    }
+
+    @PostMapping("/reply")
+    public ResponseEntity<?> reply(@RequestParam(value = "fd-id") String id,
+                                   @RequestParam(value = "fd-reply") String reply) {
         try {
-            manageFeedbackService.remove(id);
-            Response res = new Response("Feedback removed successfully.");
+            ValidateUtil validate = new ValidateUtil();
+            manageFeedbackService.reply(validate.toId(id), reply);
+            Response res = new Response("Reply feedback successfully.");
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

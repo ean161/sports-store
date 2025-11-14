@@ -10,13 +10,13 @@ public class ValidateUtil {
     }
 
     private String toStringForm(String title,
-                               String rawInput,
-                               int minLength,
-                               int maxLength,
-                               boolean hasAlpha,
-                               boolean hasNum,
-                               boolean hasSpace,
-                               boolean hasSpecialChars) {
+                                String rawInput,
+                                int minLength,
+                                int maxLength,
+                                boolean hasAlpha,
+                                boolean hasNum,
+                                boolean hasSpace,
+                                boolean hasSpecialChars) {
         if (rawInput == null) {
             throw new IllegalArgumentException(String.format("%s must be not null.", title));
         }
@@ -62,9 +62,9 @@ public class ValidateUtil {
     }
 
     private Integer toIntegerForm(String title,
-                                 String rawInput,
-                                 int minRange,
-                                 int maxRange) {
+                                  String rawInput,
+                                  int minRange,
+                                  int maxRange) {
         if (rawInput == null) {
             throw new IllegalArgumentException(String.format("%s must be not null.", title));
         }
@@ -86,9 +86,9 @@ public class ValidateUtil {
     }
 
     private Double toDoubleForm(String title,
-                                 String rawInput,
-                                 double minRange,
-                                 double maxRange) {
+                                String rawInput,
+                                double minRange,
+                                double maxRange) {
         if (rawInput == null) {
             throw new IllegalArgumentException(String.format("%s must be not null.", title));
         }
@@ -120,7 +120,7 @@ public class ValidateUtil {
     public String toFullName(String input) {
         return toStringForm("Full name", input, 3, 35, true, false, true, false);
     }
-    
+
     public String toPassword(String input) {
         return toStringForm("Password", input, 6, 35, true, true, false, true);
     }
@@ -161,12 +161,12 @@ public class ValidateUtil {
         return toIntegerForm("Limit used count", input, -1, Integer.MAX_VALUE);
     }
 
-    public Double toVoucherDiscountValue(String input) {
-        return toDoubleForm("Discount value", input, 0f, Double.MAX_VALUE);
+    public Integer toVoucherDiscountValue(String input) {
+        return toIntegerForm("Discount value", input, 0, Integer.MAX_VALUE);
     }
 
-    public Double toVoucherMaxDiscountValue(String input) {
-        return toDoubleForm("Max discount value", input, -1, Double.MAX_VALUE);
+    public Integer toVoucherMaxDiscountValue(String input) {
+        return toIntegerForm("Max discount value", input, -1, Integer.MAX_VALUE);
     }
 
     public String toAddressNote(String input) {

@@ -50,19 +50,20 @@ public class Voucher {
      */
     private String discountType;
 
-    private Double discountValue;
+    private Integer discountValue;
 
     /**
      * -1: Unlimit
      */
-    private Double maxDiscountValue;
+    private Integer maxDiscountValue;
 
     private Long expiredAt;
 
     @CreatedDate
     private Long createdAt;
 
-    public Voucher(String code, Integer maxUsedCount, String discountType, Double discountValue, Double maxDiscountValue, Long expiredAt) {
+
+    public Voucher(String code, Integer maxUsedCount, String discountType, Integer discountValue, Integer maxDiscountValue, Long expiredAt) {
         this.code = code;
         this.status = "ACTIVE";
         this.maxUsedCount = maxUsedCount;

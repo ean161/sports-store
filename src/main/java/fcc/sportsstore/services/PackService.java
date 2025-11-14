@@ -1,9 +1,6 @@
 package fcc.sportsstore.services;
 
-import fcc.sportsstore.entities.Manager;
-import fcc.sportsstore.entities.Pack;
-import fcc.sportsstore.entities.ProductCollection;
-import fcc.sportsstore.entities.User;
+import fcc.sportsstore.entities.*;
 import fcc.sportsstore.repositories.PackRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -41,7 +38,7 @@ public class PackService {
     }
 
     public List<Pack> getByUser(User user) {
-       return packRepository.findByUserOrderByCreatedAtDesc(user);
+        return packRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
     public Optional<Pack> getByUserAndStatusNotAndSign(User user, String status, String sign) {
@@ -60,4 +57,13 @@ public class PackService {
     public boolean existsById(String id) {
         return packRepository.findById(id).isPresent();
     }
+
+    public void cancelPack(String packId) {
+        Pack pack = packRepository.findById(packId).orElse(null);
+        if (pack != null) {
+            pack.setStatus("CANCELLED");
+            packRepository.save(pack);
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package fcc.sportsstore.services.manager;
 
 import fcc.sportsstore.entities.Feedback;
+import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.FeedbackService;
 import fcc.sportsstore.utils.ValidateUtil;
 import org.springframework.data.domain.Page;
@@ -42,12 +43,14 @@ public class ManageFeedbackService {
         feedbackService.save(feedback);
     }
 
-    public void remove(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("Id must not be empty");
-        }
-        feedbackService.deleteById(id);
+    @Transactional
+    public void reply(String id, String reply) {
+        Feedback feedback = feedbackService.getById(id);
+        feedback.setReply(reply);
+        feedbackService.save(feedback);
     }
+
+
 }
 
 

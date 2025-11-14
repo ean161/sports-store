@@ -14,8 +14,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "pack")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Pack {
 
@@ -68,6 +70,7 @@ public class Pack {
     @CreatedDate
     private Long createdAt;
 
+
     public Pack(User user, String sign, String status, String paymentType, Integer shippingFee, List<ProductSnapshot> productSnapshots, Address address) {
         this.user = user;
         this.sign = sign;
@@ -77,6 +80,7 @@ public class Pack {
         this.shippingFee = shippingFee;
         this.productSnapshots = productSnapshots;
         this.address = address;
+
     }
 
     public Integer getProductSnapshotCount() {
@@ -90,11 +94,12 @@ public class Pack {
 
     public Integer getTotalPrice() {
         int total = shippingFee;
-        for(ProductSnapshot i : productSnapshots) {
+
+        for (ProductSnapshot i : productSnapshots) {
             total += i.getTotalPrice();
         }
-
         return total;
+
     }
 
     public String getCreatedAt() {
@@ -103,4 +108,7 @@ public class Pack {
         return formatter.format(date);
     }
 
+
 }
+
+

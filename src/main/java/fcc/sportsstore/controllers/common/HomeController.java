@@ -1,6 +1,8 @@
-package fcc.sportsstore.controllers.common;
+package fcc.sportsstore.controllers;
 
+import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.ProductCollectionService;
+import fcc.sportsstore.services.UserService;
 import fcc.sportsstore.services.user.ManageCartService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,7 +27,12 @@ public class HomeController {
     @GetMapping
     public String homePage(Model model, HttpServletRequest request, HttpSession session) {
         manageCartService.refreshCartItemCount(request);
-        model.addAttribute("collections", productCollectionService.getAll());
+        collectionNavbar(request);
         return "pages/home";
+    }
+
+    public void collectionNavbar(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute("collections", productCollectionService.getAll());
     }
 }

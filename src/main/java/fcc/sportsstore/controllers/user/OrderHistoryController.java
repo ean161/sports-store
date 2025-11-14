@@ -3,15 +3,13 @@ package fcc.sportsstore.controllers.user;
 import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.PackService;
-import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.UserService;
-import fcc.sportsstore.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
@@ -76,10 +74,21 @@ public class OrderHistoryController {
             model.addAttribute("productSnapshots", productSnapshots);
             model.addAttribute("liveProds", liveProds);
             return "pages/user/order-details";
-
         } catch (Exception e) {
             return "redirect:/order-history";
         }
+    }
 
+    @PostMapping("/cancel/{packId}")
+    public String cancelPack(@PathVariable String packId,
+                             HttpServletRequest request) {
+        try {
+            User user = userService.getFromSession(request);
+            Pack pack = packService.getById(packId);
+            packService.cancelPack(packId);
+            return "redirect:/order-history";
+        } catch (Exception e) {
+            return "redirect:/order-history";
+        }
     }
 }

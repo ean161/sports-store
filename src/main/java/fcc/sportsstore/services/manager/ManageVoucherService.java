@@ -30,7 +30,7 @@ public class ManageVoucherService {
 
     @Transactional
     public void add(String code, Integer maxUsedCount,
-                    String discountType, Double discountValue, Double maxDiscountValue, String expiredAtRaw) {
+                    String discountType, Integer discountValue, Integer maxDiscountValue, String expiredAtRaw) {
         Long expiredAt = -1L;
         if (expiredAtRaw != null && !expiredAtRaw.isEmpty()) {
             TimeUtil timeUtil = new TimeUtil();
@@ -47,24 +47,6 @@ public class ManageVoucherService {
         voucherService.save(voucher);
     }
 
-//    @Transactional
-//    public void edit(String id, String code, String status, Integer maxUsedCount, Integer usedCount,
-//                     String discountType, Double discountValue, Double maxDiscountValue) {
-//        if (!voucherService.existsById(id)) {
-//            throw new RuntimeException("Voucher not found");
-//        }
-//
-//        Voucher voucher = voucherService.getById(id);
-//        voucher.setCode(code);
-//        voucher.setStatus(status);
-//        voucher.setMaxUsedCount(maxUsedCount);
-//        voucher.setUsedCount(usedCount);
-//        voucher.setDiscountType(discountType);
-//        voucher.setDiscountValue(discountValue);
-//        voucher.setMaxDiscountValue(maxDiscountValue);
-//
-//        voucherService.save(voucher);
-//    }
 
     @Transactional
     public void disable(String id) {

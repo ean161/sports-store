@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service("userManageCartService")
 public class ManageCartService {
@@ -24,16 +27,13 @@ public class ManageCartService {
 
     private final ProductMediaService productMediaService;
 
-    private final ProductQuantityService productQuantityService;
-
-    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService, ProductQuantityService productQuantityService) {
+    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService) {
         this.productSnapshotService = productSnapshotService;
         this.userService = userService;
         this.productService = productService;
         this.productPropertyDataService = productPropertyDataService;
         this.productPropertySnapshotService = productPropertySnapshotService;
         this.productMediaService = productMediaService;
-        this.productQuantityService = productQuantityService;
     }
 
     @Transactional
@@ -45,18 +45,11 @@ public class ManageCartService {
 
         Integer cartCount = refreshCartItemCount(request);
 
-        List<ProductPropertyData> listPropData = extractPropertyData(params);
         List<ProductPropertySnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot,
-                listPropData);
-
-        Set<ProductPropertyData> setPropData = new HashSet<>(listPropData);
+                extractPropertyData(params));
 
         if (!isValidPropertyList(prod, propSnapshot)) {
             throw new IllegalArgumentException("Please select enough product option to add.");
-        }
-
-        if (!productQuantityService.hasStockQuantity(setPropData, quantity)) {
-            throw new IllegalArgumentException("This product was out of stock.");
         }
 
         ProductSnapshot sameProductSnapshot = getSameCartProductSnapshot(user, productId, propSnapshot);
@@ -198,7 +191,9 @@ public class ManageCartService {
     public Integer refreshCartItemCount(HttpServletRequest request) {
         User user = userService.getFromSession(request);
         List<ProductSnapshot> items = getUserCart(user);
-        request.getSession().setAttribute("inCartProductSnapshotCount", items.size());
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("inCartItemCount", items.size());
         return items.size();
     }
 }

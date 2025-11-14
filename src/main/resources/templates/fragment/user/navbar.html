@@ -1,7 +1,7 @@
-<nav th:if="${collections != null}" class="border-gray-800" th:fragment="navbar">
+<nav th:if="${session.collections != null}" class="border-gray-800" th:fragment="navbar">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex items-center w-full justify-center space-x-30 py-3">
-            <span th:each="collection : ${collections}"
+            <span th:each="collection : ${session.collections}"
                   th:text="${collection.name}"
                   th:attr="onclick=${'productCollectionMove(`collection-' + collection.id + '`)'}"
                   class="text-white text-sm font-medium hover:text-red-400 tracking-wide uppercase cursor-pointer transition-colors duration-200">

@@ -1,50 +1,99 @@
 package fcc.sportsstore.controllers.user;
 
-import fcc.sportsstore.entities.Product;
-import fcc.sportsstore.entities.ProductType;
-import fcc.sportsstore.services.ProductCollectionService;
+import fcc.sportsstore.entities.*;
+import fcc.sportsstore.services.FeedbackService;
 import fcc.sportsstore.services.ProductService;
+import fcc.sportsstore.services.ProductSnapshotService;
 import fcc.sportsstore.services.user.ManageCartService;
 import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller("userProductController")
 @RequestMapping("/product")
 public class ProductController {
 
-
     private final ProductService productService;
+    private final ProductSnapshotService productSnapshotService;
     private final ManageCartService manageCartService;
+    private final FeedbackService feedbackService;
 
-    public ProductController(ProductService productService, ManageCartService manageCartService) {
+    public ProductController(ProductService productService, ManageCartService manageCartService, FeedbackService feedbackService, ProductSnapshotService productSnapshotService) {
         this.productService = productService;
         this.manageCartService = manageCartService;
+        this.feedbackService = feedbackService;
+        this.productSnapshotService = productSnapshotService;
     }
 
     @GetMapping("/{id}")
     public String details(@PathVariable("id") String id, Model model, HttpServletRequest request) {
         try {
-            ValidateUtil validate = new ValidateUtil();
-            Product product = productService.getById(validate.toId(id));
+            Product product = productService.getById(new ValidateUtil().toId(id));
             manageCartService.refreshCartItemCount(request);
-
             model.addAttribute("product", product);
 
-            ProductType type = product.getProductType();
-            List<Product> sameTypeProducts = productService.getByType(type);
+            List<Product> sameTypeProducts = productService.getByType(product.getProductType());
             sameTypeProducts.removeIf(p -> p.getId().equals(product.getId()));
-
             model.addAttribute("sameTypeProducts", sameTypeProducts);
+
+            List<Feedback> feedbacks = feedbackService.getAllByProduct(product);
+
+            HashMap<Feedback, ProductSnapshot> fbSnapshots = new HashMap<>();
+            HashMap<ProductSnapshot, Product> liveProds = new HashMap<>();
+            for (Feedback fb : feedbacks) {
+                ProductSnapshot snapshot = fb.getProductSnapshot();
+                fbSnapshots.put(fb, snapshot);
+                liveProds.put(snapshot, productSnapshotService.getLiveProduct(snapshot));
+            }
+            double averageRating = feedbacks.isEmpty() ? 0 : feedbacks.stream()
+                    .mapToInt(Feedback::getRating)
+                    .average()
+                    .orElse(0);
+
+            int fullStars = 0;
+            boolean hasHalfStar = false;
+            int emptyStars = 5;
+
+            if (!feedbacks.isEmpty()) {
+                double avg = averageRating;
+                fullStars = (int) Math.floor(avg);
+
+                double fraction = avg - fullStars;
+
+                if (fraction >= 0.5 && fullStars < 5) {
+                    hasHalfStar = true;
+                }
+
+                if (fullStars > 5) {
+                    fullStars = 5;
+                }
+                if (hasHalfStar && fullStars == 5) {
+                    hasHalfStar = false;
+                }
+
+                emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            }
+
+            model.addAttribute("averageRating", averageRating);
+            model.addAttribute("totalFeedbacks", feedbacks.size());
+            model.addAttribute("fullStars", fullStars);
+            model.addAttribute("hasHalfStar", hasHalfStar);
+            model.addAttribute("emptyStars", emptyStars);
+
+            model.addAttribute("count5", feedbacks.stream().filter(f -> f.getRating() == 5).count());
+            model.addAttribute("count4", feedbacks.stream().filter(f -> f.getRating() == 4).count());
+            model.addAttribute("count3", feedbacks.stream().filter(f -> f.getRating() == 3).count());
+            model.addAttribute("count2", feedbacks.stream().filter(f -> f.getRating() == 2).count());
+            model.addAttribute("count1", feedbacks.stream().filter(f -> f.getRating() == 1).count());
+            model.addAttribute("feedbacks", feedbacks);
+            model.addAttribute("fbSnapshots", fbSnapshots);
+            model.addAttribute("liveProds", liveProds);
+
 
             return "pages/user/product";
         } catch (Exception e) {

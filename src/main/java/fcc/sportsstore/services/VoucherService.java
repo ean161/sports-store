@@ -47,4 +47,5 @@ public class VoucherService {
     public void save(Voucher Voucher) {
         voucherRepository.save(Voucher);
     }
+
 }

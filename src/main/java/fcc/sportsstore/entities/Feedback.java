@@ -36,15 +36,28 @@ public class Feedback {
     @Column(name = "comment", length = 255)
     private String comment;
 
+    @ManyToOne
+    @JoinColumn(name = "product_snapshot_id")
+    private ProductSnapshot productSnapshot;
 
     @CreatedDate
     @Column(name = "created_at")
     private Long createdAt;
 
+    private String reply;
 
-    public Feedback(Product product, User user, Integer rating, String comment) {
-        this.product = product;
+
+    public Feedback( User user,Product product, Integer rating, String comment, String reply) {
         this.user = user;
+        this.product = product;
+        this.rating = rating;
+        this.comment = comment;
+        this.reply = reply;
+    }
+
+    public Feedback( User user,Product product, Integer rating, String comment) {
+        this.user = user;
+        this.product = product;
         this.rating = rating;
         this.comment = comment;
     }

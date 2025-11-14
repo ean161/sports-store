@@ -9,6 +9,7 @@ async function loadDetails(id) {
     $("#fd-product").val(res.data.product.title);
     $("#fd-comment").val(res.data.comment);
     $("#fd-rating").val(res.data.rating);
+    $("#fd-reply").val(res.data.reply);
     $("#fd-remove-btn").attr("onclick", `remove('${id}')`);
 }
 
