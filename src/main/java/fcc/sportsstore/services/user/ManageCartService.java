@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service("userManageCartService")
 public class ManageCartService {
@@ -27,13 +24,16 @@ public class ManageCartService {
 
     private final ProductMediaService productMediaService;
 
-    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService) {
+    private final ProductQuantityService productQuantityService;
+
+    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService, ProductQuantityService productQuantityService) {
         this.productSnapshotService = productSnapshotService;
         this.userService = userService;
         this.productService = productService;
         this.productPropertyDataService = productPropertyDataService;
         this.productPropertySnapshotService = productPropertySnapshotService;
         this.productMediaService = productMediaService;
+        this.productQuantityService = productQuantityService;
     }
 
     @Transactional
@@ -45,11 +45,18 @@ public class ManageCartService {
 
         Integer cartCount = refreshCartItemCount(request);
 
+        List<ProductPropertyData> listPropData = extractPropertyData(params);
         List<ProductPropertySnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot,
-                extractPropertyData(params));
+                listPropData);
+
+        Set<ProductPropertyData> setPropData = new HashSet<>(listPropData);
 
         if (!isValidPropertyList(prod, propSnapshot)) {
             throw new IllegalArgumentException("Please select enough product option to add.");
+        }
+
+        if (!productQuantityService.hasStockQuantity(setPropData, quantity)) {
+            throw new IllegalArgumentException("This product was out of stock.");
         }
 
         ProductSnapshot sameProductSnapshot = getSameCartProductSnapshot(user, productId, propSnapshot);

@@ -6,16 +6,23 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service("packService")
 public class PackService {
 
     private final PackRepository packRepository;
 
-    public PackService(PackRepository packRepository) {
+    private final ProductQuantityService productQuantityService;
+    private final ProductPropertyDataService productPropertyDataService;
+    private final ProductPropertySnapshotService productPropertySnapshotService;
+
+    public PackService(PackRepository packRepository, ProductQuantityService productQuantityService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService) {
         this.packRepository = packRepository;
+        this.productQuantityService = productQuantityService;
+        this.productPropertyDataService = productPropertyDataService;
+        this.productPropertySnapshotService = productPropertySnapshotService;
     }
 
     public Pack getById(String id) {
@@ -61,9 +68,20 @@ public class PackService {
     public void cancelPack(String packId) {
         Pack pack = packRepository.findById(packId).orElse(null);
         if (pack != null) {
+            for (ProductSnapshot snap : pack.getProductSnapshots()) {
+                List<ProductPropertySnapshot> snapProps = snap.getProductPropertySnapshots();
+                Set<ProductPropertyData> propData = new HashSet<>();
+                for (ProductPropertySnapshot snapPropsItem : snapProps) {
+                    propData.add(productPropertySnapshotService.toPropertyData(snapPropsItem));
+                }
+
+                ProductQuantity pQuantity = productQuantityService.getByProperties(propData);
+                pQuantity.setAmount(pQuantity.getAmount() + snap.getQuantity());
+            }
+
+
             pack.setStatus("CANCELLED");
             packRepository.save(pack);
         }
     }
-
 }

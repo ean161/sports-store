@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service("userCheckoutService")
 public class CheckoutService {
@@ -28,10 +25,12 @@ public class CheckoutService {
     private final ProductPropertySnapshotService productPropertySnapshotService;
 
     private final UserService userService;
+
     private final AddressService addressService;
 
+    private final ProductQuantityService productQuantityService;
 
-    public CheckoutService(PackService packService, ProductSnapshotService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService) {
+    public CheckoutService(PackService packService, ProductSnapshotService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService, ProductQuantityService productQuantityService) {
         this.packService = packService;
         this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
@@ -40,6 +39,7 @@ public class CheckoutService {
         this.productPropertySnapshotService = productPropertySnapshotService;
         this.userService = userService;
         this.addressService = addressService;
+        this.productQuantityService = productQuantityService;
     }
 
     @Transactional
@@ -71,6 +71,17 @@ public class CheckoutService {
             } else if (!productSnapshotService.isAvailable(item)) {
                 throw new RuntimeException("Selected item outdated or unavailable.");
             }
+
+            Set<ProductPropertyData> itemProps = new HashSet<>();
+            for (ProductPropertySnapshot ipSnap : item.getProductPropertySnapshots()) {
+                itemProps.add(productPropertySnapshotService.toPropertyData(ipSnap));
+            }
+
+            try {
+                productQuantityService.sellStockQuantity(itemProps, item.getQuantity());
+            } catch (Exception e) {
+                throw new RuntimeException(item.getTitle() + " outed stock.");
+            }
         }
 
         if (items == null || items.isEmpty() || items.size() == 0) {
@@ -79,8 +90,6 @@ public class CheckoutService {
 
         String sign = "SPST" + rand.randString(6).toUpperCase();
         Pack pack = new Pack(user, sign, status, paymentType, getShippingFee(), items, address);
-
-
         packService.save(pack);
 
         items.forEach(item -> {
