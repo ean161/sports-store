@@ -182,6 +182,10 @@ public class ValidateUtil {
     }
 
     public String toEmail(String input) {
+        if (!input.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+            throw new IllegalArgumentException("Invalid email.");
+        }
+
         return toStringForm("Email", input, 10, 50, true, true, false, true);
     }
 

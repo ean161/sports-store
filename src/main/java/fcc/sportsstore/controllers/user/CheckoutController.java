@@ -86,14 +86,15 @@ public class CheckoutController {
     public String order(Model model,
                         HttpServletRequest request,
                         @RequestParam Map<String, String> params,
-                        @RequestParam(value = "payment-type", required = false, defaultValue = "COD") String paymentType) {
+                        @RequestParam(value = "payment-type", required = false, defaultValue = "COD") String paymentType,
+                        @RequestParam(value = "voucher-code", required = false, defaultValue = "") String voucherCode) {
         if (params == null || params.keySet().size() == 0) {
             return "redirect:/cart?e=ln";
         }
 
         String redirectTo;
         try {
-            redirectTo = checkoutService.order(request, params, paymentType);
+            redirectTo = checkoutService.order(request, params, paymentType, voucherCode);
         } catch (Exception e) {
             return "redirect:/cart?error=" + e.getMessage();
         }

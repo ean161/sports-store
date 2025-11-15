@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fcc.sportsstore.utils.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "voucher")
@@ -57,11 +59,14 @@ public class Voucher {
      */
     private Integer maxDiscountValue;
 
+    @OneToMany(mappedBy = "voucher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Pack> packs;
+
     private Long expiredAt;
 
     @CreatedDate
     private Long createdAt;
-
 
     public Voucher(String code, Integer maxUsedCount, String discountType, Integer discountValue, Integer maxDiscountValue, Long expiredAt) {
         this.code = code;
@@ -78,5 +83,15 @@ public class Voucher {
         Date date = new Date(createdAt);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         return formatter.format(date);
+    }
+
+    public String getExpiredAt() {
+        Date date = new Date(expiredAt);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        return formatter.format(date);
+    }
+
+    public Long getRawExpiredAt() {
+        return this.expiredAt;
     }
 }

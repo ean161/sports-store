@@ -46,11 +46,11 @@
                             <div class="bg-white">
                                 <div class="sm:items-start">
                                     <div class="mt-3 text-center sm:mt-0 sm:text-left">
-                                        <h3 id="dialog-title" class="text-base font-semibold text-gray-900 mb-4">
-                                            <span id="vd-voucher-header"></span> details
-                                        </h3>
-                                        <div class="mt-2 space-y-4">
-                                            <form id="edit-voucher-form" method="POST" class="mt-2 space-y-4">
+                                        <form id="voucher-details-form" method="POST" class="mt-2 space-y-4">
+                                            <h3 id="dialog-title" class="text-base font-semibold text-gray-900 mb-4">
+                                                <span id="vd-voucher-header"></span> details
+                                            </h3>
+                                            <div class="mt-2 space-y-4">
                                                 <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         ID:
@@ -59,109 +59,96 @@
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
                                                            readonly/>
                                                 </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Code:
+
+                                                <div class="grid grid-cols-2 space-x-4">
+                                                    <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                            Code:
+                                                        </div>
+                                                        <input id="vd-code" type="text" name="code"
+                                                               class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                               readonly/>
                                                     </div>
-                                                    <input id="vd-code" type="text" name="code"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+
+                                                    <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                            Status:
+                                                        </div>
+                                                        <input id="vd-status" type="text" name="status"
+                                                               class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                               readonly/>
+                                                    </div>
                                                 </div>
 
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Discount type:
+                                                <div class="grid grid-cols-2 space-x-4">
+                                                    <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                            Discount type:
+                                                        </div>
+                                                        <input id="vd-discount-type" type="text" name="type"
+                                                               class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                               readonly/>
                                                     </div>
-                                                    <select id="vd-discount-type"
-                                                            name="discount-type"
-                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                        <option value="STATIC"
-                                                                th:selected="${voucher.discountType == 'STATIC'}">STATIC
-                                                        </option>
-                                                        <option value="PERCENT"
-                                                                th:selected="${voucher.discountType == 'PERCENT'}">
-                                                            PERCENT
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Discount value:
+
+                                                    <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                        <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                            Discount:
+                                                        </div>
+                                                        <input id="vd-discount-value" type="text" name="discount"
+                                                               class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                               readonly/>
                                                     </div>
-                                                    <input id="vd-discount-value" type="text" name="discount-value"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
-                                                </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Expired date:
-                                                    </div>
-                                                    <input id="vd-expired-date" type="text" name="expired-date"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
-                                                </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Max discount value:
-                                                    </div>
-                                                    <input id="vd-max-discount-value" type="text"
-                                                           name="max-discount-value"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
 
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                <div id="vd-max-discount-value-container" class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Max used:
+                                                        Max discount price:
                                                     </div>
-                                                    <input id="vd-max-used" type="text" name="max-used"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                    <input id="vd-max-discount-value" type="text" name="max-discount-value"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                           readonly/>
                                                 </div>
 
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Used count:
+                                                        Used:
                                                     </div>
-                                                    <input id="vd-used-count" type="text" name="used-count"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
+                                                    <input id="vd-used" type="text" name="used"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                           readonly/>
                                                 </div>
 
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                <div id="vd-expired-at-container" class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Status:
+                                                        Expired at:
                                                     </div>
-                                                    <select id="vd-status"
-                                                            name="status"
-                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                        <option value="ACTIVE"
-                                                                th:selected="${voucher.status == 'ACTIVE'}">ACTIVATE
-                                                        </option>
-                                                        <option value="DISABLED"
-                                                                th:selected="${voucher.status == 'DISABLE'}">DISABLED
-                                                        </option>
-                                                    </select>
+                                                    <input id="vd-expired-at" type="text" name="expired-at"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                           readonly/>
                                                 </div>
 
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                         Created at:
                                                     </div>
-                                                    <input id="vd-created-date" type="text" name="created-date"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" readonly/>
+                                                    <input id="vd-created-at" type="text" name="created-at"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                           readonly/>
                                                 </div>
 
                                                 <div class="flex justify-between">
-                                                    <div class="flex space-x-2">
-                                                        <div class="flex space-x-2" id="action-btns"></div>
-                                                        <button id="edit-btn" type="submit" class="inline-flex justify-center bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
-                                                            Save changes
-                                                        </button>
-                                                        <span id="vd-remove-btn" class="inline-flex justify-center bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
-                                                                Remove
-                                                        </span>
-                                                    </div>
+                                                    <span id="active-btn" class="inline-flex justify-center bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
+                                                        Re-active
+                                                    </span>
+                                                    <span id="disable-btn" class="inline-flex justify-center bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
+                                                        Disable
+                                                    </span>
                                                     <span class="close-modal-btn inline-flex justify-center bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 cursor-pointer">
                                                         Close
                                                     </span>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -204,51 +191,44 @@
                                                     <select id="va-discount-type"
                                                             name="discount-type"
                                                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                        <option value="" selected>— Select discount type —</option>
-                                                        <option value="PERCENT">PERCENT</option>
-                                                        <option value="STATIC">STATIC</option>
+                                                        <option value="STATIC" selected>
+                                                            Discount price value
+                                                        </option>
+                                                        <option value="PERCENT">
+                                                            Discount on product price percent
+                                                        </option>
                                                     </select>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Discount value:
+                                                    <div id="va-discount-value-title" class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                        Discount (₫):
                                                     </div>
-                                                    <input id="va-discount-value" type="number" name="discount-value"
+                                                    <input id="va-discount-value" type="text" name="discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                                <div id="va-max-discount-value-container" class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Expired date:
+                                                        Max discount value (₫):
                                                     </div>
-                                                    <input id="va-expired-date" type="text" name="expired-date"
-                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
-                                                </div>
-                                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                                    <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Max discount value:
-                                                    </div>
-                                                    <input id="va-max-discount-value" type="number"
+                                                    <input id="va-max-discount-value" type="text"
+                                                           value="-1"
                                                            name="max-discount-value"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Max used:
+                                                        Max used <i>(Leave it empty if unlimit)</i>:
                                                     </div>
-                                                    <input id="va-max-used" type="number" name="max-used"
+                                                    <input id="va-max-used" type="text" name="max-used"
                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
                                                 <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                     <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
-                                                        Status:
+                                                        Expired date <i>(Leave it unchange if forever)</i>:
                                                     </div>
-                                                    <select id="va-status"
-                                                            name="status"
-                                                            class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                        <option value="ACTIVE" selected>ACTIVE</option>
-                                                    </select>
+                                                    <input id="va-expired-at" type="datetime-local" name="expired-at"
+                                                           class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"/>
                                                 </div>
-
 
                                                 <div class="flex justify-between">
                                                     <div class="flex space-x-2">
@@ -258,8 +238,8 @@
                                                         </button>
                                                     </div>
                                                     <span class="close-modal-btn inline-flex justify-center bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 cursor-pointer">
-                                                            Close
-                                                        </span>
+                                                        Close
+                                                    </span>
                                                 </div>
                                             </form>
                                         </div>
@@ -275,8 +255,8 @@
         <script src="/assets/js/pages/manager/manage-voucher/list.js"></script>
         <script src="/assets/js/pages/manager/manage-voucher/details.js"></script>
         <script src="/assets/js/pages/manager/manage-voucher/add.js"></script>
-        <script src="/assets/js/pages/manager/manage-voucher/edit.js"></script>
-        <script src="/assets/js/pages/manager/manage-voucher/remove.js"></script>
+        <script src="/assets/js/pages/manager/manage-voucher/active.js"></script>
+        <script src="/assets/js/pages/manager/manage-voucher/disable.js"></script>
     </th:block>
 </th:block>
 </html>

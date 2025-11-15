@@ -1,5 +1,6 @@
 package fcc.sportsstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -65,13 +66,16 @@ public class Pack {
     @JoinColumn(name = "manager_id")
     private Manager manager;
 
+    @ManyToOne
+    @JoinColumn(name = "voucher_id")
+    private Voucher voucher;
+
     private String sign;
 
     @CreatedDate
     private Long createdAt;
 
-
-    public Pack(User user, String sign, String status, String paymentType, Integer shippingFee, List<ProductSnapshot> productSnapshots, Address address) {
+    public Pack(User user, String sign, String status, String paymentType, Integer shippingFee, List<ProductSnapshot> productSnapshots, Address address, Voucher voucher) {
         this.user = user;
         this.sign = sign;
         this.status = status;
@@ -80,7 +84,7 @@ public class Pack {
         this.shippingFee = shippingFee;
         this.productSnapshots = productSnapshots;
         this.address = address;
-
+        this.voucher = voucher;
     }
 
     public Integer getProductSnapshotCount() {
@@ -98,8 +102,16 @@ public class Pack {
         for (ProductSnapshot i : productSnapshots) {
             total += i.getTotalPrice();
         }
-        return total;
+        return total - getDiscount();
+    }
 
+    public Integer getTotalProductCost() {
+        int total = 0;
+
+        for (ProductSnapshot i : productSnapshots) {
+            total += i.getTotalPrice();
+        }
+        return total;
     }
 
     public String getCreatedAt() {
@@ -108,7 +120,28 @@ public class Pack {
         return formatter.format(date);
     }
 
+    public Integer getDiscount() {
+        if (voucher == null) {
+            return 0;
+        }
+        Integer discount = 0;
 
+        Integer discountVal = voucher.getDiscountValue(),
+                maxDiscountVal = voucher.getMaxDiscountValue();
+        if (voucher.getDiscountType().equals("PERCENT")) {
+            discount = (int) Math.round(getTotalProductCost() * discountVal / 100);
+        } else {
+            discount = discountVal;
+        }
+
+        if (maxDiscountVal != -1) {
+            if (discount > maxDiscountVal) {
+                discount = maxDiscountVal;
+            }
+        }
+
+        return discount < 0 ? 0 : discount;
+    }
 }
 
 

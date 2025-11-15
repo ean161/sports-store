@@ -45,7 +45,7 @@ public class ProductQuantityService {
     }
 
     public Page<ProductQuantity> getByProduct_title(String title, Pageable pageable) {
-        return productQuantityRepository.findByProduct_title(title, pageable);
+        return productQuantityRepository.findByProduct_titleContainingIgnoreCase(title, pageable);
     }
 
     public ProductQuantity getByProperties(Set<ProductPropertyData> properties) {

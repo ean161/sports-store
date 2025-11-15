@@ -19,5 +19,5 @@ public interface ProductQuantityRepository extends JpaRepository<ProductQuantity
 
     List<ProductQuantity> findByProduct(Product product);
 
-    Page<ProductQuantity> findByProduct_title(String title, Pageable pageable);
+    Page<ProductQuantity> findByProduct_titleContainingIgnoreCase(String title, Pageable pageable);
 }

@@ -30,7 +30,9 @@ public class CheckoutService {
 
     private final ProductQuantityService productQuantityService;
 
-    public CheckoutService(PackService packService, ProductSnapshotService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService, ProductQuantityService productQuantityService) {
+    private final VoucherService voucherService;
+
+    public CheckoutService(PackService packService, ProductSnapshotService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService, ProductQuantityService productQuantityService, VoucherService voucherService) {
         this.packService = packService;
         this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
@@ -40,16 +42,25 @@ public class CheckoutService {
         this.userService = userService;
         this.addressService = addressService;
         this.productQuantityService = productQuantityService;
+        this.voucherService = voucherService;
     }
 
     @Transactional
     public String order(HttpServletRequest request,
                         Map<String, String> selectedProductSnapshots,
-                        String paymentType) {
+                        String paymentType,
+                        String voucherCode) {
         paymentType = paymentType.toUpperCase();
         RandomUtil rand = new RandomUtil();
         User user = userService.getFromSession(request);
         Address address = addressService.getDefault(user);
+
+        if (!voucherService.isValid(voucherCode)) {
+            throw new IllegalArgumentException("Invalid voucher.");
+        }
+
+        Voucher voucher = voucherService.getByCode(voucherCode);
+        voucher.setUsedCount(voucher.getUsedCount() + 1);
 
         String status = switch (paymentType.toUpperCase()) {
             case "COD" -> "PENDING_APPROVAL";
@@ -62,7 +73,6 @@ public class CheckoutService {
         }
 
         List<ProductSnapshot> items = manageCartService.getUserCart(user);
-
         items.removeIf(item -> !selectedProductSnapshots.containsKey("select-" + item.getId()));
 
         for (ProductSnapshot item : items) {
@@ -89,7 +99,7 @@ public class CheckoutService {
         }
 
         String sign = "SPST" + rand.randString(6).toUpperCase();
-        Pack pack = new Pack(user, sign, status, paymentType, getShippingFee(), items, address);
+        Pack pack = new Pack(user, sign, status, paymentType, getShippingFee(), items, address, voucher);
         packService.save(pack);
 
         items.forEach(item -> {

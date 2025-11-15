@@ -31,10 +31,20 @@ public class ManageVoucherService {
     @Transactional
     public void add(String code, Integer maxUsedCount,
                     String discountType, Integer discountValue, Integer maxDiscountValue, String expiredAtRaw) {
+        try {
+            if (voucherService.getByCode(code) != null) {
+                throw new IllegalArgumentException("Voucher code existed.");
+            }
+        } catch (Exception e) {}
+
         Long expiredAt = -1L;
         if (expiredAtRaw != null && !expiredAtRaw.isEmpty()) {
             TimeUtil timeUtil = new TimeUtil();
-            expiredAt = timeUtil.getTimestamp(expiredAtRaw);
+            expiredAt = timeUtil.getTimestamp(expiredAtRaw) * 1000;
+
+            if (expiredAt <= timeUtil.getCurrentTimestamp() * 1000) {
+                throw new IllegalArgumentException("Expired date cant must be in the past.");
+            }
         }
 
         Voucher voucher = new Voucher(code,
@@ -46,7 +56,6 @@ public class ManageVoucherService {
 
         voucherService.save(voucher);
     }
-
 
     @Transactional
     public void disable(String id) {

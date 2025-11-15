@@ -32,7 +32,7 @@ async function loadDetails(id) {
     $("#vd-max-discount-value").val(res.data.maxDiscountValue);
     $("#vd-used").val(`${res.data.usedCount}/${res.data.maxUsedCount}`);
     $("#vd-status").val(res.data.status);
-    $("#vd-expired-at").val(res.data.createdAt);
+    $("#vd-expired-at").val(res.data.expiredAt);
     $("#vd-created-at").val(res.data.createdAt);
 
     $("#vd-remove-btn").attr("onclick", `disableVoucher('${id}')`);

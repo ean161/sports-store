@@ -7,6 +7,11 @@
             <section class="mt-12">
                 <form id="select-item-to-checkout-form" th:action="@{/checkout}" method="POST">
                     <h2 class="text-3xl font-bold text-gray-800 mb-8">Your cart</h2>
+                    <div th:if="${param != null && param.error != null}" class="my-2">
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                            <p class="text-red-600 font-medium text-sm" th:text="${param.error}"></p>
+                        </div>
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse">
                             <thead>
