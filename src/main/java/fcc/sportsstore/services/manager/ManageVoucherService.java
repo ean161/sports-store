@@ -19,7 +19,7 @@ public class ManageVoucherService {
 
     public Page<Voucher> list(String search, Pageable pageable) {
         if (search != null && !search.isEmpty()) {
-            return voucherService.getById(search, pageable);
+            return voucherService.getByIdOrCodeContainingIgnoreCase(search, pageable);
         }
         return voucherService.getAll(pageable);
     }

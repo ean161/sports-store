@@ -55,12 +55,15 @@ public class CheckoutService {
         User user = userService.getFromSession(request);
         Address address = addressService.getDefault(user);
 
-        if (!voucherService.isValid(voucherCode)) {
-            throw new IllegalArgumentException("Invalid voucher.");
-        }
+        Voucher voucher = null;
+        if (voucherCode != null && !voucherCode.isEmpty()) {
+            if (!voucherService.isValid(voucherCode)) {
+                throw new IllegalArgumentException("Invalid voucher.");
+            }
 
-        Voucher voucher = voucherService.getByCode(voucherCode);
-        voucher.setUsedCount(voucher.getUsedCount() + 1);
+            voucher = voucherService.getByCode(voucherCode);
+            voucher.setUsedCount(voucher.getUsedCount() + 1);
+        }
 
         String status = switch (paymentType.toUpperCase()) {
             case "COD" -> "PENDING_APPROVAL";
@@ -69,7 +72,7 @@ public class CheckoutService {
         };
 
         if (address == null) {
-            throw new IllegalArgumentException("You haven't avaiable default address to order.");
+            throw new IllegalArgumentException("You haven't available default address to order.");
         }
 
         List<ProductSnapshot> items = manageCartService.getUserCart(user);
@@ -90,7 +93,7 @@ public class CheckoutService {
             try {
                 productQuantityService.sellStockQuantity(itemProps, item.getQuantity());
             } catch (Exception e) {
-                throw new RuntimeException(item.getTitle() + " outed stock.");
+                throw new RuntimeException(item.getTitle() + " outed of stock.");
             }
         }
 

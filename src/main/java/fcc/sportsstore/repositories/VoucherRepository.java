@@ -20,4 +20,5 @@ public interface VoucherRepository extends JpaRepository<Voucher, String> {
 
     Page<Voucher> findByIdContainingIgnoreCase(String searchForId, Pageable pageable);
 
+    Page<Voucher> findByIdOrCodeContainingIgnoreCase(String searchForId, String searchForCode, Pageable pageable);
 }

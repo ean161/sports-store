@@ -27,14 +27,18 @@ public class VoucherService {
         return voucherRepository.findAll(pageable);
     }
 
+    public Page<Voucher> getByIdOrCodeContainingIgnoreCase(String search, Pageable pageable) {
+        return voucherRepository.findByIdOrCodeContainingIgnoreCase(search, search, pageable);
+    }
+
     public Voucher getById(String id) {
         return voucherRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Voucher ID not found"));
+                .orElseThrow(() -> new RuntimeException("Voucher ID not found."));
     }
 
     public Voucher getByCode(String code) {
         return voucherRepository.findByCode(code)
-                .orElseThrow(() -> new RuntimeException("Voucher not found"));
+                .orElseThrow(() -> new RuntimeException("Voucher not found."));
     }
 
     public Page<Voucher> getById(String search, Pageable pageable) {
