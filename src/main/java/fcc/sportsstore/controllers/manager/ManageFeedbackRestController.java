@@ -44,17 +44,17 @@ public class ManageFeedbackRestController {
         }
     }
 
-//    @PostMapping("/remove")
-//    public ResponseEntity<?> remove(@RequestParam("id") String id) {
-//        try {
-//            manageFeedbackService.remove(id);
-//            Response res = new Response("Feedback removed successfully.");
-//            return ResponseEntity.ok(res.build());
-//        } catch (Exception e) {
-//            Response res = new Response(e.getMessage());
-//            return ResponseEntity.badRequest().body(res.build());
-//        }
-//    }
+    @PostMapping("/remove")
+    public ResponseEntity<?> remove(@RequestParam("id") String id) {
+        try {
+            manageFeedbackService.remove(id);
+            Response res = new Response("Feedback removed successfully.");
+            return ResponseEntity.ok(res.build());
+        } catch (Exception e) {
+            Response res = new Response(e.getMessage());
+            return ResponseEntity.badRequest().body(res.build());
+        }
+    }
 
     @PostMapping("/reply")
     public ResponseEntity<?> reply(@RequestParam(value = "fd-id") String id,

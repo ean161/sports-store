@@ -50,7 +50,9 @@ public class ManageFeedbackService {
         feedbackService.save(feedback);
     }
 
-
+    public void remove(String id) {
+        feedbackService.deleteFeedbackById(id);
+    }
 }
 
 
