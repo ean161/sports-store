@@ -112,6 +112,6 @@ public class VoucherService {
             }
         }
 
-        return discount < 0 ? 0 : discount;
+        return discount > total ? total : discount;
     }
 }

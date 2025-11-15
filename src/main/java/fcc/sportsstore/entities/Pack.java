@@ -140,7 +140,7 @@ public class Pack {
             }
         }
 
-        return discount < 0 ? 0 : discount;
+        return discount > getTotalProductCost() ? getTotalProductCost() : discount;
     }
 }
 
