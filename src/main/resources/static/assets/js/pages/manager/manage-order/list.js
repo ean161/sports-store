@@ -63,6 +63,14 @@ $(document).ready(function () {
                 orderable: false
             },
             {
+                data: "totalPrice",
+                orderable: false
+            },
+            {
+                data: "createdAt",
+                orderable: false
+            },
+            {
                 data: "action",
                 orderable: false,
                 render: function (data, type, row) {

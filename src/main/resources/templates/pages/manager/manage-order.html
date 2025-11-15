@@ -26,6 +26,8 @@
                             <th>Sign</th>
                             <th>Status</th>
                             <th>Payment type</th>
+                            <th>Total</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -87,13 +89,13 @@
                                                 <select id="oh-status"
                                                         name="status"
                                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                    <option>PENDING_PAYMENT</option>
-                                                    <option>APPROVAL</option>
-                                                    <option>PENDING_ORDER</option>
-                                                    <option>IN_TRANSIT</option>
-                                                    <option>REFUNDING</option>
-                                                    <option>SUCCESS</option>
-                                                    <option>CANCELLED</option>
+                                                    <option value="PENDING_PAYMENT">Pending payment</option>
+                                                    <option value="PENDING_APPROVAL">Pending approve</option>
+                                                    <option value="PENDING_ORDER">Pending order</option>
+                                                    <option value="IN_TRANSIT">Transit</option>
+                                                    <option value="REFUNDING">Refunding</option>
+                                                    <option value="CANCELLED">Cancelled</option>
+                                                    <option value="SUCCESS">Success</option>
                                                 </select>
                                             </div>
 

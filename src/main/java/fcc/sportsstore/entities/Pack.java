@@ -87,7 +87,7 @@ public class Pack {
         this.voucher = voucher;
     }
 
-    public Integer getProductSnapshotCount() {
+    public Integer getProductCount() {
         int count = 0;
         for (ProductSnapshot i : productSnapshots) {
             count += i.getQuantity();

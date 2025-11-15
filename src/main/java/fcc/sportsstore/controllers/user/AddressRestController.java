@@ -96,7 +96,7 @@ public class AddressRestController {
             ValidateUtil validate = new ValidateUtil();
             addressService.delete(request, validate.toId(id));
             Response res = new Response("Delete address successfully.",
-                    Map.of("reload", true));
+                    Map.of("redirect", "/address", "time", 500));
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());

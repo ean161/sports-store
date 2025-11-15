@@ -27,7 +27,7 @@ public class LoginRestController {
                                 @RequestParam(required = false, name = "password") String password) {
         try {
             ValidateUtil validate = new ValidateUtil();
-            loginService.login(request, response, validate.toUsername(username), password);
+            loginService.login(request, response, validate.toUsername(username), validate.toPassword(password));
 
             Response res = new Response("Login successfully.",
                     Map.of("redirect", "/manager/order", "time", 3000));

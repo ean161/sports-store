@@ -49,12 +49,6 @@ $(document).ready(function () {
 
     $(".delete-address-btn").on("click", async function () {
         var id = $(this).data("id");
-
-        try {
-            var res = await post(`/address/delete/${id}`)
-            window.location.reload();
-        } catch (e) {
-            alert("Error: " + e.message);
-        }
-});
+        var res = await post(`/address/delete/${id}`)
+    });
 });
