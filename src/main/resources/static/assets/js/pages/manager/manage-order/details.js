@@ -3,10 +3,8 @@ async function loadDetails(id) {
         id: id
     });
 
-    console.log(res.data);
-    // return;
-
     let items = ``;
+    $(".cstate-btns").hide();
     $("#oh-detail-header").html(res.data.sign);
     $("#oh-id").val(res.data.id);
     $("#oh-user").val(res.data.user.username);
@@ -15,6 +13,24 @@ async function loadDetails(id) {
     $("#oh-payment-type").val(res.data.paymentType);
     $("#oh-total-price").val(`${res.data.totalPrice}₫`);
     $("#oh-created-at").val(res.data.createdAt);
+
+    switch (res.data.status) {
+        case "PENDING_APPROVAL":
+            $("#cstate-pending-order").show();
+            break;
+        case "PENDING_ORDER":
+            $("#cstate-in-transit").show();
+            break;
+        case "IN_TRANSIT":
+            $("#cstate-success").show();
+            $("#cstate-cancel").show();
+            break;
+        case "REFUNDING":
+            $("#cstate-cancel").show();
+            break;
+        default:
+            break;
+    }
 
     $("#oh-modifier").val(res.data.manager ? res.data.manager.fullName : "Not edited yet.")
 

@@ -51,7 +51,7 @@ public class ManageOrderService {
         List<String> availableStatus = List.of("PENDING_PAYMENT",
                 "PENDING_APPROVAL",
                 "PENDING_ORDER",
-                "TRANSIT",
+                "IN_TRANSIT",
                 "REFUNDING",
                 "SUCCESS",
                 "CANCELLED");

@@ -74,7 +74,7 @@
                                             </div>
 
                                             <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
-                                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+                                                <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                     Code:
                                                 </div>
                                                 <input id="oh-sign" type="text" name="sign"
@@ -82,21 +82,13 @@
                                                        readonly/>
                                             </div>
 
-                                            <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                                            <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                                                 <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
                                                     Status:
                                                 </div>
-                                                <select id="oh-status"
-                                                        name="status"
-                                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
-                                                    <option value="PENDING_PAYMENT">Pending payment</option>
-                                                    <option value="PENDING_APPROVAL">Pending approve</option>
-                                                    <option value="PENDING_ORDER">Pending order</option>
-                                                    <option value="IN_TRANSIT">Transit</option>
-                                                    <option value="REFUNDING">Refunding</option>
-                                                    <option value="CANCELLED">Cancelled</option>
-                                                    <option value="SUCCESS">Success</option>
-                                                </select>
+                                                <input id="oh-status" type="text" name="status"
+                                                       class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                                       readonly/>
                                             </div>
 
                                             <div class="flex items-center rounded-md bg-gray-200 pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -149,14 +141,37 @@
                                                 </table>
                                             </div>
 
-
-
                                             <div class="flex justify-between">
                                                 <div class="flex space-x-2">
-                                                    <button type="submit"
-                                                            class="inline-flex justify-center bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
-                                                        Save changes
-                                                    </button>
+                                                    <span id="cstate-pending-order"
+                                                          data-state="PENDING_ORDER"
+                                                          class="cstate-btns inline-flex justify-center bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
+                                                        Approve
+                                                    </span>
+                                                    <span id="cstate-in-transit"
+                                                          data-state="IN_TRANSIT"
+                                                          class="cstate-btns inline-flex justify-center bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 cursor-pointer">
+                                                        Change to transit
+                                                    </span>
+                                                    <span id="cstate-refunding"
+                                                          data-state="REFUNDING"
+                                                          class="cstate-btns inline-flex justify-center bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-500 cursor-pointer">
+                                                        Refund order
+                                                    </span>
+                                                    <span id="cstate-cancel"
+                                                          data-state="CANCELLED"
+                                                          class="cstate-btns inline-flex justify-center bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 cursor-pointer">
+                                                        Cancel order
+                                                    </span>
+                                                    <span id="cstate-success"
+                                                          data-state="SUCCESS"
+                                                          class="cstate-btns inline-flex justify-center bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">
+                                                        Success order
+                                                    </span>
+<!--                                                    <button type="submit"-->
+<!--                                                            class="inline-flex justify-center bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-green-500 cursor-pointer">-->
+<!--                                                        Save changes-->
+<!--                                                    </button>-->
                                                 </div>
                                                 <span class="close-modal-btn inline-flex justify-center bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 cursor-pointer">
                                                             Close

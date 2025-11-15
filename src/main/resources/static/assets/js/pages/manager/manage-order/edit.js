@@ -3,10 +3,17 @@ $(document).ready(function () {
         event.preventDefault();
         await edit($(this).serialize());
     });
+
+    $(".cstate-btns").on("click", async function () {
+        await edit($(this).attr("data-state"));
+    });
 });
 
-async function edit(data) {
-    let res = await post("/manager/order/edit", data);
+async function edit(status) {
+    let res = await post("/manager/order/edit", {
+        id: $("#oh-id").val(),
+        status: status
+    });
 
     if (res.code === 1) {
         modal("order-details");

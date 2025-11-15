@@ -127,7 +127,8 @@ public class CheckoutService {
             throw new RuntimeException("Invalid pack total price.");
         }
 
-        pack.setStatus("PENDING_APPROVAL");
+        pack.setStatus("PENDING_ORDER");
+        pack.setPaymentStatus("PAID");
         packService.save(pack);
     }
 
