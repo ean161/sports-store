@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/order-history")
@@ -60,6 +61,10 @@ public class OrderHistoryController {
             Pack pack = packService.getById(packId);
 
             if (pack == null || !pack.getUser().getId().equals(user.getId())) {
+                return "redirect:/order-history";
+            }
+
+            if (List.of("PENDING_PAYMENT", "PENDING_APPROVAL").contains(pack.getStatus())) {
                 return "redirect:/order-history";
             }
 

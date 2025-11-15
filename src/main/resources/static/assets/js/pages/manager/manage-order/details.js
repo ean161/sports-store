@@ -22,6 +22,7 @@ async function loadDetails(id) {
             $("#cstate-in-transit").show();
             break;
         case "IN_TRANSIT":
+            $("#cstate-refunding").show();
             $("#cstate-success").show();
             $("#cstate-cancel").show();
             break;
