@@ -68,7 +68,7 @@ public class AddressRestController {
                     validate.toAddressDetail(detail),
                     provinceId,wardId);
             Response res = new Response("Update address successfully.",
-                    Map.of("redirect", "/address", "time", 500));
+                    Map.of("redirect", "/address", "time", 3000));
             return ResponseEntity.ok(res.build());
         } catch (RuntimeException e) {
             Response res = new Response(e.getMessage());
@@ -81,7 +81,8 @@ public class AddressRestController {
         try {
             ValidateUtil validate = new ValidateUtil();
             addressService.setDefault(request, validate.toId(id));
-            Response res = new Response("Set default successfully.", Map.of("reload", true));
+            Response res = new Response("Update address to default successfully.",
+                    Map.of("redirect", "/address", "time", 3000));
             return ResponseEntity.ok(res.build());
         } catch (Exception e) {
             Response res = new Response(e.getMessage());
