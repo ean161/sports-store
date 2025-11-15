@@ -15,13 +15,7 @@ $(document).ready(function () {
 
     $(".set-default-btn").on("click", async function () {
         var id = $(this).data("id");
-
-        try {
-            var res = await post(`/address/set-default/${id}`);
-                window.location.reload();
-        } catch (e) {
-            alert("Error: " + e.message);
-        }
+        var res = await post(`/address/set-default/${id}`);
     });
 
     $("#province-select").on("change", async function (e) {

@@ -41,7 +41,7 @@ public class AddressRestController {
                     wardsId);
 
             Response res = new Response("Add address successfully.",
-                    Map.of("redirect", "/address", "time", 500));
+                    Map.of("redirect", "/address", "time", 3000));
             return ResponseEntity.ok(res.build());
 
         } catch (Exception e) {

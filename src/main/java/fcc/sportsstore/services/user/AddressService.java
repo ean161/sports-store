@@ -57,6 +57,17 @@ public class AddressService {
 
         User caller = userService.getFromSession(request);
 
+        boolean isDefault = false;
+        try {
+            Address defAdr = getDefault(caller);
+
+            if (defAdr == null) {
+                isDefault = true;
+            }
+        } catch (Exception e) {
+            isDefault = true;
+        }
+
         Province province = provinceRepository.findById(provinceId)
                 .orElseThrow(() -> new RuntimeException("Invalid province selected."));
         Ward ward = wardRepository.findById(wardId)
@@ -66,14 +77,13 @@ public class AddressService {
             throw new RuntimeException("Selected ward does not belong to the selected province.");
         }
 
-        Address address = new Address(
-                note,
+        Address address = new Address(note,
                 phone,
                 detail,
                 province,
                 ward,
-                caller
-        );
+                caller,
+                isDefault);
 
         addressRepository.save(address);
     }
@@ -143,6 +153,7 @@ public class AddressService {
     public List<Ward> getWardByProvinceId(String provinceId) {
         return wardRepository.findByProvinceId(provinceId);
     }
+
     @Transactional
     public void delete(HttpServletRequest request, String addressId) {
         User caller = userService.getFromSession(request);

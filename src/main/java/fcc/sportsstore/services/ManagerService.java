@@ -75,7 +75,6 @@ public class ManagerService {
         return managerRepository.findByUsernameContainingIgnoreCaseAndRoleOrFullNameContainingIgnoreCaseAndRole(search, "STAFF", search, "STAFF", pageable);
     }
 
-
     public void deleteById(String id) {
         managerRepository.deleteById(id);
     }

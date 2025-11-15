@@ -51,13 +51,14 @@ public class Address {
 
     private boolean isDefault;
 
-    public Address(String note, String phoneNumber, String addressDetail, Province province, Ward ward, User user) {
+    public Address(String note, String phoneNumber, String addressDetail, Province province, Ward ward, User user, boolean isDefault) {
         this.note = note;
         this.phoneNumber = phoneNumber;
         this.addressDetail = addressDetail;
         this.province = province;
         this.ward = ward;
         this.user = user;
+        this.isDefault = isDefault;
     }
 
     public String getCreatedAt() {
