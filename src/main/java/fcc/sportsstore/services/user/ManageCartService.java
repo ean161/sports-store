@@ -93,7 +93,6 @@ public class ManageCartService {
                         || !Objects.equals(a.getName(), b.getName())
                         || !Objects.equals(a.getData(), b.getData())
                         || !Objects.equals(a.getPrice(), b.getPrice())) {
-
                     areEqual = false;
                     break;
                 }
