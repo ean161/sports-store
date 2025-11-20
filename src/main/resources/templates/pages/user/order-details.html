@@ -8,20 +8,20 @@
                     <div class="flex space-x-2 mb-6 items-center">
                         <h2 class="text-3xl font-bold">Order details</h2>
                         <div>
-                            <span th:if="${pack.status == 'SUCCESS'}"
-                                  class="px-3 py-2 inline-flex text-xs bg-green-100 text-green-700">Success</span>
+                            <span th:if="${pack.status == 'PAYMENT'}"
+                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Payment</span>
                             <span th:if="${pack.status == 'APPROVAL'}"
-                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Pending approval</span>
-                            <span th:if="${pack.status == 'IN_TRANSIT'}"
-                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Transit</span>
-                            <span th:if="${pack.status == 'PENDING_PAYMENT'}"
-                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Pending payment</span>
-                            <span th:if="${pack.status == 'PENDING_ORDER'}"
-                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Pending order</span>
+                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Approval</span>
+                            <span th:if="${pack.status == 'PREPARING_ORDER'}"
+                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Preparing order</span>
+                            <span th:if="${pack.status == 'DELIVERING'}"
+                                  class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Delivering</span>
                             <span th:if="${pack.status == 'CANCELLED'}"
                                   class="px-3 py-2 inline-flex text-xs bg-red-100 text-red-700">Cancelled</span>
                             <span th:if="${pack.status == 'REFUNDING'}"
                                   class="px-3 py-2 inline-flex text-xs bg-orange-100 text-orange-700">Refunding</span>
+                            <span th:if="${pack.status == 'SUCCESS'}"
+                                  class="px-3 py-2 inline-flex text-xs bg-green-100 text-green-700">Success</span>
                         </div>
                     </div>
                     <p class="pb-3 space-y-4 mt-4 text-base" th:text="'Order #' + ${pack.sign}"></p>
@@ -31,7 +31,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-0 border-b border-gray-200">
                         <div class="px-6 py-4 border-r border-gray-200">
                             <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Total goods</label>
-                            <p class="text-lg font-bold text-blue-600" th:text="${pack.getTotalProductCost()} + '₫'"></p>
+                            <p class="text-lg font-bold text-blue-600"
+                               th:text="${pack.getTotalProductCost()} + '₫'"></p>
                         </div>
 
                         <div class="px-6 py-4 border-r border-gray-200">
@@ -63,20 +64,25 @@
                     <div class="px-6 py-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Order code</label>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Order
+                                    code</label>
                                 <p class="text-sm font-medium text-gray-900" th:text="${pack.sign}"></p>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Products count</label>
-                                <p class="text-sm font-medium text-gray-900" th:text="'x' + ${pack.getProductCount()} + ' products'"></p>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Products
+                                    count</label>
+                                <p class="text-sm font-medium text-gray-900"
+                                   th:text="'x' + ${pack.getProductCount()} + ' products'"></p>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment type</label>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment
+                                    type</label>
                                 <p class="text-sm font-medium text-gray-900"
                                    th:text="${pack.paymentType != null ? (pack.paymentType == 'COD' ? 'Cash on delivery' : 'Online banking') : 'N/A'}"></p>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment status</label>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase mb-2">Payment
+                                    status</label>
                                 <p class="text-sm font-medium text-gray-900"
                                    th:text="${pack.paymentStatus != null ? (pack.paymentStatus == 'NOT_PAY_YET' ? 'Not pay yet' : 'Paid') : 'N/A'}"></p>
                             </div>
@@ -84,7 +90,8 @@
                     </div>
                 </div>
 
-                <div th:if="${pack.address != null}" class="bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                <div th:if="${pack.address != null}"
+                     class="bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
                         <h3 class="text-base font-semibold text-gray-900">Contact information</h3>
                     </div>
@@ -175,13 +182,13 @@
                 </div>
 
                 <div class="mt-6 flex gap-3 justify-end">
-                    <th:block th:if="${pack.status == 'PENDING_PAYMENT'}">
+                    <th:block th:if="${pack.status == 'PAYMENT'}">
                         <a th:href="@{'/checkout/pay/' + ${pack.id}}"
                            class="bg-blue-600 px-4 py-2 text-white text-sm font-medium shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                             <span>Pay now</span>
                         </a>
                     </th:block>
-                    <th:block th:if="${pack.status == 'PENDING_PAYMENT' || pack.status == 'APPROVAL'}">
+                    <th:block th:if="${pack.status == 'PAYMENT' || pack.status == 'APPROVAL'}">
                         <form method="post" th:action="@{'/order-history/cancel/' + ${pack.id}}">
                             <button type="submit"
                                     class="bg-red-600 px-4 py-2 text-white text-sm font-medium shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">

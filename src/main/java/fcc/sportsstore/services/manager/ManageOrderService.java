@@ -47,10 +47,10 @@ public class ManageOrderService {
 
     @Transactional
     public void edit(HttpServletRequest request, String id, String status) {
-        List<String> availableStatus = List.of("PENDING_PAYMENT",
+        List<String> availableStatus = List.of("PAYMENT",
                 "APPROVAL",
-                "PENDING_ORDER",
-                "IN_TRANSIT",
+                "PREPARING_ORDER",
+                "DELIVERING",
                 "REFUNDING",
                 "SUCCESS",
                 "CANCELLED");
@@ -66,7 +66,7 @@ public class ManageOrderService {
         pack.setManager(managerService.getManagerFromSession(request));
         pack.setStatus(status);
 
-        if (oldStatus.equals("APPROVAL") && status.equals("PENDING_ORDER")) {
+        if (oldStatus.equals("APPROVAL") && status.equals("PREPARING_ORDER")) {
             for (ProductSnapshot snap : pack.getProductSnapshots()) {
                 Set<ProductPropertyData> propData = new HashSet<>();
                 for (ProductPropertySnapshot propSnap : snap.getProductPropertySnapshots()) {
@@ -81,7 +81,7 @@ public class ManageOrderService {
             }
         } else if (!oldStatus.equals(status)
                 && !oldStatus.equals("APPROVAL")
-                && !oldStatus.equals("PENDING_PAYMENT")
+                && !oldStatus.equals("PAYMENT")
                 && status.equals("CANCELLED")) {
             for (ProductSnapshot snap : pack.getProductSnapshots()) {
                 Set<ProductPropertyData> propData = new HashSet<>();

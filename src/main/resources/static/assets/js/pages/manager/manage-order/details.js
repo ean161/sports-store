@@ -19,10 +19,10 @@ async function loadDetails(id) {
             $("#cstate-pending-order").show();
             $("#cstate-cancel").show();
             break;
-        case "PENDING_ORDER":
+        case "PREPARING_ORDER":
             $("#cstate-in-transit").show();
             break;
-        case "IN_TRANSIT":
+        case "DELIVERING":
             $("#cstate-refunding").show();
             $("#cstate-success").show();
             $("#cstate-cancel").show();

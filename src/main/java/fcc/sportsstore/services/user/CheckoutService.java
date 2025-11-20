@@ -14,11 +14,9 @@ public class CheckoutService {
 
     private final PackService packService;
 
-    private final ProductSnapshotService itemService;
 
     private final ProductSnapshotService productSnapshotService;
 
-    private final ProductService productService;
 
     private final ManageCartService manageCartService;
 
@@ -32,11 +30,9 @@ public class CheckoutService {
 
     private final VoucherService voucherService;
 
-    public CheckoutService(PackService packService, ProductSnapshotService itemService, ProductSnapshotService productSnapshotService, ProductService productService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService, ProductQuantityService productQuantityService, VoucherService voucherService) {
+    public CheckoutService(PackService packService, ProductSnapshotService productSnapshotService, ManageCartService manageCartService, ProductPropertySnapshotService productPropertySnapshotService, UserService userService, AddressService addressService, ProductQuantityService productQuantityService, VoucherService voucherService) {
         this.packService = packService;
-        this.itemService = itemService;
         this.productSnapshotService = productSnapshotService;
-        this.productService = productService;
         this.manageCartService = manageCartService;
         this.productPropertySnapshotService = productPropertySnapshotService;
         this.userService = userService;
@@ -67,7 +63,7 @@ public class CheckoutService {
 
         String status = switch (paymentType.toUpperCase()) {
             case "COD" -> "APPROVAL";
-            case "OB" -> "PENDING_PAYMENT";
+            case "OB" -> "PAYMENT";
             default -> throw new IllegalArgumentException("Payment type not found.");
         };
 
@@ -120,7 +116,7 @@ public class CheckoutService {
     }
 
     public void paidWebhook(String code, Integer amount) {
-        Pack pack = packService.getBySignAndStatus(code, "PENDING_PAYMENT");
+        Pack pack = packService.getBySignAndStatus(code, "PAYMENT");
         if (!Objects.equals(pack.getTotalPrice(), amount)) {
             throw new RuntimeException("Invalid pack total price.");
         }
@@ -142,14 +138,14 @@ public class CheckoutService {
             productQuantityService.modifyStockQuantity(propData, snap.getQuantity(), false);
         }
 
-        pack.setStatus("PENDING_ORDER");
+        pack.setStatus("PREPARING_ORDER");
         pack.setPaymentStatus("PAID");
         packService.save(pack);
     }
 
     public boolean isPaid(String sign, HttpServletRequest request) {
         User user = userService.getFromSession(request);
-        return packService.getByUserAndStatusNotAndSign(user, "PENDING_PAYMENT", sign).isPresent();
+        return packService.getByUserAndStatusNotAndSign(user, "PAYMENT", sign).isPresent();
     }
 
     public Integer getShippingFee() {

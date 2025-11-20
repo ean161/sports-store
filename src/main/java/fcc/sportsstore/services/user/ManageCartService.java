@@ -13,17 +13,11 @@ import java.util.*;
 public class ManageCartService {
 
     private final ProductSnapshotService productSnapshotService;
-
     private final UserService userService;
-
     private final ProductService productService;
-
     private final ProductPropertyDataService productPropertyDataService;
-
     private final ProductPropertySnapshotService productPropertySnapshotService;
-
     private final ProductMediaService productMediaService;
-
     private final ProductQuantityService productQuantityService;
     private final PackService packService;
 
@@ -48,8 +42,7 @@ public class ManageCartService {
         Integer cartCount = refreshCartItemCount(request);
 
         List<ProductPropertyData> listPropData = extractPropertyData(params);
-        List<ProductPropertySnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot,
-                listPropData);
+        List<ProductPropertySnapshot> propSnapshot = toPropertyDataSnapshot(prodSnapshot, listPropData);
 
         Set<ProductPropertyData> setPropData = new HashSet<>(listPropData);
 
@@ -62,12 +55,14 @@ public class ManageCartService {
         }
 
         ProductSnapshot sameProductSnapshot = getSameCartProductSnapshot(user, productId, propSnapshot);
+
         if (sameProductSnapshot != null) {
+
             sameProductSnapshot.setQuantity(sameProductSnapshot.getQuantity() + quantity);
+            productSnapshotService.save(sameProductSnapshot);
             return cartCount;
         }
 
-        propSnapshot.addAll(propSnapshot);
         prodSnapshot.setType("CART");
         prodSnapshot.setUser(user);
         prodSnapshot.setQuantity(quantity);
@@ -80,28 +75,31 @@ public class ManageCartService {
     @Transactional
     public ProductSnapshot getSameCartProductSnapshot(User user, String productId, List<ProductPropertySnapshot> currentSnap) {
         List<ProductSnapshot> sameProductSnapshot = productSnapshotService.getSameProductSnapshotCart(user, productId);
+
         for (ProductSnapshot item : sameProductSnapshot) {
             List<ProductPropertySnapshot> cartSnaps = item.getProductPropertySnapshots();
+
             if (cartSnaps.size() != currentSnap.size()) {
-                return null;
+                continue;
             }
 
-            boolean areEqual = true;
-            for (int i = 0; i < cartSnaps.size(); i++) {
-                ProductPropertySnapshot a = cartSnaps.get(i);
-                ProductPropertySnapshot b = currentSnap.get(i);
-
-                if (!Objects.equals(a.getProductPropertyFieldId(), b.getProductPropertyFieldId())
-                        || !Objects.equals(a.getProductPropertyDataId(), b.getProductPropertyDataId())
-                        || !Objects.equals(a.getName(), b.getName())
-                        || !Objects.equals(a.getData(), b.getData())
-                        || !Objects.equals(a.getPrice(), b.getPrice())) {
-                    areEqual = false;
+            boolean isMatch = true;
+            for (ProductPropertySnapshot currProp : currentSnap) {
+                boolean found = false;
+                for (ProductPropertySnapshot cartProp : cartSnaps) {
+                    if (Objects.equals(currProp.getProductPropertyFieldId(), cartProp.getProductPropertyFieldId())
+                            && Objects.equals(currProp.getProductPropertyDataId(), cartProp.getProductPropertyDataId())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    isMatch = false;
                     break;
                 }
             }
 
-            if (areEqual) {
+            if (isMatch) {
                 return item;
             }
         }
