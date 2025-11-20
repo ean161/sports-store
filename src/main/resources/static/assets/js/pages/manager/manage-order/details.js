@@ -17,6 +17,7 @@ async function loadDetails(id) {
     switch (res.data.status) {
         case "PENDING_APPROVAL":
             $("#cstate-pending-order").show();
+            $("#cstate-cancel").show();
             break;
         case "PENDING_ORDER":
             $("#cstate-in-transit").show();
@@ -50,7 +51,9 @@ async function loadDetails(id) {
 
         items += `</td>
             </tr>
-            <tr><td colspan="3"><hr></td></tr>`;
+            <tr>
+                <td colspan="3"><hr></td>
+            </tr>`;
     }
 
     $("#oh-items").html(items);

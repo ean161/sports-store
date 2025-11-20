@@ -29,4 +29,26 @@ public class TimeUtil {
                 .toInstant()
                 .toEpochMilli() / 1000;
     }
+
+    public Long getStartOfCurrentMonth() {
+        ZonedDateTime now = getNow();
+
+        ZonedDateTime start = now.withDayOfMonth(1)
+                .toLocalDate()
+                .atStartOfDay(timeZone);
+
+        return start.toEpochSecond();
+    }
+
+    public Long getEndOfCurrentMonth() {
+        ZonedDateTime now = getNow();
+
+        ZonedDateTime end = now.withDayOfMonth(1)
+                .plusMonths(1)
+                .toLocalDate()
+                .atStartOfDay(timeZone)
+                .minusSeconds(1);
+
+        return end.toEpochSecond();
+    }
 }

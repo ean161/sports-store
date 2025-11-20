@@ -14,16 +14,13 @@ public class RegisterService {
 
     private final UserService userService;
 
-
     private final EmailService emailService;
-
 
     public RegisterService(UserService userService,
                            EmailService emailService) {
         this.userService = userService;
         this.emailService = emailService;
     }
-
 
     @Transactional
     public void register(HttpServletResponse response,

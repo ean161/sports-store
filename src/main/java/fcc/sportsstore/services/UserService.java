@@ -111,4 +111,13 @@ public class UserService {
         user.setToken(token);
         cookie.setCookie("token", token, 60 * 60 * 60 * 24 * 30);
     }
+
+    public Long getCount() {
+        return userRepository.count();
+    }
+
+    public Long getCountInMonth() {
+        TimeUtil timeUtil = new TimeUtil();
+        return userRepository.countByCreatedAtGreaterThanAndCreatedAtLessThan(timeUtil.getStartOfCurrentMonth(), timeUtil.getEndOfCurrentMonth());
+    }
 }
