@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Service("managerManageOrderService")
@@ -49,7 +48,7 @@ public class ManageOrderService {
     @Transactional
     public void edit(HttpServletRequest request, String id, String status) {
         List<String> availableStatus = List.of("PENDING_PAYMENT",
-                "PENDING_APPROVAL",
+                "APPROVAL",
                 "PENDING_ORDER",
                 "IN_TRANSIT",
                 "REFUNDING",
@@ -67,37 +66,30 @@ public class ManageOrderService {
         pack.setManager(managerService.getManagerFromSession(request));
         pack.setStatus(status);
 
-        String stockAffect = "no";
-
-        if (!oldStatus.equals("CANCELLED") && status.equals("CANCELLED")) {
-            stockAffect = "sub";
-        }
-
-        if (oldStatus.equals("CANCELLED") && !status.equals("CANCELLED")) {
-            stockAffect = "add";
-        }
-
-        if (!stockAffect.equals("no")) {
-            System.out.println("STOCK AFFECT: " + stockAffect);
+        if (oldStatus.equals("APPROVAL") && status.equals("PENDING_ORDER")) {
             for (ProductSnapshot snap : pack.getProductSnapshots()) {
-                List<ProductPropertySnapshot> snapProps = snap.getProductPropertySnapshots();
                 Set<ProductPropertyData> propData = new HashSet<>();
-                for (ProductPropertySnapshot snapPropsItem : snapProps) {
-                    propData.add(productPropertySnapshotService.toPropertyData(snapPropsItem));
+                for (ProductPropertySnapshot propSnap : snap.getProductPropertySnapshots()) {
+                    propData.add(productPropertySnapshotService.toPropertyData(propSnap));
                 }
 
-                ProductQuantity pQuantity = productQuantityService.getByProperties(propData);
-
-
-                if (stockAffect.equals("sub")) {
-                    pQuantity.setAmount(pQuantity.getAmount() + snap.getQuantity());
-                } else {
-                    if (pQuantity.getAmount() - snap.getQuantity() >= 0) {
-                        pQuantity.setAmount(pQuantity.getAmount() - snap.getQuantity());
-                    } else {
-                        pQuantity.setAmount(0);
-                    }
+                if (!productQuantityService.hasStockQuantity(propData, snap.getQuantity())) {
+                    throw new RuntimeException(snap.getTitle() + " can not be approval because of outed of stock.");
                 }
+
+                productQuantityService.modifyStockQuantity(propData, snap.getQuantity(), true);
+            }
+        } else if (!oldStatus.equals(status)
+                && !oldStatus.equals("APPROVAL")
+                && !oldStatus.equals("PENDING_PAYMENT")
+                && status.equals("CANCELLED")) {
+            for (ProductSnapshot snap : pack.getProductSnapshots()) {
+                Set<ProductPropertyData> propData = new HashSet<>();
+                for (ProductPropertySnapshot propSnap : snap.getProductPropertySnapshots()) {
+                    propData.add(productPropertySnapshotService.toPropertyData(propSnap));
+                }
+
+                productQuantityService.modifyStockQuantity(propData, snap.getQuantity() * -1, false);
             }
         }
     }

@@ -66,7 +66,7 @@ public class CheckoutService {
         }
 
         String status = switch (paymentType.toUpperCase()) {
-            case "COD" -> "PENDING_APPROVAL";
+            case "COD" -> "APPROVAL";
             case "OB" -> "PENDING_PAYMENT";
             default -> throw new IllegalArgumentException("Payment type not found.");
         };
@@ -90,9 +90,7 @@ public class CheckoutService {
                 itemProps.add(productPropertySnapshotService.toPropertyData(ipSnap));
             }
 
-            try {
-                productQuantityService.sellStockQuantity(itemProps, item.getQuantity());
-            } catch (Exception e) {
+            if (!productQuantityService.hasStockQuantity(itemProps, item.getQuantity())) {
                 throw new RuntimeException(item.getTitle() + " outed of stock.");
             }
         }
@@ -125,6 +123,23 @@ public class CheckoutService {
         Pack pack = packService.getBySignAndStatus(code, "PENDING_PAYMENT");
         if (!Objects.equals(pack.getTotalPrice(), amount)) {
             throw new RuntimeException("Invalid pack total price.");
+        }
+
+        for (ProductSnapshot snap : pack.getProductSnapshots()) {
+            Set<ProductPropertyData> propData = new HashSet<>();
+            for (ProductPropertySnapshot propSnap : snap.getProductPropertySnapshots()) {
+                propData.add(productPropertySnapshotService.toPropertyData(propSnap));
+            }
+
+            if (productQuantityService.hasStockQuantity(propData, snap.getQuantity())) {
+                pack.setStatus("REFUNDING");
+                pack.setPaymentStatus("PAID");
+                packService.save(pack);
+
+                return;
+            }
+
+            productQuantityService.modifyStockQuantity(propData, snap.getQuantity(), false);
         }
 
         pack.setStatus("PENDING_ORDER");

@@ -31,12 +31,12 @@ $(document).ready(function () {
         let qtyElem = $(`#quantity-${id}`);
         let quantity = parseInt(qtyElem.text()) + 1;
 
-        if (quantity >= 100) {
+        let res = await updateQuantity(id, quantity);
+        if (quantity >= 100 || res.code === 0) {
             return;
         }
 
         qtyElem.text(quantity);
-        await updateQuantity(id, quantity);
 
         updateItemTotal(id);
         updateTotal();
@@ -47,14 +47,17 @@ $(document).ready(function () {
         let qtyElem = $(`#quantity-${id}`);
         let quantity = parseInt(qtyElem.text());
 
-        if (quantity > 1) {
-            quantity--;
-            qtyElem.text(quantity);
-            await updateQuantity(id, quantity);
-
-            updateItemTotal(id);
-            updateTotal();
+        let res = await updateQuantity(id, quantity);
+        if (quantity <= 0 || res.code === 0) {
+            return;
         }
+
+        quantity--;
+        qtyElem.text(quantity);
+        await updateQuantity(id, quantity);
+
+        updateItemTotal(id);
+        updateTotal();
     });
 
     $(".selected-cart-item").on("click", async function () {
@@ -78,7 +81,7 @@ async function remove(id) {
 }
 
 async function updateQuantity(id, quantity){
-    await post("/cart/update", {
+    return await post("/cart/update", {
         id: id,
         quantity: quantity
     });

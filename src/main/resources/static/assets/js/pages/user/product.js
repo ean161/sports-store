@@ -1,4 +1,5 @@
 var selectedProp = {};
+var fullSelectedProp = {};
 
 $(document).ready(function() {
     $("#item-form").on("submit", async function (event) {
@@ -39,16 +40,26 @@ $(document).ready(function() {
 
         selectedProp[propId] = propPrice;
         calcPrice();
-    })
+    });
 
-    // $(".add-item-btn").on("click", async function (event) {
-    //
-    //     let id = $(this)[0].id.replaceAll("add-item-", "");
-    //     $(`#item-${id}`).add();
-    //
-    //     updateTotal();
-    //     await remove(id);
-    // });
+    $(".real-option-data").on("click", async function () {
+        fullSelectedProp[$(this).attr("name")] = $(this).attr("id").replaceAll("property-data-id-", "");
+
+        console.log(fullSelectedProp);
+        $(".select-option").hide();
+        let res = await post("/product/available-stock-prop", {
+            id: $("#id").val(),
+            props: Object.values(fullSelectedProp)
+        });
+
+        if (res.data.length) {
+            for (let key in res.data) {
+                let item = res.data[key];
+
+                $(`.label-property-data-id-${item}`).show();
+            }
+        }
+    });
 });
 
 function calcPrice() {

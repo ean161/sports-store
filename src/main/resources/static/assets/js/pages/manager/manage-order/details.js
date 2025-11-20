@@ -15,7 +15,7 @@ async function loadDetails(id) {
     $("#oh-created-at").val(res.data.createdAt);
 
     switch (res.data.status) {
-        case "PENDING_APPROVAL":
+        case "APPROVAL":
             $("#cstate-pending-order").show();
             $("#cstate-cancel").show();
             break;

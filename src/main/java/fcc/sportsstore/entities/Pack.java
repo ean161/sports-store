@@ -32,7 +32,7 @@ public class Pack {
 
     /**
      * PENDING_PAYMENT: Waiting for payment./ => To Pay
-     * PENDING_APPROVAL: Waiting for staff confirm.
+     * APPROVAL: Waiting for staff confirm.
      * PENDING_ORDER: Preparing the pack.
      * IN_TRANSIT: Moved to delivery.
      * SUCCESS: Delivered pack.

@@ -24,7 +24,9 @@ public interface PackRepository extends JpaRepository<Pack, String> {
 
     Page<Pack> findAll(Pageable pageable);
 
-    Page<Pack> findByUser_usernameContainingIgnoreCaseOrSignContainingIgnoreCase(String searchForStatus,
+    Page<Pack> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    Page<Pack> findByUser_usernameContainingIgnoreCaseOrSignContainingIgnoreCaseOrderByCreatedAtDesc(String searchForStatus,
                                                                                  String searchForPaymentType,
                                                                                  Pageable pageable);
     boolean existsByUserAndProductSnapshotsProductIdAndStatus(User user, String productId, String status);

@@ -70,7 +70,7 @@
                             <td class="px-3 py-3 whitespace-nowrap">
                                 <span th:if="${pack.status == 'SUCCESS'}"
                                       class="px-3 py-3 inline-flex text-xs bg-green-100 text-green-700">Success</span>
-                                <span th:if="${pack.status == 'PENDING_APPROVAL'}"
+                                <span th:if="${pack.status == 'APPROVAL'}"
                                       class="px-3 py-3 inline-flex text-xs bg-yellow-100 text-yellow-700">Pending approval</span>
                                 <span th:if="${pack.status == 'IN_TRANSIT'}"
                                       class="px-3 py-3 inline-flex text-xs bg-yellow-100 text-yellow-700">In transit</span>
@@ -163,7 +163,7 @@
                                                         name="status"
                                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 focus:outline-none sm:text-sm/6">
                                                     <option>PENDING_PAYMENT</option>
-                                                    <option>PENDING_APPROVAL</option>
+                                                    <option>APPROVAL</option>
                                                     <option>PENDING_ORDER</option>
                                                     <option>IN_TRANSIT</option>
                                                     <option>REFUNDING</option>

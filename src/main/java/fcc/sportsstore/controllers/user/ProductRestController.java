@@ -6,6 +6,7 @@ import fcc.sportsstore.entities.User;
 import fcc.sportsstore.services.FeedbackService;
 import fcc.sportsstore.services.ProductService;
 import fcc.sportsstore.services.ProductSnapshotService;
+import fcc.sportsstore.services.user.AvailableStockPropService;
 import fcc.sportsstore.services.user.ManageCartService;
 import fcc.sportsstore.utils.Response;
 import fcc.sportsstore.utils.ValidateUtil;
@@ -16,21 +17,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController("userProductRestController")
 @RequestMapping("/product")
 public class ProductRestController {
 
-
     private final ProductService productService;
+
     private final FeedbackService feedbackService;
 
-    public ProductRestController(ProductService productService, FeedbackService feedbackService) {
+    private final AvailableStockPropService availableStockPropService;
+
+    public ProductRestController(ProductService productService, FeedbackService feedbackService, AvailableStockPropService availableStockPropService) {
         this.productService = productService;
         this.feedbackService = feedbackService;
+        this.availableStockPropService = availableStockPropService;
     }
-
 
     @PostMapping("/feedback")
     public ResponseEntity<?> submitFeedback(
@@ -125,4 +129,18 @@ public class ProductRestController {
         }
     }
 
+    @PostMapping("/available-stock-prop")
+    public ResponseEntity<?> availableStockProp(@RequestParam(value = "id", required = false) String id,
+                                                @RequestParam("props[]") List<String> props) {
+
+        try {
+            ValidateUtil validate = new ValidateUtil();
+
+            Response res = new Response(availableStockPropService.availableStockProp(validate.toId(id), props));
+            return ResponseEntity.ok(res.build());
+        } catch (Exception e) {
+            Response res = new Response(e.getMessage());
+            return ResponseEntity.badRequest().body(res.build());
+        }
+    }
 }

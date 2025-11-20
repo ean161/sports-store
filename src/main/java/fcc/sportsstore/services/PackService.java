@@ -54,11 +54,11 @@ public class PackService {
     }
 
     public Page<Pack> getOrderByUser_usernameOrSign(String search, Pageable pageable) {
-        return packRepository.findByUser_usernameContainingIgnoreCaseOrSignContainingIgnoreCase(search , search, pageable);
+        return packRepository.findByUser_usernameContainingIgnoreCaseOrSignContainingIgnoreCaseOrderByCreatedAtDesc(search , search, pageable);
     }
 
     public Page<Pack> getAll(Pageable pageable) {
-        return packRepository.findAll(pageable);
+        return packRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
 
     @Transactional
