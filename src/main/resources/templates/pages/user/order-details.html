@@ -10,7 +10,7 @@
                         <div>
                             <span th:if="${pack.status == 'SUCCESS'}"
                                   class="px-3 py-2 inline-flex text-xs bg-green-100 text-green-700">Success</span>
-                            <span th:if="${pack.status == 'PENDING_APPROVAL'}"
+                            <span th:if="${pack.status == 'APPROVAL'}"
                                   class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Pending approval</span>
                             <span th:if="${pack.status == 'IN_TRANSIT'}"
                                   class="px-3 py-2 inline-flex text-xs bg-yellow-100 text-yellow-700">Transit</span>
@@ -181,7 +181,7 @@
                             <span>Pay now</span>
                         </a>
                     </th:block>
-                    <th:block th:if="${pack.status == 'PENDING_PAYMENT' || pack.status == 'PENDING_APPROVAL'}">
+                    <th:block th:if="${pack.status == 'PENDING_PAYMENT' || pack.status == 'APPROVAL'}">
                         <form method="post" th:action="@{'/order-history/cancel/' + ${pack.id}}">
                             <button type="submit"
                                     class="bg-red-600 px-4 py-2 text-white text-sm font-medium shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">

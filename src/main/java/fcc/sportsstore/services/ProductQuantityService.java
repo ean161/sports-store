@@ -113,8 +113,8 @@ public class ProductQuantityService {
     }
 
     @Transactional
-    public void sellStockQuantity(Set<ProductPropertyData> properties, Integer quantity) {
-        if (!hasStockQuantity(properties, quantity)) {
+    public void modifyStockQuantity(Set<ProductPropertyData> properties, Integer quantity, boolean hasStockCheck) {
+        if (hasStockCheck && !hasStockQuantity(properties, quantity)) {
             throw new IllegalArgumentException("Outed stock.");
         }
 

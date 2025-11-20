@@ -1,8 +1,6 @@
 package fcc.sportsstore.services;
 
-import fcc.sportsstore.entities.Product;
-import fcc.sportsstore.entities.ProductCollection;
-import fcc.sportsstore.entities.ProductType;
+import fcc.sportsstore.entities.*;
 import fcc.sportsstore.repositories.ProductRepository;
 import fcc.sportsstore.utils.RandomUtil;
 import jakarta.transaction.Transactional;
@@ -10,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("productService")
 public class ProductService {

@@ -25,8 +25,9 @@ public class ManageCartService {
     private final ProductMediaService productMediaService;
 
     private final ProductQuantityService productQuantityService;
+    private final PackService packService;
 
-    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService, ProductQuantityService productQuantityService) {
+    public ManageCartService(ProductSnapshotService productSnapshotService, UserService userService, ProductService productService, ProductPropertyDataService productPropertyDataService, ProductPropertySnapshotService productPropertySnapshotService, ProductMediaService productMediaService, ProductQuantityService productQuantityService, PackService packService) {
         this.productSnapshotService = productSnapshotService;
         this.userService = userService;
         this.productService = productService;
@@ -34,6 +35,7 @@ public class ManageCartService {
         this.productPropertySnapshotService = productPropertySnapshotService;
         this.productMediaService = productMediaService;
         this.productQuantityService = productQuantityService;
+        this.packService = packService;
     }
 
     @Transactional
@@ -75,6 +77,7 @@ public class ManageCartService {
         return ++cartCount;
     }
 
+    @Transactional
     public ProductSnapshot getSameCartProductSnapshot(User user, String productId, List<ProductPropertySnapshot> currentSnap) {
         List<ProductSnapshot> sameProductSnapshot = productSnapshotService.getSameProductSnapshotCart(user, productId);
         for (ProductSnapshot item : sameProductSnapshot) {
@@ -130,6 +133,15 @@ public class ManageCartService {
 
         if (!user.getId().equals(item.getUser().getId())) {
             throw new RuntimeException("Invalid user");
+        }
+
+        Set<ProductPropertyData> propData = new HashSet<>();
+        for (ProductPropertySnapshot propSnap : item.getProductPropertySnapshots()) {
+            propData.add(productPropertySnapshotService.toPropertyData(propSnap));
+        }
+
+        if (!productQuantityService.hasStockQuantity(propData, quantity)) {
+            throw new RuntimeException(item.getTitle() + " outed of stock.");
         }
 
         item.setQuantity(quantity);

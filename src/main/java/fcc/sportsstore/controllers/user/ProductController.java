@@ -4,6 +4,7 @@ import fcc.sportsstore.entities.*;
 import fcc.sportsstore.services.FeedbackService;
 import fcc.sportsstore.services.ProductService;
 import fcc.sportsstore.services.ProductSnapshotService;
+import fcc.sportsstore.services.user.AvailableStockPropService;
 import fcc.sportsstore.services.user.ManageCartService;
 import fcc.sportsstore.utils.ValidateUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,20 +23,30 @@ public class ProductController {
     private final ProductSnapshotService productSnapshotService;
     private final ManageCartService manageCartService;
     private final FeedbackService feedbackService;
+    private final AvailableStockPropService availableStockPropService;
 
-    public ProductController(ProductService productService, ManageCartService manageCartService, FeedbackService feedbackService, ProductSnapshotService productSnapshotService) {
+    public ProductController(ProductService productService, ManageCartService manageCartService, FeedbackService feedbackService, ProductSnapshotService productSnapshotService, AvailableStockPropService availableStockPropService) {
         this.productService = productService;
         this.manageCartService = manageCartService;
         this.feedbackService = feedbackService;
         this.productSnapshotService = productSnapshotService;
+        this.availableStockPropService = availableStockPropService;
     }
 
     @GetMapping("/{id}")
     public String details(@PathVariable("id") String id, Model model, HttpServletRequest request) {
         try {
             Product product = productService.getById(new ValidateUtil().toId(id));
+            HashMap<String, Boolean> stockGroupStatus = new HashMap<>();
+            for (ProductPropertyData propData : product.getProductPropertyData()) {
+                stockGroupStatus.put(propData.getId(),
+                        availableStockPropService.availableStockProp(product.getId(),
+                                List.of(propData.getId())).size() >= 1 ? true : false);
+            }
+
             manageCartService.refreshCartItemCount(request);
             model.addAttribute("product", product);
+            model.addAttribute("stockGroupStatus", stockGroupStatus);
 
             List<Product> sameTypeProducts = productService.getByType(product.getProductType());
             sameTypeProducts.removeIf(p -> p.getId().equals(product.getId()));

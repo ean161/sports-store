@@ -87,7 +87,7 @@ public class OrderHistoryController {
             User user = userService.getFromSession(request);
             Pack pack = packService.getById(packId);
 
-            if (!List.of("PENDING_PAYMENT", "PENDING_APPROVAL").contains(pack.getStatus())
+            if (!List.of("PENDING_PAYMENT", "APPROVAL").contains(pack.getStatus())
                 || !pack.getUser().getId().equals(user.getId())) {
                 return "redirect:/order-history";
             }
