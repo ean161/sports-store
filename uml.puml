@@ -1,0 +1,244 @@
+@startuml
+class fcc.sportsstore.entities.Voucher {
+- String id
+- String code
+- String status
+- Integer maxUsedCount
+- Integer usedCount
+- String discountType
+- Double discountValue
+- Double maxDiscountValue
+- Long expiredAt
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.User {
+- String id
+- String username
+- String password
+- String token
+- boolean gender
+- Email email
+- List<ProductSnapshot> productSnapshots
+- List<Pack> packs
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductPropertySnapshot {
+- String id
+- String productPropertyFieldId
+- String productPropertyDataId
+- String name
+- String data
+- Integer price
+- Long createdAt
+- ProductSnapshot productSnapshot
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.VerifyEmail {
+- String id
+- String code
+- String status
+- Email email
+- Long expiredAt
+- Long createdAt
++ boolean isExpired()
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Province {
+- String id
+- String name
+- Integer vtpId
+- List<Ward> awards
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductType {
+- String id
+- String name
+- List<ProductPropertyField> productPropertyFields
+- List<Product> products
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Pack {
+- String id
+- User user
+- String status
+- String paymentType
+- String paymentStatus
+- Integer shippingFee
+- List<ProductSnapshot> productSnapshots
+- Address address
+- Manager manager
+- String sign
+- Long createdAt
++ Integer getProductSnapshotCount()
++ Integer getTotalPrice()
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductMedia {
+- String id
+- String position
+- Product product
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductCollection {
+- String id
+- String name
+- List<Product> products
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ForgetPassword {
+- String id
+- String code
+- String status
+- User user
+- Long expiredAt
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductQuantity {
+- String id
+- Integer amount
+- Product product
+- Set<ProductPropertyData> productPropertyData
+}
+
+class fcc.sportsstore.entities.Email {
+- String id
+- String address
+- boolean isVerified
+- String code
+- User user
+- List<VerifyEmail> verifyEmails
+- Long verifiedAt
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Manager {
+- String id
+- String username
+- String password
+- String token
+- String role
+- List<Pack> packs
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductSnapshot {
+- String id
+- String productId
+- String title
+- Integer price
+- Integer quantity
+- String type
+- boolean isAvailable
+- User user
+- Pack pack
+- List<ProductPropertySnapshot> productPropertySnapshots
+- Long createdAt
++ Integer getTotalPrice()
++ Integer getPrice()
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Feedback {
+- String id
+- Product product
+- User user
+- Integer rating
+- String comment
+- Long createdAt
+}
+
+class fcc.sportsstore.entities.ProductPropertyData {
+- String id
+- ProductPropertyField productPropertyField
+- Product product
+- String data
+- Integer price
+- Set<ProductQuantity> productQuantities
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.ProductPropertyField {
+- String id
+- String name
+- ProductType productType
+- List<ProductPropertyData> productPropertyData
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Product {
+- String id
+- String title
+- String description
+- Integer price
+- List<ProductMedia> productMedia
+- ProductType productType
+- List<ProductPropertyData> productPropertyData
+- List<ProductQuantity> productQuantities
+- ProductCollection productCollection
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Ward {
+- String id
+- String name
+- int vtpId
+- Province province
+- Long createdAt
++ String getCreatedAt()
+}
+
+
+class fcc.sportsstore.entities.Address {
+- String id
+- String note
+- String phoneNumber
+- String addressDetail
+- Province province
+- Ward ward
+- User user
+- List<Pack> packs
+- Long createdAt
+- boolean isDefault
++ String getCreatedAt()
+}
+
+
+@enduml

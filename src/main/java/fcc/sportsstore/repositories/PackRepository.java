@@ -29,4 +29,8 @@ public interface PackRepository extends JpaRepository<Pack, String> {
                                                                                  Pageable pageable);
     boolean existsByUserAndProductSnapshotsProductIdAndStatus(User user, String productId, String status);
 
+
+    List<Pack> findByStatusAndCreatedAtBetween(String status, Long start, Long end);
+
+    List<Pack> findByStatus(String status);
 }

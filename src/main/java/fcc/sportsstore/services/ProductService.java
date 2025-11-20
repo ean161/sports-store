@@ -63,4 +63,8 @@ public class ProductService {
     public List<Product> searchOnBar(String keyword) {
         return productRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
     }
+
+    public long count() {
+        return productRepository.count();
+    }
 }

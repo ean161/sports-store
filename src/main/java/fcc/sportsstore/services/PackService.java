@@ -2,6 +2,7 @@ package fcc.sportsstore.services;
 
 import fcc.sportsstore.entities.*;
 import fcc.sportsstore.repositories.PackRepository;
+import fcc.sportsstore.utils.TimeUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -83,5 +84,32 @@ public class PackService {
             pack.setStatus("CANCELLED");
             packRepository.save(pack);
         }
+    }
+
+    public long count() {
+        return packRepository.count();
+    }
+    public List<Pack> getAll() {
+        return packRepository.findAll();
+    }
+
+    public long getRevenueInMonth() {
+        TimeUtil timeUtil = new TimeUtil();
+        List<Pack> packs = packRepository.findByStatusAndCreatedAtBetween(
+                "SUCCESS",
+                timeUtil.getStartOfCurrentMonth(),
+                timeUtil.getEndOfCurrentMonth()
+        );
+
+        return packs.stream()
+                .mapToLong(pack -> pack.getTotalPrice() != null ? pack.getTotalPrice() : 0)
+                .sum();
+    }
+
+    public long getTotalRevenue() {
+        List<Pack> packs = packRepository.findByStatus("SUCCESS");
+        return packs.stream()
+                .mapToLong(pack -> pack.getTotalPrice() != null ? pack.getTotalPrice() : 0)
+                .sum();
     }
 }
