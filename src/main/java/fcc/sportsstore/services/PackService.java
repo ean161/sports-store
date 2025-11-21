@@ -97,8 +97,7 @@ public class PackService {
         TimeUtil timeUtil = new TimeUtil();
         List<Pack> packs = packRepository.findByStatusAndCreatedAtBetween(
                 "SUCCESS",
-                timeUtil.getStartOfCurrentMonth(),
-                timeUtil.getEndOfCurrentMonth()
+                timeUtil.getStartOfCurrentMonth() * 1000, timeUtil.getEndOfCurrentMonth() * 1000
         );
 
         return packs.stream()

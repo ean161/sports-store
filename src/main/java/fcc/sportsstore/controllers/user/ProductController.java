@@ -71,7 +71,7 @@ public class ProductController {
             int emptyStars = 5;
 
             if (!feedbacks.isEmpty()) {
-                double avg = averageRating;
+                double avg = Math.min(averageRating, 5.0);
                 fullStars = (int) Math.floor(avg);
 
                 double fraction = avg - fullStars;
@@ -82,8 +82,7 @@ public class ProductController {
 
                 if (fullStars > 5) {
                     fullStars = 5;
-                }
-                if (hasHalfStar && fullStars == 5) {
+                } else if (hasHalfStar && fullStars == 5) {
                     hasHalfStar = false;
                 }
 
