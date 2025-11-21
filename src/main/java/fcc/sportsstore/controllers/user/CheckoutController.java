@@ -109,7 +109,7 @@ public class CheckoutController {
         User user = userService.getFromSession(request);
         Address defaultAddress = addressService.getDefault(user);
 
-        Pack pack = packService.getByIdAndUserAndStatus(id, user, "PENDING_PAYMENT");
+        Pack pack = packService.getByIdAndUserAndStatus(id, user, "PAYMENT");
         if (pack == null) {
             return "redirect:/cart";
         }
