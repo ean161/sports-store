@@ -43,7 +43,13 @@ $(document).ready(function() {
     });
 
     $(".real-option-data").on("click", async function () {
-        fullSelectedProp[$(this).attr("name")] = $(this).attr("id").replaceAll("property-data-id-", "");
+        let fieldPropId = $(this).attr("name");
+        let propId = $(this).attr("id").replaceAll("property-data-id-", "");
+
+        if ($(this).is(':checked'))
+            fullSelectedProp[fieldPropId] = propId;
+        else
+            delete fullSelectedProp[fieldPropId];
 
         console.log(fullSelectedProp);
         $(".select-option").hide();

@@ -27,7 +27,7 @@
                                 <div th:each="foption : ${product.productPropertyData}"
                                      th:if="${foption.productPropertyField.name == f.name}" class="w-auto">
                                     <input
-                                        type="radio" th:name="${'property-data-' + f.id}"
+                                        type="checkbox" th:name="${'property-data-' + f.id}"
                                         th:id="${'property-data-id-' + foption.id}" th:value="${foption.id}"
                                         class="real-option-data hidden peer"/>
                                     <label th:if="${stockGroupStatus.get(foption.id)}" th:for="${'property-data-id-' + foption.id}"

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -131,7 +132,10 @@ public class ProductRestController {
 
     @PostMapping("/available-stock-prop")
     public ResponseEntity<?> availableStockProp(@RequestParam(value = "id", required = false) String id,
-                                                @RequestParam("props[]") List<String> props) {
+                                                @RequestParam(value = "props[]", required = false) List<String> props) {
+        if (props == null) {
+            props = new ArrayList<>();
+        }
 
         try {
             ValidateUtil validate = new ValidateUtil();
