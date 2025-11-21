@@ -57,6 +57,15 @@ public class ManageCartService {
         ProductSnapshot sameProductSnapshot = getSameCartProductSnapshot(user, productId, propSnapshot);
 
         if (sameProductSnapshot != null) {
+//            productQuantityService.hasStockQuantity()
+            Set<ProductPropertyData> propDataToCheckQty = new HashSet<>();
+            for (ProductPropertySnapshot propSnap : sameProductSnapshot.getProductPropertySnapshots()) {
+                propDataToCheckQty.add(productPropertySnapshotService.toPropertyData(propSnap));
+            }
+
+            if (!productQuantityService.hasStockQuantity(propDataToCheckQty, sameProductSnapshot.getQuantity() + quantity)) {
+                throw new RuntimeException(sameProductSnapshot.getTitle() + " outed of stock.");
+            }
 
             sameProductSnapshot.setQuantity(sameProductSnapshot.getQuantity() + quantity);
             productSnapshotService.save(sameProductSnapshot);

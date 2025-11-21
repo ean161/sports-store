@@ -118,6 +118,6 @@ public class UserService {
 
     public Long getCountInMonth() {
         TimeUtil timeUtil = new TimeUtil();
-        return userRepository.countByCreatedAtGreaterThanAndCreatedAtLessThan(timeUtil.getStartOfCurrentMonth(), timeUtil.getEndOfCurrentMonth());
+        return userRepository.countByCreatedAtGreaterThanAndCreatedAtLessThan(timeUtil.getStartOfCurrentMonth() * 1000, timeUtil.getEndOfCurrentMonth() * 1000);
     }
 }
