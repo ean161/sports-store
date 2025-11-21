@@ -8,6 +8,8 @@ async function loadDetails(id) {
     $("#oh-detail-header").html(res.data.sign);
     $("#oh-id").val(res.data.id);
     $("#oh-user").val(res.data.user.username);
+    $("#oh-phone-number").val(res.data.address.phoneNumber);
+    $("#oh-address").val(`${res.data.address.note} | ${res.data.address.ward.name}, ${res.data.address.province.name}`);
     $("#oh-sign").val(res.data.sign);
     $("#oh-status").val(res.data.status);
     $("#oh-payment-type").val(res.data.paymentType);
