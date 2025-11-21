@@ -48,7 +48,7 @@ $(document).ready(function () {
         let quantity = parseInt(qtyElem.text());
 
         let res = await updateQuantity(id, quantity);
-        if (quantity <= 0 || res.code === 0) {
+        if (quantity <= 1 || res.code === 0) {
             return;
         }
 
