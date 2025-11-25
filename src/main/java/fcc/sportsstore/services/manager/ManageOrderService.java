@@ -66,6 +66,7 @@ public class ManageOrderService {
         pack.setManager(managerService.getManagerFromSession(request));
         pack.setStatus(status);
 
+        boolean isNewStatusReturned = status.equals("CANCELLED") || status.equals("REFUNDING");
         if (oldStatus.equals("APPROVAL") && status.equals("PREPARING_ORDER")) {
             for (ProductSnapshot snap : pack.getProductSnapshots()) {
                 Set<ProductPropertyData> propData = new HashSet<>();
@@ -82,7 +83,7 @@ public class ManageOrderService {
         } else if (!oldStatus.equals(status)
                 && !oldStatus.equals("APPROVAL")
                 && !oldStatus.equals("PAYMENT")
-                && status.equals("CANCELLED")) {
+                && isNewStatusReturned ){
             for (ProductSnapshot snap : pack.getProductSnapshots()) {
                 Set<ProductPropertyData> propData = new HashSet<>();
                 for (ProductPropertySnapshot propSnap : snap.getProductPropertySnapshots()) {

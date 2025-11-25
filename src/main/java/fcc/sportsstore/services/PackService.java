@@ -69,17 +69,16 @@ public class PackService {
     public void cancelPack(String packId) {
         Pack pack = packRepository.findById(packId).orElse(null);
         if (pack != null) {
-            for (ProductSnapshot snap : pack.getProductSnapshots()) {
-                List<ProductPropertySnapshot> snapProps = snap.getProductPropertySnapshots();
-                Set<ProductPropertyData> propData = new HashSet<>();
-                for (ProductPropertySnapshot snapPropsItem : snapProps) {
-                    propData.add(productPropertySnapshotService.toPropertyData(snapPropsItem));
-                }
-
-                ProductQuantity pQuantity = productQuantityService.getByProperties(propData);
-                pQuantity.setAmount(pQuantity.getAmount() + snap.getQuantity());
-            }
-
+//            for (ProductSnapshot snap : pack.getProductSnapshots()) {
+//                List<ProductPropertySnapshot> snapProps = snap.getProductPropertySnapshots();
+//                Set<ProductPropertyData> propData = new HashSet<>();
+//                for (ProductPropertySnapshot snapPropsItem : snapProps) {
+//                    propData.add(productPropertySnapshotService.toPropertyData(snapPropsItem));
+//                }
+//
+//                ProductQuantity pQuantity = productQuantityService.getByProperties(propData);
+//                pQuantity.setAmount(pQuantity.getAmount() + snap.getQuantity());
+//            }
 
             pack.setStatus("CANCELLED");
             packRepository.save(pack);
