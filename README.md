@@ -9,7 +9,6 @@
 | Ngô Nhất Quý     | CE190984    | <a href="mailto:quynh.ce190984@gmail.com">Email</a>                                                               |
 | Trần Hoàng Nhật  | CE190581    | <a href="mailto:nhatth.ce190581@gmail.com">Email</a>                                                              |
 | Nguyễn Minh Nhật | CE191491    | <a href="mailto:nhatnm.ce191491@gmail.com">Email</a>                                                              |
-| Võ Hải Lâm       | CE17xxxx    | -                                                                                                                 |
 
 ## Tech stack
 | Component       | Version      |
